@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reporting Forge - Privacy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Primary meta -->
+  <meta name="title" content="Reporting Forge - Privacy" />
+  <meta name="description" content="Privacy notice for the pre launch Reporting Forge site and early access list. No accounts, no telemetry from a product, and no sale of any personal information." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://reportingforge.com/privacy.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0b1120 0%, #020617 55%, #020617 100%);
+      color: #e5e7eb;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      z-index: 20;
+    }
+
+    header nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    header nav a {
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #cbd5f5;
+    }
+
+    header nav a.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: #e5f3ff;
+    }
+
+    header nav a:hover {
+      background: rgba(148, 163, 184, 0.16);
+      text-decoration: none;
+    }
+
+    main.shell {
+      max-width: 1120px;
+      margin: 96px auto 56px;
+      padding: 0 20px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 32px;
+    }
+
+    section {
+      min-width: 0;
+    }
+
+    .right-panel {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #0369a1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b1120;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .brand-tagline {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #cbd5f5;
+      margin-bottom: 18px;
+    }
+
+    .highlight-pill span:last-child {
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: 0.01em;
+      color: #f9fafb;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 20px 0 8px;
+      color: #e5e7eb;
+    }
+
+    .lead {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #d1d5db;
+      margin: 0 0 14px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #cbd5f5;
+      margin: 0 0 10px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 4px 0 6px;
+    }
+
+    .bullet-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #cbd5f5;
+      margin-bottom: 4px;
+    }
+
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #38bdf8;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .footer a {
+      color: #a5b4fc;
+    }
+
+    .panel-card {
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+      padding: 12px 14px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      font-size: 13px;
+    }
+
+    .mini-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .code-inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 5px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: #e5e7eb;
+    }
+
+    @media (max-width: 960px) {
+      main.shell {
+        grid-template-columns: minmax(0, 1fr);
+        margin-top: 88px;
+      }
+      header {
+        right: 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        background: #020617;
+      }
+      header {
+        top: 14px;
+        right: 12px;
+      }
+      header nav {
+        padding: 8px 10px;
+        gap: 6px;
+      }
+      main.shell {
+        margin-top: 80px;
+        padding: 0 14px 28px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .brand-name {
+        font-size: 14px;
+      }
+      .brand-tagline {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/roadmap.html">Roadmap</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/early-access.html">Early access</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section>
+      <div class="brand">
+        <div class="brand-mark">RF</div>
+        <div class="brand-text">
+          <div class="brand-name">Reporting Forge</div>
+          <div class="brand-tagline">How this site handles data.</div>
+        </div>
+      </div>
+
+      <div class="highlight-pill">
+        <span>Privacy</span>
+        <span>Lightweight and straightforward</span>
+      </div>
+
+      <h1>Privacy</h1>
+
+      <p class="lead">
+        Reporting Forge is a pre launch project. There is no product to log into and no in app telemetry.
+        This site collects only a small amount of information needed to run a normal web presence
+        and handle email from people who want to stay in touch.
+      </p>
+
+      <h2>Website analytics and logs</h2>
+      <p>
+        The site is served through a standard hosting provider and may sit behind a CDN such as Cloudflare.
+        These services automatically collect basic request and error logs. They typically include
+        information like IP address, browser type, operating system, and the pages you visit.
+      </p>
+      <p>
+        These logs are used for security, performance, and simple traffic understanding. They are not
+        used to build individual marketing profiles and are not sold to third parties.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        The static site itself does not set tracking cookies. Any cookies that appear will generally be
+        from the hosting or CDN layer used to keep the site running smoothly, and they are used for
+        things like routing and security.
+      </p>
+
+      <h2>Email and early access</h2>
+      <p>
+        If you email <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>
+        or choose to join the early access list for the book and lab, your contact details are used
+        only to communicate about Reporting Forge and related learning materials.
+      </p>
+      <p>
+        Your email address will not be sold to third parties. You can ask to be removed from any list
+        at any time by sending a short note to the same address.
+      </p>
+
+      <h2>Third party services</h2>
+      <p>
+        Standard infrastructure providers may be involved in delivering email or hosting files,
+        for example an email provider and cloud storage. These providers will process your data
+        only to the extent required to deliver those services.
+      </p>
+
+      <h2>Future changes</h2>
+      <p>
+        If Reporting Forge evolves into a hosted product with user accounts or more advanced analytics,
+        the privacy notice will be updated before those changes go live. The intent is to stay clear,
+        minimal, and respectful about what is collected and why.
+      </p>
+
+      <div class="footer">
+        If you have questions about this privacy notice, email
+        <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>.
+        <br />
+        <a href="/terms.html">Terms</a>
+      </div>
+    </section>
+
+    <aside class="right-panel">
+      <div class="panel-card">
+        <div class="mini-label">Short version</div>
+        <p>
+          No accounts, no product telemetry, no sale of personal information. Just basic logs,
+          email, and the minimum needed to run a static site while the book and lab take shape.
+        </p>
+      </div>
+
+      <div class="panel-card">
+        <div class="mini-label">Your choices</div>
+        <ul class="bullet-list">
+          <li><span class="bullet-dot"></span> <span>Do not email if you do not want to share your address.</span></li>
+          <li><span class="bullet-dot"></span> <span>Ask to be removed from any list at any time.</span></li>
+          <li><span class="bullet-dot"></span> <span>Use a generic work inbox if that feels more comfortable.</span></li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>

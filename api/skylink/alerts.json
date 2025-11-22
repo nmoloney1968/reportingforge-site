@@ -1,0 +1,26 @@
+{
+  "generated_at": "2025-01-01T00:00:00Z",
+  "alerts": [
+    {
+      "alert_id": "AL-9001",
+      "site_id": "SL-1001",
+      "severity": "warning",
+      "created_at": "2024-10-03T06:15:00Z",
+      "message": "Usage trending 15% above typical for this weekday."
+    },
+    {
+      "alert_id": "AL-9002",
+      "site_id": "SL-1002",
+      "severity": "info",
+      "created_at": "2024-10-04T02:30:00Z",
+      "message": "Short connectivity interruption detected overnight."
+    },
+    {
+      "alert_id": "AL-9003",
+      "site_id": "SL-1003",
+      "severity": "critical",
+      "created_at": "2024-10-05T11:42:00Z",
+      "message": "Site suspended - plan limit exceeded for the billing period."
+    }
+  ]
+}

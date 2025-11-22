@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reporting Forge - Terms</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Primary meta -->
+  <meta name="title" content="Reporting Forge - Terms" />
+  <meta name="description" content="Lightweight terms of use for the pre launch Reporting Forge site, sample code, and learning materials." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://reportingforge.com/terms.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0b1120 0%, #020617 55%, #020617 100%);
+      color: #e5e7eb;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      z-index: 20;
+    }
+
+    header nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    header nav a {
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #cbd5f5;
+    }
+
+    header nav a.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: #e5f3ff;
+    }
+
+    header nav a:hover {
+      background: rgba(148, 163, 184, 0.16);
+      text-decoration: none;
+    }
+
+    main.shell {
+      max-width: 1120px;
+      margin: 96px auto 56px;
+      padding: 0 20px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 32px;
+    }
+
+    section {
+      min-width: 0;
+    }
+
+    .right-panel {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #0369a1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b1120;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .brand-tagline {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #cbd5f5;
+      margin-bottom: 18px;
+    }
+
+    .highlight-pill span:last-child {
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: 0.01em;
+      color: #f9fafb;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 20px 0 8px;
+      color: #e5e7eb;
+    }
+
+    .lead {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #d1d5db;
+      margin: 0 0 14px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #cbd5f5;
+      margin: 0 0 10px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 4px 0 6px;
+    }
+
+    .bullet-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #cbd5f5;
+      margin-bottom: 4px;
+    }
+
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #38bdf8;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .footer a {
+      color: #a5b4fc;
+    }
+
+    .panel-card {
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+      padding: 12px 14px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      font-size: 13px;
+    }
+
+    .mini-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .code-inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 5px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: #e5e7eb;
+    }
+
+    @media (max-width: 960px) {
+      main.shell {
+        grid-template-columns: minmax(0, 1fr);
+        margin-top: 88px;
+      }
+      header {
+        right: 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        background: #020617;
+      }
+      header {
+        top: 14px;
+        right: 12px;
+      }
+      header nav {
+        padding: 8px 10px;
+        gap: 6px;
+      }
+      main.shell {
+        margin-top: 80px;
+        padding: 0 14px 28px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .brand-name {
+        font-size: 14px;
+      }
+      .brand-tagline {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/roadmap.html">Roadmap</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/early-access.html">Early access</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section>
+      <div class="brand">
+        <div class="brand-mark">RF</div>
+        <div class="brand-text">
+          <div class="brand-name">Reporting Forge</div>
+          <div class="brand-tagline">Light house rules.</div>
+        </div>
+      </div>
+
+      <div class="highlight-pill">
+        <span>Terms</span>
+        <span>Pre launch static site</span>
+      </div>
+
+      <h1>Terms of use</h1>
+
+      <p class="lead">
+        Reporting Forge is currently a pre launch project. These terms describe how you can use
+        this site and any sample materials linked from it. They are intentionally lightweight.
+      </p>
+
+      <h2>No warranties</h2>
+      <p>
+        This site and any linked materials are provided as is, without any warranties of any kind.
+        That includes, but is not limited to, implied warranties of merchantability, fitness for
+        a particular purpose, or non infringement.
+      </p>
+
+      <h2>Sample code and exercises</h2>
+      <p>
+        Any sample code, scripts, or exercises shared through this site or related materials are
+        provided as is. You are responsible for testing them in your own environment before using
+        them in production or for business critical reporting.
+      </p>
+      <p>
+        Use them at your own risk. The author and maintainers are not liable for any loss or damage
+        that may result from running or relying on these examples.
+      </p>
+
+      <h2>Acceptable use</h2>
+      <p>
+        You agree not to misuse this site. That includes, for example, trying to break or overload
+        the infrastructure, attempting to gain unauthorised access to systems, or using any content
+        in a way that violates applicable laws.
+      </p>
+
+      <h2>Intellectual property</h2>
+      <p>
+        Unless stated otherwise, the content on this site (including text, visuals, and layout)
+        is owned by the author of Reporting Forge. You may link to the site and quote short excerpts
+        with attribution. You may not present the content as your own or sell it as a separate product
+        without explicit permission.
+      </p>
+
+      <h2>Changes to these terms</h2>
+      <p>
+        These terms may change over time as Reporting Forge evolves, especially if a hosted product
+        or additional services are introduced. The version posted on this page is the one that applies
+        to your current use of the site.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        If you have questions about these terms, email
+        <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>.
+      </p>
+
+      <div class="footer">
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </section>
+
+    <aside class="right-panel">
+      <div class="panel-card">
+        <div class="mini-label">Short version</div>
+        <p>
+          Use the site, examples, and learning materials sensibly, at your own risk. Do not pretend
+          they are your work, do not try to break the infrastructure, and test everything before
+          using it in production.
+        </p>
+      </div>
+
+      <div class="panel-card">
+        <div class="mini-label">Future product terms</div>
+        <p>
+          If Reporting Forge later becomes a hosted tool with accounts and billing, that product
+          will have its own terms. Those would sit alongside these pre launch terms, not silently
+          replace them.
+        </p>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>

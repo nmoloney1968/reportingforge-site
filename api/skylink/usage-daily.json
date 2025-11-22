@@ -1,0 +1,34 @@
+{
+  "generated_at": "2025-01-01T00:00:00Z",
+  "granularity": "day",
+  "unit": "GB",
+  "usage": [
+    { "date": "2024-10-01", "site_id": "SL-1001", "gb_total": 18.4, "gb_peak": 11.2, "gb_offpeak": 7.2 },
+    { "date": "2024-10-01", "site_id": "SL-1002", "gb_total": 9.7,  "gb_peak": 6.1,  "gb_offpeak": 3.6 },
+    { "date": "2024-10-01", "site_id": "SL-1003", "gb_total": 4.3,  "gb_peak": 3.0,  "gb_offpeak": 1.3 },
+
+    { "date": "2024-10-02", "site_id": "SL-1001", "gb_total": 21.1, "gb_peak": 13.9, "gb_offpeak": 7.2 },
+    { "date": "2024-10-02", "site_id": "SL-1002", "gb_total": 10.2, "gb_peak": 6.5,  "gb_offpeak": 3.7 },
+    { "date": "2024-10-02", "site_id": "SL-1003", "gb_total": 3.8,  "gb_peak": 2.6,  "gb_offpeak": 1.2 },
+
+    { "date": "2024-10-03", "site_id": "SL-1001", "gb_total": 19.6, "gb_peak": 12.0, "gb_offpeak": 7.6 },
+    { "date": "2024-10-03", "site_id": "SL-1002", "gb_total": 8.9,  "gb_peak": 5.4,  "gb_offpeak": 3.5 },
+    { "date": "2024-10-03", "site_id": "SL-1003", "gb_total": 4.1,  "gb_peak": 2.8,  "gb_offpeak": 1.3 },
+
+    { "date": "2024-10-04", "site_id": "SL-1001", "gb_total": 22.3, "gb_peak": 14.2, "gb_offpeak": 8.1 },
+    { "date": "2024-10-04", "site_id": "SL-1002", "gb_total": 11.0, "gb_peak": 7.2,  "gb_offpeak": 3.8 },
+    { "date": "2024-10-04", "site_id": "SL-1003", "gb_total": 3.5,  "gb_peak": 2.4,  "gb_offpeak": 1.1 },
+
+    { "date": "2024-10-05", "site_id": "SL-1001", "gb_total": 17.8, "gb_peak": 10.7, "gb_offpeak": 7.1 },
+    { "date": "2024-10-05", "site_id": "SL-1002", "gb_total": 9.2,  "gb_peak": 5.9,  "gb_offpeak": 3.3 },
+    { "date": "2024-10-05", "site_id": "SL-1003", "gb_total": 4.0,  "gb_peak": 2.7,  "gb_offpeak": 1.3 },
+
+    { "date": "2024-10-06", "site_id": "SL-1001", "gb_total": 20.5, "gb_peak": 12.9, "gb_offpeak": 7.6 },
+    { "date": "2024-10-06", "site_id": "SL-1002", "gb_total": 10.4, "gb_peak": 6.7,  "gb_offpeak": 3.7 },
+    { "date": "2024-10-06", "site_id": "SL-1003", "gb_total": 3.7,  "gb_peak": 2.5,  "gb_offpeak": 1.2 },
+
+    { "date": "2024-10-07", "site_id": "SL-1001", "gb_total": 19.1, "gb_peak": 11.6, "gb_offpeak": 7.5 },
+    { "date": "2024-10-07", "site_id": "SL-1002", "gb_total": 9.9,  "gb_peak": 6.3,  "gb_offpeak": 3.6 },
+    { "date": "2024-10-07", "site_id": "SL-1003", "gb_total": 3.9,  "gb_peak": 2.6,  "gb_offpeak": 1.3 }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "generated_at": "2025-01-01T00:00:00Z",
+  "network_name": "SkyLink Test Network",
+  "sites": [
+    {
+      "site_id": "SL-1001",
+      "site_name": "Test 01 - City Hub",
+      "region": "North",
+      "plan_type": "Business-Max",
+      "status": "active"
+    },
+    {
+      "site_id": "SL-1002",
+      "site_name": "Test 02 - Regional Depot",
+      "region": "East",
+      "plan_type": "Business-Standard",
+      "status": "active"
+    },
+    {
+      "site_id": "SL-1003",
+      "site_name": "Test 03 - Remote Cabin",
+      "region": "West",
+      "plan_type": "Essentials",
+      "status": "suspended"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+<svg width="320" height="80" viewBox="0 0 320 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rf-grad-h" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2D9CDB"></stop>
+      <stop offset="100%" stop-color="#6BDCCB"></stop>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="8" width="64" height="64" rx="20" fill="url(#rf-grad-h)"></rect>
+  <text x="36" y="48" text-anchor="middle" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="600" fill="#FFFFFF">
+    RF
+  </text>
+
+  <text x="88" y="40" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="24" font-weight="600" fill="#111827">
+    Reporting Forge
+  </text>
+
+  <text x="88" y="58" font-family="Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="13" fill="#6B7280">
+    Automated reports from raw data
+  </text>
+</svg>

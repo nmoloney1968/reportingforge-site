@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reporting Forge - Coming Soon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Primary meta -->
+  <meta name="title" content="Reporting Forge - Coming Soon" />
+  <meta name="description" content="Reporting Forge is a Python-first automation layer that turns messy data exports into stable, scheduled reports you can ship with confidence." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://reportingforge.com/" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Reporting Forge" />
+  <meta property="og:url" content="https://reportingforge.com/" />
+  <meta property="og:title" content="Reporting Forge - Automated reporting you can trust" />
+  <meta property="og:description" content="Define your reporting workflows once. Reporting Forge runs them reliably on a schedule and delivers client-ready outputs without late night spreadsheet surgery." />
+  <meta property="og:image" content="https://reportingforge.com/favicon.svg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Reporting Forge - Automated reporting you can trust" />
+  <meta name="twitter:description" content="Define your reporting workflows once and let Reporting Forge handle the runs, checks, and delivery." />
+  <meta name="twitter:image" content="https://reportingforge.com/favicon.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --color-primary: #2D9CDB;
+      --color-mint: #6BDCCB;
+      --color-text-dark: #1C1E22;
+      --color-grey-1: #E5E7EB;
+      --color-white: #FFFFFF;
+
+      --color-bg-dark: #1C1E22;
+      --color-surface-dark: #2A2D31;
+      --color-text-light: #EAECEE;
+
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.18);
+      --max-width: 960px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(109, 213, 250, 0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(45, 156, 219, 0.22), transparent 55%),
+        var(--color-white);
+      color: var(--color-text-dark);
+
+      /* FIX: horizontally centered only */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      padding: 72px 16px 40px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background:
+          radial-gradient(circle at top left, rgba(109, 213, 250, 0.12), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(45, 156, 219, 0.16), transparent 55%),
+          var(--color-bg-dark);
+        color: var(--color-text-light);
+      }
+    }
+
+    .shell {
+      width: 100%;
+      max-width: var(--max-width);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+      padding: 32px 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 32px;
+      backdrop-filter: blur(18px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .shell {
+        background: rgba(26, 28, 32, 0.94);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .shell {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 24px 20px;
+      }
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-mint));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-family: "Fira Code", monospace;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      font-size: 20px;
+    }
+
+    .brand-tagline {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(45, 156, 219, 0.08);
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .highlight-pill {
+        background: rgba(45, 156, 219, 0.16);
+        color: #E5E7EB;
+      }
+    }
+
+    .lead {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+      max-width: 40rem;
+    }
+
+    .bullet-list {
+      list-style: none;
+      margin-bottom: 22px;
+    }
+
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .bullet-dot {
+      margin-top: 4px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--color-mint);
+      flex-shrink: 0;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 6px;
+    }
+
+    .btn-primary {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-mint));
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .btn-primary span.icon {
+      font-family: "Fira Code", monospace;
+      font-size: 13px;
+    }
+
+    .cta-note {
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    .right-panel {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(45, 156, 219, 0.14), rgba(107, 220, 203, 0.10));
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .right-panel {
+        background: linear-gradient(145deg, rgba(45, 156, 219, 0.20), rgba(107, 220, 203, 0.18));
+      }
+    }
+
+    .panel-title {
+      font-weight: 500;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(28, 30, 34, 0.08);
+      background: rgba(255, 255, 255, 0.88);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .chip {
+        border-color: rgba(234, 236, 238, 0.22);
+        background: rgba(18, 19, 22, 0.84);
+        color: var(--color-text-light);
+      }
+    }
+
+    .panel-card {
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(229, 231, 235, 0.9);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .panel-card {
+        background: var(--color-surface-dark);
+        border-color: rgba(148, 163, 184, 0.4);
+      }
+    }
+
+    .mini-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      margin-bottom: 4px;
+      opacity: 0.8;
+    }
+
+    .code-inline {
+      font-family: "Fira Code", monospace;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .code-inline {
+        background: rgba(15, 23, 42, 0.45);
+      }
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 11px;
+      opacity: 0.7;
+    }
+
+    .footer a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(148, 163, 184, 0.8);
+    }
+
+    .footer a:hover {
+      border-bottom-style: solid;
+    }
+
+    /* dark mode nav consistency */
+    @media (prefers-color-scheme: dark) {
+      header nav {
+        background: rgba(15,23,42,0.92) !important;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      }
+      header nav a {
+        color: #E5E7EB !important;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        top: 16px !important;
+        right: 16px !important;
+      }
+      header nav {
+        padding: 10px 12px;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header style="
+  position: fixed;
+  top: 60px;
+  right: 24px;
+  z-index: 40;
+">
+  <nav style="
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    background: rgba(255,255,255,0.88);
+    padding: 12px 14px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    backdrop-filter: blur(12px);
+  ">
+    <a href="/" style="text-decoration:none; color:#111827;">Home</a>
+    <a href="/about.html" style="text-decoration:none; color:#111827;">About</a>
+    <a href="/docs.html" style="text-decoration:none; color:#111827;">Docs</a>
+    <a href="/early-access.html" style="text-decoration:none; color:#111827;">Early access</a>
+    <a href="/roadmap.html" style="text-decoration:none; color:#111827;">Roadmap</a>
+    <a href="/changelog.html" style="text-decoration:none; color:#111827;">Changelog</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <section>
+    <div class="brand">
+      <div class="brand-mark">RF</div>
+      <div class="brand-text">
+        <div class="brand-name">Reporting Forge</div>
+        <div class="brand-tagline">Automated reports from raw data.</div>
+      </div>
+    </div>
+
+    <div class="highlight-pill">
+      <span>Coming Soon</span>
+      <span>Private beta in 2026</span>
+    </div>
+
+    <h1>Turn messy inputs into reliable reports you can ship.</h1>
+
+    <p class="lead">
+      Reporting Forge is a Python-first automation layer that takes your exports, APIs, and SQL queries
+      and forges stable, client-ready reports on a schedule. No more broken spreadsheets or manual glue work.
+    </p>
+
+    <ul class="bullet-list">
+      <li>
+        <span class="bullet-dot"></span>
+        <span>Connect CSVs, databases, and APIs, then define your reporting workflow once.</span>
+      </li>
+      <li>
+        <span class="bullet-dot"></span>
+        <span>Version-controlled templates so every run is auditable and repeatable.</span>
+      </li>
+      <li>
+        <span class="bullet-dot"></span>
+        <span>Export to PDFs, slide decks, or dashboards for stakeholders who just want answers.</span>
+      </li>
+    </ul>
+
+    <div class="cta-row">
+      <a class="btn-primary" href="/early-access.html">
+        <span>Request early access</span>
+        <span class="icon">&gt;&gt;</span>
+      </a>
+      <div class="cta-note">
+        Or email <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="523c373b3e122037223d20263b3c35343d2035377c313d3f">[email&#160;protected]</a></strong> with a short note about your reporting stack.
+      </div>
+    </div>
+
+    <div class="footer">
+      Built for teams who live in Python and spreadsheets but want their reporting to feel boring and reliable.
+      <br />
+      <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
+    </div>
+  </section>
+
+  <aside class="right-panel">
+    <div>
+      <div class="panel-title">What Reporting Forge will handle for you</div>
+      <div class="chip-row">
+        <span class="chip">Recurring report runs</span>
+        <span class="chip">Data sanity checks</span>
+        <span class="chip">Template rendering</span>
+        <span class="chip">Delivery &amp; logging</span>
+      </div>
+    </div>
+
+    <div class="panel-card">
+      <div class="mini-label">Example workflow</div>
+      <p>
+        Define a small Python script that pulls usage data, enriches it, and hands it to a
+        report template. Reporting Forge schedules it, renders the output, and ships it
+        to your clients or leadership without you touching Excel at 1am.
+      </p>
+    </div>
+
+    <div class="panel-card">
+      <div class="mini-label">Tech notes</div>
+      <p>
+        Designed to sit beside your existing stack: Git, SQL, Python, and your favourite BI tool.
+        Think of it as the orchestration and formatting layer for everything you already know.
+      </p>
+      <p style="margin-top: 6px;">
+        Environment name: <span class="code-inline">reportingforge-prod</span>
+      </p>
+    </div>
+
+    <div class="panel-card" style="margin-top:16px;">
+      <div class="mini-label">What Reporting Forge is NOT</div>
+
+      <ul class="bullet-list" style="margin-top:8px; margin-bottom:0;">
+        <li>
+          <span class="bullet-dot"></span>
+          <span>Not a BI tool. It doesn’t replace Tableau, Power BI, or Looker.</span>
+        </li>
+        <li>
+          <span class="bullet-dot"></span>
+          <span>Not a data pipeline framework. It assumes your data already exists somewhere.</span>
+        </li>
+        <li>
+          <span class="bullet-dot"></span>
+          <span>Not a heavy workflow engine. It’s intentionally small and Python-first.</span>
+        </li>
+        <li>
+          <span class="bullet-dot"></span>
+          <span>Not a rigid SaaS with one “right way.” You own your scripts, templates, and logic.</span>
+        </li>
+        <li>
+          <span class="bullet-dot"></span>
+          <span>Not another complex layer to manage. It aims to make reporting boring and predictable.</span>
+        </li>
+      </ul>
+    </div>
+  </aside>
+</main>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"6332637fb22f42618304905c01b95492","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

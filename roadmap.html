@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reporting Forge - Roadmap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Primary meta -->
+  <meta name="title" content="Reporting Forge - Roadmap" />
+  <meta name="description" content="High level roadmap for Reporting Forge as it moves from a book and lab for learning reporting automation into a small, opinionated platform for running those workflows." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://reportingforge.com/roadmap.html" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #0b1120 0%, #020617 55%, #020617 100%);
+      color: #e5e7eb;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    header {
+      position: fixed;
+      top: 24px;
+      right: 32px;
+      z-index: 20;
+    }
+
+    header nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    header nav a {
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #cbd5f5;
+    }
+
+    header nav a.active {
+      background: rgba(56, 189, 248, 0.18);
+      color: #e5f3ff;
+    }
+
+    header nav a:hover {
+      background: rgba(148, 163, 184, 0.16);
+      text-decoration: none;
+    }
+
+    main.shell {
+      max-width: 1120px;
+      margin: 96px auto 56px;
+      padding: 0 20px 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 32px;
+    }
+
+    section {
+      min-width: 0;
+    }
+
+    .right-panel {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #0369a1 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0b1120;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-name {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+    }
+
+    .brand-tagline {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+
+    .highlight-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #cbd5f5;
+      margin-bottom: 18px;
+    }
+
+    .highlight-pill span:last-child {
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.15;
+      margin: 0 0 12px;
+      letter-spacing: 0.01em;
+      color: #f9fafb;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 22px 0 10px;
+      color: #e5e7eb;
+    }
+
+    .lead {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #d1d5db;
+      margin: 0 0 14px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #cbd5f5;
+      margin: 0 0 10px;
+    }
+
+    .bullet-list {
+      list-style: none;
+      padding: 0;
+      margin: 4px 0 6px;
+    }
+
+    .bullet-list li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #cbd5f5;
+      margin-bottom: 4px;
+    }
+
+    .bullet-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #38bdf8;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      background: radial-gradient(circle at top left, #38bdf8 0, #0ea5e9 40%, #0369a1 100%);
+      color: #0b1120;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.85);
+    }
+
+    .btn-primary:hover {
+      text-decoration: none;
+      filter: brightness(1.03);
+    }
+
+    .btn-primary .icon {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      margin-bottom: 10px;
+    }
+
+    .cta-note {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .cta-note a {
+      color: #d1fae5;
+    }
+
+    .footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+
+    .footer a {
+      color: #a5b4fc;
+    }
+
+    .panel-card {
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
+      padding: 12px 14px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      font-size: 13px;
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #cbd5f5;
+      margin-bottom: 8px;
+    }
+
+    .mini-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+    }
+
+    .code-inline {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 12px;
+      padding: 2px 5px;
+      border-radius: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      color: #e5e7eb;
+    }
+
+    @media (max-width: 960px) {
+      main.shell {
+        grid-template-columns: minmax(0, 1fr);
+        margin-top: 88px;
+      }
+      header {
+        right: 16px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        background: #020617;
+      }
+      header {
+        top: 14px;
+        right: 12px;
+      }
+      header nav {
+        padding: 8px 10px;
+        gap: 6px;
+      }
+      main.shell {
+        margin-top: 80px;
+        padding: 0 14px 28px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .brand-name {
+        font-size: 14px;
+      }
+      .brand-tagline {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/docs.html">Docs</a>
+      <a href="/roadmap.html" class="active">Roadmap</a>
+      <a href="/changelog.html">Changelog</a>
+      <a href="/early-access.html">Early access</a>
+    </nav>
+  </header>
+
+  <main class="shell">
+    <section>
+      <div class="brand">
+        <div class="brand-mark">RF</div>
+        <div class="brand-text">
+          <div class="brand-name">Reporting Forge</div>
+          <div class="brand-tagline">From learning path to light platform.</div>
+        </div>
+      </div>
+
+      <div class="highlight-pill">
+        <span>Roadmap</span>
+        <span>Where the project is heading</span>
+      </div>
+
+      <h1>Roadmap from book to small automation platform.</h1>
+
+      <p class="lead">
+        The first version of Reporting Forge is a book and lab. Future versions may wrap the same
+        patterns into a small, opinionated platform for running reporting workflows. This page
+        sketches that path so expectations stay clear.
+      </p>
+
+      <h2>Phase 1 - Book and lab (now)</h2>
+      <ul class="bullet-list">
+        <li><span class="bullet-dot"></span> <span>Design the 30 day curriculum from manual spreadsheets to Python and Power BI.</span></li>
+        <li><span class="bullet-dot"></span> <span>Ship example scripts and sample data that run on a normal Windows laptop.</span></li>
+        <li><span class="bullet-dot"></span> <span>Test the labs with early readers and refine based on real reporting pain.</span></li>
+      </ul>
+
+      <h2>Phase 2 - Sharper patterns and shared helpers</h2>
+      <ul class="bullet-list">
+        <li><span class="bullet-dot"></span> <span>Extract common helpers for validation, logging, and scheduling from the labs.</span></li>
+        <li><span class="bullet-dot"></span> <span>Publish small, reusable Python modules that work with or without any future platform.</span></li>
+        <li><span class="bullet-dot"></span> <span>Collect example workflows from readers in different industries.</span></li>
+      </ul>
+
+      <h2>Phase 3 - Light orchestration layer (exploratory)</h2>
+      <ul class="bullet-list">
+        <li><span class="bullet-dot"></span> <span>Explore a minimal way to describe and run workflows built in the lab.</span></li>
+        <li><span class="bullet-dot"></span> <span>Keep the core principle that you own your scripts and data; the platform only orchestrates.</span></li>
+        <li><span class="bullet-dot"></span> <span>Decide whether this should be open source, hosted, or both.</span></li>
+      </ul>
+
+      <p>
+        Any future platform work will stay grounded in the same goal as the book: make reporting
+        feel boring and dependable instead of fragile and stressful.
+      </p>
+
+      <div class="footer">
+        Roadmaps change as reality and feedback show up. This page is a living document rather
+        than a fixed promise.
+        <br />
+        <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
+      </div>
+    </section>
+
+    <aside class="right-panel">
+      <div class="panel-card">
+        <div class="mini-label">Guiding principles</div>
+        <ul class="bullet-list">
+          <li><span class="bullet-dot"></span> <span>Teach patterns first, build tooling later.</span></li>
+          <li><span class="bullet-dot"></span> <span>Stay small and understandable rather than clever and opaque.</span></li>
+          <li><span class="bullet-dot"></span> <span>Let people keep the tools they already like.</span></li>
+          <li><span class="bullet-dot"></span> <span>Use AI as a helper, not a replacement for judgment.</span></li>
+        </ul>
+      </div>
+
+      <div class="panel-card">
+        <div class="mini-label">How to influence the roadmap</div>
+        <p>
+          If you have strong reporting pain and are willing to share examples, that feedback will
+          have more impact than any abstract feature request. Email
+          <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>
+          with a short summary of your world.
+        </p>
+      </div>
+    </aside>
+  </main>
+</body>
+</html>
