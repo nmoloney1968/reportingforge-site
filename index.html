@@ -157,4 +157,304 @@
 
     h1 {
       margin: 0 0 0.8rem;
-      font-si
+      font-size: clamp(2.1rem, 3vw, 2.5rem);
+      line-height: 1.1;
+    }
+
+    h1 span {
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+      max-width: 34rem;
+    }
+
+    .hero-sub strong {
+      color: #e5e7eb;
+      font-weight: 600;
+    }
+
+    .bullet-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .bullet-row-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .check {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+
+    .check svg {
+      width: 9px;
+      height: 9px;
+      stroke: #bbf7d0;
+      stroke-width: 2.4;
+      fill: none;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .cta-primary {
+      padding: 0.7rem 1.3rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.7);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.24), rgba(15,23,42,0.98));
+      color: #e0f2fe;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .cta-primary:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,1);
+    }
+
+    .cta-secondary {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .cta-secondary a {
+      color: var(--accent);
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .side-card {
+      border-radius: 20px;
+      border: 1px solid rgba(30,64,175,0.85);
+      background: radial-gradient(circle at top left, rgba(30,64,175,0.5), #020617 55%);
+      padding: 1.6rem 1.5rem 1.7rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .side-heading {
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #e5e7eb;
+    }
+
+    .side-card ul {
+      margin: 0.4rem 0 0.8rem;
+      padding-left: 1.3rem;
+    }
+
+    .side-card li {
+      margin-bottom: 0.25rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(191,219,254,0.7);
+      background: rgba(15,23,42,0.9);
+      font-size: 0.78rem;
+      color: #bfdbfe;
+      margin-bottom: 0.4rem;
+    }
+
+    .tag-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #bfdbfe;
+    }
+
+    footer {
+      margin-top: 2.6rem;
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 880px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .side-card {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .hero {
+        padding: 1.8rem 1.5rem 1.9rem;
+      }
+
+      .side-card {
+        padding: 1.4rem 1.3rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <a href="index.html" class="brand">
+        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
+        <div class="brand-text">
+          <div class="brand-title">Reporting Forge</div>
+          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
+        </div>
+      </a>
+      <nav>
+        <a href="index.html" class="active">Overview</a>
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="early-access.html" class="nav-cta">Get early access</a>
+      </nav>
+    </header>
+
+    <main class="grid">
+      <section class="hero">
+        <div class="pill">
+          <span class="pill-dot"></span>
+          <span>30 day AI first workflow for real business reporting</span>
+        </div>
+
+        <h1>
+          <span>Build automated reports</span>
+          <span>with almost no coding</span>
+        </h1>
+
+        <p class="hero-sub">
+          <strong>Reporting Forge</strong> is a practical book and sandbox that shows you how to use
+          AI, Python, APIs, and Power BI together to automate one real reporting workflow from
+          end to end. AI writes most of the code – you steer.
+        </p>
+
+        <div class="bullet-row">
+          <div class="bullet-row-item">
+            <span class="check">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M4 8.5 6.6 11 12 5" />
+              </svg>
+            </span>
+            <span>You will <strong>not</strong> be hand-writing long Python scripts or complex DAX.</span>
+          </div>
+          <div class="bullet-row-item">
+            <span class="check">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M4 8.5 6.6 11 12 5" />
+              </svg>
+            </span>
+            <span>You learn how to ask AI for the code you need, then adapt and verify it.</span>
+          </div>
+          <div class="bullet-row-item">
+            <span class="check">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M4 8.5 6.6 11 12 5" />
+              </svg>
+            </span>
+            <span>You practise on the <strong>SkyLink Test Network</strong> – a small, safe API built just for this book.</span>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a href="early-access.html" class="cta-primary">Join the early access list</a>
+          <div class="cta-secondary">
+            or read more <a href="about.html">about the book</a> and the approach.
+          </div>
+        </div>
+
+        <div class="cta-secondary">
+          No prior Python or Power BI experience is required – just curiosity and a reporting problem you care about.
+        </div>
+      </section>
+
+      <aside class="side-card">
+        <div class="tag">
+          <span class="tag-dot"></span>
+          <span>What you will work with</span>
+        </div>
+        <div class="side-heading">Inside the 30 day plan</div>
+        <ul>
+          <li>Short daily prompts you can paste into your AI assistant.</li>
+          <li>A tiny Python toolbelt: requests, a few data transforms, and file output.</li>
+          <li>The <strong>SkyLink</strong> sandbox API for realistic but safe data.</li>
+          <li>A Power BI report that you grow step by step.</li>
+        </ul>
+
+        <div class="side-heading" style="margin-top:1.1rem;">What you will ship</div>
+        <ul>
+          <li>One automated workflow that fetches data from an API, cleans it, and feeds a report.</li>
+          <li>A reusable prompt library for AI that you can adapt to other reports.</li>
+          <li>A clearer sense of when you need a “real platform” and when a few scripts are enough.</li>
+        </ul>
+
+        <p style="margin-top:0.9rem;">
+          The <a href="skylink-api.html">SkyLink API docs</a> are public, so you can start inspecting
+          the sandbox even before the book is finished.
+        </p>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> Reporting Forge. SkyLink Test Network is a fictional sandbox.</div>
+      <div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
