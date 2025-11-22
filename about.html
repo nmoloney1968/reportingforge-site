@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Reporting Forge - About</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>About – Reporting Forge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Why Reporting Forge exists and what you will learn in the AI-first reporting book and sandbox.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-  <!-- Primary meta -->
-  <meta name="title" content="Reporting Forge - About" />
-  <meta name="description" content="Reporting Forge is a book and lab for people who want to move from fragile, manual reporting to a small, reliable Python and Power BI stack, with AI as a helper not a replacement." />
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://reportingforge.com/about.html" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      color-scheme: dark;
+      --bg: #020617;
+      --bg-card: rgba(15,23,42,0.97);
+      --border-subtle: #1e293b;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.1);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0b1120 0%, #020617 55%, #020617 100%);
-      color: #e5e7eb;
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 50%, #000000 100%);
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
     a {
-      color: #38bdf8;
+      color: var(--accent);
       text-decoration: none;
     }
 
@@ -47,462 +42,296 @@
       text-decoration: underline;
     }
 
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+
     header {
-      position: fixed;
-      top: 24px;
-      right: 32px;
-      z-index: 20;
-    }
-
-    header nav {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      font-size: 13px;
-      color: #e5e7eb;
-    }
-
-    header nav a {
-      padding: 4px 8px;
-      border-radius: 999px;
-      color: #cbd5f5;
-    }
-
-    header nav a.active {
-      background: rgba(56, 189, 248, 0.18);
-      color: #e5f3ff;
-    }
-
-    header nav a:hover {
-      background: rgba(148, 163, 184, 0.16);
-      text-decoration: none;
-    }
-
-    main.shell {
-      max-width: 1120px;
-      margin: 96px auto 56px;
-      padding: 0 20px 32px;
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-      gap: 32px;
-    }
-
-    section {
-      min-width: 0;
-    }
-
-    .right-panel {
-      min-width: 0;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.4rem;
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 0.75rem;
+      text-decoration: none;
     }
 
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #0369a1 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 700;
-      color: #0b1120;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      display: block;
     }
 
     .brand-text {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0.1rem;
     }
 
-    .brand-name {
-      font-size: 16px;
+    .brand-title {
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: #e5e7eb;
+      color: var(--text);
     }
 
-    .brand-tagline {
-      font-size: 13px;
-      color: #9ca3af;
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
-    .highlight-pill {
-      display: inline-flex;
+    nav {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 10px;
+      gap: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    nav a.active {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
-      font-size: 11px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .nav-cta:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,0.9);
+    }
+
+    .card {
+      border-radius: 22px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: var(--bg-card);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.8);
+      padding: 2.1rem 1.8rem 2.1rem;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: #cbd5f5;
-      margin-bottom: 18px;
-    }
-
-    .highlight-pill span:last-child {
-      opacity: 0.8;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
     }
 
     h1 {
-      font-size: 32px;
-      line-height: 1.15;
-      margin: 0 0 12px;
-      letter-spacing: 0.01em;
-      color: #f9fafb;
+      margin: 0 0 0.9rem;
+      font-size: 1.9rem;
     }
 
     h2 {
-      font-size: 18px;
-      margin: 22px 0 10px;
-      color: #e5e7eb;
-    }
-
-    .lead {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #d1d5db;
-      margin: 0 0 14px;
+      margin-top: 1.6rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.1rem;
     }
 
     p {
-      font-size: 14px;
+      margin: 0 0 0.7rem;
+      font-size: 0.94rem;
+      color: var(--text-muted);
       line-height: 1.7;
-      color: #cbd5f5;
-      margin: 0 0 10px;
     }
 
-    .bullet-list {
-      list-style: none;
-      padding: 0;
-      margin: 4px 0 6px;
+    ul {
+      margin: 0.4rem 0 0.8rem;
+      padding-left: 1.3rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
 
-    .bullet-list li {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #cbd5f5;
-      margin-bottom: 4px;
-    }
+    li { margin-bottom: 0.25rem; }
 
-    .bullet-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #38bdf8;
-      margin-top: 7px;
-      flex-shrink: 0;
-    }
-
-    .btn-primary {
+    .pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
+      gap: 0.4rem;
+      padding: 0.28rem 0.8rem;
       border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      background: radial-gradient(circle at top left, #38bdf8 0, #0ea5e9 40%, #0369a1 100%);
-      color: #0b1120;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.9);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
     }
 
-    .btn-primary:hover {
-      text-decoration: none;
-      filter: brightness(1.03);
-    }
-
-    .btn-primary .icon {
-      font-size: 11px;
-      opacity: 0.8;
-    }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      margin-bottom: 10px;
-    }
-
-    .cta-note {
-      font-size: 12px;
-      color: #9ca3af;
-    }
-
-    .cta-note a {
-      color: #d1fae5;
-    }
-
-    .footer {
-      margin-top: 24px;
-      font-size: 12px;
-      color: #9ca3af;
-    }
-
-    .footer a {
-      color: #a5b4fc;
-    }
-
-    .panel-card {
-      border-radius: 16px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
-      padding: 12px 14px;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
-      font-size: 13px;
-    }
-
-    .panel-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #cbd5f5;
-      margin-bottom: 8px;
-    }
-
-    .mini-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .chip {
-      font-size: 11px;
-      padding: 4px 8px;
+    .pill-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.25);
     }
 
-    .code-inline {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
-      font-size: 12px;
-      padding: 2px 5px;
-      border-radius: 6px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      color: #e5e7eb;
+    .highlight {
+      background: var(--accent-soft);
+      border-radius: 999px;
+      padding: 0.08rem 0.45rem;
+      color: #e0f2fe;
     }
 
-    @media (max-width: 960px) {
-      main.shell {
-        grid-template-columns: minmax(0, 1fr);
-        margin-top: 88px;
-      }
+    footer {
+      margin-top: 2.4rem;
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 720px) {
       header {
-        right: 16px;
+        flex-direction: column;
+        align-items: flex-start;
       }
-    }
 
-    @media (max-width: 640px) {
-      body {
-        background: #020617;
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.8rem;
       }
-      header {
-        top: 14px;
-        right: 12px;
-      }
-      header nav {
-        padding: 8px 10px;
-        gap: 6px;
-      }
-      main.shell {
-        margin-top: 80px;
-        padding: 0 14px 28px;
-      }
-      h1 {
-        font-size: 24px;
-      }
-      .brand-name {
-        font-size: 14px;
-      }
-      .brand-tagline {
-        font-size: 12px;
+
+      .card {
+        padding: 1.7rem 1.4rem 1.8rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about.html" class="active">About</a>
-      <a href="/docs.html">Docs</a>
-      <a href="/roadmap.html">Roadmap</a>
-      <a href="/changelog.html">Changelog</a>
-      <a href="/early-access.html">Early access</a>
-    </nav>
-  </header>
-
-  <main class="shell">
-    <section>
-      <div class="brand">
-        <div class="brand-mark">RF</div>
+  <div class="shell">
+    <header>
+      <a href="index.html" class="brand">
+        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
         <div class="brand-text">
-          <div class="brand-name">Reporting Forge</div>
-          <div class="brand-tagline">Reporting that feels boring in a good way.</div>
+          <div class="brand-title">Reporting Forge</div>
+          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
         </div>
+      </a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="about.html" class="active">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="early-access.html" class="nav-cta">Get early access</a>
+      </nav>
+    </header>
+
+    <main class="card">
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>30 day AI first workflow for real business reporting</span>
       </div>
 
-      <div class="highlight-pill">
-        <span>About</span>
-        <span>Why Reporting Forge exists</span>
-      </div>
-
-      <h1>Reporting that feels boring, in a good way.</h1>
-
-      <p class="lead">
-        Reporting Forge exists for people who are tired of fragile, manual reporting
-        and want to learn how to automate it without becoming full time engineers.
-        The goal is simple - help you move from copy and paste chaos to a calm,
-        repeatable reporting stack you understand.
-      </p>
-
+      <h1>Why Reporting Forge exists</h1>
       <p>
-        The first version of Reporting Forge is not a hosted platform. It is a book and
-        a set of labs that teach you how to build the last mile of reporting yourself
-        using stock Python, AI tools, and Power BI. You will work on real reports you
-        already ship and make them less painful, step by step.
+        Reporting Forge started from a simple frustration: smart people were spending hours each week
+        copying numbers out of exports, fixing the same errors over and over, and rebuilding the same
+        charts for every monthly meeting.
       </p>
-
       <p>
-        Under the hood, the book focuses on four things:
+        At the same time, AI tools became good enough to write real Python, call APIs, and even help
+        design Power BI reports - but most business owners and analysts had no safe way to practise
+        those skills on something realistic.
       </p>
 
-      <ul class="bullet-list">
-        <li>
-          <span class="bullet-dot"></span>
-          <span>Pulling data from the sources you already have - exports, APIs, and simple databases.</span>
-        </li>
-        <li>
-          <span class="bullet-dot"></span>
-          <span>Running checks and small pieces of logic in Python so errors show up early and clearly.</span>
-        </li>
-        <li>
-          <span class="bullet-dot"></span>
-          <span>Producing clean, well named output files that tools like Power BI and Excel can use.</span>
-        </li>
-        <li>
-          <span class="bullet-dot"></span>
-          <span>Scheduling those scripts so reports refresh without last minute manual work.</span>
-        </li>
+      <h2>The book, not a SaaS platform</h2>
+      <p>
+        Reporting Forge is first and foremost a <span class="highlight">practical book and learning
+        environment</span>, not another BI product to roll out across your company.
+      </p>
+      <ul>
+        <li>You will not be building a new platform or migrating dashboards.</li>
+        <li>You will be learning how to <strong>ask AI to do the heavy lifting</strong> in Python and Power BI.</li>
+        <li>By the end of the 30 day plan, you will have one real automated reporting workflow running end to end.</li>
       </ul>
 
+      <h2>AI does the hard parts, you steer</h2>
       <p>
-        AI shows up throughout as a helper. You will use an AI assistant to draft and debug code,
-        but the book still expects you to understand the decisions you are making. The aim is
-        not click and hope automation. It is to build a small reporting system you trust.
+        The core premise is simple: AI can write most of the code, but it still needs you to
+        describe the problem clearly and check that the answers make sense in your business.
+      </p>
+      <ul>
+        <li>You learn just enough about <strong>Python</strong> to understand what AI generates.</li>
+        <li>You learn how to call real <strong>APIs</strong> so your reports are fed from live data, not manual exports.</li>
+        <li>You learn how to shape that data into <strong>Power BI</strong> visuals and scheduled reports.</li>
+      </ul>
+
+      <h2>The SkyLink Test Network sandbox</h2>
+      <p>
+        To make all of this safe and realistic, the book includes access to the
+        <strong>SkyLink Test Network</strong> - a fictional but believable usage dataset exposed through
+        a tiny HTTP API that you control from your laptop.
+      </p>
+      <p>
+        The sandbox is public, read only, and intentionally small. It is only there to give you a
+        realistic target while you practise:
+      </p>
+      <ul>
+        <li>calling an HTTP API from Python,</li>
+        <li>passing the responses into AI and asking it to shape the code, and</li>
+        <li>pushing the cleaned results into Power BI for visualisation.</li>
+      </ul>
+      <p>
+        You can read more about the sandbox endpoints on the
+        <a href="skylink-api.html">SkyLink API reference page</a>.
       </p>
 
-      <div class="footer">
-        Built by someone who has spent years wiring up operational reports for mines, projects,
-        and finance teams, and who wants that work to feel calm and predictable instead of
-        last minute and stressful.
-        <br />
-        This book is the distillation of those lessons into a path you can follow on evenings
-        and weekends without a dedicated data team.
-        <br />
-        <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
-      </div>
-    </section>
+      <h2>Who the book is for</h2>
+      <p>
+        The book is written for people who <strong>own a reporting problem</strong> but do not want to become
+        full-time developers:
+      </p>
+      <ul>
+        <li>Business owners and managers who live in spreadsheets and slide decks.</li>
+        <li>Analysts who are curious about Python and APIs but do not know where to start.</li>
+        <li>Team leads who need a first working automated workflow before scaling anything bigger.</li>
+      </ul>
 
-    <aside class="right-panel">
-      <div class="panel-card">
-        <div class="mini-label">What this project is</div>
-        <p>
-          Reporting Forge is a learning environment and lab for the practical last mile of reporting:
-          pulling data, running checks, shaping outputs, and delivering them to the people who need them.
-          It is light enough that most logic lives in normal Python modules and existing tools.
-        </p>
-      </div>
+      <h2>What you will walk away with</h2>
+      <p>By the end of the 30 day plan you will have:</p>
+      <ul>
+        <li>One real reporting workflow automated from raw data to Power BI.</li>
+        <li>A reusable prompt library for AI that you can adapt to other reports.</li>
+        <li>A working understanding of how APIs fit into your day to day reporting work.</li>
+      </ul>
+      <p>
+        After that, you can keep scaling with your own ideas or bring in more formal tools and
+        platforms – but you will no longer be guessing what “automation” should look like for your
+        team.
+      </p>
+    </main>
 
-      <div class="panel-card">
-        <div class="mini-label">What this project is not</div>
-        <p>
-          It is not another dashboard tool or a full data platform. You do not rebuild your warehouse
-          or migrate every report. You start with a few important recurring reports and make them
-          more reliable using tools you can maintain yourself.
-        </p>
-      </div>
+    <footer>
+      <div>© <span id="year"></span> Reporting Forge. SkyLink Test Network is a fictional sandbox.</div>
+      <div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+    </footer>
+  </div>
 
-      <div class="panel-card">
-        <div class="mini-label">Who it is for</div>
-        <p>Analysts, operations leaders, and domain experts who:</p>
-        <ul class="bullet-list">
-          <li>
-            <span class="bullet-dot"></span>
-            <span>Ship recurring reports or dashboards today.</span>
-          </li>
-          <li>
-            <span class="bullet-dot"></span>
-            <span>Are willing to write some Python with help from AI, even if they would not call themselves developers.</span>
-          </li>
-          <li>
-            <span class="bullet-dot"></span>
-            <span>Care more about dependable outputs than about shiny stacks.</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="panel-card">
-        <div class="mini-label">Why a book and lab first</div>
-        <p>
-          Before any hosted platform exists, it is important to prove that the patterns are teachable
-          and useful. The book and lab are the best way to do that. They also give you real skills
-          even if you never use a future hosted version of Reporting Forge.
-        </p>
-      </div>
-
-      <div class="panel-card">
-        <div class="mini-label">Stay in the loop</div>
-        <p>
-          If you want to follow progress or try early drafts of the book and exercises, email
-          <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>
-          with a short note about your current reporting work and what you hope to improve.
-        </p>
-      </div>
-    </aside>
-  </main>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
