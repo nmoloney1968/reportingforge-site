@@ -205,9 +205,9 @@
 
       <h2>Base URL</h2>
       <p>
-        All examples in the book use the following base URL (replace <code>yourdomain.com</code> with the real domain where the site is hosted):
+        All examples in the book use the following base URL (replace <code>reportingforge.com</code> with the real domain where the site is hosted):
       </p>
-      <pre><code>https://yourdomain.com/api/skylink/</code></pre>
+      <pre><code>https://reportingforge.com/api/skylink/</code></pre>
 
       <p>Endpoints are simple static JSON files. Treat them exactly as you would a normal HTTP GET API.</p>
 
@@ -215,7 +215,7 @@
         <div class="endpoint-tag"><span>GET</span> <code>/sites.json</code></div>
         <p>Returns the list of SkyLink test sites and their basic attributes.</p>
         <p><strong>Example URL:</strong></p>
-        <pre><code>https://yourdomain.com/api/skylink/sites.json</code></pre>
+        <pre><code>https://reportingforge.com/api/skylink/sites.json</code></pre>
         <p><strong>Useful for:</strong> joining site metadata onto usage and alerts in your scripts and reports.</p>
       </div>
 
@@ -223,7 +223,7 @@
         <div class="endpoint-tag"><span>GET</span> <code>/usage-daily.json</code></div>
         <p>Returns a small window of daily usage data for each test site.</p>
         <p><strong>Example URL:</strong></p>
-        <pre><code>https://yourdomain.com/api/skylink/usage-daily.json</code></pre>
+        <pre><code>https://reportingforge.com/api/skylink/usage-daily.json</code></pre>
         <p>Fields include date, site id, total usage in GB, and a split between peak and off peak.</p>
       </div>
 
@@ -231,14 +231,14 @@
         <div class="endpoint-tag"><span>GET</span> <code>/alerts.json</code></div>
         <p>Returns recent alerts for the test sites (for example, usage trending high or a site being suspended).</p>
         <p><strong>Example URL:</strong></p>
-        <pre><code>https://yourdomain.com/api/skylink/alerts.json</code></pre>
+        <pre><code>https://reportingforge.com/api/skylink/alerts.json</code></pre>
       </div>
 
       <h2>Example Python snippet</h2>
       <p>In the book you will use AI to generate code like this, but it is helpful to see the shape of the calls:</p>
       <pre><code>import requests
 
-BASE_URL = "https://yourdomain.com/api/skylink"
+BASE_URL = "https://reportingforge.com/api/skylink"
 
 resp = requests.get(f"{BASE_URL}/sites.json")
 resp.raise_for_status()
