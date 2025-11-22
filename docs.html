@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Reporting Forge - Docs</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Docs – Reporting Forge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Technical notes for the Reporting Forge book, SkyLink sandbox, and example workflows.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-  <!-- Primary meta -->
-  <meta name="title" content="Reporting Forge - Docs" />
-  <meta name="description" content="Technical overview of the Reporting Forge lab - what you will build with Python, AI tools, and Power BI as you move from messy exports to a simple, repeatable reporting workflow." />
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://reportingforge.com/docs.html" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      color-scheme: dark;
+      --bg: #020617;
+      --bg-card: rgba(15,23,42,0.97);
+      --border-subtle: #1e293b;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.1);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0b1120 0%, #020617 55%, #020617 100%);
-      color: #e5e7eb;
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 50%, #000000 100%);
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
     a {
-      color: #38bdf8;
+      color: var(--accent);
       text-decoration: none;
     }
 
@@ -47,501 +42,287 @@
       text-decoration: underline;
     }
 
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+
     header {
-      position: fixed;
-      top: 24px;
-      right: 32px;
-      z-index: 20;
-    }
-
-    header nav {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      font-size: 13px;
-      color: #e5e7eb;
-    }
-
-    header nav a {
-      padding: 4px 8px;
-      border-radius: 999px;
-      color: #cbd5f5;
-    }
-
-    header nav a.active {
-      background: rgba(56, 189, 248, 0.18);
-      color: #e5f3ff;
-    }
-
-    header nav a:hover {
-      background: rgba(148, 163, 184, 0.16);
-      text-decoration: none;
-    }
-
-    main.shell {
-      max-width: 1120px;
-      margin: 96px auto 56px;
-      padding: 0 20px 32px;
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-      gap: 32px;
-    }
-
-    section {
-      min-width: 0;
-    }
-
-    .right-panel {
-      min-width: 0;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.4rem;
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 0.75rem;
+      text-decoration: none;
     }
 
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #0369a1 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 700;
-      color: #0b1120;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      display: block;
     }
 
     .brand-text {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0.1rem;
     }
 
-    .brand-name {
-      font-size: 16px;
+    .brand-title {
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: #e5e7eb;
+      color: var(--text);
     }
 
-    .brand-tagline {
-      font-size: 13px;
-      color: #9ca3af;
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
-    .highlight-pill {
-      display: inline-flex;
+    nav {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 10px;
+      gap: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    nav a.active {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
-      font-size: 11px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .nav-cta:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,0.9);
+    }
+
+    .card {
+      border-radius: 22px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: var(--bg-card);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.8);
+      padding: 2.1rem 1.8rem 2.1rem;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: #cbd5f5;
-      margin-bottom: 18px;
-    }
-
-    .highlight-pill span:last-child {
-      opacity: 0.8;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
     }
 
     h1 {
-      font-size: 32px;
-      line-height: 1.15;
-      margin: 0 0 12px;
-      letter-spacing: 0.01em;
-      color: #f9fafb;
+      margin: 0 0 0.8rem;
+      font-size: 1.8rem;
     }
 
     h2 {
-      font-size: 18px;
-      margin: 22px 0 10px;
-      color: #e5e7eb;
-    }
-
-    .lead {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #d1d5db;
-      margin: 0 0 14px;
+      margin-top: 1.5rem;
+      margin-bottom: 0.35rem;
+      font-size: 1.08rem;
     }
 
     p {
-      font-size: 14px;
+      margin: 0 0 0.7rem;
+      font-size: 0.94rem;
+      color: var(--text-muted);
       line-height: 1.7;
-      color: #cbd5f5;
-      margin: 0 0 10px;
     }
 
-    .bullet-list {
-      list-style: none;
-      padding: 0;
-      margin: 4px 0 6px;
+    ul {
+      margin: 0.4rem 0 0.8rem;
+      padding-left: 1.3rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
 
-    .bullet-list li {
+    li { margin-bottom: 0.25rem; }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.85rem;
+      padding: 0.1rem 0.3rem;
+      border-radius: 4px;
+      background: #020617;
+      border: 1px solid rgba(30,64,175,0.6);
+      color: #e0f2fe;
+    }
+
+    pre {
+      margin: 0.5rem 0 0.8rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 8px;
+      background: #020617;
+      border: 1px solid rgba(30,64,175,0.6);
+      overflow-x: auto;
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      margin-top: 2.4rem;
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
       display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #cbd5f5;
-      margin-bottom: 4px;
-    }
-
-    .bullet-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #38bdf8;
-      margin-top: 7px;
-      flex-shrink: 0;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      background: radial-gradient(circle at top left, #38bdf8 0, #0ea5e9 40%, #0369a1 100%);
-      color: #0b1120;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.85);
-    }
-
-    .btn-primary:hover {
-      text-decoration: none;
-      filter: brightness(1.03);
-    }
-
-    .btn-primary .icon {
-      font-size: 11px;
-      opacity: 0.8;
-    }
-
-    .cta-row {
-      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
       flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      margin-bottom: 10px;
     }
 
-    .cta-note {
-      font-size: 12px;
-      color: #9ca3af;
-    }
-
-    .cta-note a {
-      color: #d1fae5;
-    }
-
-    .footer {
-      margin-top: 24px;
-      font-size: 12px;
-      color: #9ca3af;
-    }
-
-    .footer a {
-      color: #a5b4fc;
-    }
-
-    .panel-card {
-      border-radius: 16px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
-      padding: 12px 14px;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
-      font-size: 13px;
-    }
-
-    .panel-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #cbd5f5;
-      margin-bottom: 8px;
-    }
-
-    .mini-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .chip {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-    }
-
-    .code-inline {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
-      font-size: 12px;
-      padding: 2px 5px;
-      border-radius: 6px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      color: #e5e7eb;
-    }
-
-    @media (max-width: 960px) {
-      main.shell {
-        grid-template-columns: minmax(0, 1fr);
-        margin-top: 88px;
-      }
+    @media (max-width: 720px) {
       header {
-        right: 16px;
+        flex-direction: column;
+        align-items: flex-start;
       }
-    }
 
-    @media (max-width: 640px) {
-      body {
-        background: #020617;
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.8rem;
       }
-      header {
-        top: 14px;
-        right: 12px;
-      }
-      header nav {
-        padding: 8px 10px;
-        gap: 6px;
-      }
-      main.shell {
-        margin-top: 80px;
-        padding: 0 14px 28px;
-      }
-      h1 {
-        font-size: 24px;
-      }
-      .brand-name {
-        font-size: 14px;
-      }
-      .brand-tagline {
-        font-size: 12px;
+
+      .card {
+        padding: 1.7rem 1.4rem 1.8rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/docs.html" class="active">Docs</a>
-      <a href="/roadmap.html">Roadmap</a>
-      <a href="/changelog.html">Changelog</a>
-      <a href="/early-access.html">Early access</a>
-    </nav>
-  </header>
-
-  <main class="shell">
-    <section>
-      <div class="brand">
-        <div class="brand-mark">RF</div>
+  <div class="shell">
+    <header>
+      <a href="index.html" class="brand">
+        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
         <div class="brand-text">
-          <div class="brand-name">Reporting Forge</div>
-          <div class="brand-tagline">From messy inputs to repeatable workflows.</div>
+          <div class="brand-title">Reporting Forge</div>
+          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
         </div>
-      </div>
+      </a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="about.html">About</a>
+        <a href="docs.html" class="active">Docs</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="early-access.html" class="nav-cta">Get early access</a>
+      </nav>
+    </header>
 
-      <div class="highlight-pill">
-        <span>Docs</span>
-        <span>What you will build technically</span>
-      </div>
-
-      <h1>What you will build in the Reporting Forge lab.</h1>
-
-      <p class="lead">
-        The lab is designed to take you from a single messy export to a small, repeatable workflow:
-        a Python script that cleans your data, a Power BI report that visualises it, and a simple way
-        to run the whole thing on a schedule.
-      </p>
-
-      <h2>End state: a small reporting stack you own</h2>
-      <ul class="bullet-list">
-        <li>
-          <span class="bullet-dot"></span>
-          <span>A Python script that pulls data from an export, API, or simple database.</span>
-        </li>
-        <li>
-          <span class="bullet-dot"></span>
-          <span>Clear, reusable functions for cleaning, enriching, and validating that data.</span>
-        </li>
-        <li>
-          <span class="bullet-dot"></span>
-          <span>A stable output file that Power BI can read without surprises.</span>
-        </li>
-        <li>
-          <span class="bullet-dot"></span>
-          <span>A basic schedule - for example Windows Task Scheduler - so your report refreshes automatically.</span>
-        </li>
-      </ul>
-
-      <h2>Example flow</h2>
+    <main class="card">
+      <div class="eyebrow">Technical notes</div>
+      <h1>How the examples are wired together</h1>
       <p>
-        A typical workflow in the book might look like this:
+        The book is designed so that you can follow the examples on a modest laptop with minimal setup.
+        AI generates most of the code, and you focus on understanding the flow and adapting it to your
+        own reporting work.
       </p>
 
-      <pre class="code-inline" style="display:block; white-space:pre; margin-top:6px; padding:12px 14px; background:#F3F4F6; border-radius:8px; font-size:13px; overflow-x:auto; color:#020617;">
-# 1. Pull data
-fetch_export("usage_{{month}}.csv")        # from an SFTP drop or HTTP endpoint
-load_reference_table("site_metadata.csv")  # local or shared drive
-
-# 2. Clean and validate
-df = load_usage()
-df = normalise_columns(df)
-df = apply_business_rules(df)
-assert_no_negative_values(df, ["total_gb", "billable_gb"])
-
-# 3. Enrich
-df = join_site_metadata(df)
-df = tag_alerts_for_thresholds(df)
-
-# 4. Write outputs for reporting
-write_parquet(df, "prepared/usage_{{month}}.parquet")
-write_csv(df, "prepared/usage_{{month}}.csv")
-
-# 5. Power BI points at /prepared and refreshes on schedule
-      </pre>
-
-      <p>
-        Early chapters keep things even simpler and run everything manually from IDLE. As you progress
-        you will introduce basic structure so your scripts stay readable and easy to change.
-      </p>
-
-      <h2>Configuration and structure</h2>
-      <p>
-        Instead of inventing a heavy configuration language, the lab encourages you to keep most logic
-        in normal Python code. A light configuration file might exist just to describe sources and
-        destinations in one place, while keeping actual rules in code:
-      </p>
-
-      <pre class="code-inline" style="display:block; white-space:pre; margin-top:6px; padding:12px 14px; background:#F3F4F6; border-radius:8px; font-size:13px; overflow-x:auto; color:#020617;">
-# monthly_usage.yaml (simple example)
-
-name: monthly_usage_report
-
-sources:
-  - id: usage_export
-    type: file.csv
-    path: "inputs/usage_{{month}}.csv"
-
-  - id: sites
-    type: file.csv
-    path: "inputs/site_metadata.csv"
-
-outputs:
-  - id: prepared_usage
-    type: file.parquet
-    path: "prepared/usage_{{month}}.parquet"
-
-checks:
-  - name: no_negative_values
-    fields: ["total_gb", "billable_gb"]
-    severity: error
-      </pre>
-
-      <p>
-        The book walks through how to read this configuration from Python, run the checks, and
-        produce outputs that downstream tools can rely on.
-      </p>
-
-      <h2>Where AI fits</h2>
-      <p>
-        Throughout the labs you will use an AI assistant to help with:
-      </p>
-
-      <ul class="bullet-list">
-        <li><span class="bullet-dot"></span> <span>Drafting small functions or refactors.</span></li>
-        <li><span class="bullet-dot"></span> <span>Explaining error messages and suggesting fixes.</span></li>
-        <li><span class="bullet-dot"></span> <span>Thinking through edge cases and test ideas.</span></li>
+      <h2>What you will be using</h2>
+      <ul>
+        <li><strong>Python 3</strong> – installed locally, using IDLE or another simple editor.</li>
+        <li><strong>Requests</strong> – a small HTTP client library used in the API examples.</li>
+        <li><strong>Power BI Desktop</strong> – for shaping data and building visuals.</li>
+        <li>The <strong>SkyLink Test Network</strong> sandbox API – a tiny, read-only JSON API.</li>
       </ul>
 
       <p>
-        You still review and own every line of code. The aim is to move faster without giving up control
-        of your reporting logic.
+        You do not need to memorise APIs, libraries, or syntax. The book gives you short prompts you
+        can paste into your AI assistant (including all of the context it needs) so that it can write
+        the first draft of each script or measure.
       </p>
 
-      <div class="footer">
-        These docs will grow as the book and exercises solidify. Early readers will help refine the
-        examples so they stay realistic and lightweight.
-        <br />
-        <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
-      </div>
-    </section>
+      <h2>SkyLink sandbox API</h2>
+      <p>
+        All of the API examples use the same base URL:
+      </p>
+      <pre><code>https://reportingforge.com/api/skylink/</code></pre>
+      <p>
+        Endpoints are documented in more detail on the
+        <a href="skylink-api.html">SkyLink API reference page</a>, but in practice you will mostly
+        be calling:
+      </p>
+      <ul>
+        <li><code>sites.json</code> – the list of test sites.</li>
+        <li><code>usage-daily.json</code> – daily usage per site.</li>
+        <li><code>alerts.json</code> – example alerts and notifications.</li>
+      </ul>
 
-    <aside class="right-panel">
-      <div class="panel-card">
-        <div class="mini-label">Planned building blocks</div>
-        <ul class="bullet-list">
-          <li><span class="bullet-dot"></span> <span>Simple file and API connectors.</span></li>
-          <li><span class="bullet-dot"></span> <span>Reusable data cleaning helpers.</span></li>
-          <li><span class="bullet-dot"></span> <span>Basic validation and logging patterns.</span></li>
-          <li><span class="bullet-dot"></span> <span>Patterns for feeding Power BI or Excel clean data.</span></li>
-          <li><span class="bullet-dot"></span> <span>Gentle intros to using AI tools safely with Python.</span></li>
-        </ul>
-      </div>
+      <h2>Typical Python pattern (for AI to generate)</h2>
+      <p>
+        This is the basic shape of the code you will use. In the book, you will ask AI to generate
+        and then refine it, rather than typing it all by hand:
+      </p>
+      <pre><code>import requests
 
-      <div class="panel-card">
-        <div class="mini-label">Environment concept</div>
-        <p>
-          The book uses the idea of environments (for example <span class="code-inline">dev</span> and
-          <span class="code-inline">prod</span>) mainly as a way to keep your experiments separate
-          from anything that stakeholders see. In practice this can be as simple as different folders
-          or different Windows user accounts.
-        </p>
-      </div>
+BASE_URL = "https://reportingforge.com/api/skylink"
 
-      <div class="panel-card">
-        <div class="mini-label">Feedback welcome</div>
-        <p>
-          If you have a reporting setup that seems like a good fit and want to influence the later
-          chapters, send a short description to
-          <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>.
-        </p>
-      </div>
-    </aside>
-  </main>
+resp = requests.get(f"{BASE_URL}/usage-daily.json", timeout=30)
+resp.raise_for_status()
+
+usage = resp.json()["usage"]
+
+# From here the book walks through:
+# - Converting this list to a DataFrame
+# - Cleaning / grouping the data
+# - Writing a CSV or pushing to Power BI</code></pre>
+
+      <h2>Adapting the examples to your own APIs</h2>
+      <p>
+        One of the goals of the book is that you can apply the same patterns to the APIs your
+        organisation already uses: finance systems, CRM, project tools, or analytics platforms.
+      </p>
+      <p>
+        Each time we use the SkyLink sandbox, the book also includes a short sidebar that shows you:
+      </p>
+      <ul>
+        <li>where to find API documentation on a typical SaaS platform,</li>
+        <li>which pieces of that documentation to paste into AI, and</li>
+        <li>how to plug your own API keys or URLs into the generated code.</li>
+      </ul>
+
+      <h2>Scheduling and automation</h2>
+      <p>
+        The first edition focuses on getting <strong>one complete workflow</strong> running reliably from
+        your laptop. Toward the end of the book, we look at how to take that same script and:
+      </p>
+      <ul>
+        <li>run it on a simple schedule using your operating system, and</li>
+        <li>prepare it for a later move into a more formal environment, if you need one.</li>
+      </ul>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> Reporting Forge. SkyLink Test Network is a fictional sandbox.</div>
+      <div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

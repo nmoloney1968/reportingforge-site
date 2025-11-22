@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Reporting Forge - Roadmap</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Roadmap – Reporting Forge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Roadmap for the Reporting Forge book, SkyLink sandbox, and companion resources.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-  <!-- Primary meta -->
-  <meta name="title" content="Reporting Forge - Roadmap" />
-  <meta name="description" content="High level roadmap for Reporting Forge as it moves from a book and lab for learning reporting automation into a small, opinionated platform for running those workflows." />
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://reportingforge.com/roadmap.html" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="shortcut icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      color-scheme: dark;
+      --bg: #020617;
+      --bg-card: rgba(15,23,42,0.97);
+      --border-subtle: #1e293b;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.1);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0b1120 0%, #020617 55%, #020617 100%);
-      color: #e5e7eb;
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 50%, #000000 100%);
+      color: var(--text);
       -webkit-font-smoothing: antialiased;
     }
 
     a {
-      color: #38bdf8;
+      color: var(--accent);
       text-decoration: none;
     }
 
@@ -47,412 +42,238 @@
       text-decoration: underline;
     }
 
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+
     header {
-      position: fixed;
-      top: 24px;
-      right: 32px;
-      z-index: 20;
-    }
-
-    header nav {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      font-size: 13px;
-      color: #e5e7eb;
-    }
-
-    header nav a {
-      padding: 4px 8px;
-      border-radius: 999px;
-      color: #cbd5f5;
-    }
-
-    header nav a.active {
-      background: rgba(56, 189, 248, 0.18);
-      color: #e5f3ff;
-    }
-
-    header nav a:hover {
-      background: rgba(148, 163, 184, 0.16);
-      text-decoration: none;
-    }
-
-    main.shell {
-      max-width: 1120px;
-      margin: 96px auto 56px;
-      padding: 0 20px 32px;
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-      gap: 32px;
-    }
-
-    section {
-      min-width: 0;
-    }
-
-    .right-panel {
-      min-width: 0;
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.4rem;
     }
 
     .brand {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
+      gap: 0.75rem;
+      text-decoration: none;
     }
 
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #e0f2fe 0, #38bdf8 35%, #0ea5e9 70%, #0369a1 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      font-weight: 700;
-      color: #0b1120;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.7);
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      display: block;
     }
 
     .brand-text {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0.1rem;
     }
 
-    .brand-name {
-      font-size: 16px;
+    .brand-title {
+      font-size: 1rem;
       font-weight: 600;
       letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: #e5e7eb;
+      color: var(--text);
     }
 
-    .brand-tagline {
-      font-size: 13px;
-      color: #9ca3af;
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
 
-    .highlight-pill {
-      display: inline-flex;
+    nav {
+      display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 10px;
+      gap: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    nav a.active {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.8);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.7);
-      font-size: 11px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .nav-cta:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,0.9);
+    }
+
+    .card {
+      border-radius: 22px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: var(--bg-card);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.8);
+      padding: 2.1rem 1.8rem 2.1rem;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: #cbd5f5;
-      margin-bottom: 18px;
-    }
-
-    .highlight-pill span:last-child {
-      opacity: 0.8;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
     }
 
     h1 {
-      font-size: 32px;
-      line-height: 1.15;
-      margin: 0 0 12px;
-      letter-spacing: 0.01em;
-      color: #f9fafb;
+      margin: 0 0 0.8rem;
+      font-size: 1.8rem;
     }
 
     h2 {
-      font-size: 18px;
-      margin: 22px 0 10px;
-      color: #e5e7eb;
-    }
-
-    .lead {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #d1d5db;
-      margin: 0 0 14px;
+      margin-top: 1.4rem;
+      margin-bottom: 0.3rem;
+      font-size: 1.05rem;
     }
 
     p {
-      font-size: 14px;
+      margin: 0 0 0.7rem;
+      font-size: 0.94rem;
+      color: var(--text-muted);
       line-height: 1.7;
-      color: #cbd5f5;
-      margin: 0 0 10px;
     }
 
-    .bullet-list {
-      list-style: none;
-      padding: 0;
-      margin: 4px 0 6px;
+    ul {
+      margin: 0.2rem 0 0.8rem;
+      padding-left: 1.3rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
     }
 
-    .bullet-list li {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      font-size: 14px;
-      line-height: 1.6;
-      color: #cbd5f5;
-      margin-bottom: 4px;
-    }
+    li { margin-bottom: 0.25rem; }
 
-    .bullet-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: #38bdf8;
-      margin-top: 7px;
-      flex-shrink: 0;
-    }
-
-    .btn-primary {
+    .phase-label {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
+      gap: 0.4rem;
+      padding: 0.22rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      background: radial-gradient(circle at top left, #38bdf8 0, #0ea5e9 40%, #0369a1 100%);
-      color: #0b1120;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148,163,184,0.7);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.15rem;
     }
 
-    .btn-primary:hover {
-      text-decoration: none;
-      filter: brightness(1.03);
-    }
-
-    .btn-primary .icon {
-      font-size: 11px;
-      opacity: 0.8;
-    }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-top: 16px;
-      margin-bottom: 10px;
-    }
-
-    .cta-note {
-      font-size: 12px;
-      color: #9ca3af;
-    }
-
-    .cta-note a {
-      color: #d1fae5;
-    }
-
-    .footer {
-      margin-top: 24px;
-      font-size: 12px;
-      color: #9ca3af;
-    }
-
-    .footer a {
-      color: #a5b4fc;
-    }
-
-    .panel-card {
-      border-radius: 16px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.94));
-      padding: 12px 14px;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
-      font-size: 13px;
-    }
-
-    .panel-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #cbd5f5;
-      margin-bottom: 8px;
-    }
-
-    .mini-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-
-    .chip {
-      font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.9);
+    .phase-label span {
+      font-weight: 500;
       color: #e5e7eb;
     }
 
-    .code-inline {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
-      font-size: 12px;
-      padding: 2px 5px;
-      border-radius: 6px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(75, 85, 99, 0.9);
-      color: #e5e7eb;
+    footer {
+      margin-top: 2.4rem;
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
     }
 
-    @media (max-width: 960px) {
-      main.shell {
-        grid-template-columns: minmax(0, 1fr);
-        margin-top: 88px;
-      }
+    @media (max-width: 720px) {
       header {
-        right: 16px;
+        flex-direction: column;
+        align-items: flex-start;
       }
-    }
 
-    @media (max-width: 640px) {
-      body {
-        background: #020617;
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.8rem;
       }
-      header {
-        top: 14px;
-        right: 12px;
-      }
-      header nav {
-        padding: 8px 10px;
-        gap: 6px;
-      }
-      main.shell {
-        margin-top: 80px;
-        padding: 0 14px 28px;
-      }
-      h1 {
-        font-size: 24px;
-      }
-      .brand-name {
-        font-size: 14px;
-      }
-      .brand-tagline {
-        font-size: 12px;
+
+      .card {
+        padding: 1.7rem 1.4rem 1.8rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/docs.html">Docs</a>
-      <a href="/roadmap.html" class="active">Roadmap</a>
-      <a href="/changelog.html">Changelog</a>
-      <a href="/early-access.html">Early access</a>
-    </nav>
-  </header>
-
-  <main class="shell">
-    <section>
-      <div class="brand">
-        <div class="brand-mark">RF</div>
+  <div class="shell">
+    <header>
+      <a href="index.html" class="brand">
+        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
         <div class="brand-text">
-          <div class="brand-name">Reporting Forge</div>
-          <div class="brand-tagline">From learning path to light platform.</div>
+          <div class="brand-title">Reporting Forge</div>
+          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
         </div>
-      </div>
+      </a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="roadmap.html" class="active">Roadmap</a>
+        <a href="early-access.html" class="nav-cta">Get early access</a>
+      </nav>
+    </header>
 
-      <div class="highlight-pill">
-        <span>Roadmap</span>
-        <span>Where the project is heading</span>
-      </div>
-
-      <h1>Roadmap from book to small automation platform.</h1>
-
-      <p class="lead">
-        The first version of Reporting Forge is a book and lab. Future versions may wrap the same
-        patterns into a small, opinionated platform for running reporting workflows. This page
-        sketches that path so expectations stay clear.
-      </p>
-
-      <h2>Phase 1 - Book and lab (now)</h2>
-      <ul class="bullet-list">
-        <li><span class="bullet-dot"></span> <span>Design the 30 day curriculum from manual spreadsheets to Python and Power BI.</span></li>
-        <li><span class="bullet-dot"></span> <span>Ship example scripts and sample data that run on a normal Windows laptop.</span></li>
-        <li><span class="bullet-dot"></span> <span>Test the labs with early readers and refine based on real reporting pain.</span></li>
-      </ul>
-
-      <h2>Phase 2 - Sharper patterns and shared helpers</h2>
-      <ul class="bullet-list">
-        <li><span class="bullet-dot"></span> <span>Extract common helpers for validation, logging, and scheduling from the labs.</span></li>
-        <li><span class="bullet-dot"></span> <span>Publish small, reusable Python modules that work with or without any future platform.</span></li>
-        <li><span class="bullet-dot"></span> <span>Collect example workflows from readers in different industries.</span></li>
-      </ul>
-
-      <h2>Phase 3 - Light orchestration layer (exploratory)</h2>
-      <ul class="bullet-list">
-        <li><span class="bullet-dot"></span> <span>Explore a minimal way to describe and run workflows built in the lab.</span></li>
-        <li><span class="bullet-dot"></span> <span>Keep the core principle that you own your scripts and data; the platform only orchestrates.</span></li>
-        <li><span class="bullet-dot"></span> <span>Decide whether this should be open source, hosted, or both.</span></li>
-      </ul>
-
+    <main class="card">
+      <div class="eyebrow">Roadmap</div>
+      <h1>Where Reporting Forge is heading</h1>
       <p>
-        Any future platform work will stay grounded in the same goal as the book: make reporting
-        feel boring and dependable instead of fragile and stressful.
+        Reporting Forge is intentionally small: one book, one sandbox, and a focused set of examples
+        that help you automate a real workflow. The roadmap is about deepening that, not turning it
+        into a sprawling platform.
       </p>
 
-      <div class="footer">
-        Roadmaps change as reality and feedback show up. This page is a living document rather
-        than a fixed promise.
-        <br />
-        <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a>
-      </div>
-    </section>
+      <div class="phase-label"><span>Phase 1</span> – First edition and sandbox</div>
+      <h2>Book launch and SkyLink Test Network</h2>
+      <ul>
+        <li>Release of the first digital edition of the 30 day AI-first reporting book.</li>
+        <li>Public SkyLink Test Network sandbox API at <code>https://reportingforge.com/api/skylink/</code>.</li>
+        <li>Companion resources: prompt library, worksheets, and basic checklists.</li>
+      </ul>
 
-    <aside class="right-panel">
-      <div class="panel-card">
-        <div class="mini-label">Guiding principles</div>
-        <ul class="bullet-list">
-          <li><span class="bullet-dot"></span> <span>Teach patterns first, build tooling later.</span></li>
-          <li><span class="bullet-dot"></span> <span>Stay small and understandable rather than clever and opaque.</span></li>
-          <li><span class="bullet-dot"></span> <span>Let people keep the tools they already like.</span></li>
-          <li><span class="bullet-dot"></span> <span>Use AI as a helper, not a replacement for judgment.</span></li>
-        </ul>
-      </div>
+      <div class="phase-label"><span>Phase 2</span> – Bundles and deeper examples</div>
+      <h2>Optional upgrade paths</h2>
+      <ul>
+        <li>Extra example workflows for common scenarios (board packs, operational KPIs, usage analytics).</li>
+        <li>Power BI template files that mirror the main examples from the book.</li>
+        <li>Extended SkyLink datasets for teams who want more scale for testing.</li>
+      </ul>
 
-      <div class="panel-card">
-        <div class="mini-label">How to influence the roadmap</div>
-        <p>
-          If you have strong reporting pain and are willing to share examples, that feedback will
-          have more impact than any abstract feature request. Email
-          <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>
-          with a short summary of your world.
-        </p>
-      </div>
-    </aside>
-  </main>
-</body>
-</html>
+      <div class="phase-label"><span>Phase 3</span> – Teams and shared patterns</div>
+      <h2>Helping small teams standardise reporting</h2>
+      <ul>
+        <li>Guides for adapting the prompts and patterns to team environments.</li>
+        <li>Suggested structures for internal “reporting playbooks” that combine AI, Python, APIs, and BI.</li>
+        <li>Selective case studies where teams are willing to share anonymised workflows.</li>
+      </ul>
+
+      <div class="phase-label"><span>Out of scope</span></div>
+      <h2>What Reporting Forge is not planning to become</h2>
+      <ul>
+        <li>Another hosted BI platform or dashboard product.</li>
+        <li>A fully-managed “black box” automation service.</li>
+        <li>A replacement for your existing data warehouse or analytics stack.</li>
+      </ul>
+      <p>
+        The goal is to stay close to the original promise: teach people with real reporting problems
+        how to use AI and simple tools to automate one real workflow - and then repeat that success
+        in other parts of the business.
+      </p>
+    </main>
+
+    <footer>
+      <div>© <span id
