@@ -2,33 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Reporting Forge - AI First Reporting For Python, APIs, and Power BI</title>
+  <title>Reporting Forge – AI first automation for Python, APIs, and Power BI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A 30 day, AI first workflow for Python, APIs, and Power BI where AI does the heavy lifting and you stay in control.">
+  <meta name="description" content="30 day AI first workflow to automate real business reporting with Python, APIs, and Power BI. AI writes most of the code – you steer.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #020617;
-      --bg-elevated: #020617;
-      --bg-soft: #020617;
+      --bg-card: rgba(15,23,42,0.97);
       --border-subtle: #1e293b;
       --text: #e5e7eb;
       --text-muted: #9ca3af;
       --accent: #38bdf8;
-      --accent-soft: rgba(56,189,248,0.15);
-      --accent-strong: #0ea5e9;
-      --danger: #f97373;
-      --radius-lg: 18px;
-      --shadow-soft: 0 22px 50px rgba(15,23,42,0.6);
-      --shadow-subtle: 0 10px 30px rgba(15,23,42,0.5);
+      --accent-soft: rgba(56,189,248,0.1);
+      --good: #22c55e;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -48,16 +43,10 @@
       text-decoration: underline;
     }
 
-    .page {
-      max-width: 980px;
+    .shell {
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 1.75rem 1.25rem 3rem;
-    }
-
-    @media (min-width: 768px) {
-      .page {
-        padding: 2.25rem 1.75rem 4rem;
-      }
+      padding: 1.75rem 1.25rem 3.4rem;
     }
 
     header {
@@ -65,7 +54,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.6rem;
     }
 
     .brand {
@@ -76,7 +65,7 @@
     }
 
     .brand-logo {
-      height: 64px;
+      height: 40px;
       width: auto;
       display: block;
     }
@@ -102,594 +91,70 @@
     nav {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 1.2rem;
       font-size: 0.9rem;
     }
 
-    .nav-link {
-      padding: 0.4rem 0.75rem;
-      border-radius: 999px;
-      border: 1px solid transparent;
+    nav a {
       color: var(--text-muted);
+      text-decoration: none;
     }
 
-    .nav-link:hover {
-      border-color: rgba(148,163,184,0.4);
+    nav a.active {
       color: var(--text);
-      text-decoration: none;
-      background: rgba(15,23,42,0.9);
+      font-weight: 500;
     }
 
     .nav-cta {
-      padding: 0.4rem 0.9rem;
+      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      border: 1px solid rgba(56,189,248,0.65);
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.25), rgba(15,23,42,0.9));
-      color: #e0f2fe;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
       font-weight: 500;
-      box-shadow: 0 10px 40px rgba(8,47,73,0.7);
     }
 
     .nav-cta:hover {
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.4), rgba(15,23,42,1));
       text-decoration: none;
-    }
-
-    .hero {
-      border-radius: 24px;
-      border: 1px solid rgba(148,163,184,0.4);
-      background:
-        radial-gradient(circle at top left, rgba(56,189,248,0.18), transparent 55%),
-        radial-gradient(circle at bottom right, rgba(59,130,246,0.12), transparent 55%),
-        rgba(15,23,42,0.96);
-      box-shadow: var(--shadow-soft);
-      padding: 2rem 1.5rem 1.75rem;
-      margin-bottom: 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    @media (min-width: 768px) {
-      .hero {
-        padding: 2.4rem 2.2rem 2.1rem;
-      }
-    }
-
-    .hero-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.18rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.5);
-      background: rgba(15,23,42,0.9);
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .hero-pill-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #4ade80;
-      box-shadow: 0 0 0 3px rgba(74,222,128,0.35);
-    }
-
-    .hero-title {
-      font-size: clamp(1.85rem, 3vw, 2.4rem);
-      line-height: 1.15;
-      letter-spacing: 0.01em;
-      margin-bottom: 0.75rem;
-    }
-
-    .hero-title span {
-      color: var(--accent-strong);
-    }
-
-    .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      max-width: 34rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-      margin-bottom: 1.2rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.7rem 1.3rem;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-size: 0.92rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      color: #0b1220;
-      box-shadow: 0 18px 40px rgba(8,47,73,0.9);
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #0ea5e9, #22c1c3);
-      text-decoration: none;
-    }
-
-    .btn-ghost {
-      border-color: rgba(148,163,184,0.6);
-      color: var(--text);
-      background: rgba(15,23,42,0.9);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(15,23,42,1);
-      text-decoration: none;
-    }
-
-    .hero-support {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
-    .hero-support strong {
-      color: #e5e7eb;
-      font-weight: 500;
-    }
-
-    .hero-badge {
-      position: absolute;
-      right: 1.4rem;
-      bottom: 1.4rem;
-      padding: 0.55rem 0.9rem;
-      border-radius: 14px;
-      border: 1px solid rgba(148,163,184,0.4);
-      background: rgba(15,23,42,0.96);
-      box-shadow: 0 18px 40px rgba(15,23,42,0.9);
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      max-width: 15rem;
-    }
-
-    .hero-badge-title {
-      font-weight: 600;
-      color: #e5e7eb;
-      margin-bottom: 0.2rem;
-    }
-
-    .hero-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      margin-top: 0.35rem;
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.9);
-      border: 1px solid rgba(148,163,184,0.4);
-    }
-
-    .hero-badge-pill-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--accent);
-    }
-
-    main {
-      margin-top: 0.5rem;
+      border-color: rgba(56,189,248,0.9);
     }
 
     .grid {
       display: grid;
-      gap: 1.4rem;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 1.9rem;
+      align-items: stretch;
     }
 
-    @media (min-width: 880px) {
-      .grid-2 {
-        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      }
-    }
-
-    .section-card {
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-subtle);
-      background: rgba(15,23,42,0.96);
-      padding: 1.4rem 1.3rem 1.45rem;
-      box-shadow: var(--shadow-subtle);
-    }
-
-    .section-card + .section-card {
-      margin-top: 0.9rem;
-    }
-
-    @media (min-width: 768px) {
-      .section-card {
-        padding: 1.6rem 1.6rem 1.55rem;
-      }
-    }
-
-    .section-label {
-      font-size: 0.76rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .section-body {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .section-body p {
-      margin: 0 0 0.7rem;
-    }
-
-    .section-body p:last-child {
-      margin-bottom: 0;
-    }
-
-    .list {
-      margin: 0.45rem 0 0;
-      padding-left: 1.2rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .list li {
-      margin-bottom: 0.35rem;
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.65rem;
+    .hero {
+      border-radius: 24px;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: var(--bg-card);
+      box-shadow: 0 22px 50px rgba(15,23,42,0.95);
+      padding: 2.1rem 1.9rem 2.2rem;
     }
 
     .pill {
-      font-size: 0.8rem;
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.5);
-      color: var(--text-muted);
-      background: rgba(15,23,42,0.9);
-    }
-
-    .pill-strong {
-      border-color: rgba(56,189,248,0.65);
-      color: #e0f2fe;
-      background: var(--accent-soft);
-    }
-
-    .timeline {
-      margin-top: 0.6rem;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-    }
-
-    .timeline-block + .timeline-block {
-      margin-top: 0.65rem;
-      padding-top: 0.65rem;
-      border-top: 1px dashed rgba(148,163,184,0.35);
-    }
-
-    .timeline-title {
-      font-weight: 600;
-      color: #e5e7eb;
-      margin-bottom: 0.25rem;
-      font-size: 0.9rem;
-    }
-
-    .timeline p {
-      margin: 0.1rem 0;
-    }
-
-    .highlight-note {
-      margin-top: 0.7rem;
-      padding: 0.7rem 0.75rem;
-      border-radius: 12px;
-      border: 1px dashed rgba(148,163,184,0.7);
-      background: rgba(15,23,42,0.9);
-      font-size: 0.82rem;
-      color: var(--text-muted);
-    }
-
-    .badge-callout {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.78rem;
-      padding: 0.25rem 0.5rem;
+      gap: 0.5rem;
+      padding: 0.32rem 0.9rem;
       border-radius: 999px;
-      background: rgba(15,23,42,0.95);
-      border: 1px solid rgba(148,163,184,0.6);
-      margin-bottom: 0.5rem;
-    }
-
-    .badge-callout-tag {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-    }
-
-    footer {
-      margin-top: 2.4rem;
-      padding-top: 1.3rem;
-      border-top: 1px solid rgba(15,23,42,0.9);
-      font-size: 0.78rem;
+      border: 1px solid rgba(148,163,184,0.7);
+      background: rgba(15,23,42,0.98);
+      font-size: 0.8rem;
       color: var(--text-muted);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      justify-content: space-between;
-      align-items: center;
+      margin-bottom: 1rem;
     }
 
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+    .pill-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--good);
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.25);
     }
 
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-
-    .footer-links a:hover {
-      color: var(--text);
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="page">
-    <header>
-      <a href="index.html" class="brand">
-        <img src="logo-horizontal.svg"
-             alt="Reporting Forge"
-             class="brand-logo">
-        <div class="brand-text">
-          <div class="brand-title">Reporting Forge</div>
-          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
-        </div>
-      </a>
-      <nav>
-        <a class="nav-link" href="index.html">Overview</a>
-        <a class="nav-link" href="early-access.html">What you get</a>
-        <a class="nav-cta" href="early-access.html">Get early access</a>
-      </nav>
-    </header>
-
-    <section class="hero">
-      <div class="hero-pill">
-        <span class="hero-pill-dot"></span>
-        <span>30 day AI first workflow for real business reporting</span>
-      </div>
-      <h1 class="hero-title">
-        Build automated reports with almost no coding<br>
-        <span>AI writes the Python, API calls, and Power BI logic for you</span>
-      </h1>
-      <p class="hero-subtitle">
-        This book shows you a simple, prompt driven workflow where AI handles the scripts, API calls, and report logic. You will not be hand writing Python or complex DAX. You will learn how to talk to AI so it writes and explains the code that keeps your data and reports up to date.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="early-access.html">
-          Get early access to the book
-        </a>
-        <a class="btn btn-ghost" href="#how-it-works">
-          See how the 30 day plan works
-        </a>
-      </div>
-      <p class="hero-support">
-        Perfect for <strong>analysts, managers, and business owners</strong> who want live, automated reporting without becoming full time developers.
-      </p>
-      <div class="hero-badge">
-        <div class="hero-badge-title">AI does the heavy lifting</div>
-        <div>Use prompts to let AI write the Python, API calls, and Power BI measures. You stay at the level of outcomes, checks, and final sign off.</div>
-        <div class="hero-badge-pill">
-          <span class="hero-badge-pill-dot"></span>
-          <span>Includes a SkyLink Test Network sandbox for safe practice</span>
-        </div>
-      </div>
-    </section>
-
-    <main>
-      <div class="grid grid-2">
-        <!-- What this book teaches -->
-        <section class="section-card">
-          <div class="section-label">What you will learn</div>
-          <h2 class="section-title">A practical workflow where AI does the heavy lifting</h2>
-          <div class="section-body">
-            <p>This is not a traditional "learn Python from scratch" book. It is a field guide for letting AI do the hard work while you stay in control of the outcome.</p>
-            <p>Across 30 days you will learn how to:</p>
-            <ul class="list">
-              <li>Describe your data and goals in clear, effective prompts</li>
-              <li>Ask AI to generate and fix Python code that cleans and reshapes your data</li>
-              <li>Connect to common business tools via their APIs, with AI writing the requests for you</li>
-              <li>Use the fictional SkyLink Test Network and its sandbox API as a safe practice ground</li>
-              <li>Save and rerun AI generated scripts so your reports update in a few clicks</li>
-              <li>Use AI inside Power BI to build measures, visuals, and narrative summaries</li>
-              <li>Chain everything together so your reporting runs with minimal manual effort</li>
-            </ul>
-            <p>You will spend your time thinking about what you want, not fighting with syntax.</p>
-          </div>
-        </section>
-
-        <!-- Who this is for -->
-        <section class="section-card">
-          <div class="section-label">Who this is for</div>
-          <h2 class="section-title">You do not need to be a programmer</h2>
-          <div class="section-body">
-            <p>This book is designed for people who:</p>
-            <ul class="list">
-              <li>Work with spreadsheets, exports, or basic databases</li>
-              <li>Are tired of copy paste reporting every week or month</li>
-              <li>Want to use Python, APIs, and Power BI, but do not want to become software engineers</li>
-              <li>Are comfortable learning by doing, as long as the steps are clear</li>
-            </ul>
-            <p>If you can:</p>
-            <ul class="list">
-              <li>Open a file</li>
-              <li>Copy and paste text</li>
-              <li>Follow a checklist</li>
-            </ul>
-            <p>then you have enough technical skill for this book. The only extra requirement is a bit of patience while you learn how to guide AI.</p>
-            <div class="pill-row">
-              <div class="pill pill-strong">No prior Python or Power BI experience required</div>
-              <div class="pill">Designed for analysts and business owners</div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <!-- APIs without the stress -->
-      <section class="section-card" style="margin-top: 1.2rem;">
-        <div class="section-label">Live data</div>
-        <h2 class="section-title">Bring in live data from the tools you already use</h2>
-        <div class="section-body">
-          <p>Most business tools now have APIs - CRMs, accounting platforms, marketing systems, help desks, and more. The problem is that their documentation is written for engineers.</p>
-          <p>In this book you will:</p>
-          <ul class="list">
-            <li>Learn a simple way to find the API documentation for tools you already use</li>
-            <li>See how to feed that documentation into AI so it generates working example calls</li>
-            <li>Use the SkyLink Test Network sandbox as a safe data source while you practice</li>
-            <li>Turn those examples into a repeatable data pipeline for your own reports</li>
-          </ul>
-          <p>We stay at the level of "where to look, what to copy, what to paste into AI, and how to check that it worked". You do not need to know HTTP, JSON, or authentication flows in detail before you start. The book keeps you above the waterline while AI handles the low level pieces.</p>
-        </div>
-      </section>
-
-      <!-- 30 day journey -->
-      <section id="how-it-works" class="section-card" style="margin-top: 1.2rem;">
-        <div class="section-label">The 30 day journey</div>
-        <h2 class="section-title">In 30 days you will go from manual reporting to AI assisted automation</h2>
-        <div class="section-body">
-          <div class="timeline">
-            <div class="timeline-block">
-              <div class="timeline-title">Week 1 - Set up and your first AI generated script</div>
-              <p>- Install the basic tools with step by step instructions</p>
-              <p>- Learn how to describe your data and ask AI for a working Python script</p>
-              <p>- Run your first AI generated script to clean and reshape a real data file</p>
-            </div>
-            <div class="timeline-block">
-              <div class="timeline-title">Week 2 - Automate a repeatable data pipeline</div>
-              <p>- Use prompts to improve and harden your AI generated script</p>
-              <p>- Add simple checks so you can trust the output</p>
-              <p>- Point the script at the SkyLink Test Network sandbox so you can practice on live style data without risk</p>
-            </div>
-            <div class="timeline-block">
-              <div class="timeline-title">Week 3 - Connect to real APIs and build a Power BI report</div>
-              <p>- Learn where to find API endpoints and keys in a few common platforms</p>
-              <p>- Ask AI to build and explain the API calls you need for your own tools</p>
-              <p>- Connect your cleaned, API driven data to Power BI</p>
-              <p>- Use AI to help write measures, choose visuals, and build the layout</p>
-            </div>
-            <div class="timeline-block">
-              <div class="timeline-title">Week 4 - Put it together and push further</div>
-              <p>- Link the Python script, API calls, and Power BI report into a simple workflow</p>
-              <p>- Add small refinements based on feedback</p>
-              <p>- Capture a library of prompts you can reuse for future projects</p>
-            </div>
-          </div>
-          <div class="highlight-note">
-            At every step, prompts are written or scaffolded for you. Your job is to adapt them to your data, tools, and goals.
-          </div>
-        </div>
-      </section>
-
-      <!-- Outcome -->
-      <section class="section-card" style="margin-top: 1.2rem;">
-        <div class="section-label">End result</div>
-        <h2 class="section-title">A working automation, fed by APIs, not just theory</h2>
-        <div class="section-body">
-          <p>By the end of the book you will have:</p>
-          <ul class="list">
-            <li>A working Python script that AI wrote with you</li>
-            <li>At least one API connection pulling data from a tool you actually use</li>
-            <li>Access to the SkyLink Test Network sandbox you can keep using to experiment safely</li>
-            <li>A Power BI report that is fed by those scripts and APIs</li>
-            <li>A repeatable routine for updating your data and refreshing the report</li>
-            <li>A set of prompt templates you can reuse for new datasets and business problems</li>
-          </ul>
-          <p>You will also have a new mental model: whenever a repetitive data task appears, you will know how to turn it into an AI assisted script plus report instead of yet another manual spreadsheet.</p>
-        </div>
-      </section>
-
-      <!-- Why AI first -->
-      <section class="section-card" style="margin-top: 1.2rem;">
-        <div class="section-label">Approach</div>
-        <h2 class="section-title">Stop learning syntax first, start learning how to ask</h2>
-        <div class="section-body">
-          <p>Traditional programming books teach you a language, then ask you to build something. This book flips that sequence.</p>
-          <p>We start with the outcome you care about:</p>
-          <ul class="list">
-            <li>"I want a monthly margin report from this exported CSV."</li>
-            <li>"I want to see sales by product, region, and channel with filters."</li>
-            <li>"I want to pull data from this tool via its API and track a KPI over time."</li>
-          </ul>
-          <p>Then we show you how to ask AI:</p>
-          <ul class="list">
-            <li>to design the data cleaning and API steps</li>
-            <li>to write the Python and Power BI logic</li>
-            <li>to explain the code in plain language so you understand what is happening</li>
-          </ul>
-          <p>You still stay in charge. You decide what is acceptable, what needs to change, and what ready looks like. AI is the power tool, not the boss.</p>
-        </div>
-      </section>
-
-      <!-- Bundled offerings -->
-      <section class="section-card" style="margin-top: 1.2rem;">
-        <div class="badge-callout">
-          <span class="badge-callout-tag">Optional extras</span>
-          <span>Book first, bundled helpers when you need them</span>
-        </div>
-        <div class="section-body">
-          <p>The core book is designed to stand on its own. If you want to go further, there are optional bundled resources you can add when the time is right:</p>
-          <ul class="list">
-            <li>A prompt library you can plug straight into your AI tool of choice</li>
-            <li>Ready made example projects that mirror common business reporting problems</li>
-            <li>Extended access to sandbox style datasets so you can practice new ideas safely</li>
-            <li>Extra templates and checklists for turning one off experiments into stable workflows</li>
-          </ul>
-          <p>The website gives you the overview. The details live in the book and the bundled offerings, where there is room to walk through each step properly.</p>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div>© <span id="year"></span> Reporting Forge. All rights reserved.</div>
-      <div class="footer-links">
-        <a href="early-access.html">Get early access</a>
-        <a href="404.html">404 example</a>
-      </div>
-    </footer>
-  </div>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+    h1 {
+      margin: 0 0 0.8rem;
+      font-si
