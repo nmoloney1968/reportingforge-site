@@ -1,5 +1,5 @@
 {
-  "last_alert_key": "overall_red",
-  "last_alert_sent_at": "2026-02-12T18:55:07Z",
-  "last_subject": "RF Monitor: Overall RED regime"
+  "last_alert_key": "test",
+  "last_alert_sent_at": "2026-02-12T19:06:53Z",
+  "last_subject": "RF Monitor: Test alert"
 }
