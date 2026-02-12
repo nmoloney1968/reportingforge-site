@@ -6,13 +6,14 @@
   <title>Monitor - FRED</title>
   <style>
     body { font-family: Arial, Helvetica, sans-serif; margin: 18px; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; max-width: 760px; }
+    .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; max-width: 860px; }
     .ok { background: #e9f7ec; }
     .muted { opacity: 0.75; }
     .k { opacity: 0.75; }
     .v { font-weight: 700; }
     a { text-decoration: none; }
     a:hover { text-decoration: underline; }
+    code { background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }
   </style>
 </head>
 <body>
@@ -23,11 +24,16 @@
     <div><span class="k">Series:</span> <span class="v">DFII10 (10Y real yield)</span></div>
     <div><span class="k">Last datapoint:</span> <span class="v">2026-02-10</span></div>
     <div><span class="k">Last value:</span> <span class="v">1.840%</span></div>
-    <div style="margin-top:10px;"><span class="k">Built:</span> <span class="v">2026-02-12 16:12 UTC</span></div>
+    <div><span class="k">FRED last_updated:</span> <span class="v">2026-02-11 15:16:45-06</span></div>
+    <div style="margin-top:10px;"><span class="k">Built:</span> <span class="v">2026-02-12 16:23 UTC</span></div>
   </div>
 
   <p class="muted" style="margin-top:12px;">
     This page is generated server-side via GitHub Actions. No API keys are exposed to the browser.
+  </p>
+
+  <p class="muted">
+    Change detection file: <code>monitor/fred_last_updated.txt</code>
   </p>
 
   <p><a href="/">Back to Reporting Forge</a></p>
