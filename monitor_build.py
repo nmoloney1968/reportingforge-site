@@ -349,6 +349,8 @@ def html_page(payload: dict) -> str:
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Monitor</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="apple-touch-icon" href="../favicon.svg">
   <style>
     :root {{
       color-scheme: dark;
@@ -368,6 +370,52 @@ def html_page(payload: dict) -> str:
       --redTx: #ff9b9b;
       --link: #7cc4ff;
     }}
+        .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand:hover {
+      text-decoration: none;
+      opacity: 0.95;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+
+    .brand-text {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      line-height: 1;
+    }
+
+    .topmeta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    @media (max-width: 719px) {
+      .brand-text { font-size: 24px; }
+      .brand-icon { width: 26px; height: 26px; }
+    }
+
 
     body {{
       margin: 0;
@@ -552,10 +600,15 @@ def html_page(payload: dict) -> str:
 </head>
 <body>
   <div class="wrap">
-    <div class="top">
-      <h2>Monitor</h2>
-      <div class="muted">Built: <b>{built_utc}</b></div>
-      <div class="muted">FRED last_updated ({fred_series_label}): <b>{fred_last_updated}</b></div>
+    <div class="topbar">
+      <a class="brand" href="/" title="Reporting Forge">
+        <img src="../favicon.svg" alt="RF" class="brand-icon">
+        <span class="brand-text">Monitor</span>
+      </a>
+      <div class="topmeta">
+        <div class="muted">Built: <b>{built_utc}</b></div>
+        <div class="muted">FRED last_updated ({fred_series_label}): <b>{fred_last_updated}</b></div>
+      </div>
     </div>
 
     <div class="grid">
