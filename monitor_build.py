@@ -3,7 +3,7 @@ import json
 import time
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Callable, Any
+from typing import Callable, Any, Optional, Tuple
 
 import pandas as pd
 import yfinance as yf
@@ -13,28 +13,35 @@ from fredapi import Fred
 # ----------------------------
 # Config
 # ----------------------------
-FRED_SERIES_ID = "DFII10"
+TEMPLATE_VERSION = "v3-dark-fred-fallback-dxy-wti-2026-02-13"
+
+# FRED fallback chain for "real yields"
+# First one that successfully fetches wins.
+FRED_REAL_YIELD_SERIES = [
+    ("DFII10", "10Y real yield (DFII10)"),
+    ("DFII5", "5Y real yield (DFII5)"),
+]
 
 YF_TICKERS = {
-    "GOLD": "GC=F",
-    "NEM": "NEM",
-    "GDX": "GDX",
+    "GOLD": ("GC=F", "Gold (GC=F)"),
+    "NEM": ("NEM", "NEM"),
+    "GDX": ("GDX", "GDX"),
+    "DXY": ("DX-Y.NYB", "DXY (DX-Y.NYB)"),
+    "WTI": ("CL=F", "WTI (CL=F)"),
 }
-
-TEMPLATE_VERSION = "v2-dark-2026-02-13"
 
 MA_FAST = 50
 MA_SLOW = 200
-LOOKBACK_DAYS = 365 * 2  # pull 2 years for stable MAs
+LOOKBACK_DAYS = 365 * 2
 
 # Sparkline window
-SPARK_DAYS_CAL = 92      # about 3 months calendar
-SPARK_POINTS_MAX = 80    # keep SVG light
+SPARK_DAYS_CAL = 92
+SPARK_POINTS_MAX = 80
 
 # Panic flush detection
-PANIC_2D_DROP_PCT = 0.08  # 8% drop over 2 trading days
+PANIC_2D_DROP_PCT = 0.08
 
-# Retry behavior (handles transient 502/503, network blips)
+# Retry behavior
 MAX_RETRIES = 6
 BACKOFF_SECONDS = 2.0
 BACKOFF_MULTIPLIER = 1.8
@@ -122,6 +129,24 @@ def state_price_trend(df: pd.DataFrame) -> str:
     return "Red"
 
 
+def state_inverse_price_trend(df: pd.DataFrame) -> str:
+    """
+    For variables that are headwinds when rising (DXY, WTI):
+    - Downtrend is supportive (Green)
+    - Uptrend is headwind (Red)
+    """
+    latest = df.iloc[-1]
+    v, m50, m200 = float(latest["value"]), float(latest["ma50"]), float(latest["ma200"])
+    # Strong uptrend
+    if v > m200 and m50 > m200:
+        return "Red"
+    # Mixed
+    if v > m200:
+        return "Yellow"
+    # Below long MA
+    return "Green"
+
+
 def state_yield_trend(df: pd.DataFrame) -> str:
     latest = df.iloc[-1]
     v, m50, m200 = float(latest["value"]), float(latest["ma50"]), float(latest["ma200"])
@@ -198,7 +223,6 @@ def spark_svg(s: pd.Series, width: int = 240, height: int = 44) -> str:
         pts.append(f"{x:.1f},{y:.1f}")
 
     points = " ".join(pts)
-    # Use currentColor so it inherits from CSS (theme-safe)
     return (
         f'<svg class="spark" width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
         f'role="img" aria-label="trend sparkline">'
@@ -208,6 +232,7 @@ def spark_svg(s: pd.Series, width: int = 240, height: int = 44) -> str:
 
 
 def overall_state(states: list[str]) -> str:
+    # Green only if all Green. Red if 2+ Reds. Yellow otherwise.
     reds = sum(1 for s in states if s == "Red")
     yellows = sum(1 for s in states if s == "Yellow")
     if reds >= 2:
@@ -217,25 +242,49 @@ def overall_state(states: list[str]) -> str:
     return "Green"
 
 
-def interpret(overall: str, st_gold: str, st_yield: str, st_nem_gold: str, st_gdx_gold: str) -> str:
-    parts = []
-    parts.append("Gold trend supportive" if st_gold == "Green" else "Gold trend mixed" if st_gold == "Yellow" else "Gold trend deteriorating")
-    parts.append("real yields supportive" if st_yield == "Green" else "real yields mixed" if st_yield == "Yellow" else "real yields headwind")
-
-    outperf = []
-    if st_nem_gold == "Green":
-        outperf.append("NEM")
-    if st_gdx_gold == "Green":
-        outperf.append("GDX")
-    parts.append("miners outperforming gold (" + ", ".join(outperf) + ")" if outperf else "miners not clearly outperforming gold")
-
+def interpret(overall: str, bullets: list[str]) -> str:
     lead = {"Green": "Overall tailwinds.", "Yellow": "Overall mixed regime.", "Red": "Overall headwinds."}.get(overall, "Overall mixed regime.")
-    return lead + " " + "; ".join(parts) + "."
+    return lead + " " + "; ".join(bullets) + "."
+
+
+def fetch_first_working_fred_series(
+    fred: Fred,
+    series_options: list[Tuple[str, str]],
+) -> Tuple[str, str, pd.Series, str]:
+    """
+    Returns:
+      series_id_used, series_label_used, series_data, last_updated_string
+    """
+    last_err: Optional[Exception] = None
+
+    for series_id, label in series_options:
+        try:
+            info = retry(lambda: fred.get_series_info(series_id), f"FRED get_series_info {series_id}")
+            last_updated = "unknown"
+            if isinstance(info, pd.DataFrame) and "last_updated" in info.index:
+                last_updated = str(info.loc["last_updated"].values[0]).strip()
+            elif isinstance(info, pd.Series) and "last_updated" in info.index:
+                last_updated = str(info["last_updated"]).strip()
+
+            series = retry(lambda: fred.get_series(series_id), f"FRED get_series {series_id}")
+            series = series.dropna()
+            series.index = pd.to_datetime(series.index)
+
+            if series.empty:
+                raise ValueError(f"{series_id} returned empty series")
+
+            return series_id, label, series, last_updated
+        except Exception as e:
+            last_err = e
+            print(f"[fred-fallback] {series_id} failed: {type(e).__name__}: {e}")
+
+    raise last_err if last_err else RuntimeError("All FRED fallback series failed")
 
 
 def html_page(payload: dict) -> str:
     built_utc = payload["built_utc"]
     fred_last_updated = payload["fred_last_updated"]
+    fred_series_label = payload["fred_series_label"]
     overall = payload["overall"]
     interpretation = payload["interpretation"]
     panic = payload["panic"]
@@ -275,7 +324,6 @@ def html_page(payload: dict) -> str:
         </tr>
         """
 
-    panic_line = ""
     if panic["on"]:
         panic_line = f"""
         <div class="card warn">
@@ -466,7 +514,7 @@ def html_page(payload: dict) -> str:
     table {{
       border-collapse: collapse;
       width: 100%;
-      min-width: 720px;
+      min-width: 860px;
     }}
 
     th, td {{
@@ -507,7 +555,7 @@ def html_page(payload: dict) -> str:
     <div class="top">
       <h2>Monitor</h2>
       <div class="muted">Built: <b>{built_utc}</b></div>
-      <div class="muted">FRED last_updated (DFII10): <b>{fred_last_updated}</b></div>
+      <div class="muted">FRED last_updated ({fred_series_label}): <b>{fred_last_updated}</b></div>
     </div>
 
     <div class="grid">
@@ -540,7 +588,7 @@ def html_page(payload: dict) -> str:
 
       <div class="card">
         <div class="muted">
-          Source: FRED (DFII10) and Yahoo Finance via yfinance (GC=F, NEM, GDX). No API keys are exposed to the browser.
+          Source: FRED (real yields) and Yahoo Finance via yfinance (GC=F, NEM, GDX, DX-Y.NYB, CL=F). No API keys are exposed to the browser.
         </div>
         <div class="muted" style="margin-top:8px;">
           Repo outputs: <code>monitor/index.html</code> and <code>monitor/monitor_signature.json</code>
@@ -563,59 +611,65 @@ def main():
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
+    # FRED with fallback series
     fred = Fred(api_key=api_key)
-
-    def _series_info():
-        return fred.get_series_info(FRED_SERIES_ID)
-
-    info = retry(_series_info, "FRED get_series_info")
-
-    fred_last_updated = ""
-    if isinstance(info, pd.DataFrame) and "last_updated" in info.index:
-        fred_last_updated = str(info.loc["last_updated"].values[0]).strip()
-    elif isinstance(info, pd.Series) and "last_updated" in info.index:
-        fred_last_updated = str(info["last_updated"]).strip()
-    if not fred_last_updated:
-        fred_last_updated = "unknown"
-
-    def _get_series():
-        return fred.get_series(FRED_SERIES_ID)
-
-    s_yield = retry(_get_series, "FRED get_series").dropna()
-    s_yield.index = pd.to_datetime(s_yield.index)
+    fred_series_id, fred_series_label, s_yield, fred_last_updated = fetch_first_working_fred_series(
+        fred, FRED_REAL_YIELD_SERIES
+    )
     df_yield = add_mas(s_yield)
 
+    # Yahoo
     end = datetime.utcnow()
     start = end - timedelta(days=LOOKBACK_DAYS)
 
-    s_gold = yf_close(YF_TICKERS["GOLD"], start, end)
-    s_nem = yf_close(YF_TICKERS["NEM"], start, end)
-    s_gdx = yf_close(YF_TICKERS["GDX"], start, end)
+    s_gold = yf_close(YF_TICKERS["GOLD"][0], start, end)
+    s_nem = yf_close(YF_TICKERS["NEM"][0], start, end)
+    s_gdx = yf_close(YF_TICKERS["GDX"][0], start, end)
+    s_dxy = yf_close(YF_TICKERS["DXY"][0], start, end)
+    s_wti = yf_close(YF_TICKERS["WTI"][0], start, end)
 
+    # Ratios
     common = s_gold.index.intersection(s_nem.index).intersection(s_gdx.index)
     s_gold_c = s_gold.loc[common]
     s_nem_c = s_nem.loc[common]
     s_gdx_c = s_gdx.loc[common]
-
     s_nem_gold = (s_nem_c / s_gold_c).dropna()
     s_gdx_gold = (s_gdx_c / s_gold_c).dropna()
 
     df_gold = add_mas(s_gold)
     df_nem_gold = add_mas(s_nem_gold)
     df_gdx_gold = add_mas(s_gdx_gold)
+    df_dxy = add_mas(s_dxy)
+    df_wti = add_mas(s_wti)
 
+    # States
     st_gold = state_price_trend(df_gold)
     st_yield = state_yield_trend(df_yield)
     st_nem_gold = state_ratio_trend(df_nem_gold)
     st_gdx_gold = state_ratio_trend(df_gdx_gold)
 
-    overall = overall_state([st_gold, st_yield, st_nem_gold, st_gdx_gold])
-    interpretation = interpret(overall, st_gold, st_yield, st_nem_gold, st_gdx_gold)
+    # Headwind indicators (inverted)
+    st_dxy = state_inverse_price_trend(df_dxy)
+    st_wti = state_inverse_price_trend(df_wti)
 
+    overall = overall_state([st_gold, st_yield, st_nem_gold, st_gdx_gold, st_dxy, st_wti])
+
+    bullets = []
+    bullets.append("Gold trend supportive" if st_gold == "Green" else "Gold trend mixed" if st_gold == "Yellow" else "Gold trend deteriorating")
+    bullets.append("real yields supportive" if st_yield == "Green" else "real yields mixed" if st_yield == "Yellow" else "real yields headwind")
+    bullets.append("miners outperforming gold (NEM, GDX)" if (st_nem_gold == "Green" and st_gdx_gold == "Green") else "miners not uniformly outperforming gold")
+    bullets.append("USD headwind easing" if st_dxy == "Green" else "USD mixed" if st_dxy == "Yellow" else "USD headwind strengthening")
+    bullets.append("oil cost pressure easing" if st_wti == "Green" else "oil mixed" if st_wti == "Yellow" else "oil cost pressure rising")
+
+    interpretation = interpret(overall, bullets)
+
+    # Deltas
     gold_prev, gold_last = safe_last_two(s_gold)
     y_prev, y_last = safe_last_two(s_yield)
     nemg_prev, nemg_last = safe_last_two(s_nem_gold)
     gdxg_prev, gdxg_last = safe_last_two(s_gdx_gold)
+    dxy_prev, dxy_last = safe_last_two(s_dxy)
+    wti_prev, wti_last = safe_last_two(s_wti)
 
     nem_2ago, _, nem_now = safe_last_three(s_nem)
     gdx_2ago, _, gdx_now = safe_last_three(s_gdx)
@@ -638,6 +692,7 @@ def main():
     nem_2d = pct_2d(nem_2ago, nem_now)
     gdx_2d = pct_2d(gdx_2ago, gdx_now)
 
+    # Panic flush
     panic_on = False
     panic_trigger = ""
 
@@ -656,6 +711,7 @@ def main():
 
     panic = {"on": panic_on, "trigger": panic_trigger}
 
+    # Sparklines
     cutoff = datetime.utcnow() - timedelta(days=SPARK_DAYS_CAL)
 
     def tail_since(s: pd.Series) -> pd.Series:
@@ -666,33 +722,39 @@ def main():
     spark_yield = spark_svg(tail_since(s_yield))
     spark_nemg = spark_svg(tail_since(s_nem_gold))
     spark_gdxg = spark_svg(tail_since(s_gdx_gold))
+    spark_dxy = spark_svg(tail_since(s_dxy))
+    spark_wti = spark_svg(tail_since(s_wti))
 
+    # Signature (forces rebuild on template changes)
     sig = {
         "template_version": TEMPLATE_VERSION,
         "built_at_utc": utc_now_str(),
         "fred": {
-            "series": FRED_SERIES_ID,
+            "series_used": fred_series_id,
+            "series_label": fred_series_label,
             "last_updated": fred_last_updated,
             "last_obs_date": str(df_yield.index[-1].date()),
             "last_obs_value": float(df_yield["value"].iloc[-1]),
         },
         "yahoo": {
-            "gold_ticker": YF_TICKERS["GOLD"],
-            "nem_ticker": YF_TICKERS["NEM"],
-            "gdx_ticker": YF_TICKERS["GDX"],
+            "gold_ticker": YF_TICKERS["GOLD"][0],
+            "nem_ticker": YF_TICKERS["NEM"][0],
+            "gdx_ticker": YF_TICKERS["GDX"][0],
+            "dxy_ticker": YF_TICKERS["DXY"][0],
+            "wti_ticker": YF_TICKERS["WTI"][0],
             "gold_last_date": str(df_gold.index[-1].date()),
             "gold_last_value": float(df_gold["value"].iloc[-1]),
-            "nem_last_date": str(s_nem.index[-1].date()),
-            "nem_last_value": float(s_nem.iloc[-1]),
-            "gdx_last_date": str(s_gdx.index[-1].date()),
-            "gdx_last_value": float(s_gdx.iloc[-1]),
+            "dxy_last_date": str(df_dxy.index[-1].date()),
+            "wti_last_date": str(df_wti.index[-1].date()),
         },
         "states": {
             "overall": overall,
             "gold": st_gold,
-            "dfii10": st_yield,
+            "real_yield": st_yield,
             "nem_gold": st_nem_gold,
             "gdx_gold": st_gdx_gold,
+            "dxy": st_dxy,
+            "wti": st_wti,
             "panic_flush": panic,
         },
     }
@@ -703,7 +765,6 @@ def main():
         x = dict(d) if isinstance(d, dict) else {}
         x.pop("built_at_utc", None)
         return x
-
 
     if OUT_HTML.exists() and prev_sig and stable_sig(prev_sig) == stable_sig(sig):
         print("No meaningful change detected. Skipping HTML write.")
@@ -723,10 +784,12 @@ def main():
         }
 
     rows = [
-        row("Gold (GC=F)", st_gold, df_gold),
-        row("10Y real yield (DFII10)", st_yield, df_yield, "%"),
+        row(YF_TICKERS["GOLD"][1], st_gold, df_gold),
+        row(fred_series_label, st_yield, df_yield, "%"),
         row("NEM/Gold ratio", st_nem_gold, df_nem_gold),
         row("GDX/Gold ratio", st_gdx_gold, df_gdx_gold),
+        row(YF_TICKERS["DXY"][1], st_dxy, df_dxy),
+        row(YF_TICKERS["WTI"][1], st_wti, df_wti),
     ]
 
     tiles = [
@@ -736,7 +799,7 @@ def main():
             "value": fmt(float(df_gold["value"].iloc[-1])),
             "delta": f"1D: {pct_delta(gold_prev, gold_last)}" if gold_prev is not None else "",
             "delta2": "",
-            "sub": f'GC=F close, {df_gold.index[-1].date()}',
+            "sub": f"{YF_TICKERS['GOLD'][0]} close, {df_gold.index[-1].date()}",
             "spark": spark_gold,
         },
         {
@@ -744,8 +807,8 @@ def main():
             "state": st_yield,
             "value": fmt(float(df_yield["value"].iloc[-1])) + "%",
             "delta": f"chg: {bps_delta(y_prev, y_last)}" if y_prev is not None else "",
-            "delta2": "",
-            "sub": f"DFII10, {df_yield.index[-1].date()}",
+            "delta2": fred_series_id,
+            "sub": f"{fred_series_label}, {df_yield.index[-1].date()}",
             "spark": spark_yield,
         },
         {
@@ -766,11 +829,30 @@ def main():
             "sub": f"{df_gdx_gold.index[-1].date()}",
             "spark": spark_gdxg,
         },
+        {
+            "name": "DXY (USD headwind)",
+            "state": st_dxy,
+            "value": fmt(float(df_dxy["value"].iloc[-1])),
+            "delta": f"1D: {pct_delta(dxy_prev, dxy_last)}" if dxy_prev is not None else "",
+            "delta2": "",
+            "sub": f"{YF_TICKERS['DXY'][0]} close, {df_dxy.index[-1].date()}",
+            "spark": spark_dxy,
+        },
+        {
+            "name": "WTI (cost proxy)",
+            "state": st_wti,
+            "value": fmt(float(df_wti["value"].iloc[-1])),
+            "delta": f"1D: {pct_delta(wti_prev, wti_last)}" if wti_prev is not None else "",
+            "delta2": "",
+            "sub": f"{YF_TICKERS['WTI'][0]} close, {df_wti.index[-1].date()}",
+            "spark": spark_wti,
+        },
     ]
 
     payload = {
         "built_utc": built_utc,
         "fred_last_updated": fred_last_updated,
+        "fred_series_label": fred_series_label,
         "overall": overall,
         "interpretation": interpretation,
         "panic": panic,
