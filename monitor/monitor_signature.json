@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-02-12 16:56 UTC",
+  "built_at_utc": "2026-02-12 17:19 UTC",
   "fred": {
     "last_obs_date": "2026-02-10",
     "last_obs_value": 1.84,
@@ -17,6 +17,7 @@
       "trigger": ""
     }
   },
+  "template_version": "v2-dark-2026-02-13",
   "yahoo": {
     "gdx_last_date": "2026-02-11",
     "gdx_last_value": 105.97000122070312,
