@@ -1,5 +1,6 @@
 {
-  "last_alert_key": "test",
-  "last_alert_sent_at": "2026-02-12T19:36:23Z",
+  "last_alert_key": "clear",
+  "last_alert_sent_at": "2026-02-12T19:40:25Z",
+  "last_reason": "overall=Yellow panic=False",
   "last_subject": "RF Monitor: Test alert"
 }
