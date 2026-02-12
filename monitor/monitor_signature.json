@@ -12,7 +12,7 @@
     "gdx_gold": "Green",
     "gold": "Green",
     "nem_gold": "Green",
-    "overall": "Yellow",
+    "overall": "Red",
     "panic_flush": {
       "on": false,
       "trigger": ""
