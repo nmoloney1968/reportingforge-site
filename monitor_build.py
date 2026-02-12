@@ -27,7 +27,7 @@ LOOKBACK_DAYS = 365 * 2  # pull 2 years for stable MAs
 
 # Sparkline window
 SPARK_DAYS_CAL = 92      # about 3 months calendar
-SPARK_POINTS_MAX = 70    # keep SVG light
+SPARK_POINTS_MAX = 80    # keep SVG light
 
 # Panic flush detection
 PANIC_2D_DROP_PCT = 0.08  # 8% drop over 2 trading days
@@ -80,7 +80,7 @@ def retry(fn: Callable[[], Any], label: str) -> Any:
 
 def yf_close(ticker: str, start: datetime, end: datetime) -> pd.Series:
     def _download():
-        df = yf.download(
+        return yf.download(
             ticker,
             start=start.date().isoformat(),
             end=end.date().isoformat(),
@@ -88,7 +88,6 @@ def yf_close(ticker: str, start: datetime, end: datetime) -> pd.Series:
             progress=False,
             threads=False,
         )
-        return df
 
     df = retry(_download, f"yfinance download {ticker}")
 
@@ -175,7 +174,7 @@ def safe_last_three(s: pd.Series):
     return float(s2.iloc[-3]), float(s2.iloc[-2]), float(s2.iloc[-1])
 
 
-def spark_svg(s: pd.Series, width: int = 220, height: int = 38) -> str:
+def spark_svg(s: pd.Series, width: int = 240, height: int = 44) -> str:
     s2 = s.dropna()
     if s2.empty:
         return ""
@@ -197,7 +196,13 @@ def spark_svg(s: pd.Series, width: int = 220, height: int = 38) -> str:
         pts.append(f"{x:.1f},{y:.1f}")
 
     points = " ".join(pts)
-    return f'<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="trend sparkline"><polyline fill="none" stroke="#666" stroke-width="2" points="{points}"></polyline></svg>'
+    # Use currentColor so it inherits from CSS (theme-safe)
+    return (
+        f'<svg class="spark" width="{width}" height="{height}" viewBox="0 0 {width} {height}" '
+        f'role="img" aria-label="trend sparkline">'
+        f'<polyline fill="none" stroke="currentColor" stroke-width="2" points="{points}"></polyline>'
+        f"</svg>"
+    )
 
 
 def overall_state(states: list[str]) -> str:
@@ -272,7 +277,7 @@ def html_page(payload: dict) -> str:
     if panic["on"]:
         panic_line = f"""
         <div class="card warn">
-          <div style="font-weight:800;">Panic flush: ON</div>
+          <div class="card-title">Panic flush: ON</div>
           <div class="muted" style="margin-top:6px;">
             Triggered by {panic["trigger"]}. This highlights fast selloffs while gold regime is not Red.
           </div>
@@ -281,7 +286,7 @@ def html_page(payload: dict) -> str:
     else:
         panic_line = """
         <div class="card ok">
-          <div style="font-weight:800;">Panic flush: OFF</div>
+          <div class="card-title">Panic flush: OFF</div>
           <div class="muted" style="margin-top:6px;">
             No fast selloff trigger detected.
           </div>
@@ -295,107 +300,253 @@ def html_page(payload: dict) -> str:
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Monitor</title>
   <style>
-    body {{ font-family: Arial, Helvetica, sans-serif; margin: 18px; }}
-    .muted {{ opacity: 0.75; }}
-    .top {{ margin-bottom: 12px; max-width: 1160px; }}
-    .grid {{ display: flex; gap: 12px; flex-wrap: wrap; }}
-    .tile {{
-      width: 260px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 12px;
-    }}
-    .tile-name {{ font-size: 13px; opacity: 0.8; }}
-    .tile-state {{ font-size: 18px; font-weight: 800; margin-top: 6px; }}
-    .tile-value {{ font-size: 16px; margin-top: 4px; font-weight: 700; }}
-    .tile-delta {{ font-size: 12px; margin-top: 6px; opacity: 0.85; }}
-    .tile-sub {{ font-size: 12px; opacity: 0.75; margin-top: 4px; }}
-    .tile-spark {{ margin-top: 10px; }}
+    :root {{
+      color-scheme: dark;
+      --bg: #0b0f14;
+      --panel: #121824;
+      --panel2: #0f1520;
+      --text: #e8eef7;
+      --muted: rgba(232, 238, 247, 0.72);
+      --border: rgba(232, 238, 247, 0.14);
 
-    .green {{ background: #e9f7ec; }}
-    .yellow {{ background: #fff7df; }}
-    .red {{ background: #fdeaea; }}
+      --greenBg: rgba(46, 204, 113, 0.12);
+      --yellowBg: rgba(241, 196, 15, 0.12);
+      --redBg: rgba(255, 107, 107, 0.12);
+
+      --greenTx: #7dffb3;
+      --yellowTx: #ffe08a;
+      --redTx: #ff9b9b;
+      --link: #7cc4ff;
+    }}
+
+    body {{
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }}
+
+    .wrap {{
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 18px 16px 36px 16px;
+    }}
+
+    h2 {{
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 0.2px;
+    }}
+
+    .top {{
+      margin-bottom: 14px;
+    }}
+
+    .muted {{
+      opacity: 1;
+      color: var(--muted);
+    }}
+
+    .grid {{
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }}
+
+    .tile {{
+      grid-column: span 12;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
+      min-height: 150px;
+    }}
+
+    @media (min-width: 720px) {{
+      .tile {{ grid-column: span 3; }}
+      .card {{ grid-column: span 12; }}
+      .tablewrap {{ grid-column: span 12; }}
+    }}
+
+    @media (max-width: 719px) {{
+      .tile {{ grid-column: span 12; }}
+      h2 {{ font-size: 24px; }}
+    }}
+
+    .tile-name {{
+      font-size: 13px;
+      color: var(--muted);
+    }}
+
+    .tile-state {{
+      font-size: 20px;
+      font-weight: 800;
+      margin-top: 8px;
+    }}
+
+    .tile-value {{
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 6px;
+    }}
+
+    .tile-delta {{
+      font-size: 12px;
+      margin-top: 8px;
+      color: var(--muted);
+    }}
+
+    .tile-sub {{
+      font-size: 12px;
+      margin-top: 6px;
+      color: var(--muted);
+    }}
+
+    .tile-spark {{
+      margin-top: 10px;
+      color: rgba(232, 238, 247, 0.55);
+    }}
+
+    .spark {{
+      display: block;
+      width: 100%;
+      height: 46px;
+    }}
+
+    .green {{ background: linear-gradient(0deg, var(--greenBg), var(--greenBg)), var(--panel); }}
+    .yellow {{ background: linear-gradient(0deg, var(--yellowBg), var(--yellowBg)), var(--panel); }}
+    .red {{ background: linear-gradient(0deg, var(--redBg), var(--redBg)), var(--panel); }}
+
+    .green .tile-state {{ color: var(--greenTx); }}
+    .yellow .tile-state {{ color: var(--yellowTx); }}
+    .red .tile-state {{ color: var(--redTx); }}
 
     .chip {{
       display: inline-block;
-      padding: 4px 8px;
+      padding: 4px 9px;
       border-radius: 999px;
-      border: 1px solid #ddd;
-      font-weight: 700;
+      border: 1px solid var(--border);
+      font-weight: 800;
       font-size: 12px;
+      background: var(--panel2);
     }}
 
+    .chip.green {{ color: var(--greenTx); }}
+    .chip.yellow {{ color: var(--yellowTx); }}
+    .chip.red {{ color: var(--redTx); }}
+
     .card {{
-      border: 1px solid #ddd;
-      border-radius: 10px;
+      grid-column: span 12;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 12px;
-      max-width: 1160px;
-      margin-top: 12px;
     }}
-    .card.ok {{ background: #e9f7ec; }}
-    .card.warn {{ background: #fff7df; }}
+
+    .card-title {{
+      font-weight: 900;
+      font-size: 16px;
+    }}
+
+    .card.ok {{ background: linear-gradient(0deg, var(--greenBg), var(--greenBg)), var(--panel); }}
+    .card.warn {{ background: linear-gradient(0deg, var(--yellowBg), var(--yellowBg)), var(--panel); }}
+
+    .tablewrap {{
+      grid-column: span 12;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      overflow-x: auto;
+    }}
 
     table {{
       border-collapse: collapse;
       width: 100%;
-      max-width: 1160px;
-      margin-top: 14px;
+      min-width: 720px;
     }}
+
     th, td {{
-      border: 1px solid #ddd;
-      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 10px;
       font-size: 13px;
     }}
-    th {{ background: #f6f6f6; text-align: left; }}
-    td.num {{ text-align: right; font-variant-numeric: tabular-nums; }}
-    a {{ text-decoration: none; }}
-    a:hover {{ text-decoration: underline; }}
-    code {{ background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }}
+
+    th {{
+      text-align: left;
+      color: var(--muted);
+      font-weight: 800;
+    }}
+
+    td.num {{
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }}
+
+    a {{
+      color: var(--link);
+      text-decoration: none;
+    }}
+
+    a:hover {{
+      text-decoration: underline;
+    }}
+
+    code {{
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }}
   </style>
 </head>
 <body>
-  <div class="top">
-    <h2 style="margin:0;">Monitor</h2>
-    <div class="muted">Built: <b>{built_utc}</b></div>
-    <div class="muted">FRED last_updated (DFII10): <b>{fred_last_updated}</b></div>
-  </div>
-
-  <div class="card {chip_class(overall)}">
-    <div style="font-weight:800; font-size:16px;">Overall: {overall}</div>
-    <div class="muted" style="margin-top:6px;">{interpretation}</div>
-  </div>
-
-  {panic_line}
-
-  <div class="grid">
-    {tile_block}
-  </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Metric</th>
-        <th>State</th>
-        <th>Last date</th>
-        <th>Last value</th>
-        <th>MA50</th>
-        <th>MA200</th>
-      </tr>
-    </thead>
-    <tbody>
-      {row_html}
-    </tbody>
-  </table>
-
-  <div class="card">
-    <div class="muted">
-      Source: FRED (DFII10) and Yahoo Finance via yfinance (GC=F, NEM, GDX). No API keys are exposed to the browser.
+  <div class="wrap">
+    <div class="top">
+      <h2>Monitor</h2>
+      <div class="muted">Built: <b>{built_utc}</b></div>
+      <div class="muted">FRED last_updated (DFII10): <b>{fred_last_updated}</b></div>
     </div>
-    <div class="muted" style="margin-top:8px;">
-      Repo outputs: <code>monitor/index.html</code> and <code>monitor/monitor_signature.json</code>
-    </div>
-    <div style="margin-top:10px;">
-      <a href="/">Back to Reporting Forge</a>
+
+    <div class="grid">
+      <div class="card {chip_class(overall)}">
+        <div class="card-title">Overall: {overall}</div>
+        <div class="muted" style="margin-top:6px;">{interpretation}</div>
+      </div>
+
+      {panic_line}
+
+      {tile_block}
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>State</th>
+              <th>Last date</th>
+              <th class="num">Last value</th>
+              <th class="num">MA50</th>
+              <th class="num">MA200</th>
+            </tr>
+          </thead>
+          <tbody>
+            {row_html}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="muted">
+          Source: FRED (DFII10) and Yahoo Finance via yfinance (GC=F, NEM, GDX). No API keys are exposed to the browser.
+        </div>
+        <div class="muted" style="margin-top:8px;">
+          Repo outputs: <code>monitor/index.html</code> and <code>monitor/monitor_signature.json</code>
+        </div>
+        <div style="margin-top:10px;">
+          <a href="/">Back to Reporting Forge</a>
+        </div>
+      </div>
     </div>
   </div>
 </body>
@@ -410,7 +561,6 @@ def main():
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Pull FRED with retries
     fred = Fred(api_key=api_key)
 
     def _series_info():
@@ -433,7 +583,6 @@ def main():
     s_yield.index = pd.to_datetime(s_yield.index)
     df_yield = add_mas(s_yield)
 
-    # Pull Yahoo series
     end = datetime.utcnow()
     start = end - timedelta(days=LOOKBACK_DAYS)
 
@@ -441,7 +590,6 @@ def main():
     s_nem = yf_close(YF_TICKERS["NEM"], start, end)
     s_gdx = yf_close(YF_TICKERS["GDX"], start, end)
 
-    # Align on common dates for ratios
     common = s_gold.index.intersection(s_nem.index).intersection(s_gdx.index)
     s_gold_c = s_gold.loc[common]
     s_nem_c = s_nem.loc[common]
@@ -454,7 +602,6 @@ def main():
     df_nem_gold = add_mas(s_nem_gold)
     df_gdx_gold = add_mas(s_gdx_gold)
 
-    # States
     st_gold = state_price_trend(df_gold)
     st_yield = state_yield_trend(df_yield)
     st_nem_gold = state_ratio_trend(df_nem_gold)
@@ -463,7 +610,6 @@ def main():
     overall = overall_state([st_gold, st_yield, st_nem_gold, st_gdx_gold])
     interpretation = interpret(overall, st_gold, st_yield, st_nem_gold, st_gdx_gold)
 
-    # Deltas
     gold_prev, gold_last = safe_last_two(s_gold)
     y_prev, y_last = safe_last_two(s_yield)
     nemg_prev, nemg_last = safe_last_two(s_nem_gold)
@@ -490,7 +636,6 @@ def main():
     nem_2d = pct_2d(nem_2ago, nem_now)
     gdx_2d = pct_2d(gdx_2ago, gdx_now)
 
-    # Panic flush detector
     panic_on = False
     panic_trigger = ""
 
@@ -509,7 +654,6 @@ def main():
 
     panic = {"on": panic_on, "trigger": panic_trigger}
 
-    # Sparkline series (last 3 months)
     cutoff = datetime.utcnow() - timedelta(days=SPARK_DAYS_CAL)
 
     def tail_since(s: pd.Series) -> pd.Series:
@@ -521,7 +665,6 @@ def main():
     spark_nemg = spark_svg(tail_since(s_nem_gold))
     spark_gdxg = spark_svg(tail_since(s_gdx_gold))
 
-    # Signature (exclude built time from comparison)
     sig = {
         "built_at_utc": utc_now_str(),
         "fred": {
@@ -606,7 +749,7 @@ def main():
             "state": st_nem_gold,
             "value": fmt(float(df_nem_gold["value"].iloc[-1])),
             "delta": f"1D: {pct_delta(nemg_prev, nemg_last)}" if nemg_prev is not None else "",
-            "delta2": f"2D NEM: {pct_2d(nem_2ago, nem_now)}" if nem_2ago is not None else "",
+            "delta2": f"2D NEM: {nem_2d}" if nem_2ago is not None else "",
             "sub": f"{df_nem_gold.index[-1].date()}",
             "spark": spark_nemg,
         },
@@ -615,7 +758,7 @@ def main():
             "state": st_gdx_gold,
             "value": fmt(float(df_gdx_gold["value"].iloc[-1])),
             "delta": f"1D: {pct_delta(gdxg_prev, gdxg_last)}" if gdxg_prev is not None else "",
-            "delta2": f"2D GDX: {pct_2d(gdx_2ago, gdx_now)}" if gdx_2ago is not None else "",
+            "delta2": f"2D GDX: {gdx_2d}" if gdx_2ago is not None else "",
             "sub": f"{df_gdx_gold.index[-1].date()}",
             "spark": spark_gdxg,
         },
@@ -642,7 +785,6 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        # If something still goes wrong, do not delete/overwrite the existing monitor page.
         print(f"Monitor build failed: {type(e).__name__}: {e}")
         if OUT_HTML.exists():
             print("Keeping existing monitor/index.html unchanged.")
