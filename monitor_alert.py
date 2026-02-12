@@ -42,43 +42,55 @@ def build_alert(sig: dict) -> Tuple[str, Optional[str], Optional[str]]:
     gold_state = states.get("gold")
     panic = states.get("panic_flush", {}) or {}
     panic_on = bool(panic.get("on"))
-    panic_trigger = panic.get("trigger", "")
+    panic_trigger = (panic.get("trigger") or "").strip()
 
     built_at = (sig or {}).get("built_at_utc", "unknown time")
+
     fred = (sig or {}).get("fred", {})
     fred_series = fred.get("series_used", "unknown")
     fred_last_updated = fred.get("last_updated", "unknown")
 
+    why = "You are receiving this because you enabled Reporting Forge Monitor alerts."
+    link = "https://reportingforge.com/monitor/"
+
+    # Trigger 1: Panic flush buy-window
     if panic_on and gold_state != "Red":
-        subject = "RF Monitor: Panic flush ON"
+        subject = "Reporting Forge Monitor: Action - Panic flush"
         body = "\n".join(
             [
-                f"Built: {built_at}",
-                f"Overall: {overall}",
-                f"Gold state: {gold_state}",
-                f"Panic flush: ON ({panic_trigger})",
+                why,
                 "",
-                "Action: Review adding exposure into the flush (per your plan).",
-                "Link: https://reportingforge.com/monitor/",
+                "Call to action: Review adding exposure into the flush (per your plan).",
                 "",
-                f"FRED: {fred_series} (last_updated: {fred_last_updated})",
+                f"Dashboard: {link}",
+                "",
+                "Context",
+                f"- Built: {built_at}",
+                f"- Overall: {overall}",
+                f"- Gold state: {gold_state}",
+                f"- Panic flush: ON ({panic_trigger})" if panic_trigger else "- Panic flush: ON",
+                f"- FRED: {fred_series} (last_updated: {fred_last_updated})",
             ]
         )
         return "panic_on", subject, body
 
+    # Trigger 2: Regime break risk
     if overall == "Red":
-        subject = "RF Monitor: Overall RED regime"
+        subject = "Reporting Forge Monitor: Action - Overall Red"
         body = "\n".join(
             [
-                f"Built: {built_at}",
-                f"Overall: {overall}",
-                f"Gold state: {gold_state}",
-                f"Panic flush: {'ON' if panic_on else 'OFF'} {('(' + panic_trigger + ')') if panic_trigger else ''}".strip(),
+                why,
                 "",
-                "Action: Review risk management (hedge, trim, or tighten plan).",
-                "Link: https://reportingforge.com/monitor/",
+                "Call to action: Review risk management (hedge, trim, or tighten plan).",
                 "",
-                f"FRED: {fred_series} (last_updated: {fred_last_updated})",
+                f"Dashboard: {link}",
+                "",
+                "Context",
+                f"- Built: {built_at}",
+                f"- Overall: {overall}",
+                f"- Gold state: {gold_state}",
+                f"- Panic flush: {'ON' if panic_on else 'OFF'}" + (f" ({panic_trigger})" if panic_trigger else ""),
+                f"- FRED: {fred_series} (last_updated: {fred_last_updated})",
             ]
         )
         return "overall_red", subject, body
@@ -89,13 +101,24 @@ def build_alert(sig: dict) -> Tuple[str, Optional[str], Optional[str]]:
     return "unknown", None, None
 
 
-def send_sendgrid_email(api_key: str, from_email: str, to_email: str, subject: str, body: str) -> None:
+def send_sendgrid_email(
+    api_key: str,
+    from_email: str,
+    to_email: str,
+    subject: str,
+    body: str,
+    from_name: str = "Reporting Forge Monitor",
+) -> None:
     url = "https://api.sendgrid.com/v3/mail/send"
+
     payload = {
         "personalizations": [{"to": [{"email": to_email}]}],
-        "from": {"email": from_email},
+        "from": {"email": from_email, "name": from_name},
         "subject": subject,
         "content": [{"type": "text/plain", "value": body}],
+        "headers": {
+            "X-Reporting-Forge": "monitor",
+        },
     }
 
     data = json.dumps(payload).encode("utf-8")
@@ -106,7 +129,6 @@ def send_sendgrid_email(api_key: str, from_email: str, to_email: str, subject: s
     try:
         with request.urlopen(req, timeout=30) as resp:
             status = resp.getcode()
-            print(f"SendGrid response HTTP {status}")
             if status not in (200, 202):
                 raise RuntimeError(f"SendGrid returned HTTP {status}")
     except HTTPError as e:
@@ -122,40 +144,27 @@ def main() -> None:
         print("No signature found. Skipping alerts.")
         return
 
-    force = os.getenv("FORCE_ALERT", "").strip() == "1"
-
-    # Normal alert logic
     alert_key, subject, body = build_alert(sig)
-
-    # Forced test mode (manual runs)
-    if force:
-        alert_key = "test"
-        subject = "RF Monitor: Test alert"
-        body = "\n".join(
-            [
-                f"UTC: {utc_now_iso()}",
-                "This is a forced test alert from GitHub Actions.",
-                "Link: https://reportingforge.com/monitor/",
-            ]
-        )
-
-    print(f"Computed alert_key={alert_key} subject={subject!r} force={force}")
+    print(f"Computed alert_key={alert_key} subject={subject!r}")
 
     # Dedupe
     state = read_json(STATE_PATH)
     last_key = state.get("last_alert_key", "none")
 
     if alert_key in ("clear", "unknown"):
+        # Record clear so the next real alert can fire again after clearing.
         if last_key != alert_key:
             state["last_alert_key"] = alert_key
             state["last_alert_sent_at"] = utc_now_iso()
+            # Helpful for debugging without being noisy
+            state["last_reason"] = f"overall={sig.get('states', {}).get('overall')} panic={sig.get('states', {}).get('panic_flush', {}).get('on')}"
             write_json(STATE_PATH, state)
             print(f"Alert state updated to {alert_key}. No email sent.")
         else:
             print("No alert. No change.")
         return
 
-    if last_key == alert_key and not force:
+    if last_key == alert_key:
         print(f"Alert already sent for key '{alert_key}'. Suppressing repeat.")
         return
 
@@ -168,12 +177,13 @@ def main() -> None:
         raise SystemExit("Missing SENDGRID_API_KEY or ALERT_FROM_EMAIL or ALERT_TO_EMAIL secrets/env vars")
 
     print(f"Sending email from={from_email} to={to_email}")
-    send_sendgrid_email(sg_key, from_email, to_email, subject or "RF Monitor Alert", body or "")
+    send_sendgrid_email(sg_key, from_email, to_email, subject or "Reporting Forge Monitor Alert", body or "")
 
     # Update state
     state["last_alert_key"] = alert_key
     state["last_alert_sent_at"] = utc_now_iso()
     state["last_subject"] = subject
+    state["last_reason"] = "sent"
     write_json(STATE_PATH, state)
 
     print(f"Alert sent: {alert_key}")
