@@ -118,6 +118,10 @@ def send_sendgrid_email(api_key: str, from_email: str, to_email: str, subject: s
 
 def main() -> None:
     sig = read_json(SIG_PATH)
+    
+    sig.setdefault("states", {})
+    sig["states"]["overall"] = "Red"
+
     if not sig:
         print("No signature found. Skipping alerts.")
         return
