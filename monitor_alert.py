@@ -49,7 +49,6 @@ def build_alert(sig: dict) -> Tuple[str, Optional[str], Optional[str]]:
     fred_series = fred.get("series_used", "unknown")
     fred_last_updated = fred.get("last_updated", "unknown")
 
-    # Call-to-action triggers (simple and high signal)
     if panic_on and gold_state != "Red":
         subject = "RF Monitor: Panic flush ON"
         body = "\n".join(
@@ -107,6 +106,7 @@ def send_sendgrid_email(api_key: str, from_email: str, to_email: str, subject: s
     try:
         with request.urlopen(req, timeout=30) as resp:
             status = resp.getcode()
+            print(f"SendGrid response HTTP {status}")
             if status not in (200, 202):
                 raise RuntimeError(f"SendGrid returned HTTP {status}")
     except HTTPError as e:
@@ -118,18 +118,16 @@ def send_sendgrid_email(api_key: str, from_email: str, to_email: str, subject: s
 
 def main() -> None:
     sig = read_json(SIG_PATH)
-    
-    sig.setdefault("states", {})
-    sig["states"]["overall"] = "Red"
-
     if not sig:
         print("No signature found. Skipping alerts.")
         return
 
-    alert_key, subject, body = build_alert(sig)
-    
-        # One-time forced test (manual runs). Set FORCE_ALERT=1 in workflow env.
     force = os.getenv("FORCE_ALERT", "").strip() == "1"
+
+    # Normal alert logic
+    alert_key, subject, body = build_alert(sig)
+
+    # Forced test mode (manual runs)
     if force:
         alert_key = "test"
         subject = "RF Monitor: Test alert"
@@ -141,15 +139,13 @@ def main() -> None:
             ]
         )
 
-    print(f"Computed alert_key={alert_key} subject={subject!r}")
-
+    print(f"Computed alert_key={alert_key} subject={subject!r} force={force}")
 
     # Dedupe
     state = read_json(STATE_PATH)
     last_key = state.get("last_alert_key", "none")
 
     if alert_key in ("clear", "unknown"):
-        # We record clear state so the next real alert can fire again after clearing.
         if last_key != alert_key:
             state["last_alert_key"] = alert_key
             state["last_alert_sent_at"] = utc_now_iso()
@@ -170,8 +166,8 @@ def main() -> None:
 
     if not sg_key or not from_email or not to_email:
         raise SystemExit("Missing SENDGRID_API_KEY or ALERT_FROM_EMAIL or ALERT_TO_EMAIL secrets/env vars")
-        print(f"Sending email from={from_email} to={to_email}")
 
+    print(f"Sending email from={from_email} to={to_email}")
     send_sendgrid_email(sg_key, from_email, to_email, subject or "RF Monitor Alert", body or "")
 
     # Update state
