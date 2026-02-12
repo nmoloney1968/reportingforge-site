@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-02-12 17:29 UTC",
+  "built_at_utc": "2026-02-12 17:47 UTC",
   "fred": {
     "last_obs_date": "2026-02-10",
     "last_obs_value": 1.84,
@@ -20,7 +20,7 @@
     "real_yield": "Green",
     "wti": "Yellow"
   },
-  "template_version": "v3-dark-fred-fallback-dxy-wti-2026-02-13",
+  "template_version": "v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13",
   "yahoo": {
     "dxy_last_date": "2026-02-11",
     "dxy_ticker": "DX-Y.NYB",

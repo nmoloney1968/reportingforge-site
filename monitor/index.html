@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Monitor</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13">
+  <link rel="apple-touch-icon" href="../favicon.svg?v=v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13">
   <style>
     :root {
       color-scheme: dark;
@@ -37,14 +39,50 @@
       padding: 18px 16px 36px 16px;
     }
 
-    h2 {
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 0.2px;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
     }
 
-    .top {
-      margin-bottom: 14px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand:hover {
+      text-decoration: none;
+      opacity: 0.95;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+
+    .brand-text {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      line-height: 1;
+    }
+
+    .topmeta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    @media (max-width: 719px) {
+      .brand-text { font-size: 24px; }
+      .brand-icon { width: 26px; height: 26px; }
     }
 
     .muted {
@@ -76,7 +114,6 @@
 
     @media (max-width: 719px) {
       .tile { grid-column: span 12; }
-      h2 { font-size: 24px; }
     }
 
     .tile-name {
@@ -207,10 +244,15 @@
 </head>
 <body>
   <div class="wrap">
-    <div class="top">
-      <h2>Monitor</h2>
-      <div class="muted">Built: <b>2026-02-12 17:29 UTC</b></div>
-      <div class="muted">FRED last_updated (10Y real yield (DFII10)): <b>2026-02-11 15:16:45-06</b></div>
+    <div class="topbar">
+      <a class="brand" href="/" title="Reporting Forge">
+        <img src="../favicon.svg?v=v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13" alt="RF" class="brand-icon">
+        <span class="brand-text">Monitor</span>
+      </a>
+      <div class="topmeta">
+        <div class="muted">Built: <b>2026-02-12 17:47 UTC</b></div>
+        <div class="muted">FRED last_updated (10Y real yield (DFII10)): <b>2026-02-11 15:16:45-06</b></div>
+      </div>
     </div>
 
     <div class="grid">
