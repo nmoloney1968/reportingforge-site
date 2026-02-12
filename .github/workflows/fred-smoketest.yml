@@ -31,10 +31,15 @@ jobs:
         run: |
           python monitor_fred_smoketest.py
 
-      - name: Commit updated monitor page
+      - name: Commit updated monitor page if changed
         run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add monitor/index.html
-          git commit -m "Update FRED smoke test" || echo "No changes"
+          git add monitor/index.html monitor/fred_last_updated.txt
+          git commit -m "Update FRED smoke test"
           git push
