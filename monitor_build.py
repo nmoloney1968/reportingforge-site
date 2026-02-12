@@ -23,6 +23,13 @@ MA_FAST = 50
 MA_SLOW = 200
 LOOKBACK_DAYS = 365 * 2  # pull 2 years for stable MAs
 
+# Sparkline window
+SPARK_DAYS_CAL = 92      # about 3 months calendar
+SPARK_POINTS_MAX = 70    # keep SVG light
+
+# Panic flush detection
+PANIC_2D_DROP_PCT = 0.08  # 8% drop over 2 trading days
+
 OUT_DIR = Path("monitor")
 OUT_HTML = OUT_DIR / "index.html"
 OUT_SIG = OUT_DIR / "monitor_signature.json"
@@ -109,7 +116,7 @@ def state_ratio_trend(df: pd.DataFrame, band: float = 0.01) -> str:
 
 
 def chip_class(state: str) -> str:
-    s = state.lower()
+    s = (state or "").lower()
     if s in ("green", "yellow", "red"):
         return s
     return "yellow"
@@ -119,20 +126,137 @@ def fmt(x: float, decimals: int = 3) -> str:
     return f"{x:,.{decimals}f}"
 
 
+def pct(x: float, decimals: int = 2) -> str:
+    return f"{x * 100:.{decimals}f}%"
+
+
+def bps(x: float, decimals: int = 0) -> str:
+    # x in percent points, convert to basis points
+    return f"{x * 100:.{decimals}f} bps"
+
+
+def safe_last_two(s: pd.Series):
+    s2 = s.dropna()
+    if len(s2) < 2:
+        return None, None
+    return float(s2.iloc[-2]), float(s2.iloc[-1])
+
+
+def safe_last_three(s: pd.Series):
+    s2 = s.dropna()
+    if len(s2) < 3:
+        return None, None, None
+    return float(s2.iloc[-3]), float(s2.iloc[-2]), float(s2.iloc[-1])
+
+
+def spark_svg(s: pd.Series, width: int = 220, height: int = 38) -> str:
+    """
+    Inline SVG sparkline. Neutral stroke. No colors specified beyond gray.
+    """
+    s2 = s.dropna()
+    if s2.empty:
+        return ""
+
+    # downsample to keep it light
+    if len(s2) > SPARK_POINTS_MAX:
+        s2 = s2.iloc[:: max(1, len(s2) // SPARK_POINTS_MAX)]
+
+    vals = s2.values.astype(float)
+    vmin = float(vals.min())
+    vmax = float(vals.max())
+    if vmax == vmin:
+        vmax = vmin + 1e-9
+
+    # Build points
+    n = len(vals)
+    xs = []
+    ys = []
+    for i, v in enumerate(vals):
+        x = (i / (n - 1)) * (width - 2) + 1 if n > 1 else width / 2
+        # invert y because SVG origin is top-left
+        y = (1 - (v - vmin) / (vmax - vmin)) * (height - 2) + 1
+        xs.append(x)
+        ys.append(y)
+
+    pts = " ".join(f"{xs[i]:.1f},{ys[i]:.1f}" for i in range(n))
+
+    return f"""
+    <svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="trend sparkline">
+      <polyline fill="none" stroke="#666" stroke-width="2" points="{pts}"></polyline>
+    </svg>
+    """.strip()
+
+
+def overall_state(states: list[str]) -> str:
+    # Green only if all Green. Red if 2+ Reds. Yellow otherwise.
+    reds = sum(1 for s in states if s == "Red")
+    yellows = sum(1 for s in states if s == "Yellow")
+    if reds >= 2:
+        return "Red"
+    if reds == 1 or yellows >= 1:
+        return "Yellow"
+    return "Green"
+
+
+def interpret(overall: str, st_gold: str, st_yield: str, st_nem_gold: str, st_gdx_gold: str) -> str:
+    parts = []
+    if st_gold == "Green":
+        parts.append("Gold trend supportive")
+    elif st_gold == "Yellow":
+        parts.append("Gold trend mixed")
+    else:
+        parts.append("Gold trend deteriorating")
+
+    if st_yield == "Green":
+        parts.append("real yields supportive")
+    elif st_yield == "Yellow":
+        parts.append("real yields mixed")
+    else:
+        parts.append("real yields headwind")
+
+    outperf = []
+    if st_nem_gold == "Green":
+        outperf.append("NEM")
+    if st_gdx_gold == "Green":
+        outperf.append("GDX")
+    if outperf:
+        parts.append("miners outperforming gold (" + ", ".join(outperf) + ")")
+    else:
+        parts.append("miners not clearly outperforming gold")
+
+    lead = {
+        "Green": "Overall tailwinds.",
+        "Yellow": "Overall mixed regime.",
+        "Red": "Overall headwinds.",
+    }.get(overall, "Overall mixed regime.")
+    return lead + " " + "; ".join(parts) + "."
+
+
 def html_page(payload: dict) -> str:
     built_utc = payload["built_utc"]
     fred_last_updated = payload["fred_last_updated"]
+    overall = payload["overall"]
+    interpretation = payload["interpretation"]
+    panic = payload["panic"]
 
     tiles = payload["tiles"]
     rows = payload["rows"]
 
     def tile_html(t):
+        spark = t.get("spark", "")
+        delta = t.get("delta", "")
+        delta2 = t.get("delta2", "")
+        extra = ""
+        if delta or delta2:
+            extra = f'<div class="tile-delta">{delta} {delta2}</div>'
         return f"""
         <div class="tile {chip_class(t["state"])}">
           <div class="tile-name">{t["name"]}</div>
           <div class="tile-state">{t["state"]}</div>
           <div class="tile-value">{t["value"]}</div>
+          {extra}
           <div class="tile-sub">{t["sub"]}</div>
+          <div class="tile-spark">{spark}</div>
         </div>
         """
 
@@ -151,6 +275,26 @@ def html_page(payload: dict) -> str:
         </tr>
         """
 
+    panic_line = ""
+    if panic["on"]:
+        panic_line = f"""
+        <div class="card warn">
+          <div style="font-weight:800;">Panic flush: ON</div>
+          <div class="muted" style="margin-top:6px;">
+            Triggered by {panic["trigger"]}. This is designed to highlight fast selloffs while gold regime is not Red.
+          </div>
+        </div>
+        """
+    else:
+        panic_line = """
+        <div class="card ok">
+          <div style="font-weight:800;">Panic flush: OFF</div>
+          <div class="muted" style="margin-top:6px;">
+            No fast selloff trigger detected.
+          </div>
+        </div>
+        """
+
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -160,10 +304,10 @@ def html_page(payload: dict) -> str:
   <style>
     body {{ font-family: Arial, Helvetica, sans-serif; margin: 18px; }}
     .muted {{ opacity: 0.75; }}
-    .top {{ margin-bottom: 14px; }}
+    .top {{ margin-bottom: 12px; max-width: 1160px; }}
     .grid {{ display: flex; gap: 12px; flex-wrap: wrap; }}
     .tile {{
-      width: 240px;
+      width: 260px;
       border: 1px solid #ddd;
       border-radius: 10px;
       padding: 12px;
@@ -171,16 +315,37 @@ def html_page(payload: dict) -> str:
     .tile-name {{ font-size: 13px; opacity: 0.8; }}
     .tile-state {{ font-size: 18px; font-weight: 800; margin-top: 6px; }}
     .tile-value {{ font-size: 16px; margin-top: 4px; font-weight: 700; }}
+    .tile-delta {{ font-size: 12px; margin-top: 6px; opacity: 0.85; }}
     .tile-sub {{ font-size: 12px; opacity: 0.75; margin-top: 4px; }}
+    .tile-spark {{ margin-top: 10px; }}
 
     .green {{ background: #e9f7ec; }}
     .yellow {{ background: #fff7df; }}
     .red {{ background: #fdeaea; }}
 
+    .chip {{
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      font-weight: 700;
+      font-size: 12px;
+    }}
+
+    .card {{
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px;
+      max-width: 1160px;
+      margin-top: 12px;
+    }}
+    .card.ok {{ background: #e9f7ec; }}
+    .card.warn {{ background: #fff7df; }}
+
     table {{
       border-collapse: collapse;
       width: 100%;
-      max-width: 1100px;
+      max-width: 1160px;
       margin-top: 14px;
     }}
     th, td {{
@@ -190,23 +355,8 @@ def html_page(payload: dict) -> str:
     }}
     th {{ background: #f6f6f6; text-align: left; }}
     td.num {{ text-align: right; font-variant-numeric: tabular-nums; }}
-    .chip {{
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 999px;
-      border: 1px solid #ddd;
-      font-weight: 700;
-      font-size: 12px;
-    }}
     a {{ text-decoration: none; }}
     a:hover {{ text-decoration: underline; }}
-    .card {{
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 12px;
-      max-width: 1100px;
-      margin-top: 14px;
-    }}
     code {{ background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }}
   </style>
 </head>
@@ -216,6 +366,13 @@ def html_page(payload: dict) -> str:
     <div class="muted">Built: <b>{built_utc}</b></div>
     <div class="muted">FRED last_updated (DFII10): <b>{fred_last_updated}</b></div>
   </div>
+
+  <div class="card {chip_class(overall)}">
+    <div style="font-weight:800; font-size:16px;">Overall: {overall}</div>
+    <div class="muted" style="margin-top:6px;">{interpretation}</div>
+  </div>
+
+  {panic_line}
 
   <div class="grid">
     {tile_block}
@@ -306,6 +463,73 @@ def main():
     st_nem_gold = state_ratio_trend(df_nem_gold)
     st_gdx_gold = state_ratio_trend(df_gdx_gold)
 
+    overall = overall_state([st_gold, st_yield, st_nem_gold, st_gdx_gold])
+    interpretation = interpret(overall, st_gold, st_yield, st_nem_gold, st_gdx_gold)
+
+    # Deltas (1D and 2D where possible)
+    gold_prev, gold_last = safe_last_two(s_gold)
+    nem_prev, nem_last = safe_last_two(s_nem)
+    gdx_prev, gdx_last = safe_last_two(s_gdx)
+
+    y_prev, y_last = safe_last_two(s_yield)
+    nemg_prev, nemg_last = safe_last_two(s_nem_gold)
+    gdxg_prev, gdxg_last = safe_last_two(s_gdx_gold)
+
+    def pct_delta(prev, last):
+        if prev is None or last is None or prev == 0:
+            return ""
+        return pct((last / prev) - 1.0, 2)
+
+    def bps_delta(prev, last):
+        if prev is None or last is None:
+            return ""
+        return bps(last - prev, 0)
+
+    # 2D (two trading days) deltas for prices and ratios
+    nem_2ago, nem_1ago, nem_now = safe_last_three(s_nem)
+    gdx_2ago, gdx_1ago, gdx_now = safe_last_three(s_gdx)
+
+    def pct_2d(two_ago, now):
+        if two_ago is None or now is None or two_ago == 0:
+            return ""
+        return pct((now / two_ago) - 1.0, 2)
+
+    nem_2d = pct_2d(nem_2ago, nem_now)
+    gdx_2d = pct_2d(gdx_2ago, gdx_now)
+
+    # Panic flush detector:
+    # Trigger if NEM or GDX drops >= 8% over 2 trading days, while gold trend is not Red.
+    panic_on = False
+    panic_trigger = ""
+
+    def is_big_drop(two_ago, now, thresh):
+        if two_ago is None or now is None or two_ago == 0:
+            return False
+        return (now / two_ago) <= (1.0 - thresh)
+
+    if st_gold != "Red":
+        if is_big_drop(nem_2ago, nem_now, PANIC_2D_DROP_PCT):
+            panic_on = True
+            panic_trigger = f"NEM 2D drop {nem_2d}"
+        elif is_big_drop(gdx_2ago, gdx_now, PANIC_2D_DROP_PCT):
+            panic_on = True
+            panic_trigger = f"GDX 2D drop {gdx_2d}"
+
+    panic = {"on": panic_on, "trigger": panic_trigger}
+
+    # Sparkline series (last 3 months)
+    cutoff = datetime.utcnow() - timedelta(days=SPARK_DAYS_CAL)
+
+    def tail_since(s: pd.Series) -> pd.Series:
+        s2 = s.dropna()
+        s2 = s2[s2.index >= pd.to_datetime(cutoff)]
+        return s2
+
+    spark_gold = spark_svg(tail_since(s_gold))
+    spark_yield = spark_svg(tail_since(s_yield))
+    spark_nemg = spark_svg(tail_since(s_nem_gold))
+    spark_gdxg = spark_svg(tail_since(s_gdx_gold))
+
     # Build signature so we only publish when data changed
     sig = {
         "built_at_utc": utc_now_str(),
@@ -322,21 +546,23 @@ def main():
             "gold_last_date": str(df_gold.index[-1].date()),
             "gold_last_value": float(df_gold["value"].iloc[-1]),
             "nem_last_date": str(s_nem.index[-1].date()),
+            "nem_last_value": float(s_nem.iloc[-1]),
             "gdx_last_date": str(s_gdx.index[-1].date()),
+            "gdx_last_value": float(s_gdx.iloc[-1]),
         },
         "states": {
+            "overall": overall,
             "gold": st_gold,
             "dfii10": st_yield,
             "nem_gold": st_nem_gold,
             "gdx_gold": st_gdx_gold,
+            "panic_flush": panic,
         },
     }
 
     prev_sig = read_json(OUT_SIG)
 
-    # Determine whether anything meaningful changed
     def stable_sig(d: dict) -> dict:
-        # remove built_at_utc so it does not force changes
         x = dict(d) if isinstance(d, dict) else {}
         x.pop("built_at_utc", None)
         return x
@@ -345,7 +571,6 @@ def main():
         print("No meaningful change detected. Skipping HTML write.")
         return
 
-    # Prepare payload for HTML
     built_utc = utc_now_str()
 
     def row(metric: str, state: str, df: pd.DataFrame, unit: str = "") -> dict:
@@ -368,34 +593,58 @@ def main():
 
     tiles = [
         {
+            "name": "Overall",
+            "state": overall,
+            "value": overall,
+            "delta": "",
+            "delta2": "",
+            "sub": "Combined regime signal",
+            "spark": "",
+        },
+        {
             "name": "Gold trend",
             "state": st_gold,
             "value": fmt(float(df_gold["value"].iloc[-1])),
+            "delta": f"1D: {pct_delta(gold_prev, gold_last)}" if gold_prev is not None else "",
+            "delta2": "",
             "sub": f'GC=F close, {df_gold.index[-1].date()}',
+            "spark": spark_gold,
         },
         {
             "name": "Real yield trend",
             "state": st_yield,
             "value": fmt(float(df_yield["value"].iloc[-1])) + "%",
+            "delta": f"chg: {bps_delta(y_prev, y_last)}" if y_prev is not None else "",
+            "delta2": "",
             "sub": f"DFII10, {df_yield.index[-1].date()}",
+            "spark": spark_yield,
         },
         {
             "name": "NEM/Gold ratio",
             "state": st_nem_gold,
             "value": fmt(float(df_nem_gold["value"].iloc[-1])),
+            "delta": f"1D: {pct_delta(nemg_prev, nemg_last)}" if nemg_prev is not None else "",
+            "delta2": f"2D NEM: {nem_2d}" if nem_2ago is not None else "",
             "sub": f"{df_nem_gold.index[-1].date()}",
+            "spark": spark_nemg,
         },
         {
             "name": "GDX/Gold ratio",
             "state": st_gdx_gold,
             "value": fmt(float(df_gdx_gold["value"].iloc[-1])),
+            "delta": f"1D: {pct_delta(gdxg_prev, gdxg_last)}" if gdxg_prev is not None else "",
+            "delta2": f"2D GDX: {gdx_2d}" if gdx_2ago is not None else "",
             "sub": f"{df_gdx_gold.index[-1].date()}",
+            "spark": spark_gdxg,
         },
     ]
 
     payload = {
         "built_utc": built_utc,
         "fred_last_updated": fred_last_updated,
+        "overall": overall,
+        "interpretation": interpretation,
+        "panic": panic,
         "tiles": tiles,
         "rows": rows,
     }
