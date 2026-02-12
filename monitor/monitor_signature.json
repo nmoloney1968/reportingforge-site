@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-02-12 16:37 UTC",
+  "built_at_utc": "2026-02-12 16:56 UTC",
   "fred": {
     "last_obs_date": "2026-02-10",
     "last_obs_value": 1.84,
@@ -10,15 +10,22 @@
     "dfii10": "Green",
     "gdx_gold": "Green",
     "gold": "Green",
-    "nem_gold": "Green"
+    "nem_gold": "Green",
+    "overall": "Green",
+    "panic_flush": {
+      "on": false,
+      "trigger": ""
+    }
   },
   "yahoo": {
     "gdx_last_date": "2026-02-11",
+    "gdx_last_value": 105.97000122070312,
     "gdx_ticker": "GDX",
     "gold_last_date": "2026-02-11",
     "gold_last_value": 5071.60009765625,
     "gold_ticker": "GC=F",
     "nem_last_date": "2026-02-11",
+    "nem_last_value": 124.5999984741211,
     "nem_ticker": "NEM"
   }
 }
