@@ -1,4 +1,4 @@
-name: FRED smoke test
+name: Monitor build
 
 on:
   workflow_dispatch:
@@ -25,13 +25,13 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run smoke test
+      - name: Build monitor HTML
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
-          python monitor_fred_smoketest.py
+          python monitor_build.py
 
-      - name: Commit updated monitor page if changed
+      - name: Commit updated monitor if changed
         run: |
           if git diff --quiet; then
             echo "No changes to commit."
@@ -40,6 +40,6 @@ jobs:
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add monitor/index.html monitor/fred_last_updated.txt
-          git commit -m "Update FRED smoke test"
+          git add monitor/index.html monitor/monitor_signature.json
+          git commit -m "Update monitor"
           git push
