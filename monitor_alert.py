@@ -127,6 +127,22 @@ def main() -> None:
         return
 
     alert_key, subject, body = build_alert(sig)
+    
+        # One-time forced test (manual runs). Set FORCE_ALERT=1 in workflow env.
+    force = os.getenv("FORCE_ALERT", "").strip() == "1"
+    if force:
+        alert_key = "test"
+        subject = "RF Monitor: Test alert"
+        body = "\n".join(
+            [
+                f"UTC: {utc_now_iso()}",
+                "This is a forced test alert from GitHub Actions.",
+                "Link: https://reportingforge.com/monitor/",
+            ]
+        )
+
+    print(f"Computed alert_key={alert_key} subject={subject!r}")
+
 
     # Dedupe
     state = read_json(STATE_PATH)
@@ -143,7 +159,7 @@ def main() -> None:
             print("No alert. No change.")
         return
 
-    if last_key == alert_key:
+    if last_key == alert_key and not force:
         print(f"Alert already sent for key '{alert_key}'. Suppressing repeat.")
         return
 
@@ -154,6 +170,7 @@ def main() -> None:
 
     if not sg_key or not from_email or not to_email:
         raise SystemExit("Missing SENDGRID_API_KEY or ALERT_FROM_EMAIL or ALERT_TO_EMAIL secrets/env vars")
+        print(f"Sending email from={from_email} to={to_email}")
 
     send_sendgrid_email(sg_key, from_email, to_email, subject or "RF Monitor Alert", body or "")
 
