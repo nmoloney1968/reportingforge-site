@@ -1,7 +1,9 @@
 import os
 import json
+import time
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Callable, Any
 
 import pandas as pd
 import yfinance as yf
@@ -30,6 +32,11 @@ SPARK_POINTS_MAX = 70    # keep SVG light
 # Panic flush detection
 PANIC_2D_DROP_PCT = 0.08  # 8% drop over 2 trading days
 
+# Retry behavior (handles transient 502/503, network blips)
+MAX_RETRIES = 6
+BACKOFF_SECONDS = 2.0
+BACKOFF_MULTIPLIER = 1.8
+
 OUT_DIR = Path("monitor")
 OUT_HTML = OUT_DIR / "index.html"
 OUT_SIG = OUT_DIR / "monitor_signature.json"
@@ -55,17 +62,37 @@ def write_json(path: Path, obj: dict) -> None:
     path.write_text(json.dumps(obj, indent=2, sort_keys=True), encoding="utf-8")
 
 
-def yf_close(ticker: str, start: datetime, end: datetime) -> pd.Series:
-    df = yf.download(
-        ticker,
-        start=start.date().isoformat(),
-        end=end.date().isoformat(),
-        auto_adjust=True,
-        progress=False,
-        threads=False,
-    )
+def retry(fn: Callable[[], Any], label: str) -> Any:
+    delay = BACKOFF_SECONDS
+    last_err = None
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            return fn()
+        except Exception as e:
+            last_err = e
+            msg = f"{type(e).__name__}: {e}"
+            print(f"[retry] {label} failed attempt {attempt}/{MAX_RETRIES}: {msg}")
+            if attempt < MAX_RETRIES:
+                time.sleep(delay)
+                delay *= BACKOFF_MULTIPLIER
+    raise last_err
 
-    if df.empty:
+
+def yf_close(ticker: str, start: datetime, end: datetime) -> pd.Series:
+    def _download():
+        df = yf.download(
+            ticker,
+            start=start.date().isoformat(),
+            end=end.date().isoformat(),
+            auto_adjust=True,
+            progress=False,
+            threads=False,
+        )
+        return df
+
+    df = retry(_download, f"yfinance download {ticker}")
+
+    if df is None or df.empty:
         raise ValueError(f"No data returned for {ticker}")
 
     if isinstance(df.columns, pd.MultiIndex):
@@ -131,7 +158,6 @@ def pct(x: float, decimals: int = 2) -> str:
 
 
 def bps(x: float, decimals: int = 0) -> str:
-    # x in percent points, convert to basis points
     return f"{x * 100:.{decimals}f} bps"
 
 
@@ -150,14 +176,10 @@ def safe_last_three(s: pd.Series):
 
 
 def spark_svg(s: pd.Series, width: int = 220, height: int = 38) -> str:
-    """
-    Inline SVG sparkline. Neutral stroke. No colors specified beyond gray.
-    """
     s2 = s.dropna()
     if s2.empty:
         return ""
 
-    # downsample to keep it light
     if len(s2) > SPARK_POINTS_MAX:
         s2 = s2.iloc[:: max(1, len(s2) // SPARK_POINTS_MAX)]
 
@@ -167,28 +189,18 @@ def spark_svg(s: pd.Series, width: int = 220, height: int = 38) -> str:
     if vmax == vmin:
         vmax = vmin + 1e-9
 
-    # Build points
     n = len(vals)
-    xs = []
-    ys = []
+    pts = []
     for i, v in enumerate(vals):
         x = (i / (n - 1)) * (width - 2) + 1 if n > 1 else width / 2
-        # invert y because SVG origin is top-left
         y = (1 - (v - vmin) / (vmax - vmin)) * (height - 2) + 1
-        xs.append(x)
-        ys.append(y)
+        pts.append(f"{x:.1f},{y:.1f}")
 
-    pts = " ".join(f"{xs[i]:.1f},{ys[i]:.1f}" for i in range(n))
-
-    return f"""
-    <svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="trend sparkline">
-      <polyline fill="none" stroke="#666" stroke-width="2" points="{pts}"></polyline>
-    </svg>
-    """.strip()
+    points = " ".join(pts)
+    return f'<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="trend sparkline"><polyline fill="none" stroke="#666" stroke-width="2" points="{points}"></polyline></svg>'
 
 
 def overall_state(states: list[str]) -> str:
-    # Green only if all Green. Red if 2+ Reds. Yellow otherwise.
     reds = sum(1 for s in states if s == "Red")
     yellows = sum(1 for s in states if s == "Yellow")
     if reds >= 2:
@@ -200,35 +212,17 @@ def overall_state(states: list[str]) -> str:
 
 def interpret(overall: str, st_gold: str, st_yield: str, st_nem_gold: str, st_gdx_gold: str) -> str:
     parts = []
-    if st_gold == "Green":
-        parts.append("Gold trend supportive")
-    elif st_gold == "Yellow":
-        parts.append("Gold trend mixed")
-    else:
-        parts.append("Gold trend deteriorating")
-
-    if st_yield == "Green":
-        parts.append("real yields supportive")
-    elif st_yield == "Yellow":
-        parts.append("real yields mixed")
-    else:
-        parts.append("real yields headwind")
+    parts.append("Gold trend supportive" if st_gold == "Green" else "Gold trend mixed" if st_gold == "Yellow" else "Gold trend deteriorating")
+    parts.append("real yields supportive" if st_yield == "Green" else "real yields mixed" if st_yield == "Yellow" else "real yields headwind")
 
     outperf = []
     if st_nem_gold == "Green":
         outperf.append("NEM")
     if st_gdx_gold == "Green":
         outperf.append("GDX")
-    if outperf:
-        parts.append("miners outperforming gold (" + ", ".join(outperf) + ")")
-    else:
-        parts.append("miners not clearly outperforming gold")
+    parts.append("miners outperforming gold (" + ", ".join(outperf) + ")" if outperf else "miners not clearly outperforming gold")
 
-    lead = {
-        "Green": "Overall tailwinds.",
-        "Yellow": "Overall mixed regime.",
-        "Red": "Overall headwinds.",
-    }.get(overall, "Overall mixed regime.")
+    lead = {"Green": "Overall tailwinds.", "Yellow": "Overall mixed regime.", "Red": "Overall headwinds."}.get(overall, "Overall mixed regime.")
     return lead + " " + "; ".join(parts) + "."
 
 
@@ -238,7 +232,6 @@ def html_page(payload: dict) -> str:
     overall = payload["overall"]
     interpretation = payload["interpretation"]
     panic = payload["panic"]
-
     tiles = payload["tiles"]
     rows = payload["rows"]
 
@@ -281,7 +274,7 @@ def html_page(payload: dict) -> str:
         <div class="card warn">
           <div style="font-weight:800;">Panic flush: ON</div>
           <div class="muted" style="margin-top:6px;">
-            Triggered by {panic["trigger"]}. This is designed to highlight fast selloffs while gold regime is not Red.
+            Triggered by {panic["trigger"]}. This highlights fast selloffs while gold regime is not Red.
           </div>
         </div>
         """
@@ -410,9 +403,6 @@ def html_page(payload: dict) -> str:
 """
 
 
-# ----------------------------
-# Main
-# ----------------------------
 def main():
     api_key = os.getenv("FRED_API_KEY", "").strip()
     if not api_key:
@@ -420,9 +410,13 @@ def main():
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Pull FRED
+    # Pull FRED with retries
     fred = Fred(api_key=api_key)
-    info = fred.get_series_info(FRED_SERIES_ID)
+
+    def _series_info():
+        return fred.get_series_info(FRED_SERIES_ID)
+
+    info = retry(_series_info, "FRED get_series_info")
 
     fred_last_updated = ""
     if isinstance(info, pd.DataFrame) and "last_updated" in info.index:
@@ -432,7 +426,10 @@ def main():
     if not fred_last_updated:
         fred_last_updated = "unknown"
 
-    s_yield = fred.get_series(FRED_SERIES_ID).dropna()
+    def _get_series():
+        return fred.get_series(FRED_SERIES_ID)
+
+    s_yield = retry(_get_series, "FRED get_series").dropna()
     s_yield.index = pd.to_datetime(s_yield.index)
     df_yield = add_mas(s_yield)
 
@@ -466,14 +463,14 @@ def main():
     overall = overall_state([st_gold, st_yield, st_nem_gold, st_gdx_gold])
     interpretation = interpret(overall, st_gold, st_yield, st_nem_gold, st_gdx_gold)
 
-    # Deltas (1D and 2D where possible)
+    # Deltas
     gold_prev, gold_last = safe_last_two(s_gold)
-    nem_prev, nem_last = safe_last_two(s_nem)
-    gdx_prev, gdx_last = safe_last_two(s_gdx)
-
     y_prev, y_last = safe_last_two(s_yield)
     nemg_prev, nemg_last = safe_last_two(s_nem_gold)
     gdxg_prev, gdxg_last = safe_last_two(s_gdx_gold)
+
+    nem_2ago, _, nem_now = safe_last_three(s_nem)
+    gdx_2ago, _, gdx_now = safe_last_three(s_gdx)
 
     def pct_delta(prev, last):
         if prev is None or last is None or prev == 0:
@@ -485,10 +482,6 @@ def main():
             return ""
         return bps(last - prev, 0)
 
-    # 2D (two trading days) deltas for prices and ratios
-    nem_2ago, nem_1ago, nem_now = safe_last_three(s_nem)
-    gdx_2ago, gdx_1ago, gdx_now = safe_last_three(s_gdx)
-
     def pct_2d(two_ago, now):
         if two_ago is None or now is None or two_ago == 0:
             return ""
@@ -497,8 +490,7 @@ def main():
     nem_2d = pct_2d(nem_2ago, nem_now)
     gdx_2d = pct_2d(gdx_2ago, gdx_now)
 
-    # Panic flush detector:
-    # Trigger if NEM or GDX drops >= 8% over 2 trading days, while gold trend is not Red.
+    # Panic flush detector
     panic_on = False
     panic_trigger = ""
 
@@ -522,15 +514,14 @@ def main():
 
     def tail_since(s: pd.Series) -> pd.Series:
         s2 = s.dropna()
-        s2 = s2[s2.index >= pd.to_datetime(cutoff)]
-        return s2
+        return s2[s2.index >= pd.to_datetime(cutoff)]
 
     spark_gold = spark_svg(tail_since(s_gold))
     spark_yield = spark_svg(tail_since(s_yield))
     spark_nemg = spark_svg(tail_since(s_nem_gold))
     spark_gdxg = spark_svg(tail_since(s_gdx_gold))
 
-    # Build signature so we only publish when data changed
+    # Signature (exclude built time from comparison)
     sig = {
         "built_at_utc": utc_now_str(),
         "fred": {
@@ -593,15 +584,6 @@ def main():
 
     tiles = [
         {
-            "name": "Overall",
-            "state": overall,
-            "value": overall,
-            "delta": "",
-            "delta2": "",
-            "sub": "Combined regime signal",
-            "spark": "",
-        },
-        {
             "name": "Gold trend",
             "state": st_gold,
             "value": fmt(float(df_gold["value"].iloc[-1])),
@@ -624,7 +606,7 @@ def main():
             "state": st_nem_gold,
             "value": fmt(float(df_nem_gold["value"].iloc[-1])),
             "delta": f"1D: {pct_delta(nemg_prev, nemg_last)}" if nemg_prev is not None else "",
-            "delta2": f"2D NEM: {nem_2d}" if nem_2ago is not None else "",
+            "delta2": f"2D NEM: {pct_2d(nem_2ago, nem_now)}" if nem_2ago is not None else "",
             "sub": f"{df_nem_gold.index[-1].date()}",
             "spark": spark_nemg,
         },
@@ -633,7 +615,7 @@ def main():
             "state": st_gdx_gold,
             "value": fmt(float(df_gdx_gold["value"].iloc[-1])),
             "delta": f"1D: {pct_delta(gdxg_prev, gdxg_last)}" if gdxg_prev is not None else "",
-            "delta2": f"2D GDX: {gdx_2d}" if gdx_2ago is not None else "",
+            "delta2": f"2D GDX: {pct_2d(gdx_2ago, gdx_now)}" if gdx_2ago is not None else "",
             "sub": f"{df_gdx_gold.index[-1].date()}",
             "spark": spark_gdxg,
         },
@@ -657,4 +639,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        # If something still goes wrong, do not delete/overwrite the existing monitor page.
+        print(f"Monitor build failed: {type(e).__name__}: {e}")
+        if OUT_HTML.exists():
+            print("Keeping existing monitor/index.html unchanged.")
+            raise SystemExit(0)
+        raise
