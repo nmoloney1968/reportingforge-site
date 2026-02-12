@@ -3,39 +3,164 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Monitor - FRED</title>
+  <title>Monitor</title>
   <style>
     body { font-family: Arial, Helvetica, sans-serif; margin: 18px; }
-    .card { border: 1px solid #ddd; border-radius: 10px; padding: 14px; max-width: 860px; }
-    .ok { background: #e9f7ec; }
     .muted { opacity: 0.75; }
-    .k { opacity: 0.75; }
-    .v { font-weight: 700; }
+    .top { margin-bottom: 14px; }
+    .grid { display: flex; gap: 12px; flex-wrap: wrap; }
+    .tile {
+      width: 240px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .tile-name { font-size: 13px; opacity: 0.8; }
+    .tile-state { font-size: 18px; font-weight: 800; margin-top: 6px; }
+    .tile-value { font-size: 16px; margin-top: 4px; font-weight: 700; }
+    .tile-sub { font-size: 12px; opacity: 0.75; margin-top: 4px; }
+
+    .green { background: #e9f7ec; }
+    .yellow { background: #fff7df; }
+    .red { background: #fdeaea; }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1100px;
+      margin-top: 14px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+    th { background: #f6f6f6; text-align: left; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .chip {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      font-weight: 700;
+      font-size: 12px;
+    }
     a { text-decoration: none; }
     a:hover { text-decoration: underline; }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px;
+      max-width: 1100px;
+      margin-top: 14px;
+    }
     code { background: #f5f5f5; padding: 2px 6px; border-radius: 6px; }
   </style>
 </head>
 <body>
-  <h2>Monitor - FRED Smoke Test</h2>
-
-  <div class="card ok">
-    <div><span class="k">Status:</span> <span class="v">OK</span></div>
-    <div><span class="k">Series:</span> <span class="v">DFII10 (10Y real yield)</span></div>
-    <div><span class="k">Last datapoint:</span> <span class="v">2026-02-10</span></div>
-    <div><span class="k">Last value:</span> <span class="v">1.840%</span></div>
-    <div><span class="k">FRED last_updated:</span> <span class="v">2026-02-11 15:16:45-06</span></div>
-    <div style="margin-top:10px;"><span class="k">Built:</span> <span class="v">2026-02-12 16:23 UTC</span></div>
+  <div class="top">
+    <h2 style="margin:0;">Monitor</h2>
+    <div class="muted">Built: <b>2026-02-12 16:37 UTC</b></div>
+    <div class="muted">FRED last_updated (DFII10): <b>2026-02-11 15:16:45-06</b></div>
   </div>
 
-  <p class="muted" style="margin-top:12px;">
-    This page is generated server-side via GitHub Actions. No API keys are exposed to the browser.
-  </p>
+  <div class="grid">
+    
+        <div class="tile green">
+          <div class="tile-name">Gold trend</div>
+          <div class="tile-state">Green</div>
+          <div class="tile-value">5,071.600</div>
+          <div class="tile-sub">GC=F close, 2026-02-11</div>
+        </div>
+        
 
-  <p class="muted">
-    Change detection file: <code>monitor/fred_last_updated.txt</code>
-  </p>
+        <div class="tile green">
+          <div class="tile-name">Real yield trend</div>
+          <div class="tile-state">Green</div>
+          <div class="tile-value">1.840%</div>
+          <div class="tile-sub">DFII10, 2026-02-10</div>
+        </div>
+        
 
-  <p><a href="/">Back to Reporting Forge</a></p>
+        <div class="tile green">
+          <div class="tile-name">NEM/Gold ratio</div>
+          <div class="tile-state">Green</div>
+          <div class="tile-value">0.025</div>
+          <div class="tile-sub">2026-02-11</div>
+        </div>
+        
+
+        <div class="tile green">
+          <div class="tile-name">GDX/Gold ratio</div>
+          <div class="tile-state">Green</div>
+          <div class="tile-value">0.021</div>
+          <div class="tile-sub">2026-02-11</div>
+        </div>
+        
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>State</th>
+        <th>Last date</th>
+        <th>Last value</th>
+        <th>MA50</th>
+        <th>MA200</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+        <tr>
+          <td>Gold (GC=F)</td>
+          <td><span class="chip green">Green</span></td>
+          <td>2026-02-11</td>
+          <td class="num">5,071.600</td>
+          <td class="num">4,576.920</td>
+          <td class="num">3,834.912</td>
+        </tr>
+        
+        <tr>
+          <td>10Y real yield (DFII10)</td>
+          <td><span class="chip green">Green</span></td>
+          <td>2026-02-10</td>
+          <td class="num">1.840%</td>
+          <td class="num">1.900%</td>
+          <td class="num">1.916%</td>
+        </tr>
+        
+        <tr>
+          <td>NEM/Gold ratio</td>
+          <td><span class="chip green">Green</span></td>
+          <td>2026-02-11</td>
+          <td class="num">0.025</td>
+          <td class="num">0.024</td>
+          <td class="num">0.020</td>
+        </tr>
+        
+        <tr>
+          <td>GDX/Gold ratio</td>
+          <td><span class="chip green">Green</span></td>
+          <td>2026-02-11</td>
+          <td class="num">0.021</td>
+          <td class="num">0.020</td>
+          <td class="num">0.018</td>
+        </tr>
+        
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="muted">
+      Source: FRED (DFII10) and Yahoo Finance via yfinance (GC=F, NEM, GDX). No API keys are exposed to the browser.
+    </div>
+    <div class="muted" style="margin-top:8px;">
+      Repo outputs: <code>monitor/index.html</code> and <code>monitor/monitor_signature.json</code>
+    </div>
+    <div style="margin-top:10px;">
+      <a href="/">Back to Reporting Forge</a>
+    </div>
+  </div>
 </body>
 </html>
