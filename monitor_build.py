@@ -13,7 +13,7 @@ from fredapi import Fred
 # ----------------------------
 # Config
 # ----------------------------
-TEMPLATE_VERSION = "v3-dark-fred-fallback-dxy-wti-2026-02-13"
+TEMPLATE_VERSION = "v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13"
 
 # FRED fallback chain for "real yields"
 # First one that successfully fetches wins.
@@ -137,13 +137,10 @@ def state_inverse_price_trend(df: pd.DataFrame) -> str:
     """
     latest = df.iloc[-1]
     v, m50, m200 = float(latest["value"]), float(latest["ma50"]), float(latest["ma200"])
-    # Strong uptrend
     if v > m200 and m50 > m200:
         return "Red"
-    # Mixed
     if v > m200:
         return "Yellow"
-    # Below long MA
     return "Green"
 
 
@@ -232,7 +229,6 @@ def spark_svg(s: pd.Series, width: int = 240, height: int = 44) -> str:
 
 
 def overall_state(states: list[str]) -> str:
-    # Green only if all Green. Red if 2+ Reds. Yellow otherwise.
     reds = sum(1 for s in states if s == "Red")
     yellows = sum(1 for s in states if s == "Yellow")
     if reds >= 2:
@@ -243,7 +239,9 @@ def overall_state(states: list[str]) -> str:
 
 
 def interpret(overall: str, bullets: list[str]) -> str:
-    lead = {"Green": "Overall tailwinds.", "Yellow": "Overall mixed regime.", "Red": "Overall headwinds."}.get(overall, "Overall mixed regime.")
+    lead = {"Green": "Overall tailwinds.", "Yellow": "Overall mixed regime.", "Red": "Overall headwinds."}.get(
+        overall, "Overall mixed regime."
+    )
     return lead + " " + "; ".join(bullets) + "."
 
 
@@ -251,10 +249,6 @@ def fetch_first_working_fred_series(
     fred: Fred,
     series_options: list[Tuple[str, str]],
 ) -> Tuple[str, str, pd.Series, str]:
-    """
-    Returns:
-      series_id_used, series_label_used, series_data, last_updated_string
-    """
     last_err: Optional[Exception] = None
 
     for series_id, label in series_options:
@@ -290,6 +284,7 @@ def html_page(payload: dict) -> str:
     panic = payload["panic"]
     tiles = payload["tiles"]
     rows = payload["rows"]
+    favicon_q = payload.get("favicon_q", TEMPLATE_VERSION)
 
     def tile_html(t):
         spark = t.get("spark", "")
@@ -349,8 +344,8 @@ def html_page(payload: dict) -> str:
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Monitor</title>
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="apple-touch-icon" href="../favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg?v={favicon_q}">
+  <link rel="apple-touch-icon" href="../favicon.svg?v={favicon_q}">
   <style>
     :root {{
       color-scheme: dark;
@@ -370,52 +365,6 @@ def html_page(payload: dict) -> str:
       --redTx: #ff9b9b;
       --link: #7cc4ff;
     }}
-        .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .brand:hover {
-      text-decoration: none;
-      opacity: 0.95;
-    }
-
-    .brand-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-    }
-
-    .brand-text {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: 0.2px;
-      line-height: 1;
-    }
-
-    .topmeta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    @media (max-width: 719px) {
-      .brand-text { font-size: 24px; }
-      .brand-icon { width: 26px; height: 26px; }
-    }
-
 
     body {{
       margin: 0;
@@ -430,14 +379,50 @@ def html_page(payload: dict) -> str:
       padding: 18px 16px 36px 16px;
     }}
 
-    h2 {{
-      margin: 0;
-      font-size: 28px;
-      letter-spacing: 0.2px;
+    .topbar {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
     }}
 
-    .top {{
-      margin-bottom: 14px;
+    .brand {{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+    }}
+
+    .brand:hover {{
+      text-decoration: none;
+      opacity: 0.95;
+    }}
+
+    .brand-icon {{
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }}
+
+    .brand-text {{
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      line-height: 1;
+    }}
+
+    .topmeta {{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }}
+
+    @media (max-width: 719px) {{
+      .brand-text {{ font-size: 24px; }}
+      .brand-icon {{ width: 26px; height: 26px; }}
     }}
 
     .muted {{
@@ -469,7 +454,6 @@ def html_page(payload: dict) -> str:
 
     @media (max-width: 719px) {{
       .tile {{ grid-column: span 12; }}
-      h2 {{ font-size: 24px; }}
     }}
 
     .tile-name {{
@@ -602,7 +586,7 @@ def html_page(payload: dict) -> str:
   <div class="wrap">
     <div class="topbar">
       <a class="brand" href="/" title="Reporting Forge">
-        <img src="../favicon.svg" alt="RF" class="brand-icon">
+        <img src="../favicon.svg?v={favicon_q}" alt="RF" class="brand-icon">
         <span class="brand-text">Monitor</span>
       </a>
       <div class="topmeta">
@@ -700,8 +684,6 @@ def main():
     st_yield = state_yield_trend(df_yield)
     st_nem_gold = state_ratio_trend(df_nem_gold)
     st_gdx_gold = state_ratio_trend(df_gdx_gold)
-
-    # Headwind indicators (inverted)
     st_dxy = state_inverse_price_trend(df_dxy)
     st_wti = state_inverse_price_trend(df_wti)
 
@@ -778,7 +760,6 @@ def main():
     spark_dxy = spark_svg(tail_since(s_dxy))
     spark_wti = spark_svg(tail_since(s_wti))
 
-    # Signature (forces rebuild on template changes)
     sig = {
         "template_version": TEMPLATE_VERSION,
         "built_at_utc": utc_now_str(),
@@ -911,6 +892,7 @@ def main():
         "panic": panic,
         "tiles": tiles,
         "rows": rows,
+        "favicon_q": TEMPLATE_VERSION,
     }
 
     OUT_HTML.write_text(html_page(payload), encoding="utf-8")
