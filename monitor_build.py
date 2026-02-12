@@ -21,6 +21,8 @@ YF_TICKERS = {
     "GDX": "GDX",
 }
 
+TEMPLATE_VERSION = "v2-dark-2026-02-13"
+
 MA_FAST = 50
 MA_SLOW = 200
 LOOKBACK_DAYS = 365 * 2  # pull 2 years for stable MAs
@@ -666,6 +668,7 @@ def main():
     spark_gdxg = spark_svg(tail_since(s_gdx_gold))
 
     sig = {
+        "template_version": TEMPLATE_VERSION,
         "built_at_utc": utc_now_str(),
         "fred": {
             "series": FRED_SERIES_ID,
@@ -700,6 +703,7 @@ def main():
         x = dict(d) if isinstance(d, dict) else {}
         x.pop("built_at_utc", None)
         return x
+
 
     if OUT_HTML.exists() and prev_sig and stable_sig(prev_sig) == stable_sig(sig):
         print("No meaningful change detected. Skipping HTML write.")
