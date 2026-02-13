@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Example – Service Performance and Retention Dashboard (Zendesk + CRM + SLA Sheet) | Reporting Forge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Example reporting workflow for SMB operators: connect ticketing, CRM, and SLA targets into a service and retention dashboard.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+:root {
+      --bg: #020617;
+      --bg-card: rgba(15,23,42,0.97);
+      --border-subtle: #1e293b;
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 50%, #000000 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .shell {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.4rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .brand-title {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--text);
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    nav a.active {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .nav-cta:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,0.9);
+    }
+
+    .card {
+      border-radius: 22px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: var(--bg-card);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.8);
+      padding: 2.1rem 1.8rem 2.1rem;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      margin: 0 0 0.9rem;
+      font-size: 1.9rem;
+    }
+
+    h2 {
+      margin-top: 1.6rem;
+      margin-bottom: 0.4rem;
+      font-size: 1.1rem;
+    }
+
+    p {
+      margin: 0 0 0.7rem;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    ul {
+      margin: 0.4rem 0 0.8rem;
+      padding-left: 1.3rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    li { margin-bottom: 0.25rem; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.28rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.9);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.25);
+    }
+
+    .highlight {
+      background: var(--accent-soft);
+      border-radius: 999px;
+      padding: 0.08rem 0.45rem;
+      color: #e0f2fe;
+    }
+
+    footer {
+      margin-top: 2.4rem;
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .card {
+        padding: 1.7rem 1.4rem 1.8rem;
+      }
+    }
+  
+    .rf-figure { margin: 1.25rem 0 1.75rem; }
+    .rf-graphic {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 18px;
+      border: 1px solid var(--border-subtle);
+      background: #0b1220;
+    }
+    .rf-caption {
+      margin-top: 0.65rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+</style>
+</head>
+<body>
+
+  <div class="shell">
+    <header>
+      <a href="index.html" class="brand">
+        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
+        <div class="brand-text">
+          <div class="brand-title">Reporting Forge</div>
+          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
+        </div>
+      </a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="early-access.html" class="nav-cta">Get early access</a>
+      </nav>
+    </header>
+
+<main class="card">  <div class="pill">
+        <span class="pill-dot"></span>
+        <span>Example build: Service performance and retention risk</span>
+      </div><h1>Example 3: Service performance that protects renewals</h1><p>This example is for an SMB operator who wants a simple answer to: <span class="highlight">Are we meeting our service promise</span>, and <span class="highlight">which customers are at risk</span> because support is struggling?</p>
+      <figure class="rf-figure">
+        <img class="rf-graphic" src="assets/graphics/workflow.svg" alt="Workflow: sources to dashboard to scheduled refresh" loading="lazy" decoding="async">
+        <figcaption class="rf-caption">The core loop: connect sources, extract and clean once, calculate KPIs consistently, then refresh on demand or on a schedule.</figcaption>
+      </figure>
+
+      <figure class="rf-figure">
+        <img class="rf-graphic" src="assets/graphics/before-after.svg" alt="Before and after: manual reporting loops vs a refreshable system" loading="lazy" decoding="async">
+        <figcaption class="rf-caption">What changes: you replace slow back-and-forth with a small system you control.</figcaption>
+      </figure>
+
+      <figure class="rf-figure">
+        <img class="rf-graphic" src="assets/graphics/dashboard-mock.svg" alt="Operator dashboard mock showing KPIs, trends, and next actions" loading="lazy" decoding="async">
+        <figcaption class="rf-caption">End result: a dashboard that answers weekly operator questions and highlights the next actions.</figcaption>
+      </figure>
+<p>You connect your ticket system to your CRM, apply simple SLA targets, and make risk visible before churn shows up in revenue.</p><h2>Step 1: Connect the sources</h2><p>Typical sources:</p>
+<ul>
+  <li><strong>Zendesk</strong> or <strong>Freshdesk</strong> for tickets, tags, priorities, and timestamps.</li>
+  <li><strong>CRM</strong> (HubSpot, Pipedrive, Salesforce) for account tier, owner, renewal date, and ARR.</li>
+  <li><strong>Spreadsheet</strong> for SLA targets and escalation rules.</li>
+</ul>
+<p>Even a small team can benefit from a daily refresh and a single backlog view.</p><h2>Step 2: Build clean tables and consistent KPIs</h2><p>Clean, reusable tables:</p>
+<ul>
+  <li><code>tickets</code>, <code>ticket_events</code></li>
+  <li><code>accounts</code> (from CRM)</li>
+  <li><code>sla_targets</code> (from your sheet)</li>
+</ul>
+<p>Operator-grade KPIs:</p>
+<ul>
+  <li><strong>SLA compliance</strong> for first response and resolution.</li>
+  <li><strong>Median first response</strong> and <strong>median resolution</strong> by priority.</li>
+  <li><strong>Backlog</strong> (open tickets) and trend.</li>
+  <li><strong>Top categories</strong> driving volume and rework.</li>
+  <li><strong>At-risk accounts</strong> flagged by ticket intensity and SLA misses.</li>
+</ul>
+<p>You are not building an enterprise ITSM platform. You are building a simple view that helps you protect customer trust.</p><h2>Step 3: Publish a dashboard that answers operator questions</h2><p>Questions you can answer in under 5 minutes:</p>
+<ul>
+  <li>Are we meeting our service promise this week?</li>
+  <li>What is breaking right now, and what category is driving it?</li>
+  <li>Which customers are at risk due to support pain?</li>
+  <li>Where should we add capacity or fix the product?</li>
+</ul>
+<p>Suggested layout:</p>
+<ul>
+  <li>Top row: SLA %, Median first response, Median resolution, Open backlog.</li>
+  <li>Middle: Volume by category, SLA misses by priority, trend lines.</li>
+  <li>Bottom: <span class="highlight">At-risk accounts</span> table with owner and renewal date.</li>
+</ul><h2>What you end up with</h2><ul>
+  <li>A refreshable service dashboard that management can trust.</li>
+  <li>A practical way to spot churn risk early.</li>
+  <li>A clean path to add more signals later (NPS, product telemetry, refunds).</li>
+</ul></main>
+
+    <footer>
+      <div>© <span id="year"></span> Reporting Forge. SkyLink Test Network is a fictional sandbox.</div>
+      <div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-label="Before and after reporting workflow">
+  <defs>
+    <linearGradient id="rfGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2D9CDB"/>
+      <stop offset="1" stop-color="#6BDCCB"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+
+    <style>
+      .bg { fill:#0B1220; }
+      .title { font:800 26px Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; fill:#EAF2FF; }
+      .sub { font:500 14px Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; fill:#A9B7D0; }
+      .panel { fill:#111A2E; stroke:#24304A; stroke-width:2; }
+      .panelTitle { font:800 18px Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; fill:#EAF2FF; }
+      .body { font:500 14px Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; fill:#A9B7D0; }
+      .line { stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+      .accent { stroke:#2D9CDB; }
+      .mint { stroke:#6BDCCB; }
+      .rfText { font:800 14px Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; fill:#06101D; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1200" height="560" rx="28"/>
+
+  <!-- RF badge -->
+  <g transform="translate(36,32)" filter="url(#shadow)">
+    <rect x="0" y="0" width="44" height="44" rx="12" fill="url(#rfGrad)"/>
+    <text x="22" y="28" text-anchor="middle" class="rfText">RF</text>
+  </g>
+
+  <text x="100" y="60" class="title">Before vs After</text>
+  <text x="100" y="88" class="sub">Manual reporting loops vs a refreshable system you control</text>
+
+  <g filter="url(#shadow)">
+    <!-- Before panel -->
+    <g transform="translate(40,130)">
+      <rect class="panel" x="0" y="0" width="560" height="380" rx="24"/>
+      <text x="24" y="44" class="panelTitle">Before</text>
+      <text x="24" y="70" class="sub">Exports, copy/paste, and stale dashboards</text>
+
+      <g transform="translate(24,110)">
+        <rect x="0" y="0" width="240" height="70" rx="18" fill="#ff6384" fill-opacity="0.12" stroke="#ff6384" stroke-opacity="0.70" stroke-width="3"/>
+        <text x="18" y="42" class="panelTitle" fill="#FFD6DF">CSV exports</text>
+
+        <rect x="40" y="90" width="240" height="70" rx="18" fill="#ff6384" fill-opacity="0.12" stroke="#ff6384" stroke-opacity="0.70" stroke-width="3"/>
+        <text x="58" y="132" class="panelTitle" fill="#FFD6DF">Copy + paste</text>
+
+        <rect x="80" y="180" width="240" height="70" rx="18" fill="#ff6384" fill-opacity="0.12" stroke="#ff6384" stroke-opacity="0.70" stroke-width="3"/>
+        <text x="98" y="222" class="panelTitle" fill="#FFD6DF">Endless rework</text>
+
+        <path class="line" d="M310 26c30 0 30 36 60 36s30-36 60-36" stroke="#ff6384" stroke-opacity="0.75" fill="none"/>
+        <path class="line" d="M310 118c30 0 30 36 60 36s30-36 60-36" stroke="#ff6384" stroke-opacity="0.75" fill="none"/>
+        <path class="line" d="M310 210c30 0 30 36 60 36s30-36 60-36" stroke="#ff6384" stroke-opacity="0.75" fill="none"/>
+
+        <text x="310" y="300" class="body">Symptoms:</text>
+        <text x="310" y="328" class="body">- stale numbers</text>
+        <text x="310" y="352" class="body">- slow changes</text>
+        <text x="310" y="376" class="body">- mistrust and guessing</text>
+      </g>
+    </g>
+
+    <!-- After panel -->
+    <g transform="translate(600,130)">
+      <rect class="panel" x="0" y="0" width="560" height="380" rx="24"/>
+      <text x="24" y="44" class="panelTitle">After</text>
+      <text x="24" y="70" class="sub">Pull, clean, model, refresh - then iterate fast</text>
+
+      <g transform="translate(24,110)">
+        <rect x="0" y="0" width="240" height="70" rx="18" fill="#6BDCCB" fill-opacity="0.10" stroke="#6BDCCB" stroke-width="3"/>
+        <text x="18" y="42" class="panelTitle" fill="#D7FFF6">Auto pull</text>
+
+        <rect x="40" y="90" width="240" height="70" rx="18" fill="#6BDCCB" fill-opacity="0.10" stroke="#6BDCCB" stroke-width="3"/>
+        <text x="58" y="132" class="panelTitle" fill="#D7FFF6">Clean tables</text>
+
+        <rect x="80" y="180" width="240" height="70" rx="18" fill="#6BDCCB" fill-opacity="0.10" stroke="#6BDCCB" stroke-width="3"/>
+        <text x="98" y="222" class="panelTitle" fill="#D7FFF6">KPI model</text>
+
+        <path class="line accent" d="M252 36h70" fill="none"/>
+        <path class="line accent" d="M292 128h70" fill="none"/>
+        <path class="line accent" d="M332 218h70" fill="none"/>
+
+        <g fill="#2D9CDB">
+          <path d="M322 36l-10-7v14z"/>
+          <path d="M362 128l-10-7v14z"/>
+          <path d="M402 218l-10-7v14z"/>
+        </g>
+
+        <g transform="translate(350,10)">
+          <rect x="0" y="0" width="186" height="140" rx="22" fill="#2D9CDB" fill-opacity="0.10" stroke="#2D9CDB" stroke-width="3"/>
+          <rect x="18" y="18" width="56" height="22" rx="10" fill="#6BDCCB" fill-opacity="0.16" stroke="#6BDCCB" stroke-width="2"/>
+          <rect x="84" y="18" width="42" height="22" rx="10" fill="#6BDCCB" fill-opacity="0.08" stroke="#6BDCCB" stroke-width="2"/>
+          <path class="line mint" d="M18 110c20-24 34-6 50-22c12-12 22-10 34-20c12-10 22-6 34-16" fill="none"/>
+          <text x="18" y="164" class="body">Refresh OK daily</text>
+        </g>
+
+        <text x="350" y="220" class="body">Results:</text>
+        <text x="350" y="248" class="body">- trusted KPIs</text>
+        <text x="350" y="272" class="body">- fast changes</text>
+        <text x="350" y="296" class="body">- one view of the business</text>
+      </g>
+    </g>
+  </g>
+
+  <text x="40" y="532" class="sub">The win is fewer surprises and faster decisions.</text>
+</svg>
