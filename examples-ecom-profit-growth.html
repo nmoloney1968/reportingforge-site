@@ -233,6 +233,16 @@
       font-size: 0.85rem;
       color: var(--text-muted);
     }
+
+    .crumbs {
+      margin: -0.8rem 0 1.2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .crumbs a { color: var(--text-muted); text-decoration: none; }
+    .crumbs a:hover { text-decoration: underline; }
+    .crumbs .sep { margin: 0 0.45rem; color: #475569; }
+
 </style>
 </head>
 <body>
@@ -255,10 +265,21 @@
       </nav>
     </header>
 
+    <div class="crumbs">
+      <a href="index.html">Home</a><span class="sep">/</span>
+      <a href="examples.html">Examples</a><span class="sep">/</span>
+      <span>Ecommerce profit and growth (deep dive)</span>
+    </div>
+
+
 <main class="card">  <div class="pill">
         <span class="pill-dot"></span>
         <span>Example build: Profit and growth you can trust</span>
       </div><h1>Example 2: Ecommerce profit and growth, not vanity metrics</h1><p>This example is for an SMB owner who sees revenue moving but still cannot answer the question: <span class="highlight">Are we actually making money</span> after refunds, shipping, and ads?</p>
+      <p class="note" style="margin-top:0.75rem;">
+        Prefer the quick skim? <a href="tldr-ecom-profit-growth.html">Open the TL;DR version</a>.
+      </p>
+
       <figure class="rf-figure">
         <img class="rf-graphic" src="assets/graphics/workflow.svg" alt="Workflow: sources to dashboard to scheduled refresh" loading="lazy" decoding="async">
         <figcaption class="rf-caption">The core loop: connect sources, extract and clean once, calculate KPIs consistently, then refresh on demand or on a schedule.</figcaption>
