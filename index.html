@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Reporting Forge – AI first automation for Python, APIs, and Power BI</title>
+  <title>Reporting Forge - AI first automation for Python, APIs, and Power BI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="30 day AI first workflow to automate real business reporting with Python, APIs, and Power BI. AI writes most of the code – you steer.">
+  <meta name="description" content="A 30 day, AI-first workflow for SMB owner/operators to turn spreadsheets and SaaS data into refreshable dashboards and reports. AI writes most of the code - you steer.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,196 +29,204 @@
       margin: 0;
       min-height: 100vh;
       font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #0f172a 0, #020617 50%, #000000 100%);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.15), rgba(2,6,23,0.98)),
+                  radial-gradient(circle at 70% 20%, rgba(107,220,203,0.12), rgba(2,6,23,0.98)),
+                  var(--bg);
       color: var(--text);
-      -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     .shell {
-      max-width: 1080px;
+      max-width: 1160px;
       margin: 0 auto;
-      padding: 1.75rem 1.25rem 3.4rem;
+      padding: 1.1rem 1.1rem 2.2rem;
     }
 
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
-      margin-bottom: 2.6rem;
+      gap: 1rem;
+      padding: 0.5rem 0 1.2rem;
     }
 
     .brand {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
+      gap: 0.9rem;
+      min-width: 260px;
     }
 
-    .brand-logo {
-      height: 40px;
-      width: auto;
-      display: block;
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(56,189,248,1), rgba(107,220,203,1));
+      display: grid;
+      place-items: center;
+      color: #06101D;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      flex: 0 0 auto;
     }
 
     .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
+      line-height: 1.15;
     }
 
     .brand-title {
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      color: var(--text);
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: #e0f2fe;
     }
 
-    .brand-sub {
-      font-size: 0.75rem;
+    .brand-subtitle {
+      font-size: 0.78rem;
       color: var(--text-muted);
     }
 
     nav {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
-      font-size: 0.9rem;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     nav a {
       color: var(--text-muted);
-      text-decoration: none;
+      font-size: 0.92rem;
     }
 
     nav a.active {
-      color: var(--text);
-      font-weight: 500;
+      color: #e0f2fe;
+      font-weight: 600;
     }
 
     .nav-cta {
-      padding: 0.45rem 0.9rem;
+      padding: 0.55rem 0.95rem;
       border-radius: 999px;
       border: 1px solid rgba(56,189,248,0.6);
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
-      font-size: 0.82rem;
+      background: rgba(56,189,248,0.10);
+      color: #e0f2fe;
+      font-size: 0.9rem;
       font-weight: 500;
     }
 
     .nav-cta:hover {
       text-decoration: none;
-      border-color: rgba(56,189,248,0.9);
+      border-color: rgba(56,189,248,1);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 1.9rem;
-      align-items: stretch;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 1.2rem;
+      align-items: start;
+      margin-top: 0.6rem;
+    }
+
+    @media (max-width: 960px) {
+      .grid { grid-template-columns: 1fr; }
+      nav { justify-content: flex-start; }
+      .brand { min-width: unset; }
     }
 
     .hero {
-      border-radius: 24px;
-      border: 1px solid rgba(148,163,184,0.7);
-      background: var(--bg-card);
-      box-shadow: 0 22px 50px rgba(15,23,42,0.95);
-      padding: 2.1rem 1.9rem 2.2rem;
+      border-radius: 28px;
+      border: 1px solid rgba(148,163,184,0.28);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.10), rgba(15,23,42,0.98));
+      padding: 2.2rem 2.2rem 2.0rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
     }
 
     .pill {
       display: inline-flex;
-      align-items: center;
       gap: 0.5rem;
-      padding: 0.32rem 0.9rem;
+      align-items: center;
+      padding: 0.35rem 0.75rem;
       border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.7);
-      background: rgba(15,23,42,0.98);
-      font-size: 0.8rem;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.25);
       color: var(--text-muted);
-      margin-bottom: 1rem;
+      font-size: 0.85rem;
     }
 
     .pill-dot {
-      width: 9px;
-      height: 9px;
+      width: 10px;
+      height: 10px;
       border-radius: 999px;
       background: var(--good);
-      box-shadow: 0 0 0 4px rgba(34,197,94,0.25);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.18);
     }
 
     h1 {
-      margin: 0 0 0.8rem;
-      font-size: clamp(2.1rem, 3vw, 2.5rem);
-      line-height: 1.1;
+      margin: 1.1rem 0 0.9rem;
+      font-size: 3.25rem;
+      line-height: 1.02;
+      letter-spacing: -0.02em;
     }
 
-    h1 span {
-      display: block;
+    h1 span { display: block; }
+
+    @media (max-width: 520px) {
+      h1 { font-size: 2.4rem; }
+      .hero { padding: 1.5rem; }
     }
 
     .hero-sub {
-      font-size: 0.98rem;
-      color: var(--text-muted);
-      margin-bottom: 1.4rem;
-      max-width: 34rem;
-    }
-
-    .hero-sub strong {
-      color: #e5e7eb;
-      font-weight: 600;
+      margin: 0 0 1.15rem;
+      color: rgba(226,232,240,0.92);
+      font-size: 1.02rem;
+      line-height: 1.6;
     }
 
     .bullet-row {
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 1.4rem;
+      margin-top: 1.2rem;
+      display: grid;
+      gap: 0.7rem;
     }
 
     .bullet-row-item {
       display: flex;
+      gap: 0.6rem;
       align-items: flex-start;
-      gap: 0.45rem;
+      color: rgba(226,232,240,0.92);
+      font-size: 0.98rem;
+      line-height: 1.45;
     }
 
     .check {
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       border-radius: 999px;
-      background: rgba(34,197,94,0.15);
-      border: 1px solid rgba(34,197,94,0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 0.1rem;
-      flex-shrink: 0;
+      border: 1px solid rgba(34,197,94,0.55);
+      background: rgba(34,197,94,0.10);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      margin-top: 0.18rem;
     }
 
     .check svg {
-      width: 9px;
-      height: 9px;
-      stroke: #bbf7d0;
-      stroke-width: 2.4;
+      width: 14px;
+      height: 14px;
       fill: none;
+      stroke: rgba(34,197,94,0.95);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .cta-row {
+      margin-top: 1.55rem;
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
       align-items: center;
-      margin-bottom: 0.6rem;
+      gap: 0.9rem;
+      flex-wrap: wrap;
     }
 
     .cta-primary {
@@ -237,6 +245,22 @@
       border-color: rgba(56,189,248,1);
     }
 
+    .cta-secondary-btn {
+      padding: 0.7rem 1.1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: var(--accent-soft);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .cta-secondary-btn:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,0.6);
+    }
+
     .cta-secondary {
       font-size: 0.86rem;
       color: var(--text-muted);
@@ -246,114 +270,91 @@
       color: var(--accent);
     }
 
-    .eyebrow {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
-    }
-
     .side-card {
-      border-radius: 20px;
-      border: 1px solid rgba(30,64,175,0.85);
-      background: radial-gradient(circle at top left, rgba(30,64,175,0.5), #020617 55%);
-      padding: 1.6rem 1.5rem 1.7rem;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-    }
-
-    .side-heading {
-      font-size: 0.98rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #e5e7eb;
-    }
-
-    .side-card ul {
-      margin: 0.4rem 0 0.8rem;
-      padding-left: 1.3rem;
-    }
-
-    .side-card li {
-      margin-bottom: 0.25rem;
+      border-radius: 28px;
+      border: 1px solid rgba(56,189,248,0.25);
+      background: radial-gradient(circle at top right, rgba(56,189,248,0.16), rgba(2,6,23,0.98));
+      padding: 1.6rem 1.6rem 1.4rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
     }
 
     .tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
-      padding: 0.18rem 0.6rem;
+      gap: 0.5rem;
+      padding: 0.32rem 0.65rem;
       border-radius: 999px;
-      border: 1px solid rgba(191,219,254,0.7);
-      background: rgba(15,23,42,0.9);
-      font-size: 0.78rem;
-      color: #bfdbfe;
-      margin-bottom: 0.4rem;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.25);
+      color: rgba(226,232,240,0.92);
+      font-size: 0.86rem;
     }
 
     .tag-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
-      background: #bfdbfe;
+      background: rgba(226,232,240,0.9);
+    }
+
+    .side-heading {
+      margin-top: 0.9rem;
+      font-weight: 700;
+      color: #e0f2fe;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+    }
+
+    .side-card ul {
+      margin: 0.75rem 0 0;
+      padding-left: 1.1rem;
+      color: rgba(226,232,240,0.92);
+      line-height: 1.55;
+    }
+
+    .side-card li {
+      margin: 0.45rem 0;
+    }
+
+    .side-card p {
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0.9rem 0 0;
     }
 
     footer {
-      margin-top: 2.6rem;
-      border-top: 1px solid rgba(15,23,42,0.9);
-      padding-top: 1rem;
-      font-size: 0.78rem;
-      color: var(--text-muted);
+      margin-top: 1.7rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(148,163,184,0.2);
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      gap: 0.8rem;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      gap: 1rem;
       flex-wrap: wrap;
     }
 
-    @media (max-width: 880px) {
-      .grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .side-card {
-        order: -1;
-      }
+    .footer-links a {
+      color: var(--text-muted);
+      margin-left: 0.9rem;
     }
 
-    @media (max-width: 720px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav {
-        width: 100%;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-      }
-
-      .hero {
-        padding: 1.8rem 1.5rem 1.9rem;
-      }
-
-      .side-card {
-        padding: 1.4rem 1.3rem 1.5rem;
-      }
-    }
+    .footer-links a:hover { color: #e0f2fe; }
   </style>
 </head>
+
 <body>
   <div class="shell">
     <header>
-      <a href="index.html" class="brand">
-        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
+      <div class="brand">
+        <div class="brand-mark">RF</div>
         <div class="brand-text">
           <div class="brand-title">Reporting Forge</div>
-          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
+          <div class="brand-subtitle">AI first automation for Python, APIs, and Power BI</div>
         </div>
-      </a>
+      </div>
+
       <nav>
         <a href="index.html" class="active">Overview</a>
         <a href="examples.html">Examples</a>
@@ -368,7 +369,7 @@
       <section class="hero">
         <div class="pill">
           <span class="pill-dot"></span>
-          <span>30 day AI first workflow for real business reporting</span>
+          <span>30 day AI-first workflow for SMB dashboards and reporting</span>
         </div>
 
         <h1>
@@ -377,9 +378,10 @@
         </h1>
 
         <p class="hero-sub">
-          <strong>Reporting Forge</strong> is a practical book and sandbox that shows you how to use
-          AI, Python, APIs, and Power BI together to automate one real reporting workflow from
-          end to end. AI writes most of the code – you steer.
+          <strong>Reporting Forge</strong> is a practical book and sandbox for SMB owner/operators who are tired of
+          exporting data, stitching spreadsheets, and guessing at KPIs. You will learn a repeatable way to pull data
+          from spreadsheets and SaaS tools (including APIs), clean it into reliable tables, and ship a dashboard that
+          refreshes on demand or on a schedule. AI writes most of the code - you steer.
         </p>
 
         <div class="bullet-row">
@@ -391,54 +393,58 @@
             </span>
             <span>You will <strong>not</strong> be hand-writing long Python scripts or complex DAX.</span>
           </div>
+
           <div class="bullet-row-item">
             <span class="check">
               <svg viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M4 8.5 6.6 11 12 5" />
               </svg>
             </span>
-            <span>You learn how to ask AI for the code you need, then adapt and verify it.</span>
+            <span>You learn how to ask AI for the code you need, then adapt and verify it against your numbers.</span>
           </div>
+
           <div class="bullet-row-item">
             <span class="check">
               <svg viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M4 8.5 6.6 11 12 5" />
               </svg>
             </span>
-            <span>You practise on the <strong>SkyLink Test Network</strong> – a small, safe API built just for this book.</span>
+            <span>You practice with spreadsheets and the <strong>SkyLink Test Network</strong> - a safe sandbox API built for realistic business-style data.</span>
           </div>
         </div>
 
         <div class="cta-row">
           <a href="early-access.html" class="cta-primary">Join the early access list</a>
+          <a href="examples.html" class="cta-secondary-btn">See examples</a>
           <div class="cta-secondary">
             or read more <a href="about.html">about the book</a> and the approach.
           </div>
         </div>
 
-        <div class="cta-secondary">
-          No prior Python or Power BI experience is required – just curiosity and a reporting problem you care about.
+        <div class="cta-secondary" style="margin-top: 0.85rem;">
+          No prior Python or Power BI experience is required - just a business question you want answered every week.
         </div>
       </section>
 
       <aside class="side-card">
         <div class="tag">
           <span class="tag-dot"></span>
-          <span>What you will work with</span>
+          <span>What you will connect</span>
         </div>
-        <div class="side-heading">Inside the 30 day plan</div>
+
+        <div class="side-heading">Inside the 30 day plan for SMB operators</div>
         <ul>
-          <li>Short daily prompts you can paste into your AI assistant.</li>
-          <li>A tiny Python toolbelt: requests, a few data transforms, and file output.</li>
-          <li>The <strong>SkyLink</strong> sandbox API for realistic but safe data.</li>
-          <li>A Power BI report that you grow step by step.</li>
+          <li>Short daily prompts you can paste into your AI assistant to build your workflow.</li>
+          <li>A tiny Python toolbelt: API pulls, a few transforms, and clean outputs you can trust.</li>
+          <li>The <strong>SkyLink</strong> sandbox API for realistic but safe SMB-style data.</li>
+          <li>A Power BI dashboard you grow step by step (or export to spreadsheets if you prefer).</li>
         </ul>
 
         <div class="side-heading" style="margin-top:1.1rem;">What you will ship</div>
         <ul>
-          <li>One automated workflow that fetches data from an API, cleans it, and feeds a report.</li>
-          <li>A reusable prompt library for AI that you can adapt to other reports.</li>
-          <li>A clearer sense of when you need a “real platform” and when a few scripts are enough.</li>
+          <li>One end-to-end workflow that pulls data from spreadsheets and SaaS tools, cleans it, and refreshes a dashboard.</li>
+          <li>A reusable prompt library you can reuse for every report your business needs.</li>
+          <li>A clear sense of when a lightweight workflow is enough and when you truly need a platform.</li>
         </ul>
 
         <p style="margin-top:0.9rem;">
@@ -450,12 +456,15 @@
 
     <footer>
       <div>© <span id="year"></span> Reporting Forge. SkyLink Test Network is a fictional sandbox.</div>
-      <div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+      <div class="footer-links">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+      </div>
     </footer>
   </div>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
