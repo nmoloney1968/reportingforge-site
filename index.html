@@ -73,9 +73,7 @@
       flex: 0 0 auto;
     }
 
-    .brand-text {
-      line-height: 1.15;
-    }
+    .brand-text { line-height: 1.15; }
 
     .brand-title {
       font-weight: 700;
@@ -170,7 +168,8 @@
       letter-spacing: -0.02em;
     }
 
-    h1 span { display: block; }
+    /* Helps the headline break more predictably */
+    .headline-line { display: block; }
 
     @media (max-width: 520px) {
       h1 { font-size: 2.4rem; }
@@ -182,6 +181,7 @@
       color: rgba(226,232,240,0.92);
       font-size: 1.02rem;
       line-height: 1.6;
+      max-width: 58ch;
     }
 
     .bullet-row {
@@ -266,8 +266,14 @@
       color: var(--text-muted);
     }
 
-    .cta-secondary a {
-      color: var(--accent);
+    .cta-secondary a { color: var(--accent); }
+
+    .micro-line {
+      margin-top: 0.85rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      max-width: 62ch;
     }
 
     .side-card {
@@ -312,9 +318,7 @@
       line-height: 1.55;
     }
 
-    .side-card li {
-      margin: 0.45rem 0;
-    }
+    .side-card li { margin: 0.45rem 0; }
 
     .side-card p {
       color: var(--text-muted);
@@ -373,15 +377,14 @@
         </div>
 
         <h1>
-          <span>Build automated reports</span>
-          <span>with almost no coding</span>
+          <span class="headline-line">Build automated reports</span>
+          <span class="headline-line">with almost no coding</span>
         </h1>
 
         <p class="hero-sub">
-          <strong>Reporting Forge</strong> is a practical book and sandbox for SMB owner/operators who are tired of
-          exporting data, stitching spreadsheets, and guessing at KPIs. You will learn a repeatable way to pull data
-          from spreadsheets and SaaS tools (including APIs), clean it into reliable tables, and ship a dashboard that
-          refreshes on demand or on a schedule. AI writes most of the code - you steer.
+          Reporting Forge helps SMB owner/operators turn scattered spreadsheets and SaaS data into a refreshable dashboard
+          that answers weekly operator questions. AI writes most of the code while you steer the logic, definitions, and
+          outputs you trust.
         </p>
 
         <div class="bullet-row">
@@ -415,13 +418,15 @@
 
         <div class="cta-row">
           <a href="early-access.html" class="cta-primary">Join the early access list</a>
-          <a href="examples.html" class="cta-secondary-btn">See examples</a>
+          <a href="examples.html" class="cta-secondary-btn">See dashboards like yours</a>
           <div class="cta-secondary">
             or read more <a href="about.html">about the book</a> and the approach.
           </div>
         </div>
 
-        <div class="cta-secondary" style="margin-top: 0.85rem;">
+        <p class="micro-line">Start with one source. Prove refresh. Add complexity only when it pays off.</p>
+
+        <div class="cta-secondary" style="margin-top: 0.2rem;">
           No prior Python or Power BI experience is required - just a business question you want answered every week.
         </div>
       </section>
