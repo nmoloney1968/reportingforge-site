@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy - The SME Automation Lab - Reporting Forge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Buy The SME Automation Lab (Reporting Forge). Instant purchase, personalized PDF delivered by email.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-card: rgba(15,23,42,0.97);
+      --text: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56,189,248,0.1);
+      --ok: #34d399;
+      --border: rgba(148,163,184,0.6);
+      --border-soft: rgba(148,163,184,0.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #0f172a 0, #020617 50%, #000000 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.0rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .brand-logo { height: 40px; width: auto; display: block; }
+
+    .brand-text { display: flex; flex-direction: column; gap: 0.1rem; }
+    .brand-title { font-size: 1rem; font-weight: 600; letter-spacing: 0.03em; color: var(--text); }
+    .brand-sub { font-size: 0.75rem; color: var(--text-muted); }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a { color: var(--text-muted); text-decoration: none; }
+    nav a.active { color: var(--text); font-weight: 600; }
+
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+
+    .nav-cta:hover { text-decoration: none; border-color: rgba(56,189,248,0.9); }
+
+    .hero {
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.8);
+      padding: 2.0rem 1.8rem 1.8rem;
+    }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-muted);
+      margin-bottom: 0.55rem;
+    }
+
+    h1 {
+      margin: 0 0 0.65rem;
+      font-size: 2.05rem;
+      letter-spacing: -0.01em;
+    }
+
+    .lead {
+      margin: 0 0 1rem;
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 60ch;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin: 0.9rem 0 0.3rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.45);
+      background: rgba(2,6,23,0.35);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--ok);
+      box-shadow: 0 0 0 4px rgba(52,211,153,0.15);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .panel {
+      border-radius: 18px;
+      border: 1px solid var(--border-soft);
+      background: rgba(2,6,23,0.35);
+      padding: 1.1rem 1.1rem;
+    }
+
+    .panel h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .panel p {
+      margin: 0 0 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 0.94rem;
+    }
+
+    ul {
+      margin: 0.4rem 0 0.6rem;
+      padding-left: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-size: 0.94rem;
+    }
+
+    li { margin-bottom: 0.25rem; }
+
+    .callout {
+      margin-top: 0.9rem;
+      padding: 0.85rem 0.95rem;
+      border-radius: 14px;
+      border: 1px solid rgba(56,189,248,0.5);
+      background: var(--accent-soft);
+      color: #e0f2fe;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .small {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0.55rem 0 0;
+    }
+
+    .checkout-wrap {
+      display: flex;
+      justify-content: center;
+    }
+
+    .checkout-box {
+      width: 100%;
+      max-width: 470px;
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.45);
+      background: rgba(2,6,23,0.25);
+      padding: 0.85rem 0.85rem;
+    }
+
+    .checkout-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .checkout-title strong {
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+    }
+
+    .checkout-title span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .faq h3 {
+      margin: 0 0 0.45rem;
+      font-size: 0.98rem;
+      color: var(--text);
+    }
+
+    .faq p { margin: 0 0 0.85rem; }
+
+    footer {
+      margin-top: 2.4rem;
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding-top: 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+      nav { justify-content: flex-start; }
+      .hero { padding: 1.7rem 1.4rem 1.6rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <header>
+      <a href="index.html" class="brand">
+        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
+        <div class="brand-text">
+          <div class="brand-title">Reporting Forge</div>
+          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
+        </div>
+      </a>
+
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="examples.html">Examples</a>
+        <a href="about.html">About</a>
+        <a href="docs.html">Docs</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="buy.html" class="nav-cta active">Buy</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <div class="eyebrow">Full book</div>
+      <h1>The SME Automation Lab</h1>
+      <p class="lead">
+        A practical, step-by-step playbook to build an AI first reporting system using Python, APIs, and Power BI.
+        You get a personalized PDF delivered by email after checkout.
+      </p>
+
+      <div class="badge-row">
+        <div class="badge"><span class="dot"></span> Delivered by email in 1 to 2 minutes</div>
+        <div class="badge">Personalized PDF</div>
+        <div class="badge">Copy-ready patterns</div>
+      </div>
+
+      <div class="grid">
+        <section class="panel">
+          <h2>What you get</h2>
+          <ul>
+            <li>The full PDF: The SME Automation Lab</li>
+            <li>A repeatable workflow: extract - clean - model - publish</li>
+            <li>Practical examples that you can copy into your own reporting environment</li>
+            <li>Guidance on building small first, then scaling complexity safely</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Delivery:</strong> after checkout, we generate a personalized PDF and email you a secure download link.
+            If you do not see it within 2 minutes, check Spam and Promotions.
+          </div>
+
+          <p class="small">
+            Support: <a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a><br>
+            By purchasing, you agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy</a>.
+          </p>
+        </section>
+
+        <aside class="panel">
+          <div class="checkout-wrap">
+            <div class="checkout-box">
+              <div class="checkout-title">
+                <strong>Checkout</strong>
+                <span>Secure payment via Fungies</span>
+              </div>
+
+              <div id="target-element-id" style="max-width: 450px; height: 900px;"></div>
+              <script
+                src="https://cdn.jsdelivr.net/npm/@fungies/fungies-js@0.0.7"
+                defer
+                data-auto-init
+                data-auto-display-checkout
+                data-fungies-checkout-url="https://reportingforge.app.fungies.io/checkout-element/d7b37949-06f4-4364-98f7-a694db65c55a"
+                data-fungies-mode="embed"
+                data-fungies-frame-target="target-element-id">
+              </script>
+
+              <p class="small" style="margin-top:0.7rem;">
+                After payment you will be redirected to <code style="color:#e5e7eb;">/thank-you.html</code>.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="grid" style="margin-top:1rem;">
+        <section class="panel faq" style="grid-column: 1 / -1;">
+          <h2>FAQ</h2>
+
+          <h3>I paid but did not get the email</h3>
+          <p class="lead" style="max-width:none;">
+            Wait 2 minutes, then check Spam and Promotions. Search for <strong>Reporting Forge</strong> or <strong>mg.reportingforge.com</strong>.
+            If it still does not arrive, contact <a href="mailto:hello@reportingforge.com?subject=Reporting%20Forge%20-%20Missing%20download%20email">hello@reportingforge.com</a>.
+          </p>
+
+          <h3>My link expired</h3>
+          <p class="lead" style="max-width:none;">
+            Reply to the delivery email and we will resend a fresh link.
+          </p>
+
+          <h3>I used the wrong email address</h3>
+          <p class="lead" style="max-width:none;">
+            Contact support and tell us the correct address and the approximate purchase time.
+          </p>
+
+          <h3>Refund policy</h3>
+          <p class="lead" style="max-width:none;">
+            See <a href="terms.html">Terms</a> for details. We aim to be fair and prevent abuse for digital goods.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> Reporting Forge.</div>
+      <div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
