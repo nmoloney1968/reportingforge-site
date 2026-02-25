@@ -15,7 +15,6 @@
     :root {
       --bg: #020617;
       --bg-card: rgba(15,23,42,0.97);
-      --border-subtle: #1e293b;
       --text: #e5e7eb;
       --text-muted: #9ca3af;
       --accent: #38bdf8;
@@ -35,11 +34,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     .shell {
@@ -63,29 +58,11 @@
       text-decoration: none;
     }
 
-    .brand-logo {
-      height: 40px;
-      width: auto;
-      display: block;
-    }
+    .brand-logo { height: 40px; width: auto; display: block; }
 
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-    }
-
-    .brand-title {
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      color: var(--text);
-    }
-
-    .brand-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
+    .brand-text { display: flex; flex-direction: column; gap: 0.1rem; }
+    .brand-title { font-size: 1rem; font-weight: 600; letter-spacing: 0.03em; color: var(--text); }
+    .brand-sub { font-size: 0.75rem; color: var(--text-muted); }
 
     nav {
       display: flex;
@@ -94,15 +71,8 @@
       font-size: 0.9rem;
     }
 
-    nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-
-    nav a.active {
-      color: var(--text);
-      font-weight: 500;
-    }
+    nav a { color: var(--text-muted); text-decoration: none; }
+    nav a.active { color: var(--text); font-weight: 500; }
 
     .nav-cta {
       padding: 0.45rem 0.9rem;
@@ -113,10 +83,7 @@
       font-weight: 500;
     }
 
-    .nav-cta:hover {
-      text-decoration: none;
-      border-color: rgba(56,189,248,0.9);
-    }
+    .nav-cta:hover { text-decoration: none; border-color: rgba(56,189,248,0.9); }
 
     .card {
       border-radius: 22px;
@@ -134,16 +101,8 @@
       margin-bottom: 0.5rem;
     }
 
-    h1 {
-      margin: 0 0 0.8rem;
-      font-size: 1.8rem;
-    }
-
-    h2 {
-      margin-top: 1.5rem;
-      margin-bottom: 0.4rem;
-      font-size: 1.08rem;
-    }
+    h1 { margin: 0 0 0.8rem; font-size: 1.8rem; }
+    h2 { margin-top: 1.5rem; margin-bottom: 0.4rem; font-size: 1.08rem; }
 
     p {
       margin: 0 0 0.7rem;
@@ -190,7 +149,8 @@
       color: #e0f2fe;
     }
 
-    .signup-form input[type="email"] {
+    .signup-form input[type="email"],
+    .signup-form input[type="text"] {
       width: 100%;
       padding: 0.7rem 0.85rem;
       border-radius: 12px;
@@ -201,11 +161,9 @@
       font-size: 0.95rem;
     }
 
-    .signup-form input[type="email"]::placeholder {
-      color: rgba(156,163,175,0.85);
-    }
+    .signup-form input::placeholder { color: rgba(156,163,175,0.85); }
 
-    .signup-form input[type="email"]:focus {
+    .signup-form input:focus {
       border-color: rgba(56,189,248,0.85);
       box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
     }
@@ -235,10 +193,7 @@
       font-weight: 600;
     }
 
-    .btn:disabled {
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
+    .btn:disabled { cursor: not-allowed; opacity: 0.7; }
 
     .signup-note {
       margin: 0.15rem 0 0;
@@ -247,7 +202,7 @@
       line-height: 1.55;
     }
 
-    .inline-email {
+    .inline-chip {
       display: inline-block;
       padding: 0.15rem 0.45rem;
       border-radius: 10px;
@@ -257,14 +212,11 @@
       font-weight: 600;
       font-size: 0.95rem;
       word-break: break-word;
+      margin-right: 0.35rem;
+      margin-top: 0.25rem;
     }
 
-    .status-line {
-      margin-top: 0.35rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-
+    .status-line { margin-top: 0.35rem; font-size: 0.85rem; color: var(--text-muted); }
     .status-line.error { color: var(--danger); }
     .status-line.ok { color: var(--ok); }
 
@@ -281,21 +233,9 @@
     }
 
     @media (max-width: 720px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      nav {
-        width: 100%;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        gap: 0.8rem;
-      }
-
-      .card {
-        padding: 1.7rem 1.4rem 1.8rem;
-      }
+      header { flex-direction: column; align-items: flex-start; }
+      nav { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 0.8rem; }
+      .card { padding: 1.7rem 1.4rem 1.8rem; }
     }
   </style>
 </head>
@@ -361,27 +301,35 @@
       <div class="cta-box">
         <strong>Join the list</strong>
         <p class="cta-note" style="margin:0.45rem 0 0.2rem 0;">
-          Enter your email below. You will be asked to confirm it before anything is sent.
+          Enter your email below. First name is optional. You will be asked to confirm before anything is sent.
         </p>
 
         <div id="lead-step-1">
           <form class="signup-form" id="lead-form">
+            <label for="firstName">First name (optional)</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Neil">
+
             <label for="email">Email address</label>
             <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
             <button class="btn" type="submit" id="lead-submit">Join the early access list</button>
+
             <p class="signup-note" id="lead-note">
               No spam. Occasional progress updates, examples, and release details.
             </p>
+
             <div class="status-line error" id="lead-error" style="display:none;"></div>
           </form>
         </div>
 
         <div id="lead-step-2" style="display:none;">
           <div class="cta-note" style="margin-top:0.65rem;">
-            Confirm your email address:
+            Confirm your details:
           </div>
+
           <div style="margin-top:0.45rem;">
-            <span class="inline-email" id="confirm-email"></span>
+            <span class="inline-chip" id="confirm-name" style="display:none;"></span>
+            <span class="inline-chip" id="confirm-email"></span>
           </div>
 
           <div class="btn-row" style="margin-top:0.8rem;">
@@ -416,17 +364,20 @@
       const step2 = document.getElementById("lead-step-2");
 
       const form = document.getElementById("lead-form");
+      const firstNameEl = document.getElementById("firstName");
       const emailEl = document.getElementById("email");
       const btnSubmit = document.getElementById("lead-submit");
       const note = document.getElementById("lead-note");
       const errLine = document.getElementById("lead-error");
 
+      const confirmName = document.getElementById("confirm-name");
       const confirmEmail = document.getElementById("confirm-email");
       const btnConfirm = document.getElementById("confirm-send");
       const btnEdit = document.getElementById("confirm-edit");
       const confirmStatus = document.getElementById("confirm-status");
 
       let pendingEmail = "";
+      let pendingFirstName = "";
 
       function showError(msg) {
         errLine.textContent = msg;
@@ -446,6 +397,8 @@
 
       function resetToStep1() {
         pendingEmail = "";
+        pendingFirstName = "";
+
         confirmStatus.textContent = "";
         btnConfirm.disabled = false;
         btnConfirm.textContent = "Confirm and send Chapter 0";
@@ -460,10 +413,23 @@
         emailEl.focus();
       }
 
-      function goToStep2(email) {
+      function goToStep2(email, firstName) {
         pendingEmail = email;
+        pendingFirstName = firstName;
+
         confirmEmail.textContent = email;
-        confirmStatus.textContent = "If this is correct, confirm to send your personalized Chapter 0 teaser.";
+
+        if (firstName) {
+          confirmName.textContent = firstName;
+          confirmName.style.display = "inline-block";
+        } else {
+          confirmName.textContent = "";
+          confirmName.style.display = "none";
+        }
+
+        confirmStatus.textContent = "If these are correct, confirm to send your personalized Chapter 0 teaser.";
+        confirmStatus.className = "status-line";
+
         step1.style.display = "none";
         step2.style.display = "block";
       }
@@ -473,6 +439,7 @@
         clearError();
 
         const email = (emailEl.value || "").trim().toLowerCase();
+        const firstName = (firstNameEl.value || "").trim();
 
         if (!isValidEmail(email)) {
           showError("Please enter a valid email address.");
@@ -481,9 +448,9 @@
 
         btnSubmit.disabled = true;
         btnSubmit.textContent = "Reviewing...";
-        note.textContent = "Please confirm your email address on the next step.";
+        note.textContent = "Please confirm your details on the next step.";
 
-        goToStep2(email);
+        goToStep2(email, firstName);
       });
 
       btnEdit.addEventListener("click", function () {
@@ -507,7 +474,11 @@
           const res = await fetch(API_BASE + "/lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: pendingEmail, source: "early-access" })
+            body: JSON.stringify({
+              email: pendingEmail,
+              firstName: pendingFirstName,
+              source: "early-access"
+            })
           });
 
           const data = await res.json().catch(() => ({}));
@@ -516,8 +487,6 @@
           confirmStatus.textContent = "Success. Check your inbox shortly.";
           confirmStatus.className = "status-line ok";
           btnConfirm.textContent = "Done";
-
-          // Keep step 2 visible so the user sees what was submitted
         } catch (err) {
           btnConfirm.disabled = false;
           btnEdit.disabled = false;
@@ -527,10 +496,7 @@
         }
       });
 
-      // If browser autofills email, keep UX nice
-      emailEl.addEventListener("input", function () {
-        clearError();
-      });
+      emailEl.addEventListener("input", function () { clearError(); });
     })();
   </script>
 </body>
