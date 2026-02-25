@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Early access - Reporting Forge</title>
+  <title>Early access – Reporting Forge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Join the early access list for the Reporting Forge book, SkyLink sandbox, and bonus resources.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -177,62 +177,6 @@
       margin-top: 0.3rem;
     }
 
-    /* Form styling that matches existing look */
-    .signup-form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      margin-top: 0.75rem;
-    }
-
-    .signup-form label {
-      font-size: 0.9rem;
-      color: #e0f2fe;
-    }
-
-    .signup-form input[type="email"] {
-      width: 100%;
-      padding: 0.7rem 0.85rem;
-      border-radius: 12px;
-      border: 1px solid rgba(148,163,184,0.55);
-      background: rgba(2,6,23,0.55);
-      color: var(--text);
-      outline: none;
-      font-size: 0.95rem;
-    }
-
-    .signup-form input[type="email"]::placeholder {
-      color: rgba(156,163,175,0.85);
-    }
-
-    .signup-form input[type="email"]:focus {
-      border-color: rgba(56,189,248,0.85);
-      box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
-    }
-
-    .signup-form button {
-      cursor: pointer;
-      padding: 0.7rem 0.85rem;
-      border-radius: 12px;
-      border: 1px solid rgba(56,189,248,0.65);
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.22), rgba(15,23,42,0.92));
-      color: #e0f2fe;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .signup-form button:disabled {
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-
-    .signup-note {
-      margin: 0.15rem 0 0;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
     footer {
       margin-top: 2.4rem;
       border-top: 1px solid rgba(15,23,42,0.9);
@@ -319,27 +263,21 @@
         release.
       </p>
       <p>
-        There is no obligation or payment to join the list - it simply means you will hear first
+        There is no obligation or payment to join the list – it simply means you will hear first
         when the early access edition is available.
       </p>
 
       <div class="cta-box">
-        <strong>Join the list</strong>
-        <p class="cta-note" style="margin:0.45rem 0 0.2rem 0;">
-          Enter your email below. You will get occasional updates. You can unsubscribe at any time.
-        </p>
-
-        <form class="signup-form" id="lead-form">
-          <label for="email">Email address</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" required>
-          <button type="submit" id="lead-submit">Join the early access list</button>
-          <p class="signup-note" id="lead-note">
-            No spam. Occasional progress updates, examples, and release details.
-          </p>
-        </form>
-
-        <div class="cta-note" style="margin-top:0.65rem;">
-          Prefer email? You can still send a short note to <strong>early@reportingforge.com</strong>.
+        To join the early access list, use your normal email tools to send a short note to
+        <strong>early@reportingforge.com</strong> with:
+        <ul>
+          <li>your name,</li>
+          <li>a couple of lines about your reporting environment, and</li>
+          <li>one workflow you would love to automate.</li>
+        </ul>
+        <div class="cta-note">
+          This keeps things intentionally lightweight: no forms, no funnels – just a short human
+          note so we can keep the group focused and relevant.
         </div>
       </div>
     </main>
@@ -352,46 +290,6 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-
-  <script>
-    (function () {
-      const API_BASE = "https://api.reportingforge.com";
-      const form = document.getElementById("lead-form");
-      const emailEl = document.getElementById("email");
-      const btn = document.getElementById("lead-submit");
-      const note = document.getElementById("lead-note");
-
-      if (!form) return;
-
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const email = (emailEl.value || "").trim();
-        btn.disabled = true;
-        btn.textContent = "Submitting...";
-        note.textContent = "Submitting...";
-
-        try {
-          const res = await fetch(API_BASE + "/lead", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email, source: "early-access" })
-          });
-
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok || !data.ok) throw new Error("bad_response");
-
-          btn.textContent = "You are on the list";
-          note.textContent = "Success. Check your inbox shortly.";
-          form.reset();
-        } catch (err) {
-          btn.disabled = false;
-          btn.textContent = "Join the early access list";
-          note.textContent = "Something went wrong. Please try again in a moment.";
-        }
-      });
-    })();
   </script>
 </body>
 </html>
