@@ -20,6 +20,8 @@
       --text-muted: #9ca3af;
       --accent: #38bdf8;
       --accent-soft: rgba(56,189,248,0.1);
+      --danger: #fb7185;
+      --ok: #34d399;
     }
 
     * { box-sizing: border-box; }
@@ -38,9 +40,7 @@
       text-decoration: none;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
+    a:hover { text-decoration: underline; }
 
     .shell {
       max-width: 980px;
@@ -175,9 +175,9 @@
       font-size: 0.8rem;
       color: var(--text-muted);
       margin-top: 0.3rem;
+      line-height: 1.5;
     }
 
-    /* Form styling that matches existing look */
     .signup-form {
       display: flex;
       flex-direction: column;
@@ -210,7 +210,14 @@
       box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
     }
 
-    .signup-form button {
+    .btn-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 0.25rem;
+    }
+
+    .btn {
       cursor: pointer;
       padding: 0.7rem 0.85rem;
       border-radius: 12px;
@@ -221,7 +228,14 @@
       font-size: 0.95rem;
     }
 
-    .signup-form button:disabled {
+    .btn.secondary {
+      border: 1px solid rgba(148,163,184,0.55);
+      background: rgba(2,6,23,0.35);
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .btn:disabled {
       cursor: not-allowed;
       opacity: 0.7;
     }
@@ -232,6 +246,27 @@
       color: var(--text-muted);
       line-height: 1.55;
     }
+
+    .inline-email {
+      display: inline-block;
+      padding: 0.15rem 0.45rem;
+      border-radius: 10px;
+      background: rgba(2,6,23,0.55);
+      border: 1px solid rgba(148,163,184,0.45);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+
+    .status-line {
+      margin-top: 0.35rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .status-line.error { color: var(--danger); }
+    .status-line.ok { color: var(--ok); }
 
     footer {
       margin-top: 2.4rem;
@@ -264,6 +299,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="shell">
     <header>
@@ -306,10 +342,9 @@
 
       <h2>What you get as an early reader</h2>
       <ul>
-        <li>The full digital copy of the book as soon as the early access edition is ready.</li>
-        <li>Access to the <strong>SkyLink Test Network</strong> sandbox API and example datasets.</li>
-        <li>A practical prompt library you can copy, paste, and adapt for your own reports.</li>
+        <li>Chapter 0 teaser PDF delivered immediately (personalized).</li>
         <li>Updates on additional bundles (checklists, templates, example workflows) as they are released.</li>
+        <li>Early access details when the first edition is available.</li>
       </ul>
 
       <h2>How it works</h2>
@@ -326,19 +361,38 @@
       <div class="cta-box">
         <strong>Join the list</strong>
         <p class="cta-note" style="margin:0.45rem 0 0.2rem 0;">
-          Enter your email below. You will get occasional updates. You can unsubscribe at any time.
+          Enter your email below. You will be asked to confirm it before anything is sent.
         </p>
 
-        <form class="signup-form" id="lead-form">
-          <label for="email">Email address</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com" required>
-          <button type="submit" id="lead-submit">Join the early access list</button>
-          <p class="signup-note" id="lead-note">
-            No spam. Occasional progress updates, examples, and release details.
-          </p>
-        </form>
+        <div id="lead-step-1">
+          <form class="signup-form" id="lead-form">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            <button class="btn" type="submit" id="lead-submit">Join the early access list</button>
+            <p class="signup-note" id="lead-note">
+              No spam. Occasional progress updates, examples, and release details.
+            </p>
+            <div class="status-line error" id="lead-error" style="display:none;"></div>
+          </form>
+        </div>
 
-        <div class="cta-note" style="margin-top:0.65rem;">
+        <div id="lead-step-2" style="display:none;">
+          <div class="cta-note" style="margin-top:0.65rem;">
+            Confirm your email address:
+          </div>
+          <div style="margin-top:0.45rem;">
+            <span class="inline-email" id="confirm-email"></span>
+          </div>
+
+          <div class="btn-row" style="margin-top:0.8rem;">
+            <button class="btn" id="confirm-send">Confirm and send Chapter 0</button>
+            <button class="btn secondary" id="confirm-edit">Edit</button>
+          </div>
+
+          <div class="status-line" id="confirm-status" style="margin-top:0.65rem;"></div>
+        </div>
+
+        <div class="cta-note" style="margin-top:0.9rem;">
           Prefer email? You can still send a short note to <strong>early@reportingforge.com</strong>.
         </div>
       </div>
@@ -357,39 +411,125 @@
   <script>
     (function () {
       const API_BASE = "https://api.reportingforge.com";
+
+      const step1 = document.getElementById("lead-step-1");
+      const step2 = document.getElementById("lead-step-2");
+
       const form = document.getElementById("lead-form");
       const emailEl = document.getElementById("email");
-      const btn = document.getElementById("lead-submit");
+      const btnSubmit = document.getElementById("lead-submit");
       const note = document.getElementById("lead-note");
+      const errLine = document.getElementById("lead-error");
 
-      if (!form) return;
+      const confirmEmail = document.getElementById("confirm-email");
+      const btnConfirm = document.getElementById("confirm-send");
+      const btnEdit = document.getElementById("confirm-edit");
+      const confirmStatus = document.getElementById("confirm-status");
 
-      form.addEventListener("submit", async function (e) {
+      let pendingEmail = "";
+
+      function showError(msg) {
+        errLine.textContent = msg;
+        errLine.style.display = "block";
+      }
+
+      function clearError() {
+        errLine.textContent = "";
+        errLine.style.display = "none";
+      }
+
+      function isValidEmail(email) {
+        if (!email) return false;
+        if (email.length > 254) return false;
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      function resetToStep1() {
+        pendingEmail = "";
+        confirmStatus.textContent = "";
+        btnConfirm.disabled = false;
+        btnConfirm.textContent = "Confirm and send Chapter 0";
+        btnEdit.disabled = false;
+
+        step2.style.display = "none";
+        step1.style.display = "block";
+
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = "Join the early access list";
+        note.textContent = "No spam. Occasional progress updates, examples, and release details.";
+        emailEl.focus();
+      }
+
+      function goToStep2(email) {
+        pendingEmail = email;
+        confirmEmail.textContent = email;
+        confirmStatus.textContent = "If this is correct, confirm to send your personalized Chapter 0 teaser.";
+        step1.style.display = "none";
+        step2.style.display = "block";
+      }
+
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
+        clearError();
 
-        const email = (emailEl.value || "").trim();
-        btn.disabled = true;
-        btn.textContent = "Submitting...";
-        note.textContent = "Submitting...";
+        const email = (emailEl.value || "").trim().toLowerCase();
+
+        if (!isValidEmail(email)) {
+          showError("Please enter a valid email address.");
+          return;
+        }
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = "Reviewing...";
+        note.textContent = "Please confirm your email address on the next step.";
+
+        goToStep2(email);
+      });
+
+      btnEdit.addEventListener("click", function () {
+        resetToStep1();
+      });
+
+      btnConfirm.addEventListener("click", async function () {
+        if (!pendingEmail) {
+          confirmStatus.textContent = "Missing email. Please go back and try again.";
+          confirmStatus.className = "status-line error";
+          return;
+        }
+
+        btnConfirm.disabled = true;
+        btnEdit.disabled = true;
+        btnConfirm.textContent = "Submitting...";
+        confirmStatus.textContent = "Submitting...";
+        confirmStatus.className = "status-line";
 
         try {
           const res = await fetch(API_BASE + "/lead", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: email, source: "early-access" })
+            body: JSON.stringify({ email: pendingEmail, source: "early-access" })
           });
 
           const data = await res.json().catch(() => ({}));
           if (!res.ok || !data.ok) throw new Error("bad_response");
 
-          btn.textContent = "You are on the list";
-          note.textContent = "Success. Check your inbox shortly.";
-          form.reset();
+          confirmStatus.textContent = "Success. Check your inbox shortly.";
+          confirmStatus.className = "status-line ok";
+          btnConfirm.textContent = "Done";
+
+          // Keep step 2 visible so the user sees what was submitted
         } catch (err) {
-          btn.disabled = false;
-          btn.textContent = "Join the early access list";
-          note.textContent = "Something went wrong. Please try again in a moment.";
+          btnConfirm.disabled = false;
+          btnEdit.disabled = false;
+          btnConfirm.textContent = "Confirm and send Chapter 0";
+          confirmStatus.textContent = "Something went wrong. Please try again in a moment.";
+          confirmStatus.className = "status-line error";
         }
+      });
+
+      // If browser autofills email, keep UX nice
+      emailEl.addEventListener("input", function () {
+        clearError();
       });
     })();
   </script>
