@@ -261,6 +261,10 @@
       nav { justify-content: flex-start; }
       .hero { padding: 1.7rem 1.4rem 1.6rem; }
     }
+
+    @media (max-width: 520px) {
+      #fungies-embed { height: 980px !important; }
+    }
   </style>
 </head>
 
@@ -328,15 +332,14 @@
                 <span>Secure payment via Fungies</span>
               </div>
 
-              <div id="target-element-id" style="max-width: 450px; height: 900px;"></div>
+              <div id="fungies-embed" style="max-width: 450px; height: 860px;"></div>
               <script
                 src="https://cdn.jsdelivr.net/npm/@fungies/fungies-js@0.0.7"
                 defer
                 data-auto-init
-                data-auto-display-checkout
-                data-fungies-checkout-url="https://reportingforge.app.fungies.io/checkout-element/d7b37949-06f4-4364-98f7-a694db65c55a"
+                data-fungies-checkout-url="https://reportingforge.app.fungies.io/checkout-element/bfbc1eeb-e74a-4db9-b52f-1c8b2c53c6d6"
                 data-fungies-mode="embed"
-                data-fungies-frame-target="target-element-id">
+                data-fungies-frame-target="fungies-embed">
               </script>
 
               <p class="small" style="margin-top:0.7rem;">
