@@ -153,6 +153,9 @@
       grid-template-columns: 1.05fr 0.95fr;
       gap: 1rem;
       margin-top: 1.25rem;
+
+      /* key fix: do NOT stretch panels to same height */
+      align-items: start;
     }
 
     .panel {
@@ -262,8 +265,9 @@
       .hero { padding: 1.7rem 1.4rem 1.6rem; }
     }
 
+    /* Mobile: give the embed more vertical room */
     @media (max-width: 520px) {
-      #fungies-embed { height: 980px !important; }
+      #target-element-id { height: 980px !important; }
     }
   </style>
 </head>
@@ -332,14 +336,16 @@
                 <span>Secure payment via Fungies</span>
               </div>
 
-              <div id="fungies-embed" style="max-width: 450px; height: 860px;"></div>
+              <!-- Use Fungies embed snippet style: keep data-auto-display-checkout so it renders -->
+              <div id="target-element-id" style="max-width: 450px; height: 860px;"></div>
               <script
                 src="https://cdn.jsdelivr.net/npm/@fungies/fungies-js@0.0.7"
                 defer
                 data-auto-init
+                data-auto-display-checkout
                 data-fungies-checkout-url="https://reportingforge.app.fungies.io/checkout-element/bfbc1eeb-e74a-4db9-b52f-1c8b2c53c6d6"
                 data-fungies-mode="embed"
-                data-fungies-frame-target="fungies-embed">
+                data-fungies-frame-target="target-element-id">
               </script>
 
               <p class="small" style="margin-top:0.7rem;">
