@@ -177,27 +177,85 @@
     .small a:hover {
       text-decoration: underline;
     }
-  </style>
+
+/* Standard site header (from index.html) */
+header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.5rem 0 1.2rem;
+    }
+
+.brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      min-width: 260px;
+    }
+
+.brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(56,189,248,1), rgba(107,220,203,1));
+      display: grid;
+      place-items: center;
+      color: #06101D;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      flex: 0 0 auto;
+    }
+
+.brand-text { line-height: 1.15; }
+
+.brand-title {
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: #e0f2fe;
+    }
+
+.brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+nav {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+nav a {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+nav a.active {
+      color: #e0f2fe;
+      font-weight: 600;
+    }
+
+.nav-cta {
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: rgba(56,189,248,0.10);
+      color: #e0f2fe;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+.nav-cta:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,1);
+    }
+</style>
 </head>
 <body>
-<header>
-      <a href="index.html" class="brand">
-        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
-        <div class="brand-text">
-          <div class="brand-title">Reporting Forge</div>
-          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
-        </div>
-      </a>
-      <nav>
-        <a href="index.html">Overview</a>
-        <a href="examples.html">Examples</a>
-        <a href="docs.html">Docs</a>
-        <a href="roadmap.html">Roadmap</a>
-        <a href="buy.html">Buy</a>
-        <a href="early-access.html" class="nav-cta">Get Chapter 0</a>
-      </nav>
-    </header>
-
   <div class="outer">
     <a href="index.html" class="brand">
       <img src="logo-horizontal.svg"
@@ -226,7 +284,7 @@
       </p>
       <div class="btn-row">
         <a href="index.html" class="button button-primary">Back to home</a>
-        <a href="buy.html" class="button button-ghost">Buy the book</a>
+        <a href="early-access.html" class="button button-ghost">Get Chapter 0</a>
       </div>
       <p class="small">
         If you reached this page from a link in an email or document, the URL may have changed. Try starting again from the <a href="index.html">home page</a>.

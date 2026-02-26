@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Get Chapter 0 – Reporting Forge</title>
+  <title>Early access - Reporting Forge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Get Chapter 0 for the Reporting Forge book, SkyLink sandbox, and bonus resources.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -69,7 +69,6 @@
       align-items: center;
       gap: 1.2rem;
       font-size: 0.9rem;
-      flex-wrap: wrap;
     }
 
     nav a { color: var(--text-muted); text-decoration: none; }
@@ -82,8 +81,6 @@
       background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
       font-size: 0.82rem;
       font-weight: 500;
-    
-      white-space: nowrap;
     }
 
     .nav-cta:hover { text-decoration: none; border-color: rgba(56,189,248,0.9); }
@@ -240,31 +237,108 @@
       nav { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 0.8rem; }
       .card { padding: 1.7rem 1.4rem 1.8rem; }
     }
-  </style>
+
+/* Standard site header (from index.html) */
+header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.5rem 0 1.2rem;
+    }
+
+.brand {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      min-width: 260px;
+    }
+
+.brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(56,189,248,1), rgba(107,220,203,1));
+      display: grid;
+      place-items: center;
+      color: #06101D;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      flex: 0 0 auto;
+    }
+
+.brand-text { line-height: 1.15; }
+
+.brand-title {
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: #e0f2fe;
+    }
+
+.brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+nav {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+nav a {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+nav a.active {
+      color: #e0f2fe;
+      font-weight: 600;
+    }
+
+.nav-cta {
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: rgba(56,189,248,0.10);
+      color: #e0f2fe;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+.nav-cta:hover {
+      text-decoration: none;
+      border-color: rgba(56,189,248,1);
+    }
+</style>
 </head>
 
 <body>
   <div class="shell">
     <header>
-      <a href="index.html" class="brand">
-        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
+      <a class="brand" href="index.html" style="text-decoration:none;color:inherit;">
+        <div class="brand-mark">RF</div>
         <div class="brand-text">
           <div class="brand-title">Reporting Forge</div>
-          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
+          <div class="brand-subtitle">AI first automation for Python, APIs, and Power BI</div>
         </div>
       </a>
       <nav>
         <a href="index.html">Overview</a>
         <a href="examples.html">Examples</a>
+        <a href="about.html">About</a>
         <a href="docs.html">Docs</a>
         <a href="roadmap.html">Roadmap</a>
         <a href="buy.html">Buy</a>
-        <a href="early-access.html" class="nav-cta active">Get Chapter 0</a>
+        <a href="early-access.html" class="active nav-cta">Get Chapter 0</a>
       </nav>
     </header>
 
     <main class="card">
-      <div class="eyebrow">Chapter 0</div>
+      <div class="eyebrow">Early access</div>
       <h1>Get Chapter 0</h1>
       <p>
         The first edition of <strong>Reporting Forge</strong> is a 30 day plan that teaches you how to use AI,
@@ -272,11 +346,11 @@
         needing to become a full-time developer.
       </p>
       <p>
-        Chapter 0 is for people who want to be part of the very first cohort using the book and
+        Early access is for people who want to be part of the very first cohort using the book and
         the SkyLink Test Network sandbox in their own business.
       </p>
 
-      <h2>Who Chapter 0 is for</h2>
+      <h2>Who early access is for</h2>
       <ul>
         <li>Owners and managers who are buried in monthly reporting and board packs.</li>
         <li>Analysts who want a safe, guided way to bring AI and Python into their workflow.</li>
@@ -287,18 +361,18 @@
       <ul>
         <li>Chapter 0 teaser PDF delivered immediately (personalized).</li>
         <li>Updates on additional bundles (checklists, templates, example workflows) as they are released.</li>
-        <li>Chapter 0 details when the first edition is available.</li>
+        <li>Early access details when the first edition is available.</li>
       </ul>
 
       <h2>How it works</h2>
       <p>
-        Chapter 0 is deliberately small. The plan is to work with a limited number of readers,
+        Early access is deliberately small. The plan is to work with a limited number of readers,
         gather feedback on the 30 day sequence, and refine the prompts and examples before a wider
         release.
       </p>
       <p>
         There is no obligation or payment to join the list - it simply means you will hear first
-        when the Chapter 0 edition is available.
+        when the early access edition is available.
       </p>
 
       <div class="cta-box">
