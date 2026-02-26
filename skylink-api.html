@@ -179,7 +179,34 @@
       gap: 0.8rem;
       flex-wrap: wrap;
     }
-  </style>
+  
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a { color: var(--text-muted); text-decoration: none; }
+    nav a.active { color: var(--text); font-weight: 600; }
+
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(56,189,248,0.6);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #e0f2fe;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .nav-cta:hover { border-color: rgba(56,189,248,0.9); }
+</style>
 </head>
 <body>
   <div class="page">
@@ -194,10 +221,6 @@
       <nav>
         <a href="index.html">Overview</a>
         <a href="examples.html">Examples</a>
-        <a href="docs.html" class="active">Docs</a>
-        <a href="roadmap.html">Roadmap</a>
-        <a href="buy.html">Buy</a>
-        <a href="early-access.html" class="nav-cta">Get Chapter 0</a>
       </nav>
     </header>
 

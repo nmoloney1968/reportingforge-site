@@ -7,7 +7,7 @@
 
   <!-- Primary meta -->
   <meta name="title" content="Reporting Forge - Privacy" />
-  <meta name="description" content="Privacy notice for the pre launch Reporting Forge site and Chapter 0 list. No accounts, no telemetry from a product, and no sale of any personal information." />
+  <meta name="description" content="Privacy notice for the pre launch Reporting Forge site and early access list. No accounts, no telemetry from a product, and no sale of any personal information." />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://reportingforge.com/privacy.html" />
@@ -48,10 +48,11 @@
     }
 
     header {
-      position: fixed;
-      top: 24px;
-      right: 32px;
-      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.4rem;
     }
 
     header nav {
@@ -67,7 +68,6 @@
       -webkit-backdrop-filter: blur(16px);
       font-size: 13px;
       color: #e5e7eb;
-      flex-wrap: wrap;
     }
 
     header nav a {
@@ -264,8 +264,12 @@
         margin-top: 88px;
       }
       header {
-        right: 16px;
-      }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.4rem;
+    }
     }
 
     @media (max-width: 640px) {
@@ -273,14 +277,16 @@
         background: #020617;
       }
       header {
-        top: 14px;
-        right: 12px;
-      }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.4rem;
+    }
       header nav {
         padding: 8px 10px;
         gap: 6px;
-      flex-wrap: wrap;
-    }
+      }
       main.shell {
         margin-top: 80px;
         padding: 0 14px 28px;
@@ -306,6 +312,7 @@
           <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
         </div>
       </a>
+
       <nav>
         <a href="index.html">Overview</a>
         <a href="examples.html">Examples</a>
@@ -357,10 +364,10 @@
         things like routing and security.
       </p>
 
-      <h2>Email and Chapter 0</h2>
+      <h2>Email and early access</h2>
       <p>
         If you email <span class="code-inline"><a href="mailto:hello@reportingforge.com">hello@reportingforge.com</a></span>
-        or choose to join the Chapter 0 list for the book and lab, your contact details are used
+        or choose to join the early access list for the book and lab, your contact details are used
         only to communicate about Reporting Forge and related learning materials.
       </p>
       <p>
