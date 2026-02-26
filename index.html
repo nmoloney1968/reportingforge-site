@@ -112,6 +112,8 @@
       color: #e0f2fe;
       font-size: 0.9rem;
       font-weight: 500;
+    
+      white-space: nowrap;
     }
 
     .nav-cta:hover {
@@ -129,7 +131,9 @@
 
     @media (max-width: 960px) {
       .grid { grid-template-columns: 1fr; }
-      nav { justify-content: flex-start; }
+      nav { justify-content: flex-start;
+      flex-wrap: wrap;
+    }
       .brand { min-width: unset; }
     }
 
@@ -416,7 +420,7 @@
         </div>
 
         <div class="cta-row">
-          <a href="early-access.html" class="cta-primary">Join the early access list</a>
+          <a href="early-access.html" class="cta-primary">Get Chapter 0</a>
           <a href="examples.html" class="cta-secondary-btn">See dashboards like yours</a>
           <div class="cta-secondary">
             or read more <a href="about.html">about the book</a> and the approach.

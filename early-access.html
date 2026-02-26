@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Early access - Reporting Forge</title>
+  <title>Get Chapter 0 – Reporting Forge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Join the early access list for the Reporting Forge book, SkyLink sandbox, and bonus resources.">
+  <meta name="description" content="Get Chapter 0 for the Reporting Forge book, SkyLink sandbox, and bonus resources.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,6 +69,7 @@
       align-items: center;
       gap: 1.2rem;
       font-size: 0.9rem;
+      flex-wrap: wrap;
     }
 
     nav a { color: var(--text-muted); text-decoration: none; }
@@ -81,6 +82,8 @@
       background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
       font-size: 0.82rem;
       font-weight: 500;
+    
+      white-space: nowrap;
     }
 
     .nav-cta:hover { text-decoration: none; border-color: rgba(56,189,248,0.9); }
@@ -261,19 +264,19 @@
     </header>
 
     <main class="card">
-      <div class="eyebrow">Early access</div>
-      <h1>Join the early access list</h1>
+      <div class="eyebrow">Chapter 0</div>
+      <h1>Get Chapter 0</h1>
       <p>
         The first edition of <strong>Reporting Forge</strong> is a 30 day plan that teaches you how to use AI,
         Python, APIs, and Power BI together to automate a real report from end to end - without
         needing to become a full-time developer.
       </p>
       <p>
-        Early access is for people who want to be part of the very first cohort using the book and
+        Chapter 0 is for people who want to be part of the very first cohort using the book and
         the SkyLink Test Network sandbox in their own business.
       </p>
 
-      <h2>Who early access is for</h2>
+      <h2>Who Chapter 0 is for</h2>
       <ul>
         <li>Owners and managers who are buried in monthly reporting and board packs.</li>
         <li>Analysts who want a safe, guided way to bring AI and Python into their workflow.</li>
@@ -284,18 +287,18 @@
       <ul>
         <li>Chapter 0 teaser PDF delivered immediately (personalized).</li>
         <li>Updates on additional bundles (checklists, templates, example workflows) as they are released.</li>
-        <li>Early access details when the first edition is available.</li>
+        <li>Chapter 0 details when the first edition is available.</li>
       </ul>
 
       <h2>How it works</h2>
       <p>
-        Early access is deliberately small. The plan is to work with a limited number of readers,
+        Chapter 0 is deliberately small. The plan is to work with a limited number of readers,
         gather feedback on the 30 day sequence, and refine the prompts and examples before a wider
         release.
       </p>
       <p>
         There is no obligation or payment to join the list - it simply means you will hear first
-        when the early access edition is available.
+        when the Chapter 0 edition is available.
       </p>
 
       <div class="cta-box">
@@ -312,7 +315,7 @@
             <label for="email">Email address</label>
             <input type="email" id="email" name="email" placeholder="you@example.com" required>
 
-            <button class="btn" type="submit" id="lead-submit">Join the early access list</button>
+            <button class="btn" type="submit" id="lead-submit">Get Chapter 0</button>
 
             <p class="signup-note" id="lead-note">
               No spam. Occasional progress updates, examples, and release details.
@@ -408,7 +411,7 @@
         step1.style.display = "block";
 
         btnSubmit.disabled = false;
-        btnSubmit.textContent = "Join the early access list";
+        btnSubmit.textContent = "Get Chapter 0";
         note.textContent = "No spam. Occasional progress updates, examples, and release details.";
         emailEl.focus();
       }

@@ -92,6 +92,7 @@
       align-items: center;
       gap: 1.2rem;
       font-size: 0.9rem;
+      flex-wrap: wrap;
     }
 
     nav a {
@@ -111,6 +112,8 @@
       background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
       font-size: 0.82rem;
       font-weight: 500;
+    
+      white-space: nowrap;
     }
 
     .nav-cta:hover {
@@ -222,10 +225,10 @@
       <nav>
         <a href="index.html">Overview</a>
         <a href="examples.html">Examples</a>
-        <a href="about.html">About</a>
         <a href="docs.html">Docs</a>
         <a href="roadmap.html" class="active">Roadmap</a>
-        <a href="early-access.html" class="nav-cta">Get early access</a>
+        <a href="buy.html">Buy</a>
+        <a href="early-access.html" class="nav-cta">Get Chapter 0</a>
       </nav>
     </header>
 
@@ -257,6 +260,7 @@
       <div class="phase-label"><span>Phase 3</span> – Teams and shared patterns</div>
       <h2>Helping small teams standardise reporting</h2>
       <ul>
+        <li>Optional consulting: short, focused engagements to help small teams implement the patterns in their own environment.</li>
         <li>Guides for adapting the prompts and patterns to team environments.</li>
         <li>Suggested structures for internal “reporting playbooks” that combine AI, Python, APIs, and BI.</li>
         <li>Selective case studies where teams are willing to share anonymised workflows.</li>

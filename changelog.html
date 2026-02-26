@@ -67,6 +67,7 @@
       -webkit-backdrop-filter: blur(16px);
       font-size: 13px;
       color: #e5e7eb;
+      flex-wrap: wrap;
     }
 
     header nav a {
@@ -262,7 +263,8 @@
       header nav {
         padding: 8px 10px;
         gap: 6px;
-      }
+      flex-wrap: wrap;
+    }
       main.shell {
         margin-top: 80px;
         padding: 0 14px 28px;
@@ -281,15 +283,22 @@
 </head>
 <body>
   <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about.html">About</a>
-      <a href="/docs.html">Docs</a>
-      <a href="/roadmap.html">Roadmap</a>
-      <a href="/changelog.html" class="active">Changelog</a>
-      <a href="/early-access.html">Early access</a>
-    </nav>
-  </header>
+      <a href="index.html" class="brand">
+        <img src="logo-horizontal.svg" alt="Reporting Forge" class="brand-logo">
+        <div class="brand-text">
+          <div class="brand-title">Reporting Forge</div>
+          <div class="brand-sub">AI first automation for Python, APIs, and Power BI</div>
+        </div>
+      </a>
+      <nav>
+        <a href="index.html">Overview</a>
+        <a href="examples.html">Examples</a>
+        <a href="docs.html">Docs</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="buy.html">Buy</a>
+        <a href="early-access.html" class="nav-cta">Get Chapter 0</a>
+      </nav>
+    </header>
 
   <main class="shell">
     <section>
