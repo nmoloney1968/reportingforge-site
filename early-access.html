@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Early access - Reporting Forge</title>
+  <title>Get Chapter 0 - Reporting Forge</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Get Chapter 0 for the Reporting Forge book, SkyLink sandbox, and bonus resources.">
+  <meta name="description" content="Get Chapter 0 of The SME Automation Lab. Free personalized PDF delivered by email in 1 to 2 minutes.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,12 +15,13 @@
     :root {
       --bg: #020617;
       --bg-card: rgba(15,23,42,0.97);
+      --border-subtle: #1e293b;
       --text: #e5e7eb;
       --text-muted: #9ca3af;
       --accent: #38bdf8;
       --accent-soft: rgba(56,189,248,0.1);
-      --danger: #fb7185;
       --ok: #34d399;
+      --bad: #fb7185;
     }
 
     * { box-sizing: border-box; }
@@ -43,47 +44,83 @@
       padding: 1.75rem 1.25rem 3rem;
     }
 
+    /* Standard site header (from index.html) */
     header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1.5rem;
-      margin-bottom: 2.4rem;
+      padding: 1.1rem 0 1.2rem;
     }
 
     .brand {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
+      gap: 0.95rem;
+      min-width: 240px;
     }
 
-    .brand-logo { height: 40px; width: auto; display: block; }
+    .brand-mark {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.35), rgba(2,6,23,0.25));
+      border: 1px solid rgba(148,163,184,0.35);
+    }
 
-    .brand-text { display: flex; flex-direction: column; gap: 0.1rem; }
-    .brand-title { font-size: 1rem; font-weight: 600; letter-spacing: 0.03em; color: var(--text); }
-    .brand-sub { font-size: 0.75rem; color: var(--text-muted); }
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .brand-title {
+      font-weight: 700;
+      font-size: 1.06rem;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      max-width: 38ch;
+      line-height: 1.35;
+    }
 
     nav {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
-      font-size: 0.9rem;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
-    nav a { color: var(--text-muted); text-decoration: none; }
-    nav a.active { color: var(--text); font-weight: 500; }
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    nav a.active { color: var(--text); }
 
     .nav-cta {
-      padding: 0.45rem 0.9rem;
+      padding: 0.55rem 1.05rem;
       border-radius: 999px;
       border: 1px solid rgba(56,189,248,0.6);
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.18), rgba(15,23,42,0.95));
-      font-size: 0.82rem;
-      font-weight: 500;
+      background: rgba(2,6,23,0.35);
+      color: var(--text);
+      font-weight: 700;
+      white-space: nowrap;
     }
 
-    .nav-cta:hover { text-decoration: none; border-color: rgba(56,189,248,0.9); }
+    .nav-cta:hover { border-color: rgba(56,189,248,0.9); }
 
     .card {
       border-radius: 22px;
@@ -102,6 +139,7 @@
     }
 
     h1 { margin: 0 0 0.8rem; font-size: 1.8rem; }
+
     h2 { margin-top: 1.5rem; margin-bottom: 0.4rem; font-size: 1.08rem; }
 
     p {
@@ -121,104 +159,126 @@
     li { margin-bottom: 0.25rem; }
 
     .cta-box {
-      margin-top: 1.2rem;
+      margin-top: 1.0rem;
       padding: 0.9rem 1rem;
       border-radius: 14px;
       border: 1px solid rgba(56,189,248,0.5);
       background: var(--accent-soft);
       font-size: 0.9rem;
       color: #e0f2fe;
+      line-height: 1.55;
     }
 
     .cta-note {
-      font-size: 0.8rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
-      margin-top: 0.3rem;
-      line-height: 1.5;
+      margin-top: 0.4rem;
+      line-height: 1.55;
+    }
+
+    .lead-steps {
+      margin-top: 1.25rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.35);
+      padding: 1.1rem 1.1rem;
     }
 
     .signup-form {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      margin-top: 0.75rem;
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.55rem;
     }
 
-    .signup-form label {
-      font-size: 0.9rem;
-      color: #e0f2fe;
+    label {
+      font-size: 0.86rem;
+      color: var(--text-muted);
     }
 
-    .signup-form input[type="email"],
-    .signup-form input[type="text"] {
+    input {
       width: 100%;
-      padding: 0.7rem 0.85rem;
+      padding: 0.72rem 0.85rem;
       border-radius: 12px;
-      border: 1px solid rgba(148,163,184,0.55);
-      background: rgba(2,6,23,0.55);
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.45);
       color: var(--text);
       outline: none;
       font-size: 0.95rem;
     }
 
-    .signup-form input::placeholder { color: rgba(156,163,175,0.85); }
+    input:focus {
+      border-color: rgba(56,189,248,0.65);
+      box-shadow: 0 0 0 4px rgba(56,189,248,0.12);
+    }
 
-    .signup-form input:focus {
-      border-color: rgba(56,189,248,0.85);
-      box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+    .btn {
+      margin-top: 0.25rem;
+      padding: 0.72rem 0.9rem;
+      border-radius: 12px;
+      border: 1px solid rgba(56,189,248,0.65);
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.22), rgba(15,23,42,0.95));
+      color: #e0f2fe;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .btn-row {
       display: flex;
       gap: 0.6rem;
       flex-wrap: wrap;
-      margin-top: 0.25rem;
+      margin-top: 0.55rem;
     }
 
-    .btn {
-      cursor: pointer;
-      padding: 0.7rem 0.85rem;
-      border-radius: 12px;
-      border: 1px solid rgba(56,189,248,0.65);
-      background: radial-gradient(circle at top left, rgba(56,189,248,0.22), rgba(15,23,42,0.92));
-      color: #e0f2fe;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .btn.secondary {
-      border: 1px solid rgba(148,163,184,0.55);
+    .btn-secondary {
+      border-color: rgba(148,163,184,0.45);
       background: rgba(2,6,23,0.35);
       color: var(--text);
-      font-weight: 600;
     }
 
-    .btn:disabled { cursor: not-allowed; opacity: 0.7; }
-
     .signup-note {
-      margin: 0.15rem 0 0;
+      margin: 0.2rem 0 0;
       font-size: 0.82rem;
       color: var(--text-muted);
       line-height: 1.55;
     }
 
-    .inline-chip {
-      display: inline-block;
-      padding: 0.15rem 0.45rem;
-      border-radius: 10px;
-      background: rgba(2,6,23,0.55);
-      border: 1px solid rgba(148,163,184,0.45);
-      color: var(--text);
-      font-weight: 600;
-      font-size: 0.95rem;
-      word-break: break-word;
-      margin-right: 0.35rem;
-      margin-top: 0.25rem;
+    .status-line {
+      margin-top: 0.55rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
     }
 
-    .status-line { margin-top: 0.35rem; font-size: 0.85rem; color: var(--text-muted); }
-    .status-line.error { color: var(--danger); }
     .status-line.ok { color: var(--ok); }
+    .status-line.error { color: var(--bad); }
+
+    .confirm-box {
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.25);
+      padding: 0.9rem 0.9rem;
+      margin-top: 0.6rem;
+      color: var(--text);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.32rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      background: rgba(2,6,23,0.25);
+      font-size: 0.82rem;
+      color: var(--text);
+      font-weight: 600;
+    }
 
     footer {
       margin-top: 2.4rem;
@@ -234,86 +294,10 @@
 
     @media (max-width: 720px) {
       header { flex-direction: column; align-items: flex-start; }
-      nav { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 0.8rem; }
+      nav { justify-content: flex-start; }
       .card { padding: 1.7rem 1.4rem 1.8rem; }
     }
-
-/* Standard site header (from index.html) */
-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.5rem 0 1.2rem;
-    }
-
-.brand {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      min-width: 260px;
-    }
-
-.brand-mark {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, rgba(56,189,248,1), rgba(107,220,203,1));
-      display: grid;
-      place-items: center;
-      color: #06101D;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-      flex: 0 0 auto;
-    }
-
-.brand-text { line-height: 1.15; }
-
-.brand-title {
-      font-weight: 700;
-      font-size: 1.02rem;
-      color: #e0f2fe;
-    }
-
-.brand-subtitle {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-nav {
-      display: flex;
-      align-items: center;
-      gap: 1.1rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-nav a {
-      color: var(--text-muted);
-      font-size: 0.92rem;
-    }
-
-nav a.active {
-      color: #e0f2fe;
-      font-weight: 600;
-    }
-
-.nav-cta {
-      padding: 0.55rem 0.95rem;
-      border-radius: 999px;
-      border: 1px solid rgba(56,189,248,0.6);
-      background: rgba(56,189,248,0.10);
-      color: #e0f2fe;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-
-.nav-cta:hover {
-      text-decoration: none;
-      border-color: rgba(56,189,248,1);
-    }
-</style>
+  </style>
 </head>
 
 <body>
@@ -338,48 +322,40 @@ nav a.active {
     </header>
 
     <main class="card">
-      <div class="eyebrow">Early access</div>
+      <div class="eyebrow">Chapter 0</div>
       <h1>Get Chapter 0</h1>
+
       <p>
-        The first edition of <strong>Reporting Forge</strong> is a 30 day plan that teaches you how to use AI,
-        Python, APIs, and Power BI together to automate a real report from end to end - without
-        needing to become a full-time developer.
-      </p>
-      <p>
-        Early access is for people who want to be part of the very first cohort using the book and
-        the SkyLink Test Network sandbox in their own business.
+        Chapter 0 is the fast orientation for <strong>The SME Automation Lab</strong>.
+        It explains the workflow you will repeat, how to use the book, and what you are building over 30 days.
       </p>
 
-      <h2>Who early access is for</h2>
-      <ul>
-        <li>Owners and managers who are buried in monthly reporting and board packs.</li>
-        <li>Analysts who want a safe, guided way to bring AI and Python into their workflow.</li>
-        <li>Team leads who want to prove an automation concept before rolling out anything bigger.</li>
-      </ul>
+      <p>
+        Enter your details below and we will generate a <strong>personalized PDF</strong> and email it to you.
+        In most cases it arrives within <strong>1 to 2 minutes</strong>.
+      </p>
 
-      <h2>What you get as an early reader</h2>
+      <h2>What you will receive</h2>
       <ul>
-        <li>Chapter 0 teaser PDF delivered immediately (personalized).</li>
-        <li>Updates on additional bundles (checklists, templates, example workflows) as they are released.</li>
-        <li>Early access details when the first edition is available.</li>
+        <li>Chapter 0 (personalized PDF) delivered by email.</li>
+        <li>Occasional product updates and new example workflows (optional).</li>
       </ul>
 
       <h2>How it works</h2>
-      <p>
-        Early access is deliberately small. The plan is to work with a limited number of readers,
-        gather feedback on the 30 day sequence, and refine the prompts and examples before a wider
-        release.
-      </p>
-      <p>
-        There is no obligation or payment to join the list - it simply means you will hear first
-        when the early access edition is available.
-      </p>
+      <ul>
+        <li>You enter your email (first name optional).</li>
+        <li>You confirm the details on the next step to avoid typos.</li>
+        <li>We email you a secure link to your personalized PDF.</li>
+      </ul>
 
       <div class="cta-box">
-        <strong>Join the list</strong>
-        <p class="cta-note" style="margin:0.45rem 0 0.2rem 0;">
-          Enter your email below. First name is optional. You will be asked to confirm before anything is sent.
-        </p>
+        <strong>Important:</strong> after checkout on Fungies you may also receive a separate Fungies email with a download link.
+        That download is only a placeholder (delivery instructions). Your personalized PDF comes from <strong>Reporting Forge</strong>.
+      </div>
+
+      <div class="lead-steps">
+        <div class="pill">Personalized PDF delivered by email</div>
+        <p class="cta-note" style="margin:0.45rem 0 0.2rem 0;">Enter your email below. First name is optional. You will be asked to confirm before anything is sent.</p>
 
         <div id="lead-step-1">
           <form class="signup-form" id="lead-form">
@@ -392,7 +368,7 @@ nav a.active {
             <button class="btn" type="submit" id="lead-submit">Get Chapter 0</button>
 
             <p class="signup-note" id="lead-note">
-              No spam. Occasional progress updates, examples, and release details.
+              No spam. If you opt in, you will receive occasional updates and examples.
             </p>
 
             <div class="status-line error" id="lead-error" style="display:none;"></div>
@@ -400,31 +376,30 @@ nav a.active {
         </div>
 
         <div id="lead-step-2" style="display:none;">
-          <div class="cta-note" style="margin-top:0.65rem;">
-            Confirm your details:
+          <div class="confirm-box">
+            <div style="margin-bottom:0.4rem;color:var(--text-muted);font-size:0.86rem;">Please confirm</div>
+            <div style="font-size:0.98rem;font-weight:700;">
+              <span id="confirm-name" style="display:none;"></span>
+              <span id="confirm-email"></span>
+            </div>
+
+            <div class="status-line" id="confirm-status" style="margin-top:0.6rem;"></div>
+
+            <div class="btn-row">
+              <button class="btn" id="confirm-send" type="button">Confirm and send Chapter 0</button>
+              <button class="btn btn-secondary" id="confirm-edit" type="button">Edit</button>
+            </div>
+
+            <p class="signup-note" style="margin-top:0.6rem;">
+              This confirmation step exists to prevent typos and missed delivery.
+            </p>
           </div>
-
-          <div style="margin-top:0.45rem;">
-            <span class="inline-chip" id="confirm-name" style="display:none;"></span>
-            <span class="inline-chip" id="confirm-email"></span>
-          </div>
-
-          <div class="btn-row" style="margin-top:0.8rem;">
-            <button class="btn" id="confirm-send">Confirm and send Chapter 0</button>
-            <button class="btn secondary" id="confirm-edit">Edit</button>
-          </div>
-
-          <div class="status-line" id="confirm-status" style="margin-top:0.65rem;"></div>
-        </div>
-
-        <div class="cta-note" style="margin-top:0.9rem;">
-          Prefer email? You can still send a short note to <strong>early@reportingforge.com</strong>.
         </div>
       </div>
     </main>
 
     <footer>
-      <div>© <span id="year"></span> Reporting Forge. SkyLink Test Network is a fictional sandbox.</div>
+      <div>© <span id="year"></span> Reporting Forge.</div>
       <div><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></div>
     </footer>
   </div>
@@ -486,7 +461,7 @@ nav a.active {
 
         btnSubmit.disabled = false;
         btnSubmit.textContent = "Get Chapter 0";
-        note.textContent = "No spam. Occasional progress updates, examples, and release details.";
+        note.textContent = "No spam. If you opt in, you will receive occasional updates and examples.";
         emailEl.focus();
       }
 
@@ -504,7 +479,7 @@ nav a.active {
           confirmName.style.display = "none";
         }
 
-        confirmStatus.textContent = "If these are correct, confirm to send your personalized Chapter 0 teaser.";
+        confirmStatus.textContent = "If these are correct, confirm to send your personalized Chapter 0 PDF.";
         confirmStatus.className = "status-line";
 
         step1.style.display = "none";
@@ -554,7 +529,7 @@ nav a.active {
             body: JSON.stringify({
               email: pendingEmail,
               firstName: pendingFirstName,
-              source: "early-access"
+              source: "chapter0"
             })
           });
 
