@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-03-05 03:38 UTC",
+  "built_at_utc": "2026-03-05 04:22 UTC",
   "fred": {
     "last_obs_date": "2026-03-03",
     "last_obs_value": 1.77,
@@ -26,7 +26,7 @@
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
     "gold_last_date": "2026-03-04",
-    "gold_last_value": 5195.5,
+    "gold_last_value": 5194.5,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
     "wti_last_date": "2026-03-04",
