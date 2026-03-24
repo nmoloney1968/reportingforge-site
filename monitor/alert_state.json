@@ -1,6 +1,6 @@
 {
-  "last_alert_key": "panic_on",
-  "last_alert_sent_at": "2026-03-20T04:24:51Z",
-  "last_reason": "sent",
+  "last_alert_key": "clear",
+  "last_alert_sent_at": "2026-03-24T04:29:53Z",
+  "last_reason": "overall=Yellow panic=False",
   "last_subject": "Reporting Forge Monitor: Action - Panic flush"
 }
