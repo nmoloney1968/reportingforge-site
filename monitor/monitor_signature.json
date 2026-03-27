@@ -1,9 +1,9 @@
 {
-  "built_at_utc": "2026-03-26 04:05 UTC",
+  "built_at_utc": "2026-03-27 04:06 UTC",
   "fred": {
-    "last_obs_date": "2026-03-24",
-    "last_obs_value": 2.06,
-    "last_updated": "2026-03-25 15:16:32-05",
+    "last_obs_date": "2026-03-25",
+    "last_obs_value": 2.02,
+    "last_updated": "2026-03-26 15:16:49-05",
     "series_label": "10Y real yield (DFII10)",
     "series_used": "DFII10"
   },
@@ -22,14 +22,14 @@
   },
   "template_version": "v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13",
   "yahoo": {
-    "dxy_last_date": "2026-03-25",
+    "dxy_last_date": "2026-03-26",
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
-    "gold_last_date": "2026-03-25",
-    "gold_last_value": 4549.7998046875,
+    "gold_last_date": "2026-03-26",
+    "gold_last_value": 4375.5,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
-    "wti_last_date": "2026-03-25",
+    "wti_last_date": "2026-03-26",
     "wti_ticker": "CL=F"
   }
 }
