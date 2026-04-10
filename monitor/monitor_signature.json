@@ -1,14 +1,14 @@
 {
-  "built_at_utc": "2026-04-09 04:04 UTC",
+  "built_at_utc": "2026-04-10 04:18 UTC",
   "fred": {
-    "last_obs_date": "2026-04-07",
+    "last_obs_date": "2026-04-08",
     "last_obs_value": 1.96,
-    "last_updated": "2026-04-08 15:16:36-05",
+    "last_updated": "2026-04-09 15:16:32-05",
     "series_label": "10Y real yield (DFII10)",
     "series_used": "DFII10"
   },
   "states": {
-    "dxy": "Yellow",
+    "dxy": "Red",
     "gdx_gold": "Green",
     "gold": "Green",
     "nem_gold": "Green",
@@ -22,14 +22,14 @@
   },
   "template_version": "v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13",
   "yahoo": {
-    "dxy_last_date": "2026-04-07",
+    "dxy_last_date": "2026-04-09",
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
-    "gold_last_date": "2026-04-08",
-    "gold_last_value": 4749.5,
+    "gold_last_date": "2026-04-09",
+    "gold_last_value": 4792.2001953125,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
-    "wti_last_date": "2026-04-08",
+    "wti_last_date": "2026-04-09",
     "wti_ticker": "CL=F"
   }
 }
