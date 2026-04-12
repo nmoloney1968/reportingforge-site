@@ -8,6 +8,7 @@ enabled = true
 [[d1_databases]]
 binding = "DB"
 database_name = "rf_store"
+database_id = "aa566fec-9105-4779-8abe-2a0ba8299dc6"
 
 [[r2_buckets]]
 binding = "rf_books"
