@@ -152,14 +152,14 @@ function Test-HealthEndpoint {
 
 New-Item -ItemType Directory -Path $reportsDir -Force | Out-Null
 
-$observedNameservers = Get-ExactNameservers -Name $Domain
-$expectedSorted = $expectedNameservers | ForEach-Object { Normalize-Host $_ } | Sort-Object -Unique
+$observedNameservers = @(Get-ExactNameservers -Name $Domain)
+$expectedSorted = @($expectedNameservers | ForEach-Object { Normalize-Host $_ } | Sort-Object -Unique)
 $nsMatch = (@($observedNameservers) -join ",") -eq (@($expectedSorted) -join ",")
 if (-not $nsMatch) {
     Add-Failure ("Nameserver mismatch for {0}. Expected: {1}. Observed: {2}." -f $Domain, ($expectedSorted -join ", "), (($observedNameservers | ForEach-Object { $_ }) -join ", "))
 }
 
-$apiResolution = Resolve-HostSummary -Name $ApiDomain
+$apiResolution = @(Resolve-HostSummary -Name $ApiDomain)
 if (-not $apiResolution -or $apiResolution.Count -eq 0) {
     Add-Failure "Failed to resolve $ApiDomain."
 }
@@ -188,12 +188,12 @@ $reportLines += "- workers.dev health URL: <$WorkersDevHealthUrl>"
 $reportLines += ""
 $reportLines += "## Expected nameservers"
 $reportLines += ""
-$reportLines += ($expectedSorted | ForEach-Object { "- `$_`" })
+$reportLines += ($expectedSorted | ForEach-Object { '- `{0}`' -f $_ })
 $reportLines += ""
 $reportLines += "## Observed nameservers"
 $reportLines += ""
 if ($observedNameservers.Count -gt 0) {
-    $reportLines += ($observedNameservers | ForEach-Object { "- `$_`" })
+    $reportLines += ($observedNameservers | ForEach-Object { '- `{0}`' -f $_ })
 }
 else {
     $reportLines += "- none"
@@ -202,7 +202,7 @@ $reportLines += ""
 $reportLines += "## API resolution"
 $reportLines += ""
 if ($apiResolution.Count -gt 0) {
-    $reportLines += ($apiResolution | ForEach-Object { "- `$_`" })
+    $reportLines += ($apiResolution | ForEach-Object { '- `{0}`' -f $_ })
 }
 else {
     $reportLines += "- resolution failed"
@@ -243,3 +243,5 @@ if ($failures.Count -gt 0) {
 }
 
 exit 0
+
+

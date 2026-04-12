@@ -1,17 +1,18 @@
-Thought for 12s
+Here is the corrected full rewrite of the file, with the confidence level tightened so it does not overstate end-to-end validation. Source text reviewed from your pasted file.
+
 # RECOVERY_NOTES_2026-04-12
 
 ## Purpose
 
-This file records the recovered live Reporting Forge fulfillment/API configuration and supporting evidence as of 2026-04-12.
+This file records the recovered Reporting Forge fulfillment/API configuration and supporting evidence as of 2026-04-12.
 
-This is a recovery snapshot and preservation record, not a final architecture specification.
+This is a recovery snapshot and preservation record, not a final architecture specification or proof of full end-to-end production health.
 
 ---
 
 ## Executive Summary
 
-The critical Reporting Forge backend was recovered successfully from the live Cloudflare Worker and dashboard.
+The core Cloudflare-side Reporting Forge backend assets were recovered and verified from the live environment.
 
 Recovered and verified:
 
@@ -22,15 +23,22 @@ Recovered and verified:
 - R2 binding: `rf_books -> rf-books`
 - Cron trigger: `*/1 * * * *`
 - Compatibility date: `2026-02-17`
-- Health endpoint confirmed live: `GET /health` returned `{"ok":true}`
+- Health endpoints confirmed live:
+  - `GET https://api.reportingforge.com/health` -> `{"ok":true}`
+  - `GET https://rf-webhooks.nmoloney1968.workers.dev/health` -> `{"ok":true}`
 
 Conclusion:
 
 - The system was not lost.
 - The main risk was source-control drift and incomplete repo history.
 - The live Cloudflare Worker contained the real fulfillment logic.
-- D1 and R2 were still intact.
+- D1 and R2 were still present and structurally intact.
 - The system appears lightly used, consistent with very low traction and no sales yet.
+
+Important limitation:
+
+- This recovery snapshot does **not** by itself prove current end-to-end success of the full fulfillment pipeline.
+- Current Render stamping, Mailgun delivery, and the complete webhook-to-download path were **not fully validated** in this pass.
 
 ---
 
@@ -62,6 +70,11 @@ Conclusion:
 5. Generate secure download links
 6. Send delivery email via Mailgun
 7. Capture leads and enqueue Chapter 0 personalized delivery
+
+Important caveat:
+
+- These responsibilities are confirmed from recovered code and configuration.
+- They are **not** the same as proving every external dependency is currently working end to end.
 
 ---
 
@@ -198,13 +211,22 @@ RF-SMEAF-EBK-tmp normalizes to RF-SMEAF-EBK
 Chapter 0 lead jobs use generated order numbers like LEAD-...
 Download links are signed with DL_TOKEN_SECRET
 The default public base URL falls back to https://rf-webhooks.nmoloney1968.workers.dev if PUBLIC_BASE_URL is absent
+
 Mailgun sending depends on:
+
 MAILGUN_API_KEY
 MAILGUN_DOMAIN
 MAILGUN_API_BASE
 MAIL_FROM
+
 The Render stamper is called at:
+
 https://reportingforge-internal.onrender.com/stamp
+
+Important limitation:
+
+The presence of these settings in code and config does not prove current successful Mailgun delivery or current successful Render stamping.
+Those components remain only partially validated in this recovery snapshot.
 D1 Schema Snapshot
 
 Schema captured from:
@@ -360,17 +382,23 @@ Operational Interpretation of the Data
 
 What the live dataset suggests:
 
-The backend is real and functioning
+The Cloudflare-side backend is present, reachable, and materially intact
 The Worker, D1, R2, and custom API domain are intact
 The system was not heavily used, which reduces recovery risk
 There are two leads and two fulfillment jobs, likely corresponding to Chapter 0 lead flow
 There is no meaningful commercial history to reconstruct from paid orders
 
+What this does not prove:
+
+Current Render stamping success
+Current Mailgun delivery success
+Current end-to-end success of the full webhook-to-download pipeline
+
 Important additional observation:
 
 The recovered Worker code tries to insert optional Fungies event logging into a schema that may have drifted
 Because those inserts are wrapped in silent try/catch blocks, fungies_events may remain zero even if the webhook route is exercised
-Therefore zero rows in fungies_events does not necessarily mean the webhook route was never called, but in this case it aligns with the fact that nothing was sold
+Therefore zero rows in fungies_events does not necessarily mean the webhook route was never called, though in this case it aligns with the fact that nothing was sold
 R2 Inventory Snapshot
 
 Bucket:
@@ -397,9 +425,13 @@ Observed CH0 output filenames were lead-style files, consistent with generated L
 
 Interpretation:
 
-The fulfillment pipeline has created output objects in R2
-This aligns with the lead-driven Chapter 0 flow
+Historical artifacts and current bucket structure indicate prior output activity in R2
+This is consistent with the lead-driven Chapter 0 flow
 The R2 bucket structure matches the recovered Worker code expectations
+
+Important caveat:
+
+The existence of these objects and prefixes does not by itself prove that current live stamping and delivery are fully healthy end to end
 Confirmed Live Endpoints
 Confirmed working
 https://api.reportingforge.com/health -> {"ok":true}
@@ -407,6 +439,11 @@ https://rf-webhooks.nmoloney1968.workers.dev/health -> {"ok":true}
 Additional observations from probing
 https://api.reportingforge.com/ returned 404 Not Found
 This is consistent with api.reportingforge.com being routed to the Worker for specific paths rather than serving a root page
+
+Important caveat:
+
+Health endpoint success confirms basic Worker reachability and route handling
+It does not confirm the health of external dependencies such as Render or Mailgun
 Known Architecture Snapshot
 Public side
 reportingforge.com
@@ -422,9 +459,21 @@ Email
 Mailgun domain: mg.reportingforge.com
 Reply-to: hello@reportingforge.com
 From: hello@mg.reportingforge.com
+
+Operational status note:
+
+Mailgun configuration is present in the recovered Worker settings
+Current live email delivery success was not fully validated in this recovery snapshot
 Stamper
+
 Render service:
+
 https://reportingforge-internal.onrender.com
+
+Operational status note:
+
+The stamper URL is present in the recovered configuration
+Current live stamper behavior was not fully validated in this recovery snapshot
 Recovery Branch Snapshot
 
 Branch created and published:
@@ -445,10 +494,24 @@ Important Recovery Observations
 The live Worker was recoverable from Cloudflare even though the repo was missing the true live source.
 The old Worker config referencing reporting-forge and src/index.ts should be treated as historical or stale.
 The actual live operational backend is rf-webhooks.
-Backend resources are intact enough to preserve and rebuild from.
+Cloudflare-side backend resources are intact enough to preserve and rebuild from.
 The system appears lightly used, which reduces historical-data recovery risk.
-There may be code/schema drift in some logging or event-storage areas, but the core structure is intact.
+There may be code/schema drift in some logging or event-storage areas, but the core Cloudflare-side structure is intact.
 This is a preservation and stabilization point, not a signal to casually redeploy or refactor production immediately.
+Full stack health still requires controlled validation of Render, Mailgun, and the end-to-end fulfillment path.
+Required Validation Before Claiming Full Stack Health
+
+The following tests remain required:
+
+Controlled /lead test
+Controlled /fungies/webhook test
+Confirm successful Render stamping
+Confirm successful Mailgun delivery
+Confirm valid /dl download of generated output
+Complete manual Cloudflare and registrar checks for zone integrity and domain routing
+
+Until those are completed, this file should be read as a recovery and preservation record, not proof that the entire stack is fully healthy.
+
 Recommended Immediate Next-Step Guidance
 Keep the recovery branch untouched as a reference point.
 Maintain an external backup ZIP of:
@@ -457,12 +520,9 @@ wrangler.toml
 wrangler.toml_old
 screenshots
 this notes file
-Do not deploy or merge until repo reconciliation is complete.
+Do not merge until repo reconciliation is complete.
 Consider moving rf-webhooks into its own dedicated repo, separate from the public site repo.
-Later, run controlled end-to-end tests for:
-/lead
-/fungies/webhook
-/dl
+Perform the required validation steps listed above before describing the stack as fully healthy.
 Recovery Status
 
 Status as of 2026-04-12:
@@ -474,4 +534,7 @@ custom domain confirmed: yes
 source saved to GitHub recovery branch: yes
 production redeploy required immediately: no
 commercial history loss risk: low
+Cloudflare-side backend recovery: confirmed
+full end-to-end stack validation: not yet complete
+likely next phase: stabilize, document, separate repos, then test
 likely next phase: stabilize, document, separate repos, then test
