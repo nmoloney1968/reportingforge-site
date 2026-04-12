@@ -1,0 +1,8 @@
+name = "reporting-forge"
+main = "src/index.ts"
+compatibility_date = "2026-02-17"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "rf_store"
+database_id = "aa566fec-9105-4779-8abe-2a0ba8299dc6"
