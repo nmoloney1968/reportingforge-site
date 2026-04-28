@@ -1,6 +1,6 @@
 {
-  "last_alert_key": "overall_red",
-  "last_alert_sent_at": "2026-04-02T04:40:04Z",
-  "last_reason": "sent",
+  "last_alert_key": "clear",
+  "last_alert_sent_at": "2026-04-28T05:43:34Z",
+  "last_reason": "overall=Yellow panic=False",
   "last_subject": "Reporting Forge Monitor: Action - Overall Red"
 }
