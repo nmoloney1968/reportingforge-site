@@ -32,19 +32,10 @@ jobs:
         run: |
           python monitor_build.py
 
-      - name: Send alerts if needed
-        env:
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          ALERT_FROM_EMAIL: ${{ secrets.ALERT_FROM_EMAIL }}
-          ALERT_TO_EMAIL: ${{ secrets.ALERT_TO_EMAIL }}
-
-        run: |
-          python monitor_alert.py
-
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add monitor/index.html monitor/monitor_signature.json monitor/alert_state.json
+          git add monitor/index.html monitor/monitor_signature.json
           git diff --cached --quiet || git commit -m "Update monitor"
           git push
