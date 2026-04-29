@@ -1,8 +1,35 @@
-name = "reporting-forge"
-main = "src/index.ts"
+name = "rf-webhooks"
+main = "worker.js"
 compatibility_date = "2026-02-17"
+
+[observability]
+enabled = true
 
 [[d1_databases]]
 binding = "DB"
 database_name = "rf_store"
 database_id = "aa566fec-9105-4779-8abe-2a0ba8299dc6"
+
+[[r2_buckets]]
+binding = "rf_books"
+bucket_name = "rf-books"
+
+[triggers]
+crons = ["*/1 * * * *"]
+
+[vars]
+MAIL_FROM = "hello@mg.reportingforge.com"
+MAILGUN_API_BASE = "https://api.mailgun.net"
+MAILGUN_DOMAIN = "mg.reportingforge.com"
+PUBLIC_BASE_URL = "https://api.reportingforge.com"
+REPLY_TO = "hello@reportingforge.com"
+STAMPER_URL = "https://reportingforge-internal.onrender.com"
+
+[secrets]
+required = [
+  "ADMIN_TOKEN",
+  "DL_TOKEN_SECRET",
+  "FNGS_WEBHOOK_SECRET",
+  "MAILGUN_API_KEY",
+  "STAMPER_TOKEN",
+]

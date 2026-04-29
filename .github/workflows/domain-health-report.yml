@@ -1,0 +1,54 @@
+name: Domain health report
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 3 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  windows-powershell-checks:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run domain health PowerShell check
+        shell: pwsh
+        run: ./scripts/check-domain-health.ps1
+
+      - name: Run worker health PowerShell check
+        shell: pwsh
+        run: ./scripts/check-worker-health.ps1
+
+      - name: Upload Windows reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: domain-health-reports-windows
+          path: reports/*.md
+          if-no-files-found: ignore
+
+  ubuntu-bash-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run domain health Bash check
+        shell: bash
+        run: bash ./scripts/check-domain-health.sh
+
+      - name: Run worker health Bash check
+        shell: bash
+        run: bash ./scripts/check-worker-health.sh
+
+      - name: Upload Linux reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: domain-health-reports-linux
+          path: reports/*.md
+          if-no-files-found: ignore
