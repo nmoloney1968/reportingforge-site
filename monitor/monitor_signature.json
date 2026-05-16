@@ -1,9 +1,9 @@
 {
-  "built_at_utc": "2026-05-15 05:01 UTC",
+  "built_at_utc": "2026-05-16 04:38 UTC",
   "fred": {
-    "last_obs_date": "2026-05-13",
-    "last_obs_value": 1.99,
-    "last_updated": "2026-05-14 15:16:36-05",
+    "last_obs_date": "2026-05-14",
+    "last_obs_value": 2.0,
+    "last_updated": "2026-05-15 15:16:36-05",
     "series_label": "10Y real yield (DFII10)",
     "series_used": "DFII10"
   },
@@ -14,22 +14,22 @@
     "nem_gold": "Green",
     "overall": "Red",
     "panic_flush": {
-      "on": false,
-      "trigger": ""
+      "on": true,
+      "trigger": "NEM 2D drop -8.32%"
     },
     "real_yield": "Red",
     "wti": "Red"
   },
   "template_version": "v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13",
   "yahoo": {
-    "dxy_last_date": "2026-05-14",
+    "dxy_last_date": "2026-05-15",
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
-    "gold_last_date": "2026-05-14",
-    "gold_last_value": 4678.10009765625,
+    "gold_last_date": "2026-05-15",
+    "gold_last_value": 4555.7998046875,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
-    "wti_last_date": "2026-05-14",
+    "wti_last_date": "2026-05-15",
     "wti_ticker": "CL=F"
   }
 }
