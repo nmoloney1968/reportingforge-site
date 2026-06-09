@@ -1,0 +1,1396 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//OpenAI ChatGPT//FIFA World Cup 2026 Group Stage Hanoi Calendar/
+ /EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:FIFA World Cup 2026 - Group Stage - Hanoi Time
+X-WR-TIMEZONE:Asia/Ho_Chi_Minh
+BEGIN:VTIMEZONE
+TZID:Asia/Ho_Chi_Minh
+X-LIC-LOCATION:Asia/Ho_Chi_Minh
+BEGIN:STANDARD
+TZOFFSETFROM:+0700
+TZOFFSETTO:+0700
+TZNAME:ICT
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:wc26-hanoi-group-001-823c7d4522fb@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260612T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260612T040000
+SUMMARY:Group A: Mexico vs South Africa - World Cup 2026
+LOCATION:Mexico City\, Mexico
+DESCRIPTION:Group A group-stage match.\\nMatch: Mexico vs South Africa\\n
+ Kickoff: 2026-06-12 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Mexico City\,
+  Mexico\\nOriginal schedule reference: Thursday\, June 11\, 8pm UK time.
+ \\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group A: Mexico vs South Africa
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-002-3967e93fbf10@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260612T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260612T110000
+SUMMARY:Group A: South Korea vs Czech Republic - World Cup 2026
+LOCATION:Zapopan\, Mexico
+DESCRIPTION:Group A group-stage match.\\nMatch: South Korea vs Czech Repu
+ blic\\nKickoff: 2026-06-12 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Zapopa
+ n\, Mexico\\nOriginal schedule reference: Friday\, June 12\, 3am UK time
+ .\\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group A: South Korea vs Czech R
+ epublic
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-003-720974383873@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260613T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260613T040000
+SUMMARY:Group B: Canada vs Bosnia & Herzegovina - World Cup 2026
+LOCATION:Toronto\, Canada
+DESCRIPTION:Group B group-stage match.\\nMatch: Canada vs Bosnia & Herzeg
+ ovina\\nKickoff: 2026-06-13 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Toron
+ to\, Canada\\nOriginal schedule reference: Friday\, June 12\, 8pm UK tim
+ e.\\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group B: Canada vs Bosnia & Her
+ zegovina
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-004-80f386877483@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260613T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260613T100000
+SUMMARY:Group D: USA vs Paraguay - World Cup 2026
+LOCATION:Los Angeles\, USA
+DESCRIPTION:Group D group-stage match.\\nMatch: USA vs Paraguay\\nKickoff
+ : 2026-06-13 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Los Angeles\, USA\\n
+ Original schedule reference: Saturday\, June 13\, 2am UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group D: USA vs Paraguay
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-005-a07a412a84a9@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260614T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260614T040000
+SUMMARY:Group B: Qatar vs Switzerland - World Cup 2026
+LOCATION:Santa Clara\, USA
+DESCRIPTION:Group B group-stage match.\\nMatch: Qatar vs Switzerland\\nKi
+ ckoff: 2026-06-14 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Santa Clara\, U
+ SA\\nOriginal schedule reference: Saturday\, June 13\, 8pm UK time.\\nRe
+ minder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group B: Qatar vs Switzerland
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-006-84eb1893cccd@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260614T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260614T070000
+SUMMARY:Group C: Brazil vs Morocco - World Cup 2026
+LOCATION:New Jersey\, USA
+DESCRIPTION:Group C group-stage match.\\nMatch: Brazil vs Morocco\\nKicko
+ ff: 2026-06-14 05:00 Hanoi time (ICT/UTC+7).\\nVenue: New Jersey\, USA\\
+ nOriginal schedule reference: Saturday\, June 13\, 11pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group C: Brazil vs Morocco
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-007-d46aa9224909@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260614T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260614T100000
+SUMMARY:Group C: Haiti vs Scotland - World Cup 2026
+LOCATION:Foxborough\, USA
+DESCRIPTION:Group C group-stage match.\\nMatch: Haiti vs Scotland\\nKicko
+ ff: 2026-06-14 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Foxborough\, USA\\
+ nOriginal schedule reference: Sunday\, June 14\, 2am UK time.\\nReminder
+ : 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group C: Haiti vs Scotland
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-008-ff1f387862ec@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260614T110000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260614T130000
+SUMMARY:Group D: Australia vs Turkey - World Cup 2026
+LOCATION:Vancouver\, Canada
+DESCRIPTION:Group D group-stage match.\\nMatch: Australia vs Turkey\\nKic
+ koff: 2026-06-14 11:00 Hanoi time (ICT/UTC+7).\\nVenue: Vancouver\, Cana
+ da\\nOriginal schedule reference: Sunday\, June 14\, 5am UK time.\\nRemi
+ nder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group D: Australia vs Turkey
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-009-3f7258842e65@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260615T000000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260615T020000
+SUMMARY:Group E: Germany vs Curacao - World Cup 2026
+LOCATION:Houston\, USA
+DESCRIPTION:Group E group-stage match.\\nMatch: Germany vs Curacao\\nKick
+ off: 2026-06-15 00:00 Hanoi time (ICT/UTC+7).\\nVenue: Houston\, USA\\nO
+ riginal schedule reference: Sunday\, June 14\, 6pm UK time.\\nReminder: 
+ 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group E: Germany vs Curacao
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-010-93725d72cb0c@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260615T030000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260615T050000
+SUMMARY:Group F: Netherlands vs Japan - World Cup 2026
+LOCATION:Arlington\, USA
+DESCRIPTION:Group F group-stage match.\\nMatch: Netherlands vs Japan\\nKi
+ ckoff: 2026-06-15 03:00 Hanoi time (ICT/UTC+7).\\nVenue: Arlington\, USA
+ \\nOriginal schedule reference: Sunday\, June 14\, 9pm UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group F: Netherlands vs Japan
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-011-b031a6d2cc32@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260615T060000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260615T080000
+SUMMARY:Group E: Ivory Coast vs Ecuador - World Cup 2026
+LOCATION:Philadelphia\, USA
+DESCRIPTION:Group E group-stage match.\\nMatch: Ivory Coast vs Ecuador\\n
+ Kickoff: 2026-06-15 06:00 Hanoi time (ICT/UTC+7).\\nVenue: Philadelphia\
+ , USA\\nOriginal schedule reference: Monday\, June 15\, 12am UK time.\\n
+ Reminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group E: Ivory Coast vs Ecuador
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-012-7076fe61210f@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260615T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260615T110000
+SUMMARY:Group F: Sweden vs Tunisia - World Cup 2026
+LOCATION:Guadalupe\, Mexico
+DESCRIPTION:Group F group-stage match.\\nMatch: Sweden vs Tunisia\\nKicko
+ ff: 2026-06-15 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Guadalupe\, Mexico
+ \\nOriginal schedule reference: Monday\, June 15\, 3am UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group F: Sweden vs Tunisia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-013-c9d83ba85a97@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260615T230000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260616T010000
+SUMMARY:Group H: Spain vs Cape Verde - World Cup 2026
+LOCATION:Atlanta\, USA
+DESCRIPTION:Group H group-stage match.\\nMatch: Spain vs Cape Verde\\nKic
+ koff: 2026-06-15 23:00 Hanoi time (ICT/UTC+7).\\nVenue: Atlanta\, USA\\n
+ Original schedule reference: Monday\, June 15\, 5pm UK time.\\nReminder:
+  4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group H: Spain vs Cape Verde
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-014-04ed65239f10@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260616T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260616T040000
+SUMMARY:Group G: Belgium vs Egypt - World Cup 2026
+LOCATION:Seattle\, USA
+DESCRIPTION:Group G group-stage match.\\nMatch: Belgium vs Egypt\\nKickof
+ f: 2026-06-16 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Seattle\, USA\\nOri
+ ginal schedule reference: Monday\, June 15\, 8pm UK time.\\nReminder: 4 
+ hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group G: Belgium vs Egypt
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-015-4c5e92130120@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260616T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260616T070000
+SUMMARY:Group H: Saudi Arabia vs Uruguay - World Cup 2026
+LOCATION:Miami\, USA
+DESCRIPTION:Group H group-stage match.\\nMatch: Saudi Arabia vs Uruguay\\
+ nKickoff: 2026-06-16 05:00 Hanoi time (ICT/UTC+7).\\nVenue: Miami\, USA\
+ \nOriginal schedule reference: Monday\, June 15\, 11pm UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group H: Saudi Arabia vs Urugua
+ y
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-016-fdeaab41b5c5@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260616T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260616T100000
+SUMMARY:Group G: Iran vs New Zealand - World Cup 2026
+LOCATION:Los Angeles\, USA
+DESCRIPTION:Group G group-stage match.\\nMatch: Iran vs New Zealand\\nKic
+ koff: 2026-06-16 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Los Angeles\, US
+ A\\nOriginal schedule reference: Tuesday\, June 16\, 2am UK time.\\nRemi
+ nder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group G: Iran vs New Zealand
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-017-51bd17b48356@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260617T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260617T040000
+SUMMARY:Group I: France vs Senegal - World Cup 2026
+LOCATION:New Jersey\, USA
+DESCRIPTION:Group I group-stage match.\\nMatch: France vs Senegal\\nKicko
+ ff: 2026-06-17 02:00 Hanoi time (ICT/UTC+7).\\nVenue: New Jersey\, USA\\
+ nOriginal schedule reference: Tuesday\, June 16\, 8pm UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group I: France vs Senegal
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-018-d3ed05c49df0@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260617T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260617T070000
+SUMMARY:Group I: Iraq vs Norway - World Cup 2026
+LOCATION:Foxborough\, USA
+DESCRIPTION:Group I group-stage match.\\nMatch: Iraq vs Norway\\nKickoff:
+  2026-06-17 05:00 Hanoi time (ICT/UTC+7).\\nVenue: Foxborough\, USA\\nOr
+ iginal schedule reference: Tuesday\, June 16\, 11pm UK time.\\nReminder:
+  4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group I: Iraq vs Norway
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-019-78ab57bce747@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260617T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260617T100000
+SUMMARY:Group J: Argentina vs Algeria - World Cup 2026
+LOCATION:Kansas City\, USA
+DESCRIPTION:Group J group-stage match.\\nMatch: Argentina vs Algeria\\nKi
+ ckoff: 2026-06-17 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Kansas City\, U
+ SA\\nOriginal schedule reference: Wednesday\, June 17\, 2am UK time.\\nR
+ eminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group J: Argentina vs Algeria
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-020-2dbb5296adae@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260617T110000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260617T130000
+SUMMARY:Group J: Austria vs Jordan - World Cup 2026
+LOCATION:Santa Clara\, USA
+DESCRIPTION:Group J group-stage match.\\nMatch: Austria vs Jordan\\nKicko
+ ff: 2026-06-17 11:00 Hanoi time (ICT/UTC+7).\\nVenue: Santa Clara\, USA\
+ \nOriginal schedule reference: Wednesday\, June 17\, 5am UK time.\\nRemi
+ nder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group J: Austria vs Jordan
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-021-9e005c76cbf6@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260618T000000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260618T020000
+SUMMARY:Group K: Portugal vs DR Congo - World Cup 2026
+LOCATION:Houston\, USA
+DESCRIPTION:Group K group-stage match.\\nMatch: Portugal vs DR Congo\\nKi
+ ckoff: 2026-06-18 00:00 Hanoi time (ICT/UTC+7).\\nVenue: Houston\, USA\\
+ nOriginal schedule reference: Wednesday\, June 17\, 6pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group K: Portugal vs DR Congo
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-022-6fce6c72360d@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260618T030000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260618T050000
+SUMMARY:Group L: England vs Croatia - World Cup 2026
+LOCATION:Arlington\, USA
+DESCRIPTION:Group L group-stage match.\\nMatch: England vs Croatia\\nKick
+ off: 2026-06-18 03:00 Hanoi time (ICT/UTC+7).\\nVenue: Arlington\, USA\\
+ nOriginal schedule reference: Wednesday\, June 17\, 9pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group L: England vs Croatia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-023-76bf0c4ed3a8@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260618T060000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260618T080000
+SUMMARY:Group L: Ghana vs Panama - World Cup 2026
+LOCATION:Toronto\, Canada
+DESCRIPTION:Group L group-stage match.\\nMatch: Ghana vs Panama\\nKickoff
+ : 2026-06-18 06:00 Hanoi time (ICT/UTC+7).\\nVenue: Toronto\, Canada\\nO
+ riginal schedule reference: Thursday\, June 18\, 12am UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group L: Ghana vs Panama
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-024-df7ebc2f7da5@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260618T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260618T110000
+SUMMARY:Group K: Uzbekistan vs Colombia - World Cup 2026
+LOCATION:Mexico City\, Mexico
+DESCRIPTION:Group K group-stage match.\\nMatch: Uzbekistan vs Colombia\\n
+ Kickoff: 2026-06-18 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Mexico City\,
+  Mexico\\nOriginal schedule reference: Thursday\, June 18\, 3am UK time.
+ \\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group K: Uzbekistan vs Colombia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-025-663202b7d596@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260618T230000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260619T010000
+SUMMARY:Group A: Czech Republic vs South Africa - World Cup 2026
+LOCATION:Atlanta\, USA
+DESCRIPTION:Group A group-stage match.\\nMatch: Czech Republic vs South A
+ frica\\nKickoff: 2026-06-18 23:00 Hanoi time (ICT/UTC+7).\\nVenue: Atlan
+ ta\, USA\\nOriginal schedule reference: Thursday\, June 18\, 5pm UK time
+ .\\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group A: Czech Republic vs Sout
+ h Africa
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-026-6017f6871539@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260619T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260619T040000
+SUMMARY:Group B: Switzerland vs Bosnia & Herzegovina - World Cup 2026
+LOCATION:Los Angeles\, USA
+DESCRIPTION:Group B group-stage match.\\nMatch: Switzerland vs Bosnia & H
+ erzegovina\\nKickoff: 2026-06-19 02:00 Hanoi time (ICT/UTC+7).\\nVenue: 
+ Los Angeles\, USA\\nOriginal schedule reference: Thursday\, June 18\, 8p
+ m UK time.\\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group B: Switzerland vs Bosnia 
+ & Herzegovina
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-027-14c46767c1ee@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260619T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260619T070000
+SUMMARY:Group B: Canada vs Qatar - World Cup 2026
+LOCATION:Vancouver\, Canada
+DESCRIPTION:Group B group-stage match.\\nMatch: Canada vs Qatar\\nKickoff
+ : 2026-06-19 05:00 Hanoi time (ICT/UTC+7).\\nVenue: Vancouver\, Canada\\
+ nOriginal schedule reference: Thursday\, June 18\, 11pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group B: Canada vs Qatar
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-028-3cd152ae1b43@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260619T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260619T100000
+SUMMARY:Group A: Mexico vs South Korea - World Cup 2026
+LOCATION:Zapopan\, Mexico
+DESCRIPTION:Group A group-stage match.\\nMatch: Mexico vs South Korea\\nK
+ ickoff: 2026-06-19 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Zapopan\, Mexi
+ co\\nOriginal schedule reference: Friday\, June 19\, 2am UK time.\\nRemi
+ nder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group A: Mexico vs South Korea
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-029-925316d03562@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260620T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260620T040000
+SUMMARY:Group D: USA vs Australia - World Cup 2026
+LOCATION:Seattle\, USA
+DESCRIPTION:Group D group-stage match.\\nMatch: USA vs Australia\\nKickof
+ f: 2026-06-20 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Seattle\, USA\\nOri
+ ginal schedule reference: Friday\, June 19\, 8pm UK time.\\nReminder: 4 
+ hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group D: USA vs Australia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-030-9542970dfb7a@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260620T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260620T070000
+SUMMARY:Group C: Scotland vs Morocco - World Cup 2026
+LOCATION:Foxborough\, USA
+DESCRIPTION:Group C group-stage match.\\nMatch: Scotland vs Morocco\\nKic
+ koff: 2026-06-20 05:00 Hanoi time (ICT/UTC+7).\\nVenue: Foxborough\, USA
+ \\nOriginal schedule reference: Friday\, June 19\, 11pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group C: Scotland vs Morocco
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-031-f74a8055c6ab@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260620T073000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260620T093000
+SUMMARY:Group C: Brazil vs Haiti - World Cup 2026
+LOCATION:Philadelphia\, USA
+DESCRIPTION:Group C group-stage match.\\nMatch: Brazil vs Haiti\\nKickoff
+ : 2026-06-20 07:30 Hanoi time (ICT/UTC+7).\\nVenue: Philadelphia\, USA\\
+ nOriginal schedule reference: Saturday\, June 20\, 1.30am UK time.\\nRem
+ inder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group C: Brazil vs Haiti
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-032-9700815380d5@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260620T100000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260620T120000
+SUMMARY:Group D: Turkey vs Paraguay - World Cup 2026
+LOCATION:Santa Clara\, USA
+DESCRIPTION:Group D group-stage match.\\nMatch: Turkey vs Paraguay\\nKick
+ off: 2026-06-20 10:00 Hanoi time (ICT/UTC+7).\\nVenue: Santa Clara\, USA
+ \\nOriginal schedule reference: Saturday\, June 20\, 4am UK time.\\nRemi
+ nder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group D: Turkey vs Paraguay
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-033-43bf6c103d57@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260621T000000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260621T020000
+SUMMARY:Group F: Netherlands vs Sweden - World Cup 2026
+LOCATION:Houston\, USA
+DESCRIPTION:Group F group-stage match.\\nMatch: Netherlands vs Sweden\\nK
+ ickoff: 2026-06-21 00:00 Hanoi time (ICT/UTC+7).\\nVenue: Houston\, USA\
+ \nOriginal schedule reference: Saturday\, June 20\, 6pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group F: Netherlands vs Sweden
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-034-a8f75ef17856@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260621T030000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260621T050000
+SUMMARY:Group E: Germany vs Ivory Coast - World Cup 2026
+LOCATION:Toronto\, Canada
+DESCRIPTION:Group E group-stage match.\\nMatch: Germany vs Ivory Coast\\n
+ Kickoff: 2026-06-21 03:00 Hanoi time (ICT/UTC+7).\\nVenue: Toronto\, Can
+ ada\\nOriginal schedule reference: Saturday\, June 20\, 9pm UK time.\\nR
+ eminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group E: Germany vs Ivory Coast
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-035-8087d01b2d1c@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260621T070000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260621T090000
+SUMMARY:Group E: Ecuador vs Curacao - World Cup 2026
+LOCATION:Kansas City\, USA
+DESCRIPTION:Group E group-stage match.\\nMatch: Ecuador vs Curacao\\nKick
+ off: 2026-06-21 07:00 Hanoi time (ICT/UTC+7).\\nVenue: Kansas City\, USA
+ \\nOriginal schedule reference: Sunday\, June 21\, 1am UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group E: Ecuador vs Curacao
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-036-617eecddbe2c@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260621T110000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260621T130000
+SUMMARY:Group F: Tunisia vs Japan - World Cup 2026
+LOCATION:Guadalupe\, Mexico
+DESCRIPTION:Group F group-stage match.\\nMatch: Tunisia vs Japan\\nKickof
+ f: 2026-06-21 11:00 Hanoi time (ICT/UTC+7).\\nVenue: Guadalupe\, Mexico\
+ \nOriginal schedule reference: Sunday\, June 21\, 5am UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group F: Tunisia vs Japan
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-037-6ce9457c2ad7@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260621T230000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260622T010000
+SUMMARY:Group H: Spain vs Saudi Arabia - World Cup 2026
+LOCATION:Atlanta\, USA
+DESCRIPTION:Group H group-stage match.\\nMatch: Spain vs Saudi Arabia\\nK
+ ickoff: 2026-06-21 23:00 Hanoi time (ICT/UTC+7).\\nVenue: Atlanta\, USA\
+ \nOriginal schedule reference: Sunday\, June 21\, 5pm UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group H: Spain vs Saudi Arabia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-038-e8205ed68c16@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260622T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260622T040000
+SUMMARY:Group G: Belgium vs Iran - World Cup 2026
+LOCATION:Los Angeles\, USA
+DESCRIPTION:Group G group-stage match.\\nMatch: Belgium vs Iran\\nKickoff
+ : 2026-06-22 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Los Angeles\, USA\\n
+ Original schedule reference: Sunday\, June 21\, 8pm UK time.\\nReminder:
+  4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group G: Belgium vs Iran
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-039-b424b267685a@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260622T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260622T070000
+SUMMARY:Group H: Uruguay vs Cape Verde - World Cup 2026
+LOCATION:Miami\, USA
+DESCRIPTION:Group H group-stage match.\\nMatch: Uruguay vs Cape Verde\\nK
+ ickoff: 2026-06-22 05:00 Hanoi time (ICT/UTC+7).\\nVenue: Miami\, USA\\n
+ Original schedule reference: Sunday\, June 21\, 11pm UK time.\\nReminder
+ : 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group H: Uruguay vs Cape Verde
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-040-d149a811893d@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260622T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260622T100000
+SUMMARY:Group G: New Zealand vs Egypt - World Cup 2026
+LOCATION:Vancouver\, Canada
+DESCRIPTION:Group G group-stage match.\\nMatch: New Zealand vs Egypt\\nKi
+ ckoff: 2026-06-22 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Vancouver\, Can
+ ada\\nOriginal schedule reference: Monday\, June 22\, 2am UK time.\\nRem
+ inder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group G: New Zealand vs Egypt
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-041-7d22f64f5798@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260623T000000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260623T020000
+SUMMARY:Group J: Argentina vs Austria - World Cup 2026
+LOCATION:Arlington\, USA
+DESCRIPTION:Group J group-stage match.\\nMatch: Argentina vs Austria\\nKi
+ ckoff: 2026-06-23 00:00 Hanoi time (ICT/UTC+7).\\nVenue: Arlington\, USA
+ \\nOriginal schedule reference: Monday\, June 22\, 6pm UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group J: Argentina vs Austria
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-042-709f05c11af4@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260623T040000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260623T060000
+SUMMARY:Group I: France vs Iraq - World Cup 2026
+LOCATION:Philadelphia\, USA
+DESCRIPTION:Group I group-stage match.\\nMatch: France vs Iraq\\nKickoff:
+  2026-06-23 04:00 Hanoi time (ICT/UTC+7).\\nVenue: Philadelphia\, USA\\n
+ Original schedule reference: Monday\, June 22\, 10pm UK time.\\nReminder
+ : 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group I: France vs Iraq
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-043-84885f2068aa@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260623T070000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260623T090000
+SUMMARY:Group I: Norway vs Senegal - World Cup 2026
+LOCATION:Toronto\, Canada
+DESCRIPTION:Group I group-stage match.\\nMatch: Norway vs Senegal\\nKicko
+ ff: 2026-06-23 07:00 Hanoi time (ICT/UTC+7).\\nVenue: Toronto\, Canada\\
+ nOriginal schedule reference: Tuesday\, June 23\, 1am UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group I: Norway vs Senegal
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-044-d64cef035e9b@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260623T100000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260623T120000
+SUMMARY:Group J: Jordan vs Algeria - World Cup 2026
+LOCATION:Santa Clara\, USA
+DESCRIPTION:Group J group-stage match.\\nMatch: Jordan vs Algeria\\nKicko
+ ff: 2026-06-23 10:00 Hanoi time (ICT/UTC+7).\\nVenue: Santa Clara\, USA\
+ \nOriginal schedule reference: Tuesday\, June 23\, 4am UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group J: Jordan vs Algeria
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-045-f6578aaa9e5b@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260624T000000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260624T020000
+SUMMARY:Group K: Portugal vs Uzbekistan - World Cup 2026
+LOCATION:Houston\, USA
+DESCRIPTION:Group K group-stage match.\\nMatch: Portugal vs Uzbekistan\\n
+ Kickoff: 2026-06-24 00:00 Hanoi time (ICT/UTC+7).\\nVenue: Houston\, USA
+ \\nOriginal schedule reference: Tuesday\, June 23\, 6pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group K: Portugal vs Uzbekistan
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-046-d764e799b8da@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260624T030000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260624T050000
+SUMMARY:Group L: England vs Ghana - World Cup 2026
+LOCATION:Foxborough\, USA
+DESCRIPTION:Group L group-stage match.\\nMatch: England vs Ghana\\nKickof
+ f: 2026-06-24 03:00 Hanoi time (ICT/UTC+7).\\nVenue: Foxborough\, USA\\n
+ Original schedule reference: Tuesday\, June 23\, 9pm UK time.\\nReminder
+ : 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group L: England vs Ghana
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-047-bec14f533062@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260624T060000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260624T080000
+SUMMARY:Group L: Panama vs Croatia - World Cup 2026
+LOCATION:Foxborough\, USA
+DESCRIPTION:Group L group-stage match.\\nMatch: Panama vs Croatia\\nKicko
+ ff: 2026-06-24 06:00 Hanoi time (ICT/UTC+7).\\nVenue: Foxborough\, USA\\
+ nOriginal schedule reference: Wednesday\, June 24\, 12am UK time.\\nRemi
+ nder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group L: Panama vs Croatia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-048-cacdbb698f9b@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260624T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260624T110000
+SUMMARY:Group K: Colombia vs DR Congo - World Cup 2026
+LOCATION:Zapopan\, Mexico
+DESCRIPTION:Group K group-stage match.\\nMatch: Colombia vs DR Congo\\nKi
+ ckoff: 2026-06-24 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Zapopan\, Mexic
+ o\\nOriginal schedule reference: Wednesday\, June 24\, 3am UK time.\\nRe
+ minder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group K: Colombia vs DR Congo
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-049-1fcbb2862fd1@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260625T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260625T040000
+SUMMARY:Group B: Switzerland vs Canada - World Cup 2026
+LOCATION:Vancouver\, Canada
+DESCRIPTION:Group B group-stage match.\\nMatch: Switzerland vs Canada\\nK
+ ickoff: 2026-06-25 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Vancouver\, Ca
+ nada\\nOriginal schedule reference: Wednesday\, June 24\, 8pm UK time.\\
+ nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group B: Switzerland vs Canada
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-050-302c4057af95@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260625T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260625T040000
+SUMMARY:Group B: Bosnia & Herzegovina vs Qatar - World Cup 2026
+LOCATION:Seattle\, USA
+DESCRIPTION:Group B group-stage match.\\nMatch: Bosnia & Herzegovina vs Q
+ atar\\nKickoff: 2026-06-25 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Seattl
+ e\, USA\\nOriginal schedule reference: Wednesday\, June 24\, 8pm UK time
+ .\\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group B: Bosnia & Herzegovina v
+ s Qatar
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-051-ef52c7fcf5d3@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260625T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260625T070000
+SUMMARY:Group C: Morocco vs Haiti - World Cup 2026
+LOCATION:Atlanta\, USA
+DESCRIPTION:Group C group-stage match.\\nMatch: Morocco vs Haiti\\nKickof
+ f: 2026-06-25 05:00 Hanoi time (ICT/UTC+7).\\nVenue: Atlanta\, USA\\nOri
+ ginal schedule reference: Wednesday\, June 24\, 11pm UK time.\\nReminder
+ : 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group C: Morocco vs Haiti
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-052-8c47e27a6052@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260625T050000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260625T070000
+SUMMARY:Group C: Scotland vs Brazil - World Cup 2026
+LOCATION:Miami\, USA
+DESCRIPTION:Group C group-stage match.\\nMatch: Scotland vs Brazil\\nKick
+ off: 2026-06-25 05:00 Hanoi time (ICT/UTC+7).\\nVenue: Miami\, USA\\nOri
+ ginal schedule reference: Wednesday\, June 24\, 11pm UK time.\\nReminder
+ : 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group C: Scotland vs Brazil
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-053-60ea6ffc2065@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260625T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260625T100000
+SUMMARY:Group A: South Africa vs South Korea - World Cup 2026
+LOCATION:Guadalupe\, Mexico
+DESCRIPTION:Group A group-stage match.\\nMatch: South Africa vs South Kor
+ ea\\nKickoff: 2026-06-25 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Guadalup
+ e\, Mexico\\nOriginal schedule reference: Thursday\, June 25\, 2am UK ti
+ me.\\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group A: South Africa vs South 
+ Korea
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-054-2c67e7c281a6@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260625T080000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260625T100000
+SUMMARY:Group A: Czech Republic vs Mexico - World Cup 2026
+LOCATION:Mexico City\, Mexico
+DESCRIPTION:Group A group-stage match.\\nMatch: Czech Republic vs Mexico\
+ \nKickoff: 2026-06-25 08:00 Hanoi time (ICT/UTC+7).\\nVenue: Mexico City
+ \, Mexico\\nOriginal schedule reference: Thursday\, June 25\, 2am UK tim
+ e.\\nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group A: Czech Republic vs Mexi
+ co
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-055-9691536081e1@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260626T030000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260626T050000
+SUMMARY:Group E: Curacao vs Ivory Coast - World Cup 2026
+LOCATION:Philadelphia\, USA
+DESCRIPTION:Group E group-stage match.\\nMatch: Curacao vs Ivory Coast\\n
+ Kickoff: 2026-06-26 03:00 Hanoi time (ICT/UTC+7).\\nVenue: Philadelphia\
+ , USA\\nOriginal schedule reference: Thursday\, June 25\, 9pm UK time.\\
+ nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group E: Curacao vs Ivory Coast
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-056-af2e0aad580a@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260626T030000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260626T050000
+SUMMARY:Group E: Ecuador vs Germany - World Cup 2026
+LOCATION:New Jersey\, USA
+DESCRIPTION:Group E group-stage match.\\nMatch: Ecuador vs Germany\\nKick
+ off: 2026-06-26 03:00 Hanoi time (ICT/UTC+7).\\nVenue: New Jersey\, USA\
+ \nOriginal schedule reference: Thursday\, June 25\, 9pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group E: Ecuador vs Germany
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-057-cca2b8e2ea0a@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260626T060000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260626T080000
+SUMMARY:Group F: Tunisia vs Netherlands - World Cup 2026
+LOCATION:Kansas City\, USA
+DESCRIPTION:Group F group-stage match.\\nMatch: Tunisia vs Netherlands\\n
+ Kickoff: 2026-06-26 06:00 Hanoi time (ICT/UTC+7).\\nVenue: Kansas City\,
+  USA\\nOriginal schedule reference: Friday\, June 26\, 12am UK time.\\nR
+ eminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group F: Tunisia vs Netherlands
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-058-f4884f8db906@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260626T060000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260626T080000
+SUMMARY:Group F: Japan vs Sweden - World Cup 2026
+LOCATION:Arlington\, USA
+DESCRIPTION:Group F group-stage match.\\nMatch: Japan vs Sweden\\nKickoff
+ : 2026-06-26 06:00 Hanoi time (ICT/UTC+7).\\nVenue: Arlington\, USA\\nOr
+ iginal schedule reference: Friday\, June 26\, 12am UK time.\\nReminder: 
+ 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group F: Japan vs Sweden
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-059-68d6b1929558@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260626T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260626T110000
+SUMMARY:Group D: Turkey vs USA - World Cup 2026
+LOCATION:Los Angeles\, USA
+DESCRIPTION:Group D group-stage match.\\nMatch: Turkey vs USA\\nKickoff: 
+ 2026-06-26 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Los Angeles\, USA\\nOr
+ iginal schedule reference: Friday\, June 26\, 3am UK time.\\nReminder: 4
+  hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group D: Turkey vs USA
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-060-45016048b186@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260626T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260626T110000
+SUMMARY:Group D: Paraguay vs Australia - World Cup 2026
+LOCATION:Santa Clara\, USA
+DESCRIPTION:Group D group-stage match.\\nMatch: Paraguay vs Australia\\nK
+ ickoff: 2026-06-26 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Santa Clara\, 
+ USA\\nOriginal schedule reference: Friday\, June 26\, 3am UK time.\\nRem
+ inder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group D: Paraguay vs Australia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-061-35660bab67ea@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260627T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260627T040000
+SUMMARY:Group I: Norway vs France - World Cup 2026
+LOCATION:Foxborough\, USA
+DESCRIPTION:Group I group-stage match.\\nMatch: Norway vs France\\nKickof
+ f: 2026-06-27 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Foxborough\, USA\\n
+ Original schedule reference: Friday\, June 26\, 8pm UK time.\\nReminder:
+  4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group I: Norway vs France
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-062-8ffb2c67baa9@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260627T020000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260627T040000
+SUMMARY:Group I: Senegal vs Iraq - World Cup 2026
+LOCATION:Toronto\, Canada
+DESCRIPTION:Group I group-stage match.\\nMatch: Senegal vs Iraq\\nKickoff
+ : 2026-06-27 02:00 Hanoi time (ICT/UTC+7).\\nVenue: Toronto\, Canada\\nO
+ riginal schedule reference: Friday\, June 26\, 8pm UK time.\\nReminder: 
+ 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group I: Senegal vs Iraq
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-063-4dac33858ce9@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260627T070000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260627T090000
+SUMMARY:Group H: Cape Verde vs Saudi Arabia - World Cup 2026
+LOCATION:Houston\, USA
+DESCRIPTION:Group H group-stage match.\\nMatch: Cape Verde vs Saudi Arabi
+ a\\nKickoff: 2026-06-27 07:00 Hanoi time (ICT/UTC+7).\\nVenue: Houston\,
+  USA\\nOriginal schedule reference: Saturday\, June 27\, 1am UK time.\\n
+ Reminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group H: Cape Verde vs Saudi Ar
+ abia
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-064-65ad669c2cd4@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260627T070000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260627T090000
+SUMMARY:Group H: Uruguay vs Spain - World Cup 2026
+LOCATION:Zapopan\, Mexico
+DESCRIPTION:Group H group-stage match.\\nMatch: Uruguay vs Spain\\nKickof
+ f: 2026-06-27 07:00 Hanoi time (ICT/UTC+7).\\nVenue: Zapopan\, Mexico\\n
+ Original schedule reference: Saturday\, June 27\, 1am UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group H: Uruguay vs Spain
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-065-e1fdf89959d6@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260627T100000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260627T120000
+SUMMARY:Group G: New Zealand vs Belgium - World Cup 2026
+LOCATION:Vancouver\, Canada
+DESCRIPTION:Group G group-stage match.\\nMatch: New Zealand vs Belgium\\n
+ Kickoff: 2026-06-27 10:00 Hanoi time (ICT/UTC+7).\\nVenue: Vancouver\, C
+ anada\\nOriginal schedule reference: Saturday\, June 27\, 4am UK time.\\
+ nReminder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group G: New Zealand vs Belgium
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-066-8902ed579b3e@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260627T100000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260627T120000
+SUMMARY:Group G: Egypt vs Iran - World Cup 2026
+LOCATION:Seattle\, USA
+DESCRIPTION:Group G group-stage match.\\nMatch: Egypt vs Iran\\nKickoff: 
+ 2026-06-27 10:00 Hanoi time (ICT/UTC+7).\\nVenue: Seattle\, USA\\nOrigin
+ al schedule reference: Saturday\, June 27\, 4am UK time.\\nReminder: 4 h
+ ours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group G: Egypt vs Iran
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-067-ce10848dfef1@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260628T040000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260628T060000
+SUMMARY:Group L: Panama vs England - World Cup 2026
+LOCATION:New Jersey\, USA
+DESCRIPTION:Group L group-stage match.\\nMatch: Panama vs England\\nKicko
+ ff: 2026-06-28 04:00 Hanoi time (ICT/UTC+7).\\nVenue: New Jersey\, USA\\
+ nOriginal schedule reference: Saturday\, June 27\, 10pm UK time.\\nRemin
+ der: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group L: Panama vs England
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-068-06da128e7bb1@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260628T040000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260628T060000
+SUMMARY:Group L: Croatia vs Ghana - World Cup 2026
+LOCATION:Philadelphia\, USA
+DESCRIPTION:Group L group-stage match.\\nMatch: Croatia vs Ghana\\nKickof
+ f: 2026-06-28 04:00 Hanoi time (ICT/UTC+7).\\nVenue: Philadelphia\, USA\
+ \nOriginal schedule reference: Saturday\, June 27\, 10pm UK time.\\nRemi
+ nder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group L: Croatia vs Ghana
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-069-d5ae265daa99@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260628T063000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260628T083000
+SUMMARY:Group K: Colombia vs Portugal - World Cup 2026
+LOCATION:Miami\, USA
+DESCRIPTION:Group K group-stage match.\\nMatch: Colombia vs Portugal\\nKi
+ ckoff: 2026-06-28 06:30 Hanoi time (ICT/UTC+7).\\nVenue: Miami\, USA\\nO
+ riginal schedule reference: Sunday\, June 28\, 12.30am UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group K: Colombia vs Portugal
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-070-d5491f644d6f@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260628T063000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260628T083000
+SUMMARY:Group K: DR Congo vs Uzbekistan - World Cup 2026
+LOCATION:Atlanta\, USA
+DESCRIPTION:Group K group-stage match.\\nMatch: DR Congo vs Uzbekistan\\n
+ Kickoff: 2026-06-28 06:30 Hanoi time (ICT/UTC+7).\\nVenue: Atlanta\, USA
+ \\nOriginal schedule reference: Sunday\, June 28\, 12.30am UK time.\\nRe
+ minder: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group K: DR Congo vs Uzbekistan
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-071-7f299254cbd3@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260628T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260628T110000
+SUMMARY:Group J: Algeria vs Austria - World Cup 2026
+LOCATION:Kansas City\, USA
+DESCRIPTION:Group J group-stage match.\\nMatch: Algeria vs Austria\\nKick
+ off: 2026-06-28 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Kansas City\, USA
+ \\nOriginal schedule reference: Sunday\, June 28\, 3am UK time.\\nRemind
+ er: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group J: Algeria vs Austria
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc26-hanoi-group-072-feb7af2dcfc6@chatgpt.openai
+DTSTAMP:20260609T224156Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20260628T090000
+DTEND;TZID=Asia/Ho_Chi_Minh:20260628T110000
+SUMMARY:Group J: Jordan vs Argentina - World Cup 2026
+LOCATION:Arlington\, USA
+DESCRIPTION:Group J group-stage match.\\nMatch: Jordan vs Argentina\\nKic
+ koff: 2026-06-28 09:00 Hanoi time (ICT/UTC+7).\\nVenue: Arlington\, USA\
+ \nOriginal schedule reference: Sunday\, June 28\, 3am UK time.\\nReminde
+ r: 4 hours before kickoff.
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:World Cup kickoff in 4 hours: Group J: Jordan vs Argentina
+TRIGGER:-PT4H
+END:VALARM
+END:VEVENT
+END:VCALENDAR
