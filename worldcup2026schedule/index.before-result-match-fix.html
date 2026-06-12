@@ -583,12 +583,9 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 
       let count = 0;
       document.querySelectorAll('.card').forEach(card => {
-        const home = card.querySelector(".team-home")?.textContent?.trim();
-        const away = card.querySelector(".team-away")?.textContent?.trim();
-        if (!home || !away) return;
-
-        const key = `${home} vs ${away}`;
-        const result = rawMatches[key] || matchKeys(key).map(k => byKey.get(k)).find(Boolean);
+        const matchEl = card.querySelector('.match');
+        if (!matchEl) return;
+        const result = matchKeys(matchEl.textContent).map(k => byKey.get(k)).find(Boolean);
         if (result) { addResult(card, result); count++; }
       });
 
