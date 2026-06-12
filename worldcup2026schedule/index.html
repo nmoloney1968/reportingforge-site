@@ -549,6 +549,28 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     return [key];
   }
 
+  function displayElapsed(value) {
+    const raw = String(value ?? '').trim();
+    if (!raw) return '';
+    const key = raw.toLowerCase().replace(/[_-]+/g, ' ').replace(/\s+/g, ' ').trim();
+    if (['null', 'undefined', 'notstarted', 'not started', 'finished', 'fulltime', 'full time', 'ft'].includes(key)) return '';
+    if (['ht', 'half time', 'halftime'].includes(key)) return 'HT';
+    const minute = raw.match(/^(\d{1,3})(?:\s*\+\s*(\d{1,2}))?\s*(?:'|min|mins|minute|minutes)?$/i);
+    if (!minute) return '';
+    const base = Number.parseInt(minute[1], 10);
+    if (!Number.isFinite(base) || base < 0 || base > 130) return '';
+    return minute[2] ? `${base}+${Number.parseInt(minute[2], 10)}'` : `${base}'`;
+  }
+
+  function formatStatusLabel(status, elapsed) {
+    if (status === 'LIVE') {
+      const cleanElapsed = displayElapsed(elapsed);
+      return cleanElapsed ? `LIVE ${cleanElapsed}` : 'LIVE';
+    }
+    if (status === 'HT') return 'HT';
+    return status || 'Result';
+  }
+
   function addResult(card, result) {
     if (!result) return false;
     const status = String(result.status || result.apiStatus || '').toUpperCase();
@@ -558,7 +580,13 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     const score = result.score || `${result.home || ''} ${result.homeGoals}-${result.awayGoals} ${result.away || ''}`.trim();
     const div = document.createElement('div');
     div.className = 'result' + (liveStatuses.has(status) && !finishedStatuses.has(status) ? ' live' : '');
-    div.innerHTML = `<span class="status">${status || 'Result'}</span>${score}`;
+
+    const badge = document.createElement('span');
+    badge.className = 'status';
+    badge.textContent = formatStatusLabel(status, result.elapsed);
+    div.appendChild(badge);
+    div.appendChild(document.createTextNode(score));
+
     if (result.note) {
       const note = document.createElement('div');
       note.style.fontWeight = '500';

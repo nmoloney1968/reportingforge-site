@@ -20,6 +20,7 @@ Polling rules:
 - One request to `https://worldcup26.ir/get/games` fetches the full World Cup feed and updates all visible matches.
 - A daily usage counter is kept for visibility, but scheduled polling is no longer capped at 90 calls per UTC day.
 - If the source fetch fails, the last successful result payload stays in KV and continues to be served to the page.
+- Live matches include a cleaned `elapsed` field when `worldcup26.ir` provides useful `time_elapsed` data, such as `67'`, `45+2'`, or `HT`; finished and not-started timing values are omitted.
 
 The cron still runs every 5 minutes, but source requests are made only inside match polling windows and post-match check slots. Scheduled source calls wait until +23 seconds after the 5-minute boundary before calling `https://worldcup26.ir/get/games`, which avoids the obvious high-traffic boundary.
 

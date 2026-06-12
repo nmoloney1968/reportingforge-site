@@ -587,11 +587,14 @@ async function refreshResults(env, options = {}) {
     const homeGoals = normalizeScore(readValue(item, ['home_score', 'homeScore', 'home_goals', 'homeGoals', 'goals.home']));
     const awayGoals = normalizeScore(readValue(item, ['away_score', 'awayScore', 'away_goals', 'awayGoals', 'goals.away']));
     const key = `${home} vs ${away}`;
+    const status = getGameStatus(item);
+    const elapsed = getElapsedDisplay(item, status);
 
     matches[key] = {
-      status: getGameStatus(item),
+      status,
       score: formatScore(home, away, homeGoals, awayGoals),
-      note: formatGroup(readString(item, ['group', 'league.round', 'round']))
+      note: formatGroup(readString(item, ['group', 'league.round', 'round'])),
+      ...(elapsed ? { elapsed } : {})
     };
   }
 
@@ -632,10 +635,59 @@ function getGameStatus(item) {
   const finished = readValue(item, ['finished']);
   if (finished === true || String(finished).toUpperCase() === 'TRUE') return 'FT';
 
-  const timeElapsed = String(readValue(item, ['time_elapsed', 'timeElapsed']) || '').toLowerCase();
-  if (timeElapsed && timeElapsed !== 'notstarted') return 'LIVE';
+  const rawElapsed = readValue(item, ['time_elapsed', 'timeElapsed', 'elapsed', 'minute', 'status']);
+  const normalizedElapsed = normalizeElapsedTime(rawElapsed);
+  if (normalizedElapsed === 'HT') return 'HT';
+
+  const elapsedKey = normalizeElapsedToken(rawElapsed);
+  if (isFinishedElapsed(elapsedKey)) return 'FT';
+  if (normalizedElapsed) return 'LIVE';
+  if (elapsedKey && !isNotStartedElapsed(elapsedKey)) return 'LIVE';
 
   return 'NS';
+}
+
+function getElapsedDisplay(item, status) {
+  if (status === 'FT' || status === 'NS') return '';
+  return normalizeElapsedTime(readValue(item, ['time_elapsed', 'timeElapsed', 'elapsed', 'minute', 'status']));
+}
+
+function normalizeElapsedTime(value) {
+  const raw = String(value ?? '').trim();
+  if (!raw) return '';
+
+  const key = normalizeElapsedToken(raw);
+  if (isNotStartedElapsed(key) || isFinishedElapsed(key)) return '';
+  if (isHalftimeElapsed(key)) return 'HT';
+
+  const minute = raw.match(/^(\d{1,3})(?:\s*\+\s*(\d{1,2}))?\s*(?:'|min|mins|minute|minutes)?$/i);
+  if (!minute) return '';
+
+  const base = Number.parseInt(minute[1], 10);
+  if (!Number.isFinite(base) || base < 0 || base > 130) return '';
+  return minute[2] ? `${base}+${Number.parseInt(minute[2], 10)}'` : `${base}'`;
+}
+
+function normalizeElapsedToken(value) {
+  return String(value ?? '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function isNotStartedElapsed(value) {
+  return !value || ['null', 'undefined', 'notstarted', 'not started', 'not started yet', 'not played', 'scheduled', 'tbd', 'ns'].includes(value);
+}
+
+function isFinishedElapsed(value) {
+  return ['finished', 'finish', 'fulltime', 'full time', 'ft', 'ended', 'complete', 'completed'].includes(value);
+}
+
+function isHalftimeElapsed(value) {
+  return ['ht', 'half time', 'halftime', 'half'].includes(value);
 }
 
 function formatScore(home, away, homeGoals, awayGoals) {
