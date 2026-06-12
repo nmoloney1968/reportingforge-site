@@ -523,9 +523,13 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 (() => {
   const STATUS = document.getElementById('results-status');
   const RESULT_URL = 'results.json';
+  const RESULTS_BROWSER_READ_OFFSET_SECONDS = 41;
   const finishedStatuses = new Set(['FT', 'AET', 'PEN']);
   const liveStatuses = new Set(['1H', 'HT', '2H', 'ET', 'P', 'BT', 'LIVE']);
+  let resultsRefreshInProgress = false;
+  let resultsRefreshTimer = null;
 
+  // The browser reads cached Worker results at +41 seconds, after the Worker should usually have written the latest KV result.
   function normalize(value) {
     return String(value || '')
       .toLowerCase()
@@ -546,10 +550,10 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
   }
 
   function addResult(card, result) {
-    if (!result) return;
+    if (!result) return false;
     const status = String(result.status || result.apiStatus || '').toUpperCase();
     const hasScore = result.score || (Number.isFinite(result.homeGoals) && Number.isFinite(result.awayGoals));
-    if (!hasScore || status === 'NS' || status === 'TBD') return;
+    if (!hasScore || status === 'NS' || status === 'TBD') return false;
 
     const score = result.score || `${result.home || ''} ${result.homeGoals}-${result.awayGoals} ${result.away || ''}`.trim();
     const div = document.createElement('div');
@@ -565,11 +569,35 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
       div.appendChild(note);
     }
     card.appendChild(div);
+    return true;
+  }
+
+  function getNextResultsRefreshDelay(now = Date.now()) {
+    const intervalMs = 5 * 60 * 1000;
+    const offsetMs = RESULTS_BROWSER_READ_OFFSET_SECONDS * 1000;
+    const currentBoundary = Math.floor(now / intervalMs) * intervalMs;
+    let target = currentBoundary + offsetMs;
+    if (target <= now) target += intervalMs;
+    return target - now;
+  }
+
+  function scheduleNextResultsRefresh() {
+    if (resultsRefreshTimer) clearTimeout(resultsRefreshTimer);
+    resultsRefreshTimer = setTimeout(async () => {
+      await loadResults();
+      scheduleNextResultsRefresh();
+    }, getNextResultsRefreshDelay());
   }
 
   async function loadResults() {
+    if (resultsRefreshInProgress) return;
+    resultsRefreshInProgress = true;
+
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+
     try {
-      const res = await fetch(`${RESULT_URL}?v=${Date.now()}`, { cache: 'no-store' });
+      const res = await fetch(`${RESULT_URL}?ts=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const rawMatches = data.matches || {};
@@ -581,7 +609,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
         }
       });
 
-      let count = 0;
+      const renderedResults = [];
       document.querySelectorAll('.card').forEach(card => {
         const home = card.querySelector(".team-home")?.textContent?.trim();
         const away = card.querySelector(".team-away")?.textContent?.trim();
@@ -589,20 +617,38 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 
         const key = `${home} vs ${away}`;
         const result = rawMatches[key] || matchKeys(key).map(k => byKey.get(k)).find(Boolean);
-        if (result) { addResult(card, result); count++; }
+        if (result) renderedResults.push({ card, result });
       });
+
+      document.querySelectorAll('.card > .result').forEach(resultEl => resultEl.remove());
+
+      let count = 0;
+      renderedResults.forEach(({ card, result }) => {
+        if (addResult(card, result)) count++;
+      });
+
+      window.scrollTo(scrollX, scrollY);
 
       if (STATUS) {
         const when = data.lastUpdated || data.lastUpdatedUtc || 'unknown time';
         STATUS.textContent = count ? `Results loaded: ${count} match result${count === 1 ? '' : 's'} shown. Last updated: ${when}.` : `No results posted yet. Last checked: ${when}.`;
       }
     } catch (err) {
-      if (STATUS) STATUS.textContent = 'Results unavailable right now; showing schedule only.';
+      if (STATUS) STATUS.textContent = 'Results refresh unavailable right now; keeping the last displayed scores.';
       console.warn('Could not load World Cup results:', err);
+    } finally {
+      resultsRefreshInProgress = false;
     }
   }
 
   loadResults();
+  scheduleNextResultsRefresh();
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+      loadResults();
+      scheduleNextResultsRefresh();
+    }
+  });
 })();
 </script>
 <footer>Generated group-stage-only schedule for Hanoi time. Rebuild after the group stage for confirmed knockout fixtures. Calendar import includes 4-hour reminders.</footer></body></html>
