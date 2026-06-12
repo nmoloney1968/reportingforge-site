@@ -1,15 +1,16 @@
-
 <!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>World Cup 2026 Group Stage - Hanoi Time</title>
-<meta name="description" content="Phone-friendly FIFA World Cup 2026 group-stage schedule converted to Hanoi time, with downloadable calendar import file.">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#0f172a">
+<meta content="Phone-friendly FIFA World Cup 2026 group-stage schedule converted to Hanoi time, with downloadable calendar import file." name="description"/>
+<link href="/favicon.ico" rel="icon" sizes="any"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="#0f172a" name="theme-color"/>
 <style>
 :root { color-scheme: light dark; }
 body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; margin: 0; padding: 16px; line-height: 1.35; background: Canvas; color: CanvasText; }
@@ -23,40 +24,45 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1
 .group { display: inline-block; font-size: .78rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; border: 1px solid color-mix(in srgb, CanvasText 28%, transparent); margin-left: 8px; vertical-align: 3px; }
 .match { font-size: 1.05rem; font-weight: 650; margin-top: 4px; }
 .venue, .meta { font-size: .86rem; opacity: .76; margin-top: 4px; }
-
-.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-.actions a { display: inline-block; padding: 8px 10px; border-radius: 999px; border: 1px solid color-mix(in srgb, CanvasText 24%, transparent); text-decoration: none; color: CanvasText; font-size: .84rem; }
-.germany-card { border: 2px solid #d4a500; background: linear-gradient(90deg, #111 0 8px, color-mix(in srgb, #fff3b0 72%, Canvas 28%) 8px 100%); color: #111; box-shadow: 0 0 0 3px rgba(212,165,0,.18); }
-.germany-card .group { border-color: #d4a500; background: #fff8ce; color: #111; }
-.germany-card .venue, .germany-card .meta { color: #222; opacity: .9; }
-.germany-card .match { font-weight: 800; }
-.team-highlight { display: inline-block; margin-bottom: 7px; padding: 4px 9px; border-radius: 999px; background: #dd0000; color: white; font-size: .76rem; font-weight: 800; letter-spacing: .02em; }
-@media (prefers-color-scheme: dark) {
-  .germany-card { background: linear-gradient(90deg, #000 0 8px, #3a3000 8px 100%); color: #fff6cf; border-color: #ffcc33; box-shadow: 0 0 0 3px rgba(255,204,51,.22); }
-  .germany-card .group { background: #ffd84a; color: #111; border-color: #ffd84a; }
-  .germany-card .venue, .germany-card .meta { color: #f8e8a0; opacity: .95; }
-}
-
 footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
+
+.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.actions a { border: 1px solid color-mix(in srgb, CanvasText 22%, transparent); border-radius: 999px; padding: 7px 10px; text-decoration: none; color: inherit; font-size: .86rem; }
+#results-status { font-size: .82rem; opacity: .74; margin-top: 9px; }
+.card.germany { border: 2px solid #f59e0b; background: color-mix(in srgb, #fef3c7 58%, Canvas 42%); box-shadow: 0 0 0 3px color-mix(in srgb, #f59e0b 22%, transparent); }
+.germany-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #b91c1c; color: white; margin-left: 6px; vertical-align: 2px; }
+.result { margin-top: 10px; border-radius: 10px; padding: 9px 10px; background: color-mix(in srgb, #16a34a 14%, Canvas 86%); border: 1px solid color-mix(in srgb, #16a34a 42%, transparent); font-weight: 700; }
+.result .status { display: inline-block; font-size: .74rem; padding: 2px 7px; border-radius: 999px; background: color-mix(in srgb, #16a34a 22%, Canvas 78%); margin-right: 6px; }
+.result.live { background: color-mix(in srgb, #dc2626 12%, Canvas 88%); border-color: color-mix(in srgb, #dc2626 42%, transparent); }
+.result.live .status { background: color-mix(in srgb, #dc2626 22%, Canvas 78%); }
+@media (prefers-color-scheme: dark) { .card.germany { background: color-mix(in srgb, #78350f 46%, Canvas 54%); } }
+
+.flag-img { display: inline-block; width: 1.35em; height: .95em; object-fit: cover; border-radius: 2px; vertical-align: -0.08em; box-shadow: 0 0 0 1px color-mix(in srgb, CanvasText 18%, transparent); background: color-mix(in srgb, Canvas 85%, CanvasText 15%); }
+.flag-img.home { margin-right: .35em; }
+.flag-img.away { margin-left: .35em; }
+.team { white-space: nowrap; }
+.versus { opacity: .74; font-weight: 600; margin: 0 .18em; }
+
+
 </style>
 </head>
 <body>
 <header>
 <h1>World Cup 2026 Group Stage - Hanoi Time</h1>
-<p class="summary">72 group-stage games only. Times are Hanoi / ICT / UTC+7. Germany games are highlighted. Calendar file includes 4-hour reminders.</p>
+<p class="summary">72 group-stage games only. Times are Hanoi / ICT / UTC+7. Country flags use SVG images so they display correctly on Windows and mobile. Calendar file includes 4-hour reminders.</p>
 <div class="actions"><a href="world-cup-2026-group-stage-hanoi.ics">Download calendar (.ics)</a><a href="world-cup-2026-group-stage-hanoi.csv">Download CSV</a><a href="/">Reporting Forge home</a></div>
+<div id="results-status">Results update automatically from <code>results.json</code> when available.</div>
 </header>
-
 <section class="day"><h2>Friday, 12 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group A</span></div>
-<div class="match">Mexico vs South Africa</div>
+<div class="match"><img alt="Mexico flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/><span class="team team-home">Mexico</span><span class="versus">vs</span><span class="team team-away">South Africa</span><img alt="South Africa flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/></div>
 <div class="venue">Mexico City, Mexico</div>
 <div class="meta">Source time: Thursday, June 11, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group A</span></div>
-<div class="match">South Korea vs Czech Republic</div>
+<div class="match"><img alt="South Korea flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/kr.svg"/><span class="team team-home">South Korea</span><span class="versus">vs</span><span class="team team-away">Czech Republic</span><img alt="Czech Republic flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cz.svg"/></div>
 <div class="venue">Zapopan, Mexico</div>
 <div class="meta">Source time: Friday, June 12, 3am UK time</div>
 </article>
@@ -64,13 +70,13 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Saturday, 13 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match">Canada vs Bosnia &amp; Herzegovina</div>
+<div class="match"><img alt="Canada flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/><span class="team team-home">Canada</span><span class="versus">vs</span><span class="team team-away">Bosnia &amp; Herzegovina</span><img alt="Bosnia &amp; Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
 <div class="venue">Toronto, Canada</div>
 <div class="meta">Source time: Friday, June 12, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group D</span></div>
-<div class="match">USA vs Paraguay</div>
+<div class="match"><img alt="USA flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/><span class="team team-home">USA</span><span class="versus">vs</span><span class="team team-away">Paraguay</span><img alt="Paraguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/></div>
 <div class="venue">Los Angeles, USA</div>
 <div class="meta">Source time: Saturday, June 13, 2am UK time</div>
 </article>
@@ -78,58 +84,57 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Sunday, 14 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match">Qatar vs Switzerland</div>
+<div class="match"><img alt="Qatar flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/><span class="team team-home">Qatar</span><span class="versus">vs</span><span class="team team-away">Switzerland</span><img alt="Switzerland flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/></div>
 <div class="venue">Santa Clara, USA</div>
 <div class="meta">Source time: Saturday, June 13, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match">Brazil vs Morocco</div>
+<div class="match"><img alt="Brazil flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/><span class="team team-home">Brazil</span><span class="versus">vs</span><span class="team team-away">Morocco</span><img alt="Morocco flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/></div>
 <div class="venue">New Jersey, USA</div>
 <div class="meta">Source time: Saturday, June 13, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group C</span></div>
-<div class="match">Haiti vs Scotland</div>
+<div class="match"><img alt="Haiti flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ht.svg"/><span class="team team-home">Haiti</span><span class="versus">vs</span><span class="team team-away">Scotland</span><img alt="Scotland flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-sct.svg"/></div>
 <div class="venue">Foxborough, USA</div>
 <div class="meta">Source time: Sunday, June 14, 2am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">11:00</span><span class="group">Group D</span></div>
-<div class="match">Australia vs Turkey</div>
+<div class="match"><img alt="Australia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/><span class="team team-home">Australia</span><span class="versus">vs</span><span class="team team-away">Turkey</span><img alt="Turkey flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tr.svg"/></div>
 <div class="venue">Vancouver, Canada</div>
 <div class="meta">Source time: Sunday, June 14, 5am UK time</div>
 </article>
 </section>
 <section class="day"><h2>Monday, 15 June 2026</h2>
-<article class="card germany-card">
-<div class="team-highlight">🇩🇪 Germany game</div>
-<div><span class="time">00:00</span><span class="group">Group E</span></div>
-<div class="match">Germany vs Curacao</div>
+<article class="card germany">
+<div><span class="time">00:00</span><span class="group">Group E</span><span class="germany-badge">Germany game</span></div>
+<div class="match"><img alt="Germany flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/><span class="team team-home">Germany</span><span class="versus">vs</span><span class="team team-away">Curacao</span><img alt="Curacao flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cw.svg"/></div>
 <div class="venue">Houston, USA</div>
 <div class="meta">Source time: Sunday, June 14, 6pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">03:00</span><span class="group">Group F</span></div>
-<div class="match">Netherlands vs Japan</div>
+<div class="match"><img alt="Netherlands flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/><span class="team team-home">Netherlands</span><span class="versus">vs</span><span class="team team-away">Japan</span><img alt="Japan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/></div>
 <div class="venue">Arlington, USA</div>
 <div class="meta">Source time: Sunday, June 14, 9pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">06:00</span><span class="group">Group E</span></div>
-<div class="match">Ivory Coast vs Ecuador</div>
+<div class="match"><img alt="Ivory Coast flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/><span class="team team-home">Ivory Coast</span><span class="versus">vs</span><span class="team team-away">Ecuador</span><img alt="Ecuador flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/></div>
 <div class="venue">Philadelphia, USA</div>
 <div class="meta">Source time: Monday, June 15, 12am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group F</span></div>
-<div class="match">Sweden vs Tunisia</div>
+<div class="match"><img alt="Sweden flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/><span class="team team-home">Sweden</span><span class="versus">vs</span><span class="team team-away">Tunisia</span><img alt="Tunisia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tn.svg"/></div>
 <div class="venue">Guadalupe, Mexico</div>
 <div class="meta">Source time: Monday, June 15, 3am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">23:00</span><span class="group">Group H</span></div>
-<div class="match">Spain vs Cape Verde</div>
+<div class="match"><img alt="Spain flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/><span class="team team-home">Spain</span><span class="versus">vs</span><span class="team team-away">Cape Verde</span><img alt="Cape Verde flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/></div>
 <div class="venue">Atlanta, USA</div>
 <div class="meta">Source time: Monday, June 15, 5pm UK time</div>
 </article>
@@ -137,19 +142,19 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Tuesday, 16 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group G</span></div>
-<div class="match">Belgium vs Egypt</div>
+<div class="match"><img alt="Belgium flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/><span class="team team-home">Belgium</span><span class="versus">vs</span><span class="team team-away">Egypt</span><img alt="Egypt flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/></div>
 <div class="venue">Seattle, USA</div>
 <div class="meta">Source time: Monday, June 15, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group H</span></div>
-<div class="match">Saudi Arabia vs Uruguay</div>
+<div class="match"><img alt="Saudi Arabia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sa.svg"/><span class="team team-home">Saudi Arabia</span><span class="versus">vs</span><span class="team team-away">Uruguay</span><img alt="Uruguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uy.svg"/></div>
 <div class="venue">Miami, USA</div>
 <div class="meta">Source time: Monday, June 15, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group G</span></div>
-<div class="match">Iran vs New Zealand</div>
+<div class="match"><img alt="Iran flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ir.svg"/><span class="team team-home">Iran</span><span class="versus">vs</span><span class="team team-away">New Zealand</span><img alt="New Zealand flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nz.svg"/></div>
 <div class="venue">Los Angeles, USA</div>
 <div class="meta">Source time: Tuesday, June 16, 2am UK time</div>
 </article>
@@ -157,25 +162,25 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Wednesday, 17 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group I</span></div>
-<div class="match">France vs Senegal</div>
+<div class="match"><img alt="France flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/><span class="team team-home">France</span><span class="versus">vs</span><span class="team team-away">Senegal</span><img alt="Senegal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/></div>
 <div class="venue">New Jersey, USA</div>
 <div class="meta">Source time: Tuesday, June 16, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group I</span></div>
-<div class="match">Iraq vs Norway</div>
+<div class="match"><img alt="Iraq flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/iq.svg"/><span class="team team-home">Iraq</span><span class="versus">vs</span><span class="team team-away">Norway</span><img alt="Norway flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/></div>
 <div class="venue">Foxborough, USA</div>
 <div class="meta">Source time: Tuesday, June 16, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group J</span></div>
-<div class="match">Argentina vs Algeria</div>
+<div class="match"><img alt="Argentina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/><span class="team team-home">Argentina</span><span class="versus">vs</span><span class="team team-away">Algeria</span><img alt="Algeria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/></div>
 <div class="venue">Kansas City, USA</div>
 <div class="meta">Source time: Wednesday, June 17, 2am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">11:00</span><span class="group">Group J</span></div>
-<div class="match">Austria vs Jordan</div>
+<div class="match"><img alt="Austria flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/><span class="team team-home">Austria</span><span class="versus">vs</span><span class="team team-away">Jordan</span><img alt="Jordan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jo.svg"/></div>
 <div class="venue">Santa Clara, USA</div>
 <div class="meta">Source time: Wednesday, June 17, 5am UK time</div>
 </article>
@@ -183,31 +188,31 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Thursday, 18 June 2026</h2>
 <article class="card">
 <div><span class="time">00:00</span><span class="group">Group K</span></div>
-<div class="match">Portugal vs DR Congo</div>
+<div class="match"><img alt="Portugal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/><span class="team team-home">Portugal</span><span class="versus">vs</span><span class="team team-away">DR Congo</span><img alt="DR Congo flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/></div>
 <div class="venue">Houston, USA</div>
 <div class="meta">Source time: Wednesday, June 17, 6pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">03:00</span><span class="group">Group L</span></div>
-<div class="match">England vs Croatia</div>
+<div class="match"><img alt="England flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/><span class="team team-home">England</span><span class="versus">vs</span><span class="team team-away">Croatia</span><img alt="Croatia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/></div>
 <div class="venue">Arlington, USA</div>
 <div class="meta">Source time: Wednesday, June 17, 9pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">06:00</span><span class="group">Group L</span></div>
-<div class="match">Ghana vs Panama</div>
+<div class="match"><img alt="Ghana flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/><span class="team team-home">Ghana</span><span class="versus">vs</span><span class="team team-away">Panama</span><img alt="Panama flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pa.svg"/></div>
 <div class="venue">Toronto, Canada</div>
 <div class="meta">Source time: Thursday, June 18, 12am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group K</span></div>
-<div class="match">Uzbekistan vs Colombia</div>
+<div class="match"><img alt="Uzbekistan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uz.svg"/><span class="team team-home">Uzbekistan</span><span class="versus">vs</span><span class="team team-away">Colombia</span><img alt="Colombia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/></div>
 <div class="venue">Mexico City, Mexico</div>
 <div class="meta">Source time: Thursday, June 18, 3am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">23:00</span><span class="group">Group A</span></div>
-<div class="match">Czech Republic vs South Africa</div>
+<div class="match"><img alt="Czech Republic flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cz.svg"/><span class="team team-home">Czech Republic</span><span class="versus">vs</span><span class="team team-away">South Africa</span><img alt="South Africa flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/></div>
 <div class="venue">Atlanta, USA</div>
 <div class="meta">Source time: Thursday, June 18, 5pm UK time</div>
 </article>
@@ -215,19 +220,19 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Friday, 19 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match">Switzerland vs Bosnia &amp; Herzegovina</div>
+<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Bosnia &amp; Herzegovina</span><img alt="Bosnia &amp; Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
 <div class="venue">Los Angeles, USA</div>
 <div class="meta">Source time: Thursday, June 18, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group B</span></div>
-<div class="match">Canada vs Qatar</div>
+<div class="match"><img alt="Canada flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/><span class="team team-home">Canada</span><span class="versus">vs</span><span class="team team-away">Qatar</span><img alt="Qatar flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/></div>
 <div class="venue">Vancouver, Canada</div>
 <div class="meta">Source time: Thursday, June 18, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group A</span></div>
-<div class="match">Mexico vs South Korea</div>
+<div class="match"><img alt="Mexico flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/><span class="team team-home">Mexico</span><span class="versus">vs</span><span class="team team-away">South Korea</span><img alt="South Korea flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/kr.svg"/></div>
 <div class="venue">Zapopan, Mexico</div>
 <div class="meta">Source time: Friday, June 19, 2am UK time</div>
 </article>
@@ -235,25 +240,25 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Saturday, 20 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group D</span></div>
-<div class="match">USA vs Australia</div>
+<div class="match"><img alt="USA flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/><span class="team team-home">USA</span><span class="versus">vs</span><span class="team team-away">Australia</span><img alt="Australia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/></div>
 <div class="venue">Seattle, USA</div>
 <div class="meta">Source time: Friday, June 19, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match">Scotland vs Morocco</div>
+<div class="match"><img alt="Scotland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-sct.svg"/><span class="team team-home">Scotland</span><span class="versus">vs</span><span class="team team-away">Morocco</span><img alt="Morocco flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/></div>
 <div class="venue">Foxborough, USA</div>
 <div class="meta">Source time: Friday, June 19, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">07:30</span><span class="group">Group C</span></div>
-<div class="match">Brazil vs Haiti</div>
+<div class="match"><img alt="Brazil flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/><span class="team team-home">Brazil</span><span class="versus">vs</span><span class="team team-away">Haiti</span><img alt="Haiti flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ht.svg"/></div>
 <div class="venue">Philadelphia, USA</div>
 <div class="meta">Source time: Saturday, June 20, 1.30am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">10:00</span><span class="group">Group D</span></div>
-<div class="match">Turkey vs Paraguay</div>
+<div class="match"><img alt="Turkey flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tr.svg"/><span class="team team-home">Turkey</span><span class="versus">vs</span><span class="team team-away">Paraguay</span><img alt="Paraguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/></div>
 <div class="venue">Santa Clara, USA</div>
 <div class="meta">Source time: Saturday, June 20, 4am UK time</div>
 </article>
@@ -261,32 +266,31 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Sunday, 21 June 2026</h2>
 <article class="card">
 <div><span class="time">00:00</span><span class="group">Group F</span></div>
-<div class="match">Netherlands vs Sweden</div>
+<div class="match"><img alt="Netherlands flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/><span class="team team-home">Netherlands</span><span class="versus">vs</span><span class="team team-away">Sweden</span><img alt="Sweden flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/></div>
 <div class="venue">Houston, USA</div>
 <div class="meta">Source time: Saturday, June 20, 6pm UK time</div>
 </article>
-<article class="card germany-card">
-<div class="team-highlight">🇩🇪 Germany game</div>
-<div><span class="time">03:00</span><span class="group">Group E</span></div>
-<div class="match">Germany vs Ivory Coast</div>
+<article class="card germany">
+<div><span class="time">03:00</span><span class="group">Group E</span><span class="germany-badge">Germany game</span></div>
+<div class="match"><img alt="Germany flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/><span class="team team-home">Germany</span><span class="versus">vs</span><span class="team team-away">Ivory Coast</span><img alt="Ivory Coast flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/></div>
 <div class="venue">Toronto, Canada</div>
 <div class="meta">Source time: Saturday, June 20, 9pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">07:00</span><span class="group">Group E</span></div>
-<div class="match">Ecuador vs Curacao</div>
+<div class="match"><img alt="Ecuador flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/><span class="team team-home">Ecuador</span><span class="versus">vs</span><span class="team team-away">Curacao</span><img alt="Curacao flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cw.svg"/></div>
 <div class="venue">Kansas City, USA</div>
 <div class="meta">Source time: Sunday, June 21, 1am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">11:00</span><span class="group">Group F</span></div>
-<div class="match">Tunisia vs Japan</div>
+<div class="match"><img alt="Tunisia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tn.svg"/><span class="team team-home">Tunisia</span><span class="versus">vs</span><span class="team team-away">Japan</span><img alt="Japan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/></div>
 <div class="venue">Guadalupe, Mexico</div>
 <div class="meta">Source time: Sunday, June 21, 5am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">23:00</span><span class="group">Group H</span></div>
-<div class="match">Spain vs Saudi Arabia</div>
+<div class="match"><img alt="Spain flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/><span class="team team-home">Spain</span><span class="versus">vs</span><span class="team team-away">Saudi Arabia</span><img alt="Saudi Arabia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sa.svg"/></div>
 <div class="venue">Atlanta, USA</div>
 <div class="meta">Source time: Sunday, June 21, 5pm UK time</div>
 </article>
@@ -294,19 +298,19 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Monday, 22 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group G</span></div>
-<div class="match">Belgium vs Iran</div>
+<div class="match"><img alt="Belgium flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/><span class="team team-home">Belgium</span><span class="versus">vs</span><span class="team team-away">Iran</span><img alt="Iran flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ir.svg"/></div>
 <div class="venue">Los Angeles, USA</div>
 <div class="meta">Source time: Sunday, June 21, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group H</span></div>
-<div class="match">Uruguay vs Cape Verde</div>
+<div class="match"><img alt="Uruguay flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uy.svg"/><span class="team team-home">Uruguay</span><span class="versus">vs</span><span class="team team-away">Cape Verde</span><img alt="Cape Verde flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/></div>
 <div class="venue">Miami, USA</div>
 <div class="meta">Source time: Sunday, June 21, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group G</span></div>
-<div class="match">New Zealand vs Egypt</div>
+<div class="match"><img alt="New Zealand flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nz.svg"/><span class="team team-home">New Zealand</span><span class="versus">vs</span><span class="team team-away">Egypt</span><img alt="Egypt flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/></div>
 <div class="venue">Vancouver, Canada</div>
 <div class="meta">Source time: Monday, June 22, 2am UK time</div>
 </article>
@@ -314,25 +318,25 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Tuesday, 23 June 2026</h2>
 <article class="card">
 <div><span class="time">00:00</span><span class="group">Group J</span></div>
-<div class="match">Argentina vs Austria</div>
+<div class="match"><img alt="Argentina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/><span class="team team-home">Argentina</span><span class="versus">vs</span><span class="team team-away">Austria</span><img alt="Austria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/></div>
 <div class="venue">Arlington, USA</div>
 <div class="meta">Source time: Monday, June 22, 6pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">04:00</span><span class="group">Group I</span></div>
-<div class="match">France vs Iraq</div>
+<div class="match"><img alt="France flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/><span class="team team-home">France</span><span class="versus">vs</span><span class="team team-away">Iraq</span><img alt="Iraq flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/iq.svg"/></div>
 <div class="venue">Philadelphia, USA</div>
 <div class="meta">Source time: Monday, June 22, 10pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">07:00</span><span class="group">Group I</span></div>
-<div class="match">Norway vs Senegal</div>
+<div class="match"><img alt="Norway flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/><span class="team team-home">Norway</span><span class="versus">vs</span><span class="team team-away">Senegal</span><img alt="Senegal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/></div>
 <div class="venue">Toronto, Canada</div>
 <div class="meta">Source time: Tuesday, June 23, 1am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">10:00</span><span class="group">Group J</span></div>
-<div class="match">Jordan vs Algeria</div>
+<div class="match"><img alt="Jordan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jo.svg"/><span class="team team-home">Jordan</span><span class="versus">vs</span><span class="team team-away">Algeria</span><img alt="Algeria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/></div>
 <div class="venue">Santa Clara, USA</div>
 <div class="meta">Source time: Tuesday, June 23, 4am UK time</div>
 </article>
@@ -340,25 +344,25 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Wednesday, 24 June 2026</h2>
 <article class="card">
 <div><span class="time">00:00</span><span class="group">Group K</span></div>
-<div class="match">Portugal vs Uzbekistan</div>
+<div class="match"><img alt="Portugal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/><span class="team team-home">Portugal</span><span class="versus">vs</span><span class="team team-away">Uzbekistan</span><img alt="Uzbekistan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uz.svg"/></div>
 <div class="venue">Houston, USA</div>
 <div class="meta">Source time: Tuesday, June 23, 6pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">03:00</span><span class="group">Group L</span></div>
-<div class="match">England vs Ghana</div>
+<div class="match"><img alt="England flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/><span class="team team-home">England</span><span class="versus">vs</span><span class="team team-away">Ghana</span><img alt="Ghana flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/></div>
 <div class="venue">Foxborough, USA</div>
 <div class="meta">Source time: Tuesday, June 23, 9pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">06:00</span><span class="group">Group L</span></div>
-<div class="match">Panama vs Croatia</div>
+<div class="match"><img alt="Panama flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pa.svg"/><span class="team team-home">Panama</span><span class="versus">vs</span><span class="team team-away">Croatia</span><img alt="Croatia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/></div>
 <div class="venue">Foxborough, USA</div>
 <div class="meta">Source time: Wednesday, June 24, 12am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group K</span></div>
-<div class="match">Colombia vs DR Congo</div>
+<div class="match"><img alt="Colombia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/><span class="team team-home">Colombia</span><span class="versus">vs</span><span class="team team-away">DR Congo</span><img alt="DR Congo flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/></div>
 <div class="venue">Zapopan, Mexico</div>
 <div class="meta">Source time: Wednesday, June 24, 3am UK time</div>
 </article>
@@ -366,37 +370,37 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Thursday, 25 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match">Switzerland vs Canada</div>
+<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Canada</span><img alt="Canada flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/></div>
 <div class="venue">Vancouver, Canada</div>
 <div class="meta">Source time: Wednesday, June 24, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match">Bosnia &amp; Herzegovina vs Qatar</div>
+<div class="match"><img alt="Bosnia &amp; Herzegovina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/><span class="team team-home">Bosnia &amp; Herzegovina</span><span class="versus">vs</span><span class="team team-away">Qatar</span><img alt="Qatar flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/></div>
 <div class="venue">Seattle, USA</div>
 <div class="meta">Source time: Wednesday, June 24, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match">Morocco vs Haiti</div>
+<div class="match"><img alt="Morocco flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/><span class="team team-home">Morocco</span><span class="versus">vs</span><span class="team team-away">Haiti</span><img alt="Haiti flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ht.svg"/></div>
 <div class="venue">Atlanta, USA</div>
 <div class="meta">Source time: Wednesday, June 24, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match">Scotland vs Brazil</div>
+<div class="match"><img alt="Scotland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-sct.svg"/><span class="team team-home">Scotland</span><span class="versus">vs</span><span class="team team-away">Brazil</span><img alt="Brazil flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/></div>
 <div class="venue">Miami, USA</div>
 <div class="meta">Source time: Wednesday, June 24, 11pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group A</span></div>
-<div class="match">South Africa vs South Korea</div>
+<div class="match"><img alt="South Africa flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/><span class="team team-home">South Africa</span><span class="versus">vs</span><span class="team team-away">South Korea</span><img alt="South Korea flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/kr.svg"/></div>
 <div class="venue">Guadalupe, Mexico</div>
 <div class="meta">Source time: Thursday, June 25, 2am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">08:00</span><span class="group">Group A</span></div>
-<div class="match">Czech Republic vs Mexico</div>
+<div class="match"><img alt="Czech Republic flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cz.svg"/><span class="team team-home">Czech Republic</span><span class="versus">vs</span><span class="team team-away">Mexico</span><img alt="Mexico flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/></div>
 <div class="venue">Mexico City, Mexico</div>
 <div class="meta">Source time: Thursday, June 25, 2am UK time</div>
 </article>
@@ -404,38 +408,37 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Friday, 26 June 2026</h2>
 <article class="card">
 <div><span class="time">03:00</span><span class="group">Group E</span></div>
-<div class="match">Curacao vs Ivory Coast</div>
+<div class="match"><img alt="Curacao flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cw.svg"/><span class="team team-home">Curacao</span><span class="versus">vs</span><span class="team team-away">Ivory Coast</span><img alt="Ivory Coast flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/></div>
 <div class="venue">Philadelphia, USA</div>
 <div class="meta">Source time: Thursday, June 25, 9pm UK time</div>
 </article>
-<article class="card germany-card">
-<div class="team-highlight">🇩🇪 Germany game</div>
-<div><span class="time">03:00</span><span class="group">Group E</span></div>
-<div class="match">Ecuador vs Germany</div>
+<article class="card germany">
+<div><span class="time">03:00</span><span class="group">Group E</span><span class="germany-badge">Germany game</span></div>
+<div class="match"><img alt="Ecuador flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/><span class="team team-home">Ecuador</span><span class="versus">vs</span><span class="team team-away">Germany</span><img alt="Germany flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/></div>
 <div class="venue">New Jersey, USA</div>
 <div class="meta">Source time: Thursday, June 25, 9pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">06:00</span><span class="group">Group F</span></div>
-<div class="match">Tunisia vs Netherlands</div>
+<div class="match"><img alt="Tunisia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tn.svg"/><span class="team team-home">Tunisia</span><span class="versus">vs</span><span class="team team-away">Netherlands</span><img alt="Netherlands flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/></div>
 <div class="venue">Kansas City, USA</div>
 <div class="meta">Source time: Friday, June 26, 12am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">06:00</span><span class="group">Group F</span></div>
-<div class="match">Japan vs Sweden</div>
+<div class="match"><img alt="Japan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/><span class="team team-home">Japan</span><span class="versus">vs</span><span class="team team-away">Sweden</span><img alt="Sweden flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/></div>
 <div class="venue">Arlington, USA</div>
 <div class="meta">Source time: Friday, June 26, 12am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group D</span></div>
-<div class="match">Turkey vs USA</div>
+<div class="match"><img alt="Turkey flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tr.svg"/><span class="team team-home">Turkey</span><span class="versus">vs</span><span class="team team-away">USA</span><img alt="USA flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/></div>
 <div class="venue">Los Angeles, USA</div>
 <div class="meta">Source time: Friday, June 26, 3am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group D</span></div>
-<div class="match">Paraguay vs Australia</div>
+<div class="match"><img alt="Paraguay flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/><span class="team team-home">Paraguay</span><span class="versus">vs</span><span class="team team-away">Australia</span><img alt="Australia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/></div>
 <div class="venue">Santa Clara, USA</div>
 <div class="meta">Source time: Friday, June 26, 3am UK time</div>
 </article>
@@ -443,37 +446,37 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Saturday, 27 June 2026</h2>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group I</span></div>
-<div class="match">Norway vs France</div>
+<div class="match"><img alt="Norway flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/><span class="team team-home">Norway</span><span class="versus">vs</span><span class="team team-away">France</span><img alt="France flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/></div>
 <div class="venue">Foxborough, USA</div>
 <div class="meta">Source time: Friday, June 26, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">02:00</span><span class="group">Group I</span></div>
-<div class="match">Senegal vs Iraq</div>
+<div class="match"><img alt="Senegal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/><span class="team team-home">Senegal</span><span class="versus">vs</span><span class="team team-away">Iraq</span><img alt="Iraq flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/iq.svg"/></div>
 <div class="venue">Toronto, Canada</div>
 <div class="meta">Source time: Friday, June 26, 8pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">07:00</span><span class="group">Group H</span></div>
-<div class="match">Cape Verde vs Saudi Arabia</div>
+<div class="match"><img alt="Cape Verde flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/><span class="team team-home">Cape Verde</span><span class="versus">vs</span><span class="team team-away">Saudi Arabia</span><img alt="Saudi Arabia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sa.svg"/></div>
 <div class="venue">Houston, USA</div>
 <div class="meta">Source time: Saturday, June 27, 1am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">07:00</span><span class="group">Group H</span></div>
-<div class="match">Uruguay vs Spain</div>
+<div class="match"><img alt="Uruguay flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uy.svg"/><span class="team team-home">Uruguay</span><span class="versus">vs</span><span class="team team-away">Spain</span><img alt="Spain flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/></div>
 <div class="venue">Zapopan, Mexico</div>
 <div class="meta">Source time: Saturday, June 27, 1am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">10:00</span><span class="group">Group G</span></div>
-<div class="match">New Zealand vs Belgium</div>
+<div class="match"><img alt="New Zealand flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nz.svg"/><span class="team team-home">New Zealand</span><span class="versus">vs</span><span class="team team-away">Belgium</span><img alt="Belgium flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/></div>
 <div class="venue">Vancouver, Canada</div>
 <div class="meta">Source time: Saturday, June 27, 4am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">10:00</span><span class="group">Group G</span></div>
-<div class="match">Egypt vs Iran</div>
+<div class="match"><img alt="Egypt flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/><span class="team team-home">Egypt</span><span class="versus">vs</span><span class="team team-away">Iran</span><img alt="Iran flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ir.svg"/></div>
 <div class="venue">Seattle, USA</div>
 <div class="meta">Source time: Saturday, June 27, 4am UK time</div>
 </article>
@@ -481,39 +484,122 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Sunday, 28 June 2026</h2>
 <article class="card">
 <div><span class="time">04:00</span><span class="group">Group L</span></div>
-<div class="match">Panama vs England</div>
+<div class="match"><img alt="Panama flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pa.svg"/><span class="team team-home">Panama</span><span class="versus">vs</span><span class="team team-away">England</span><img alt="England flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/></div>
 <div class="venue">New Jersey, USA</div>
 <div class="meta">Source time: Saturday, June 27, 10pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">04:00</span><span class="group">Group L</span></div>
-<div class="match">Croatia vs Ghana</div>
+<div class="match"><img alt="Croatia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/><span class="team team-home">Croatia</span><span class="versus">vs</span><span class="team team-away">Ghana</span><img alt="Ghana flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/></div>
 <div class="venue">Philadelphia, USA</div>
 <div class="meta">Source time: Saturday, June 27, 10pm UK time</div>
 </article>
 <article class="card">
 <div><span class="time">06:30</span><span class="group">Group K</span></div>
-<div class="match">Colombia vs Portugal</div>
+<div class="match"><img alt="Colombia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/><span class="team team-home">Colombia</span><span class="versus">vs</span><span class="team team-away">Portugal</span><img alt="Portugal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/></div>
 <div class="venue">Miami, USA</div>
 <div class="meta">Source time: Sunday, June 28, 12.30am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">06:30</span><span class="group">Group K</span></div>
-<div class="match">DR Congo vs Uzbekistan</div>
+<div class="match"><img alt="DR Congo flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/><span class="team team-home">DR Congo</span><span class="versus">vs</span><span class="team team-away">Uzbekistan</span><img alt="Uzbekistan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uz.svg"/></div>
 <div class="venue">Atlanta, USA</div>
 <div class="meta">Source time: Sunday, June 28, 12.30am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group J</span></div>
-<div class="match">Algeria vs Austria</div>
+<div class="match"><img alt="Algeria flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/><span class="team team-home">Algeria</span><span class="versus">vs</span><span class="team team-away">Austria</span><img alt="Austria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/></div>
 <div class="venue">Kansas City, USA</div>
 <div class="meta">Source time: Sunday, June 28, 3am UK time</div>
 </article>
 <article class="card">
 <div><span class="time">09:00</span><span class="group">Group J</span></div>
-<div class="match">Jordan vs Argentina</div>
+<div class="match"><img alt="Jordan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jo.svg"/><span class="team team-home">Jordan</span><span class="versus">vs</span><span class="team team-away">Argentina</span><img alt="Argentina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/></div>
 <div class="venue">Arlington, USA</div>
 <div class="meta">Source time: Sunday, June 28, 3am UK time</div>
 </article>
 </section>
+<script>
+(() => {
+  const STATUS = document.getElementById('results-status');
+  const RESULT_URL = 'results.json';
+  const finishedStatuses = new Set(['FT', 'AET', 'PEN']);
+  const liveStatuses = new Set(['1H', 'HT', '2H', 'ET', 'P', 'BT', 'LIVE']);
+
+  function normalize(value) {
+    return String(value || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
+  function matchKeys(name) {
+    const key = normalize(name);
+    const parts = key.split(/\s+vs\s+/);
+    if (parts.length === 2) {
+      return [key, `${parts[1]} vs ${parts[0]}`];
+    }
+    return [key];
+  }
+
+  function addResult(card, result) {
+    if (!result) return;
+    const status = String(result.status || result.apiStatus || '').toUpperCase();
+    const hasScore = result.score || (Number.isFinite(result.homeGoals) && Number.isFinite(result.awayGoals));
+    if (!hasScore || status === 'NS' || status === 'TBD') return;
+
+    const score = result.score || `${result.home || ''} ${result.homeGoals}-${result.awayGoals} ${result.away || ''}`.trim();
+    const div = document.createElement('div');
+    div.className = 'result' + (liveStatuses.has(status) && !finishedStatuses.has(status) ? ' live' : '');
+    div.innerHTML = `<span class="status">${status || 'Result'}</span>${score}`;
+    if (result.note) {
+      const note = document.createElement('div');
+      note.style.fontWeight = '500';
+      note.style.fontSize = '.8rem';
+      note.style.opacity = '.78';
+      note.style.marginTop = '3px';
+      note.textContent = result.note;
+      div.appendChild(note);
+    }
+    card.appendChild(div);
+  }
+
+  async function loadResults() {
+    try {
+      const res = await fetch(`${RESULT_URL}?v=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const rawMatches = data.matches || {};
+      const byKey = new Map();
+      Object.entries(rawMatches).forEach(([name, result]) => {
+        matchKeys(name).forEach(k => byKey.set(k, result));
+        if (result && result.home && result.away) {
+          matchKeys(`${result.home} vs ${result.away}`).forEach(k => byKey.set(k, result));
+        }
+      });
+
+      let count = 0;
+      document.querySelectorAll('.card').forEach(card => {
+        const matchEl = card.querySelector('.match');
+        if (!matchEl) return;
+        const result = matchKeys(matchEl.textContent).map(k => byKey.get(k)).find(Boolean);
+        if (result) { addResult(card, result); count++; }
+      });
+
+      if (STATUS) {
+        const when = data.lastUpdated || data.lastUpdatedUtc || 'unknown time';
+        STATUS.textContent = count ? `Results loaded: ${count} match result${count === 1 ? '' : 's'} shown. Last updated: ${when}.` : `No results posted yet. Last checked: ${when}.`;
+      }
+    } catch (err) {
+      if (STATUS) STATUS.textContent = 'Results unavailable right now; showing schedule only.';
+      console.warn('Could not load World Cup results:', err);
+    }
+  }
+
+  loadResults();
+})();
+</script>
 <footer>Generated group-stage-only schedule for Hanoi time. Rebuild after the group stage for confirmed knockout fixtures. Calendar import includes 4-hour reminders.</footer></body></html>
