@@ -21,7 +21,7 @@ Polling rules:
 - A daily usage counter is kept for visibility, but scheduled polling is no longer capped at 90 calls per UTC day.
 - If the source fetch fails, the last successful result payload stays in KV and continues to be served to the page.
 
-The cron still runs every 5 minutes, but source requests are made only inside match polling windows and post-match check slots.
+The cron still runs every 5 minutes, but source requests are made only inside match polling windows and post-match check slots. Scheduled source calls wait until +23 seconds after the 5-minute boundary before calling `https://worldcup26.ir/get/games`, which avoids the obvious high-traffic boundary.
 
 ## Files
 

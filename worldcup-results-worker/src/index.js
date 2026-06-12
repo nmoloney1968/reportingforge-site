@@ -4,6 +4,8 @@ const KV_KEY = 'worldcup2026-results';
 const STATUS_KEY = 'worldcup2026-poller-status';
 const LAST_ERROR_KEY = 'worldcup2026-last-error';
 const SLOT_MS = 5 * 60 * 1000;
+const SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS = 23;
+// Scheduled source calls are delayed to +23 seconds after the 5-minute boundary to avoid the obvious high-traffic boundary.
 const SLOT_CLAIM_TTL_SECONDS = 60 * 60 * 24 * 45;
 const USAGE_TTL_SECONDS = 60 * 60 * 24 * 3;
 
@@ -462,6 +464,8 @@ async function runScheduledRefresh(env, now) {
   await env.RESULTS.put(claimKey, JSON.stringify({ claimedAtUtc: now.toISOString(), slot }), { expirationTtl: SLOT_CLAIM_TTL_SECONDS });
 
   try {
+    const sourceFetchAt = new Date(Date.parse(slot.slotUtc) + SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS * 1000);
+    await waitUntilTime(sourceFetchAt);
     return await refreshResults(env, { mode: 'scheduled', slot, now });
   } catch (error) {
     const failure = {
@@ -474,6 +478,12 @@ async function runScheduledRefresh(env, now) {
     await putJson(env, STATUS_KEY, { ...failure, lastSuccessfulPayloadKept: true }, USAGE_TTL_SECONDS);
     return failure;
   }
+}
+
+function waitUntilTime(target) {
+  const delayMs = target.getTime() - Date.now();
+  if (delayMs <= 0) return Promise.resolve();
+  return new Promise(resolve => setTimeout(resolve, delayMs));
 }
 
 async function handleManualRefresh(request, env, url) {
