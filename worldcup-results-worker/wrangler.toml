@@ -1,14 +1,20 @@
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "reportingforge.com/worldcup2026schedule/results.json*", zone_name = "reportingforge.com" }
+]
 name = "worldcup-results-worker"
 main = "src/index.js"
 compatibility_date = "2026-06-01"
 
-# Run often, but the Worker only calls API-FOOTBALL during approved match polling slots.
+# Run often, but the Worker only calls worldcup26.ir during approved match polling slots.
 [triggers]
 crons = ["*/5 * * * *"]
 
 [[kv_namespaces]]
 binding = "RESULTS"
-id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id = "14663b6609624f9e82ecb1871c570452"
 
 # Optional: deploy the route with Wrangler after KV + secrets are configured.
 # Otherwise configure the same route in the Cloudflare dashboard.

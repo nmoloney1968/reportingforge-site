@@ -1,10 +1,8 @@
-const API_BASE = 'https://v3.football.api-sports.io';
+const API_URL = 'https://worldcup26.ir/get/games';
+const SOURCE_LABEL = 'worldcup26.ir/get/games';
 const KV_KEY = 'worldcup2026-results';
 const STATUS_KEY = 'worldcup2026-poller-status';
 const LAST_ERROR_KEY = 'worldcup2026-last-error';
-const LEAGUE_ID = '1';
-const SEASON = '2026';
-
 const SLOT_MS = 5 * 60 * 1000;
 const SLOT_CLAIM_TTL_SECONDS = 60 * 60 * 24 * 45;
 const USAGE_TTL_SECONDS = 60 * 60 * 24 * 3;
@@ -452,7 +450,7 @@ const GROUP_STAGE_SCHEDULE = [
   }
 ];
 
-// API-Football/FIFA naming can differ from the page naming. Canonicalize here so the static HTML can match reliably.
+// Source/FIFA naming can differ from the page naming. Canonicalize here so the static HTML can match reliably.
 const TEAM_ALIASES = new Map([
   ['bosnia and herzegovina', 'Bosnia & Herzegovina'],
   ['bosnia herzgovina', 'Bosnia & Herzegovina'],
@@ -533,7 +531,7 @@ async function runScheduledRefresh(env, now) {
     const status = {
       skipped: true,
       reason: `Automatic daily API cap reached: ${usageBefore}/${AUTO_DAILY_LIMIT}`,
-      mode: 'auto',
+      mode: 'scheduled',
       slot,
       checkedAtUtc: now.toISOString()
     };
@@ -550,11 +548,11 @@ async function runScheduledRefresh(env, now) {
   await env.RESULTS.put(claimKey, JSON.stringify({ claimedAtUtc: now.toISOString(), slot }), { expirationTtl: SLOT_CLAIM_TTL_SECONDS });
 
   try {
-    return await refreshResults(env, { mode: 'auto', slot, now });
+    return await refreshResults(env, { mode: 'scheduled', slot, now });
   } catch (error) {
     const failure = {
       error: String(error && error.message ? error.message : error),
-      mode: 'auto',
+      mode: 'scheduled',
       slot,
       checkedAtUtc: now.toISOString()
     };
@@ -637,64 +635,57 @@ function getOffsetsForMatch(match) {
 }
 
 async function refreshResults(env, options = {}) {
-  if (!env.APISPORTS_KEY) throw new Error('Missing APISPORTS_KEY secret');
-
   const now = options.now || new Date();
   const usageAfterIncrement = await incrementUsage(env, now);
 
-  const url = `${API_BASE}/fixtures?league=${LEAGUE_ID}&season=${SEASON}`;
-  const response = await fetch(url, {
-    headers: { 'x-apisports-key': env.APISPORTS_KEY }
+  const response = await fetch(API_URL, {
+    headers: { accept: 'application/json' }
   });
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`API-Football error ${response.status}: ${text.slice(0, 250)}`);
+    throw new Error(`worldcup26.ir error ${response.status}: ${text.slice(0, 250)}`);
   }
 
   const api = await response.json();
+  const games = extractGames(api);
   const matches = {};
 
-  for (const item of api.response || []) {
-    const round = item.league?.round || '';
-    if (!/group/i.test(round)) continue;
+  for (const item of games) {
+    const home = canonicalTeamName(readString(item, [
+      'home_team_name_en',
+      'homeTeamNameEn',
+      'home_team',
+      'homeTeam',
+      'home.name',
+      'teams.home.name'
+    ]));
+    const away = canonicalTeamName(readString(item, [
+      'away_team_name_en',
+      'awayTeamNameEn',
+      'away_team',
+      'awayTeam',
+      'away.name',
+      'teams.away.name'
+    ]));
 
-    const status = item.fixture?.status?.short || '';
-    if (status === 'NS' || status === 'TBD') continue;
+    if (!home || !away) continue;
 
-    const apiHome = item.teams?.home?.name || '';
-    const apiAway = item.teams?.away?.name || '';
-    const home = canonicalTeamName(apiHome);
-    const away = canonicalTeamName(apiAway);
-    const homeGoals = item.goals?.home;
-    const awayGoals = item.goals?.away;
-
-    if (!home || !away || homeGoals === null || awayGoals === null || homeGoals === undefined || awayGoals === undefined) continue;
-
+    const homeGoals = normalizeScore(readValue(item, ['home_score', 'homeScore', 'home_goals', 'homeGoals', 'goals.home']));
+    const awayGoals = normalizeScore(readValue(item, ['away_score', 'awayScore', 'away_goals', 'awayGoals', 'goals.away']));
     const key = `${home} vs ${away}`;
-    const score = `${home} ${homeGoals}-${awayGoals} ${away}`;
 
     matches[key] = {
-      status,
-      score,
-      home,
-      away,
-      apiHome,
-      apiAway,
-      homeGoals,
-      awayGoals,
-      fixtureId: item.fixture?.id,
-      note: round,
-      venue: item.fixture?.venue?.name || '',
-      city: item.fixture?.venue?.city || '',
-      kickoffUtc: item.fixture?.date || ''
+      status: getGameStatus(item),
+      score: formatScore(home, away, homeGoals, awayGoals),
+      note: formatGroup(readString(item, ['group', 'league.round', 'round']))
     };
   }
 
   const data = {
     lastUpdated: new Date().toLocaleString('en-GB', { timeZone: 'Asia/Bangkok', hour12: false }) + ' ICT',
     lastUpdatedUtc: new Date().toISOString(),
-    source: 'API-FOOTBALL fixtures?league=1&season=2026',
+    source: SOURCE_LABEL,
     mode: options.mode || 'unknown',
     slot: options.slot || null,
     apiUsageUtcDate: usageKeyDate(now),
@@ -714,6 +705,59 @@ async function refreshResults(env, options = {}) {
   }, USAGE_TTL_SECONDS);
 
   return data;
+}
+
+function extractGames(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (Array.isArray(payload?.games)) return payload.games;
+  if (Array.isArray(payload?.data)) return payload.data;
+  if (Array.isArray(payload?.data?.games)) return payload.data.games;
+  throw new Error('Unexpected worldcup26.ir response shape');
+}
+
+function getGameStatus(item) {
+  const finished = readValue(item, ['finished']);
+  if (finished === true || String(finished).toUpperCase() === 'TRUE') return 'FT';
+
+  const timeElapsed = String(readValue(item, ['time_elapsed', 'timeElapsed']) || '').toLowerCase();
+  if (timeElapsed && timeElapsed !== 'notstarted') return 'LIVE';
+
+  return 'NS';
+}
+
+function formatScore(home, away, homeGoals, awayGoals) {
+  if (homeGoals !== '' && awayGoals !== '') {
+    return `${home} ${homeGoals}-${awayGoals} ${away}`;
+  }
+  return `${home} vs ${away}`;
+}
+
+function formatGroup(value) {
+  const group = String(value || '').trim();
+  if (!group) return '';
+  if (/^group\b/i.test(group)) return group.replace(/^group\s*/i, 'Group ');
+  if (/^[A-L]$/i.test(group)) return `Group ${group.toUpperCase()}`;
+  return group;
+}
+
+function normalizeScore(value) {
+  if (value === null || value === undefined) return '';
+  const score = String(value).trim();
+  if (!score || score.toLowerCase() === 'null') return '';
+  return score;
+}
+
+function readString(item, paths) {
+  const value = readValue(item, paths);
+  return value === null || value === undefined ? '' : String(value).trim();
+}
+
+function readValue(item, paths) {
+  for (const path of paths) {
+    const value = path.split('.').reduce((current, part) => current?.[part], item);
+    if (value !== null && value !== undefined && value !== '') return value;
+  }
+  return undefined;
 }
 
 function canonicalTeamName(name) {
