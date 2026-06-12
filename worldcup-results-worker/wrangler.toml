@@ -1,0 +1,17 @@
+name = "worldcup-results"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+
+# Runs every 15 minutes. You can tighten this during live match windows if needed.
+[triggers]
+crons = ["*/15 * * * *"]
+
+[[kv_namespaces]]
+binding = "RESULTS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# Optional: once KV + secrets are working, you can uncomment this and deploy the route by Wrangler.
+# Otherwise configure the same route in the Cloudflare dashboard.
+# [[routes]]
+# pattern = "reportingforge.com/worldcup2026schedule/results.json*"
+# zone_name = "reportingforge.com"
