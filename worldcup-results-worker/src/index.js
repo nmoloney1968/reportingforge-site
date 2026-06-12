@@ -6,7 +6,6 @@ const LAST_ERROR_KEY = 'worldcup2026-last-error';
 const SLOT_MS = 5 * 60 * 1000;
 const SLOT_CLAIM_TTL_SECONDS = 60 * 60 * 24 * 45;
 const USAGE_TTL_SECONDS = 60 * 60 * 24 * 3;
-const AUTO_DAILY_LIMIT = 90;
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -19,434 +18,362 @@ const GROUP_STAGE_SCHEDULE = [
   {
     "match": "Mexico vs South Africa",
     "group": "Group A",
-    "kickoffUtc": "2026-06-11T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-11T19:00:00Z"
   },
   {
     "match": "South Korea vs Czech Republic",
     "group": "Group A",
-    "kickoffUtc": "2026-06-12T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-12T02:00:00Z"
   },
   {
     "match": "Canada vs Bosnia & Herzegovina",
     "group": "Group B",
-    "kickoffUtc": "2026-06-12T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-12T19:00:00Z"
   },
   {
     "match": "USA vs Paraguay",
     "group": "Group D",
-    "kickoffUtc": "2026-06-13T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-13T01:00:00Z"
   },
   {
     "match": "Qatar vs Switzerland",
     "group": "Group B",
-    "kickoffUtc": "2026-06-13T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-13T19:00:00Z"
   },
   {
     "match": "Brazil vs Morocco",
     "group": "Group C",
-    "kickoffUtc": "2026-06-13T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-13T22:00:00Z"
   },
   {
     "match": "Haiti vs Scotland",
     "group": "Group C",
-    "kickoffUtc": "2026-06-14T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-14T01:00:00Z"
   },
   {
     "match": "Australia vs Turkey",
     "group": "Group D",
-    "kickoffUtc": "2026-06-14T04:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-14T04:00:00Z"
   },
   {
     "match": "Germany vs Curacao",
     "group": "Group E",
-    "kickoffUtc": "2026-06-14T17:00:00Z",
-    "germany": true
+    "kickoffUtc": "2026-06-14T17:00:00Z"
   },
   {
     "match": "Netherlands vs Japan",
     "group": "Group F",
-    "kickoffUtc": "2026-06-14T20:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-14T20:00:00Z"
   },
   {
     "match": "Ivory Coast vs Ecuador",
     "group": "Group E",
-    "kickoffUtc": "2026-06-14T23:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-14T23:00:00Z"
   },
   {
     "match": "Sweden vs Tunisia",
     "group": "Group F",
-    "kickoffUtc": "2026-06-15T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-15T02:00:00Z"
   },
   {
     "match": "Spain vs Cape Verde",
     "group": "Group H",
-    "kickoffUtc": "2026-06-15T16:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-15T16:00:00Z"
   },
   {
     "match": "Belgium vs Egypt",
     "group": "Group G",
-    "kickoffUtc": "2026-06-15T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-15T19:00:00Z"
   },
   {
     "match": "Saudi Arabia vs Uruguay",
     "group": "Group H",
-    "kickoffUtc": "2026-06-15T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-15T22:00:00Z"
   },
   {
     "match": "Iran vs New Zealand",
     "group": "Group G",
-    "kickoffUtc": "2026-06-16T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-16T01:00:00Z"
   },
   {
     "match": "France vs Senegal",
     "group": "Group I",
-    "kickoffUtc": "2026-06-16T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-16T19:00:00Z"
   },
   {
     "match": "Iraq vs Norway",
     "group": "Group I",
-    "kickoffUtc": "2026-06-16T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-16T22:00:00Z"
   },
   {
     "match": "Argentina vs Algeria",
     "group": "Group J",
-    "kickoffUtc": "2026-06-17T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-17T01:00:00Z"
   },
   {
     "match": "Austria vs Jordan",
     "group": "Group J",
-    "kickoffUtc": "2026-06-17T04:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-17T04:00:00Z"
   },
   {
     "match": "Portugal vs DR Congo",
     "group": "Group K",
-    "kickoffUtc": "2026-06-17T17:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-17T17:00:00Z"
   },
   {
     "match": "England vs Croatia",
     "group": "Group L",
-    "kickoffUtc": "2026-06-17T20:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-17T20:00:00Z"
   },
   {
     "match": "Ghana vs Panama",
     "group": "Group L",
-    "kickoffUtc": "2026-06-17T23:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-17T23:00:00Z"
   },
   {
     "match": "Uzbekistan vs Colombia",
     "group": "Group K",
-    "kickoffUtc": "2026-06-18T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-18T02:00:00Z"
   },
   {
     "match": "Czech Republic vs South Africa",
     "group": "Group A",
-    "kickoffUtc": "2026-06-18T16:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-18T16:00:00Z"
   },
   {
     "match": "Switzerland vs Bosnia & Herzegovina",
     "group": "Group B",
-    "kickoffUtc": "2026-06-18T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-18T19:00:00Z"
   },
   {
     "match": "Canada vs Qatar",
     "group": "Group B",
-    "kickoffUtc": "2026-06-18T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-18T22:00:00Z"
   },
   {
     "match": "Mexico vs South Korea",
     "group": "Group A",
-    "kickoffUtc": "2026-06-19T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-19T01:00:00Z"
   },
   {
     "match": "USA vs Australia",
     "group": "Group D",
-    "kickoffUtc": "2026-06-19T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-19T19:00:00Z"
   },
   {
     "match": "Scotland vs Morocco",
     "group": "Group C",
-    "kickoffUtc": "2026-06-19T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-19T22:00:00Z"
   },
   {
     "match": "Brazil vs Haiti",
     "group": "Group C",
-    "kickoffUtc": "2026-06-20T00:30:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-20T00:30:00Z"
   },
   {
     "match": "Turkey vs Paraguay",
     "group": "Group D",
-    "kickoffUtc": "2026-06-20T03:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-20T03:00:00Z"
   },
   {
     "match": "Netherlands vs Sweden",
     "group": "Group F",
-    "kickoffUtc": "2026-06-20T17:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-20T17:00:00Z"
   },
   {
     "match": "Germany vs Ivory Coast",
     "group": "Group E",
-    "kickoffUtc": "2026-06-20T20:00:00Z",
-    "germany": true
+    "kickoffUtc": "2026-06-20T20:00:00Z"
   },
   {
     "match": "Ecuador vs Curacao",
     "group": "Group E",
-    "kickoffUtc": "2026-06-21T00:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-21T00:00:00Z"
   },
   {
     "match": "Tunisia vs Japan",
     "group": "Group F",
-    "kickoffUtc": "2026-06-21T04:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-21T04:00:00Z"
   },
   {
     "match": "Spain vs Saudi Arabia",
     "group": "Group H",
-    "kickoffUtc": "2026-06-21T16:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-21T16:00:00Z"
   },
   {
     "match": "Belgium vs Iran",
     "group": "Group G",
-    "kickoffUtc": "2026-06-21T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-21T19:00:00Z"
   },
   {
     "match": "Uruguay vs Cape Verde",
     "group": "Group H",
-    "kickoffUtc": "2026-06-21T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-21T22:00:00Z"
   },
   {
     "match": "New Zealand vs Egypt",
     "group": "Group G",
-    "kickoffUtc": "2026-06-22T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-22T01:00:00Z"
   },
   {
     "match": "Argentina vs Austria",
     "group": "Group J",
-    "kickoffUtc": "2026-06-22T17:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-22T17:00:00Z"
   },
   {
     "match": "France vs Iraq",
     "group": "Group I",
-    "kickoffUtc": "2026-06-22T21:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-22T21:00:00Z"
   },
   {
     "match": "Norway vs Senegal",
     "group": "Group I",
-    "kickoffUtc": "2026-06-23T00:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-23T00:00:00Z"
   },
   {
     "match": "Jordan vs Algeria",
     "group": "Group J",
-    "kickoffUtc": "2026-06-23T03:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-23T03:00:00Z"
   },
   {
     "match": "Portugal vs Uzbekistan",
     "group": "Group K",
-    "kickoffUtc": "2026-06-23T17:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-23T17:00:00Z"
   },
   {
     "match": "England vs Ghana",
     "group": "Group L",
-    "kickoffUtc": "2026-06-23T20:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-23T20:00:00Z"
   },
   {
     "match": "Panama vs Croatia",
     "group": "Group L",
-    "kickoffUtc": "2026-06-23T23:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-23T23:00:00Z"
   },
   {
     "match": "Colombia vs DR Congo",
     "group": "Group K",
-    "kickoffUtc": "2026-06-24T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-24T02:00:00Z"
   },
   {
     "match": "Switzerland vs Canada",
     "group": "Group B",
-    "kickoffUtc": "2026-06-24T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-24T19:00:00Z"
   },
   {
     "match": "Bosnia & Herzegovina vs Qatar",
     "group": "Group B",
-    "kickoffUtc": "2026-06-24T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-24T19:00:00Z"
   },
   {
     "match": "Morocco vs Haiti",
     "group": "Group C",
-    "kickoffUtc": "2026-06-24T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-24T22:00:00Z"
   },
   {
     "match": "Scotland vs Brazil",
     "group": "Group C",
-    "kickoffUtc": "2026-06-24T22:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-24T22:00:00Z"
   },
   {
     "match": "South Africa vs South Korea",
     "group": "Group A",
-    "kickoffUtc": "2026-06-25T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-25T01:00:00Z"
   },
   {
     "match": "Czech Republic vs Mexico",
     "group": "Group A",
-    "kickoffUtc": "2026-06-25T01:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-25T01:00:00Z"
   },
   {
     "match": "Curacao vs Ivory Coast",
     "group": "Group E",
-    "kickoffUtc": "2026-06-25T20:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-25T20:00:00Z"
   },
   {
     "match": "Ecuador vs Germany",
     "group": "Group E",
-    "kickoffUtc": "2026-06-25T20:00:00Z",
-    "germany": true
+    "kickoffUtc": "2026-06-25T20:00:00Z"
   },
   {
     "match": "Tunisia vs Netherlands",
     "group": "Group F",
-    "kickoffUtc": "2026-06-25T23:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-25T23:00:00Z"
   },
   {
     "match": "Japan vs Sweden",
     "group": "Group F",
-    "kickoffUtc": "2026-06-25T23:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-25T23:00:00Z"
   },
   {
     "match": "Turkey vs USA",
     "group": "Group D",
-    "kickoffUtc": "2026-06-26T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-26T02:00:00Z"
   },
   {
     "match": "Paraguay vs Australia",
     "group": "Group D",
-    "kickoffUtc": "2026-06-26T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-26T02:00:00Z"
   },
   {
     "match": "Norway vs France",
     "group": "Group I",
-    "kickoffUtc": "2026-06-26T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-26T19:00:00Z"
   },
   {
     "match": "Senegal vs Iraq",
     "group": "Group I",
-    "kickoffUtc": "2026-06-26T19:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-26T19:00:00Z"
   },
   {
     "match": "Cape Verde vs Saudi Arabia",
     "group": "Group H",
-    "kickoffUtc": "2026-06-27T00:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T00:00:00Z"
   },
   {
     "match": "Uruguay vs Spain",
     "group": "Group H",
-    "kickoffUtc": "2026-06-27T00:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T00:00:00Z"
   },
   {
     "match": "New Zealand vs Belgium",
     "group": "Group G",
-    "kickoffUtc": "2026-06-27T03:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T03:00:00Z"
   },
   {
     "match": "Egypt vs Iran",
     "group": "Group G",
-    "kickoffUtc": "2026-06-27T03:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T03:00:00Z"
   },
   {
     "match": "Panama vs England",
     "group": "Group L",
-    "kickoffUtc": "2026-06-27T21:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T21:00:00Z"
   },
   {
     "match": "Croatia vs Ghana",
     "group": "Group L",
-    "kickoffUtc": "2026-06-27T21:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T21:00:00Z"
   },
   {
     "match": "Colombia vs Portugal",
     "group": "Group K",
-    "kickoffUtc": "2026-06-27T23:30:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T23:30:00Z"
   },
   {
     "match": "DR Congo vs Uzbekistan",
     "group": "Group K",
-    "kickoffUtc": "2026-06-27T23:30:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-27T23:30:00Z"
   },
   {
     "match": "Algeria vs Austria",
     "group": "Group J",
-    "kickoffUtc": "2026-06-28T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-28T02:00:00Z"
   },
   {
     "match": "Jordan vs Argentina",
     "group": "Group J",
-    "kickoffUtc": "2026-06-28T02:00:00Z",
-    "germany": false
+    "kickoffUtc": "2026-06-28T02:00:00Z"
   }
 ];
 
@@ -526,19 +453,6 @@ async function runScheduledRefresh(env, now) {
     return { skipped: true, reason: 'No approved polling slot', checkedAtUtc: now.toISOString() };
   }
 
-  const usageBefore = await getUsageCount(env, now);
-  if (usageBefore >= AUTO_DAILY_LIMIT) {
-    const status = {
-      skipped: true,
-      reason: `Automatic daily API cap reached: ${usageBefore}/${AUTO_DAILY_LIMIT}`,
-      mode: 'scheduled',
-      slot,
-      checkedAtUtc: now.toISOString()
-    };
-    await putJson(env, STATUS_KEY, status, USAGE_TTL_SECONDS);
-    return status;
-  }
-
   const claimKey = `poll-slot:${slot.slotId}`;
   const alreadyClaimed = await env.RESULTS.get(claimKey);
   if (alreadyClaimed) {
@@ -570,15 +484,8 @@ async function handleManualRefresh(request, env, url) {
 
   try {
     const now = new Date();
-    const usageBefore = await getUsageCount(env, now);
     const data = await refreshResults(env, { mode: 'manual', now });
-    const warnings = [];
-    if (usageBefore >= AUTO_DAILY_LIMIT) {
-      warnings.push(`Manual refresh performed after automatic cap threshold: usage before refresh was ${usageBefore}/${AUTO_DAILY_LIMIT}.`);
-    } else if (usageBefore >= 80) {
-      warnings.push(`Daily API usage is getting high: usage before refresh was ${usageBefore}/${AUTO_DAILY_LIMIT} automatic-cap threshold.`);
-    }
-    return json({ ...data, warnings }, 200);
+    return json(data, 200);
   } catch (error) {
     return json({ error: String(error && error.message ? error.message : error) }, 500);
   }
@@ -599,7 +506,7 @@ function getCurrentPollingSlot(now) {
     for (const offset of getOffsetsForMatch(match)) {
       const targetMs = kickoffMs + offset * 60 * 1000;
       if (targetMs === slotMs) {
-        dueMatches.push({ match: match.match, group: match.group, germany: match.germany, offsetMinutes: offset });
+        dueMatches.push({ match: match.match, group: match.group, offsetMinutes: offset });
       }
     }
   }
@@ -615,21 +522,17 @@ function getCurrentPollingSlot(now) {
   };
 }
 
-function getOffsetsForMatch(match) {
+function getOffsetsForMatch() {
   const offsets = new Set();
 
-  // All games: kickoff, then every 10 minutes through kickoff +120 minutes.
-  for (let minute = 0; minute <= 120; minute += 10) offsets.add(minute);
+  // All group-stage games: kickoff, then every 5 minutes through kickoff +120 minutes.
+  for (let minute = 0; minute <= 120; minute += 5) offsets.add(minute);
 
-  // All games: post-match checks at roughly +10, +20 and +45 after a two-hour match window.
-  offsets.add(130);
-  offsets.add(140);
-  offsets.add(165);
-
-  // Germany games: effectively every 5 minutes during live play.
-  if (match.germany) {
-    for (let minute = 5; minute <= 120; minute += 10) offsets.add(minute);
-  }
+  // Post-match checks after the two-hour live window.
+  offsets.add(125);
+  offsets.add(135);
+  offsets.add(150);
+  offsets.add(180);
 
   return Array.from(offsets).sort((a, b) => a - b);
 }

@@ -14,14 +14,14 @@ The cron runs every 5 minutes, but the Worker **does not call the source API eve
 
 Polling rules:
 
-- All games: kickoff, then every 10 minutes through kickoff +120 minutes.
-- All games: post-match checks at kickoff +130, +140 and +165 minutes.
-- Germany games: additional 5-minute checks during live play, so Germany games are effectively checked every 5 minutes.
+- Every group-stage match is checked every 5 minutes from kickoff through kickoff +120 minutes.
+- Each match also gets post-match checks at kickoff +125, +135, +150 and +180 minutes.
+- There is no separate Germany-game polling rule; all matches use the same 5-minute in-window cadence.
 - One request to `https://worldcup26.ir/get/games` fetches the full World Cup feed and updates all visible matches.
-- Automatic refreshes stop for the UTC day once usage reaches 90.
-- The last successful result payload stays in KV if an API call fails.
+- A daily usage counter is kept for visibility, but scheduled polling is no longer capped at 90 calls per UTC day.
+- If the source fetch fails, the last successful result payload stays in KV and continues to be served to the page.
 
-Expected group-stage usage stays below the 90-call automatic daily cap because polling is tied to match windows instead of running on every cron tick.
+The cron still runs every 5 minutes, but source requests are made only inside match polling windows and post-match check slots.
 
 ## Files
 
