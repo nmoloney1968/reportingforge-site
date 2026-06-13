@@ -94,3 +94,17 @@ https://reportingforge.com/worldcup2026schedule/results.json/status
 - `ADMIN_TOKEN` is your private manual-refresh token.
 - The route should stay narrow. Do not route the Worker to `reportingforge.com/worldcup2026schedule/*`.
 - The static HTML page should remain in Cloudflare Pages and should continue fetching `./results.json`.
+
+## FIFA live enrichment
+
+The Worker keeps `worldcup26.ir/get/games` as the schedule and fallback source. For selected known match IDs, it also tries a short-timeout FIFA live fetch after the normal results object is built.
+
+Current pilot mapping:
+
+```js
+const FIFA_MATCH_IDS = {
+  'USA vs Paraguay': '400021458'
+};
+```
+
+If FIFA returns valid team names, scores, and a clean `MatchTime`, the Worker enriches that match with `source: "fifa"` and an official-looking `elapsed` value. If FIFA fails or returns incomplete data, the existing `worldcup26.ir` result is left untouched and a warning is added to `warnings`.

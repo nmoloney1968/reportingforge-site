@@ -1,5 +1,10 @@
 const API_URL = 'https://worldcup26.ir/get/games';
 const SOURCE_LABEL = 'worldcup26.ir/get/games';
+const FIFA_LIVE_BASE_URL = 'https://api.fifa.com/api/v3/live/football';
+const FIFA_LIVE_TIMEOUT_MS = 7000;
+const FIFA_MATCH_IDS = {
+  'USA vs Paraguay': '400021458'
+};
 const KV_KEY = 'worldcup2026-results';
 const STATUS_KEY = 'worldcup2026-poller-status';
 const LAST_ERROR_KEY = 'worldcup2026-last-error';
@@ -563,6 +568,7 @@ async function refreshResults(env, options = {}) {
   const api = await response.json();
   const games = extractGames(api);
   const matches = {};
+  const warnings = [];
 
   for (const item of games) {
     const home = canonicalTeamName(readString(item, [
@@ -598,6 +604,8 @@ async function refreshResults(env, options = {}) {
     };
   }
 
+  await enrichMatchesWithFifa(matches, warnings);
+
   const data = {
     lastUpdated: new Date().toLocaleString('en-GB', { timeZone: 'Asia/Bangkok', hour12: false }) + ' ICT',
     lastUpdatedUtc: new Date().toISOString(),
@@ -607,7 +615,8 @@ async function refreshResults(env, options = {}) {
     apiUsageUtcDate: usageKeyDate(now),
     apiUsageAfterThisCall: usageAfterIncrement,
     matchCount: Object.keys(matches).length,
-    matches
+    matches,
+    warnings
   };
 
   await env.RESULTS.put(KV_KEY, JSON.stringify(data, null, 2));
@@ -621,6 +630,102 @@ async function refreshResults(env, options = {}) {
   }, USAGE_TTL_SECONDS);
 
   return data;
+}
+
+async function enrichMatchesWithFifa(matches, warnings) {
+  for (const [key, fifaId] of Object.entries(FIFA_MATCH_IDS)) {
+    try {
+      const fifa = await fetchFifaLiveMatch(fifaId);
+      const enrichment = parseFifaLiveMatch(fifa, key, matches[key]);
+      if (!enrichment) {
+        warnings.push(`FIFA enrichment skipped for ${key}: invalid live payload`);
+        continue;
+      }
+
+      matches[key] = {
+        ...(matches[key] || {}),
+        ...enrichment,
+        note: matches[key]?.note || enrichment.note,
+        source: 'fifa'
+      };
+    } catch (error) {
+      warnings.push(`FIFA enrichment failed for ${key}: ${String(error && error.message ? error.message : error).slice(0, 180)}`);
+    }
+  }
+}
+
+async function fetchFifaLiveMatch(fifaId) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort('timeout'), FIFA_LIVE_TIMEOUT_MS);
+  try {
+    const response = await fetch(`${FIFA_LIVE_BASE_URL}/${encodeURIComponent(fifaId)}?language=en`, {
+      headers: { accept: 'application/json' },
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`FIFA live error ${response.status}: ${text.slice(0, 120)}`);
+    }
+
+    return await response.json();
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+function parseFifaLiveMatch(payload, key, existing) {
+  const fifaHome = canonicalTeamName(readString(payload, ['HomeTeam.TeamName.0.Description', 'HomeTeam.Abbreviation']));
+  const fifaAway = canonicalTeamName(readString(payload, ['AwayTeam.TeamName.0.Description', 'AwayTeam.Abbreviation']));
+  const homeScore = normalizeFifaScore(readValue(payload, ['HomeTeam.Score']));
+  const awayScore = normalizeFifaScore(readValue(payload, ['AwayTeam.Score']));
+
+  if (!fifaHome || !fifaAway || homeScore === '' || awayScore === '') return null;
+
+  const [fallbackHome, fallbackAway] = key.split(' vs ');
+  const home = canonicalTeamName(fallbackHome || fifaHome);
+  const away = canonicalTeamName(fallbackAway || fifaAway);
+  const elapsed = normalizeFifaMatchTime(readValue(payload, ['MatchTime']));
+  const status = getFifaStatus(payload, elapsed, existing?.status);
+
+  return {
+    status,
+    score: `${home} ${homeScore}-${awayScore} ${away}`,
+    ...(elapsed && status !== 'FT' ? { elapsed } : {})
+  };
+}
+
+function normalizeFifaScore(value) {
+  if (value === null || value === undefined || value === '') return '';
+  const score = Number(value);
+  return Number.isFinite(score) ? String(score) : '';
+}
+
+function normalizeFifaMatchTime(value) {
+  const raw = String(value ?? '').trim();
+  if (!raw) return '';
+  if (/^ht$/i.test(raw)) return 'HT';
+
+  const minute = raw.match(/^(\d{1,3})(?:\s*\+\s*(\d{1,2}))?\s*'?$/);
+  if (!minute) return '';
+
+  const base = Number.parseInt(minute[1], 10);
+  if (!Number.isFinite(base) || base < 0 || base > 130) return '';
+  return minute[2] ? `${base}+${Number.parseInt(minute[2], 10)}'` : `${base}'`;
+}
+
+function getFifaStatus(payload, elapsed, fallbackStatus) {
+  const statusText = [
+    readString(payload, ['Status']),
+    readString(payload, ['MatchStatus']),
+    readString(payload, ['MatchStatusName.0.Description']),
+    readString(payload, ['PeriodName.0.Description'])
+  ].join(' ').toLowerCase();
+
+  if (/\b(finished|full[ -]?time|final|ft)\b/.test(statusText)) return 'FT';
+  if (elapsed === 'HT') return 'HT';
+  if (elapsed) return 'LIVE';
+  return fallbackStatus || 'LIVE';
 }
 
 function extractGames(payload) {
