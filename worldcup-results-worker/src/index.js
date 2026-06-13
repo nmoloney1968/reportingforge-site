@@ -10,7 +10,7 @@ let MATCH_KICKOFF_MAP = {};
 const KV_KEY = 'worldcup2026-results';
 const STATUS_KEY = 'worldcup2026-poller-status';
 const LAST_ERROR_KEY = 'worldcup2026-last-error';
-const SLOT_MS = 5 * 60 * 1000;
+const SLOT_MS = 3 * 60 * 1000;
 const SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS = 23;
 // Scheduled source calls are delayed to +23 seconds after the 5-minute boundary to avoid the obvious high-traffic boundary.
 const GROUP_STAGE_POLLING_END_UTC = '2026-06-28T08:00:00Z';
@@ -554,8 +554,8 @@ function getCurrentPollingSlot(now) {
 function getOffsetsForMatch() {
   const offsets = new Set();
 
-  // All group-stage games: every 5 minutes from kickoff through +240 minutes.
-  for (let minute = 0; minute <= 240; minute += 5) offsets.add(minute);
+  // All group-stage games: every 3 minutes from kickoff through +240 minutes.
+  for (let minute = 0; minute <= 240; minute += 3) offsets.add(minute);
 
   return Array.from(offsets).sort((a, b) => a - b);
 }
