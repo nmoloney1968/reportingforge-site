@@ -1,1 +1,578 @@
-{}
+{
+  "Mexico vs South Africa": {
+    "fifaId": "400021443",
+    "kickoffUtc": "2026-06-11T19:00:00Z",
+    "home": "Mexico",
+    "away": "South Africa",
+    "group": "Group A",
+    "source": "fifa"
+  },
+  "South Korea vs Czech Republic": {
+    "fifaId": "400021441",
+    "kickoffUtc": "2026-06-12T02:00:00Z",
+    "home": "South Korea",
+    "away": "Czech Republic",
+    "group": "Group A",
+    "source": "fifa"
+  },
+  "Canada vs Bosnia & Herzegovina": {
+    "fifaId": "400021449",
+    "kickoffUtc": "2026-06-12T19:00:00Z",
+    "home": "Canada",
+    "away": "Bosnia & Herzegovina",
+    "group": "Group B",
+    "source": "fifa"
+  },
+  "USA vs Paraguay": {
+    "fifaId": "400021458",
+    "kickoffUtc": "2026-06-13T01:00:00Z",
+    "home": "USA",
+    "away": "Paraguay",
+    "group": "Group D",
+    "source": "fifa"
+  },
+  "Qatar vs Switzerland": {
+    "fifaId": "400021447",
+    "kickoffUtc": "2026-06-13T19:00:00Z",
+    "home": "Qatar",
+    "away": "Switzerland",
+    "group": "Group B",
+    "source": "fifa"
+  },
+  "Brazil vs Morocco": {
+    "fifaId": "400021456",
+    "kickoffUtc": "2026-06-13T22:00:00Z",
+    "home": "Brazil",
+    "away": "Morocco",
+    "group": "Group C",
+    "source": "fifa"
+  },
+  "Haiti vs Scotland": {
+    "fifaId": "400021453",
+    "kickoffUtc": "2026-06-14T01:00:00Z",
+    "home": "Haiti",
+    "away": "Scotland",
+    "group": "Group C",
+    "source": "fifa"
+  },
+  "Australia vs Turkey": {
+    "fifaId": "400021463",
+    "kickoffUtc": "2026-06-14T04:00:00Z",
+    "home": "Australia",
+    "away": "Turkey",
+    "group": "Group D",
+    "source": "fifa"
+  },
+  "Germany vs Curacao": {
+    "fifaId": "400021464",
+    "kickoffUtc": "2026-06-14T17:00:00Z",
+    "home": "Germany",
+    "away": "Curacao",
+    "group": "Group E",
+    "source": "fifa"
+  },
+  "Netherlands vs Japan": {
+    "fifaId": "400021470",
+    "kickoffUtc": "2026-06-14T20:00:00Z",
+    "home": "Netherlands",
+    "away": "Japan",
+    "group": "Group F",
+    "source": "fifa"
+  },
+  "Ivory Coast vs Ecuador": {
+    "fifaId": "400021467",
+    "kickoffUtc": "2026-06-14T23:00:00Z",
+    "home": "Ivory Coast",
+    "away": "Ecuador",
+    "group": "Group E",
+    "source": "fifa"
+  },
+  "Sweden vs Tunisia": {
+    "fifaId": "400021474",
+    "kickoffUtc": "2026-06-15T02:00:00Z",
+    "home": "Sweden",
+    "away": "Tunisia",
+    "group": "Group F",
+    "source": "fifa"
+  },
+  "Spain vs Cape Verde": {
+    "fifaId": "400021482",
+    "kickoffUtc": "2026-06-15T16:00:00Z",
+    "home": "Spain",
+    "away": "Cape Verde",
+    "group": "Group H",
+    "source": "fifa"
+  },
+  "Belgium vs Egypt": {
+    "fifaId": "400021478",
+    "kickoffUtc": "2026-06-15T19:00:00Z",
+    "home": "Belgium",
+    "away": "Egypt",
+    "group": "Group G",
+    "source": "fifa"
+  },
+  "Saudi Arabia vs Uruguay": {
+    "fifaId": "400021486",
+    "kickoffUtc": "2026-06-15T22:00:00Z",
+    "home": "Saudi Arabia",
+    "away": "Uruguay",
+    "group": "Group H",
+    "source": "fifa"
+  },
+  "Iran vs New Zealand": {
+    "fifaId": "400021476",
+    "kickoffUtc": "2026-06-16T01:00:00Z",
+    "home": "Iran",
+    "away": "New Zealand",
+    "group": "Group G",
+    "source": "fifa"
+  },
+  "France vs Senegal": {
+    "fifaId": "400021490",
+    "kickoffUtc": "2026-06-16T19:00:00Z",
+    "home": "France",
+    "away": "Senegal",
+    "group": "Group I",
+    "source": "fifa"
+  },
+  "Iraq vs Norway": {
+    "fifaId": "400021488",
+    "kickoffUtc": "2026-06-16T22:00:00Z",
+    "home": "Iraq",
+    "away": "Norway",
+    "group": "Group I",
+    "source": "fifa"
+  },
+  "Argentina vs Algeria": {
+    "fifaId": "400021496",
+    "kickoffUtc": "2026-06-17T01:00:00Z",
+    "home": "Argentina",
+    "away": "Algeria",
+    "group": "Group J",
+    "source": "fifa"
+  },
+  "Austria vs Jordan": {
+    "fifaId": "400021498",
+    "kickoffUtc": "2026-06-17T04:00:00Z",
+    "home": "Austria",
+    "away": "Jordan",
+    "group": "Group J",
+    "source": "fifa"
+  },
+  "Portugal vs DR Congo": {
+    "fifaId": "400021502",
+    "kickoffUtc": "2026-06-17T17:00:00Z",
+    "home": "Portugal",
+    "away": "DR Congo",
+    "group": "Group K",
+    "source": "fifa"
+  },
+  "England vs Croatia": {
+    "fifaId": "400021507",
+    "kickoffUtc": "2026-06-17T20:00:00Z",
+    "home": "England",
+    "away": "Croatia",
+    "group": "Group L",
+    "source": "fifa"
+  },
+  "Ghana vs Panama": {
+    "fifaId": "400021510",
+    "kickoffUtc": "2026-06-17T23:00:00Z",
+    "home": "Ghana",
+    "away": "Panama",
+    "group": "Group L",
+    "source": "fifa"
+  },
+  "Uzbekistan vs Colombia": {
+    "fifaId": "400021504",
+    "kickoffUtc": "2026-06-18T02:00:00Z",
+    "home": "Uzbekistan",
+    "away": "Colombia",
+    "group": "Group K",
+    "source": "fifa"
+  },
+  "Czech Republic vs South Africa": {
+    "fifaId": "400021440",
+    "kickoffUtc": "2026-06-18T16:00:00Z",
+    "home": "Czech Republic",
+    "away": "South Africa",
+    "group": "Group A",
+    "source": "fifa"
+  },
+  "Switzerland vs Bosnia & Herzegovina": {
+    "fifaId": "400021446",
+    "kickoffUtc": "2026-06-18T19:00:00Z",
+    "home": "Switzerland",
+    "away": "Bosnia & Herzegovina",
+    "group": "Group B",
+    "source": "fifa"
+  },
+  "Canada vs Qatar": {
+    "fifaId": "400021450",
+    "kickoffUtc": "2026-06-18T22:00:00Z",
+    "home": "Canada",
+    "away": "Qatar",
+    "group": "Group B",
+    "source": "fifa"
+  },
+  "Mexico vs South Korea": {
+    "fifaId": "400021442",
+    "kickoffUtc": "2026-06-19T01:00:00Z",
+    "home": "Mexico",
+    "away": "South Korea",
+    "group": "Group A",
+    "source": "fifa"
+  },
+  "USA vs Australia": {
+    "fifaId": "400021462",
+    "kickoffUtc": "2026-06-19T19:00:00Z",
+    "home": "USA",
+    "away": "Australia",
+    "group": "Group D",
+    "source": "fifa"
+  },
+  "Scotland vs Morocco": {
+    "fifaId": "400021454",
+    "kickoffUtc": "2026-06-19T22:00:00Z",
+    "home": "Scotland",
+    "away": "Morocco",
+    "group": "Group C",
+    "source": "fifa"
+  },
+  "Brazil vs Haiti": {
+    "fifaId": "400021457",
+    "kickoffUtc": "2026-06-20T00:30:00Z",
+    "home": "Brazil",
+    "away": "Haiti",
+    "group": "Group C",
+    "source": "fifa"
+  },
+  "Turkey vs Paraguay": {
+    "fifaId": "400021460",
+    "kickoffUtc": "2026-06-20T03:00:00Z",
+    "home": "Turkey",
+    "away": "Paraguay",
+    "group": "Group D",
+    "source": "fifa"
+  },
+  "Netherlands vs Sweden": {
+    "fifaId": "400021472",
+    "kickoffUtc": "2026-06-20T17:00:00Z",
+    "home": "Netherlands",
+    "away": "Sweden",
+    "group": "Group F",
+    "source": "fifa"
+  },
+  "Germany vs Ivory Coast": {
+    "fifaId": "400021469",
+    "kickoffUtc": "2026-06-20T20:00:00Z",
+    "home": "Germany",
+    "away": "Ivory Coast",
+    "group": "Group E",
+    "source": "fifa"
+  },
+  "Ecuador vs Curacao": {
+    "fifaId": "400021465",
+    "kickoffUtc": "2026-06-21T00:00:00Z",
+    "home": "Ecuador",
+    "away": "Curacao",
+    "group": "Group E",
+    "source": "fifa"
+  },
+  "Tunisia vs Japan": {
+    "fifaId": "400021475",
+    "kickoffUtc": "2026-06-21T04:00:00Z",
+    "home": "Tunisia",
+    "away": "Japan",
+    "group": "Group F",
+    "source": "fifa"
+  },
+  "Spain vs Saudi Arabia": {
+    "fifaId": "400021483",
+    "kickoffUtc": "2026-06-21T16:00:00Z",
+    "home": "Spain",
+    "away": "Saudi Arabia",
+    "group": "Group H",
+    "source": "fifa"
+  },
+  "Belgium vs Iran": {
+    "fifaId": "400021477",
+    "kickoffUtc": "2026-06-21T19:00:00Z",
+    "home": "Belgium",
+    "away": "Iran",
+    "group": "Group G",
+    "source": "fifa"
+  },
+  "Uruguay vs Cape Verde": {
+    "fifaId": "400021487",
+    "kickoffUtc": "2026-06-21T22:00:00Z",
+    "home": "Uruguay",
+    "away": "Cape Verde",
+    "group": "Group H",
+    "source": "fifa"
+  },
+  "New Zealand vs Egypt": {
+    "fifaId": "400021480",
+    "kickoffUtc": "2026-06-22T01:00:00Z",
+    "home": "New Zealand",
+    "away": "Egypt",
+    "group": "Group G",
+    "source": "fifa"
+  },
+  "Argentina vs Austria": {
+    "fifaId": "400021494",
+    "kickoffUtc": "2026-06-22T17:00:00Z",
+    "home": "Argentina",
+    "away": "Austria",
+    "group": "Group J",
+    "source": "fifa"
+  },
+  "France vs Iraq": {
+    "fifaId": "400021492",
+    "kickoffUtc": "2026-06-22T21:00:00Z",
+    "home": "France",
+    "away": "Iraq",
+    "group": "Group I",
+    "source": "fifa"
+  },
+  "Norway vs Senegal": {
+    "fifaId": "400021491",
+    "kickoffUtc": "2026-06-23T00:00:00Z",
+    "home": "Norway",
+    "away": "Senegal",
+    "group": "Group I",
+    "source": "fifa"
+  },
+  "Jordan vs Algeria": {
+    "fifaId": "400021499",
+    "kickoffUtc": "2026-06-23T03:00:00Z",
+    "home": "Jordan",
+    "away": "Algeria",
+    "group": "Group J",
+    "source": "fifa"
+  },
+  "Portugal vs Uzbekistan": {
+    "fifaId": "400021503",
+    "kickoffUtc": "2026-06-23T17:00:00Z",
+    "home": "Portugal",
+    "away": "Uzbekistan",
+    "group": "Group K",
+    "source": "fifa"
+  },
+  "England vs Ghana": {
+    "fifaId": "400021506",
+    "kickoffUtc": "2026-06-23T20:00:00Z",
+    "home": "England",
+    "away": "Ghana",
+    "group": "Group L",
+    "source": "fifa"
+  },
+  "Panama vs Croatia": {
+    "fifaId": "400021511",
+    "kickoffUtc": "2026-06-23T23:00:00Z",
+    "home": "Panama",
+    "away": "Croatia",
+    "group": "Group L",
+    "source": "fifa"
+  },
+  "Colombia vs DR Congo": {
+    "fifaId": "400021501",
+    "kickoffUtc": "2026-06-24T02:00:00Z",
+    "home": "Colombia",
+    "away": "DR Congo",
+    "group": "Group K",
+    "source": "fifa"
+  },
+  "Switzerland vs Canada": {
+    "fifaId": "400021451",
+    "kickoffUtc": "2026-06-24T19:00:00Z",
+    "home": "Switzerland",
+    "away": "Canada",
+    "group": "Group B",
+    "source": "fifa"
+  },
+  "Bosnia & Herzegovina vs Qatar": {
+    "fifaId": "400021448",
+    "kickoffUtc": "2026-06-24T19:00:00Z",
+    "home": "Bosnia & Herzegovina",
+    "away": "Qatar",
+    "group": "Group B",
+    "source": "fifa"
+  },
+  "Morocco vs Haiti": {
+    "fifaId": "400021452",
+    "kickoffUtc": "2026-06-24T22:00:00Z",
+    "home": "Morocco",
+    "away": "Haiti",
+    "group": "Group C",
+    "source": "fifa"
+  },
+  "Scotland vs Brazil": {
+    "fifaId": "400021455",
+    "kickoffUtc": "2026-06-24T22:00:00Z",
+    "home": "Scotland",
+    "away": "Brazil",
+    "group": "Group C",
+    "source": "fifa"
+  },
+  "South Africa vs South Korea": {
+    "fifaId": "400021445",
+    "kickoffUtc": "2026-06-25T01:00:00Z",
+    "home": "South Africa",
+    "away": "South Korea",
+    "group": "Group A",
+    "source": "fifa"
+  },
+  "Czech Republic vs Mexico": {
+    "fifaId": "400021444",
+    "kickoffUtc": "2026-06-25T01:00:00Z",
+    "home": "Czech Republic",
+    "away": "Mexico",
+    "group": "Group A",
+    "source": "fifa"
+  },
+  "Curacao vs Ivory Coast": {
+    "fifaId": "400021468",
+    "kickoffUtc": "2026-06-25T20:00:00Z",
+    "home": "Curacao",
+    "away": "Ivory Coast",
+    "group": "Group E",
+    "source": "fifa"
+  },
+  "Ecuador vs Germany": {
+    "fifaId": "400021466",
+    "kickoffUtc": "2026-06-25T20:00:00Z",
+    "home": "Ecuador",
+    "away": "Germany",
+    "group": "Group E",
+    "source": "fifa"
+  },
+  "Tunisia vs Netherlands": {
+    "fifaId": "400021473",
+    "kickoffUtc": "2026-06-25T23:00:00Z",
+    "home": "Tunisia",
+    "away": "Netherlands",
+    "group": "Group F",
+    "source": "fifa"
+  },
+  "Japan vs Sweden": {
+    "fifaId": "400021471",
+    "kickoffUtc": "2026-06-25T23:00:00Z",
+    "home": "Japan",
+    "away": "Sweden",
+    "group": "Group F",
+    "source": "fifa"
+  },
+  "Turkey vs USA": {
+    "fifaId": "400021459",
+    "kickoffUtc": "2026-06-26T02:00:00Z",
+    "home": "Turkey",
+    "away": "USA",
+    "group": "Group D",
+    "source": "fifa"
+  },
+  "Paraguay vs Australia": {
+    "fifaId": "400021461",
+    "kickoffUtc": "2026-06-26T02:00:00Z",
+    "home": "Paraguay",
+    "away": "Australia",
+    "group": "Group D",
+    "source": "fifa"
+  },
+  "Norway vs France": {
+    "fifaId": "400021489",
+    "kickoffUtc": "2026-06-26T19:00:00Z",
+    "home": "Norway",
+    "away": "France",
+    "group": "Group I",
+    "source": "fifa"
+  },
+  "Senegal vs Iraq": {
+    "fifaId": "400021493",
+    "kickoffUtc": "2026-06-26T19:00:00Z",
+    "home": "Senegal",
+    "away": "Iraq",
+    "group": "Group I",
+    "source": "fifa"
+  },
+  "Cape Verde vs Saudi Arabia": {
+    "fifaId": "400021485",
+    "kickoffUtc": "2026-06-27T00:00:00Z",
+    "home": "Cape Verde",
+    "away": "Saudi Arabia",
+    "group": "Group H",
+    "source": "fifa"
+  },
+  "Uruguay vs Spain": {
+    "fifaId": "400021484",
+    "kickoffUtc": "2026-06-27T00:00:00Z",
+    "home": "Uruguay",
+    "away": "Spain",
+    "group": "Group H",
+    "source": "fifa"
+  },
+  "New Zealand vs Belgium": {
+    "fifaId": "400021481",
+    "kickoffUtc": "2026-06-27T03:00:00Z",
+    "home": "New Zealand",
+    "away": "Belgium",
+    "group": "Group G",
+    "source": "fifa"
+  },
+  "Egypt vs Iran": {
+    "fifaId": "400021479",
+    "kickoffUtc": "2026-06-27T03:00:00Z",
+    "home": "Egypt",
+    "away": "Iran",
+    "group": "Group G",
+    "source": "fifa"
+  },
+  "Panama vs England": {
+    "fifaId": "400021508",
+    "kickoffUtc": "2026-06-27T21:00:00Z",
+    "home": "Panama",
+    "away": "England",
+    "group": "Group L",
+    "source": "fifa"
+  },
+  "Croatia vs Ghana": {
+    "fifaId": "400021509",
+    "kickoffUtc": "2026-06-27T21:00:00Z",
+    "home": "Croatia",
+    "away": "Ghana",
+    "group": "Group L",
+    "source": "fifa"
+  },
+  "Colombia vs Portugal": {
+    "fifaId": "400021505",
+    "kickoffUtc": "2026-06-27T23:30:00Z",
+    "home": "Colombia",
+    "away": "Portugal",
+    "group": "Group K",
+    "source": "fifa"
+  },
+  "DR Congo vs Uzbekistan": {
+    "fifaId": "400021500",
+    "kickoffUtc": "2026-06-27T23:30:00Z",
+    "home": "DR Congo",
+    "away": "Uzbekistan",
+    "group": "Group K",
+    "source": "fifa"
+  },
+  "Algeria vs Austria": {
+    "fifaId": "400021497",
+    "kickoffUtc": "2026-06-28T02:00:00Z",
+    "home": "Algeria",
+    "away": "Austria",
+    "group": "Group J",
+    "source": "fifa"
+  },
+  "Jordan vs Argentina": {
+    "fifaId": "400021495",
+    "kickoffUtc": "2026-06-28T02:00:00Z",
+    "home": "Jordan",
+    "away": "Argentina",
+    "group": "Group J",
+    "source": "fifa"
+  }
+}

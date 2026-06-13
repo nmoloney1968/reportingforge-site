@@ -1,10 +1,12 @@
+import FIFA_MATCH_IDS from './fifa-match-ids.js';
+
 const API_URL = 'https://worldcup26.ir/get/games';
 const SOURCE_LABEL = 'worldcup26.ir/get/games';
 const FIFA_LIVE_BASE_URL = 'https://api.fifa.com/api/v3/live/football';
 const FIFA_LIVE_TIMEOUT_MS = 7000;
-const FIFA_MATCH_IDS = {
-  'USA vs Paraguay': '400021458'
-};
+const FIFA_MAX_ENRICHMENT_CALLS = 12;
+
+let MATCH_KICKOFF_MAP = {};
 const KV_KEY = 'worldcup2026-results';
 const STATUS_KEY = 'worldcup2026-poller-status';
 const LAST_ERROR_KEY = 'worldcup2026-last-error';
@@ -418,6 +420,11 @@ const TEAM_ALIASES = new Map([
   ['usa', 'USA']
 ]);
 
+// Build kickoff lookup after GROUP_STAGE_SCHEDULE is fully declared
+for (const m of GROUP_STAGE_SCHEDULE) {
+  MATCH_KICKOFF_MAP[m.match] = m.kickoffUtc;
+}
+
 export default {
   async scheduled(event, env, ctx) {
     const scheduledAt = new Date(event.scheduledTime || Date.now());
@@ -512,6 +519,10 @@ async function handleStatus(env) {
   return json({ status, lastError }, 200);
 }
 
+function getDueMatchKeys(slot) {
+  return new Set((slot?.dueMatches || []).map(d => d.match));
+}
+
 function getCurrentPollingSlot(now) {
   const slotMs = Math.floor(now.getTime() / SLOT_MS) * SLOT_MS;
   const dueMatches = [];
@@ -604,7 +615,7 @@ async function refreshResults(env, options = {}) {
     };
   }
 
-  await enrichMatchesWithFifa(matches, warnings);
+  await enrichMatchesWithFifa(matches, warnings, options.slot);
 
   const data = {
     lastUpdated: new Date().toLocaleString('en-GB', { timeZone: 'Asia/Bangkok', hour12: false }) + ' ICT',
@@ -632,8 +643,66 @@ async function refreshResults(env, options = {}) {
   return data;
 }
 
-async function enrichMatchesWithFifa(matches, warnings) {
+function isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs) {
+  // Condition 1: match is in the current scheduled slot's dueMatches
+  if (dueMatchKeys.has(key)) return true;
+
+  // Condition 2: existing result has a live-ish status
+  const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY'];
+  if (liveStatuses.includes(matchStatus)) return true;
+
+  // Condition 3 & 4: kickoff time window
+  const kickoffUtc = MATCH_KICKOFF_MAP[key];
+  if (!kickoffUtc) return false;
+
+  const kickoffMs = Date.parse(kickoffUtc);
+  if (!Number.isFinite(kickoffMs)) return false;
+
+  const msSinceKickoff = nowMs - kickoffMs;
+  const MIN_BEFORE_MS = 15 * 60 * 1000;    // 15 minutes before kickoff
+  const MAX_AFTER_MS = 240 * 60 * 1000;    // 240 minutes after kickoff
+
+  // From 15 min before to 240 min after kickoff
+  return msSinceKickoff >= -MIN_BEFORE_MS && msSinceKickoff <= MAX_AFTER_MS;
+}
+
+async function enrichMatchesWithFifa(matches, warnings, slot) {
+  const nowMs = Date.now();
+  const dueMatchKeys = getDueMatchKeys(slot);
+
+  // Build candidate list filtered by relevance
+  const candidates = [];
   for (const [key, fifaId] of Object.entries(FIFA_MATCH_IDS)) {
+    const matchStatus = matches[key]?.status || '';
+    if (isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs)) {
+      candidates.push({ key, fifaId, matchStatus });
+    }
+  }
+
+  // Sort by relevance: due slot first, live status second, closest to kickoff third
+  candidates.sort((a, b) => {
+    const aIsDue = dueMatchKeys.has(a.key) ? 1 : 0;
+    const bIsDue = dueMatchKeys.has(b.key) ? 1 : 0;
+    if (aIsDue !== bIsDue) return bIsDue - aIsDue;
+
+    const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY'];
+    const aIsLive = liveStatuses.includes(a.matchStatus) ? 1 : 0;
+    const bIsLive = liveStatuses.includes(b.matchStatus) ? 1 : 0;
+    if (aIsLive !== bIsLive) return bIsLive - aIsLive;
+
+    const aKickoff = Date.parse(MATCH_KICKOFF_MAP[a.key] || 0);
+    const bKickoff = Date.parse(MATCH_KICKOFF_MAP[b.key] || 0);
+    return Math.abs(aKickoff - nowMs) - Math.abs(bKickoff - nowMs);
+  });
+
+  // Cap at FIFA_MAX_ENRICHMENT_CALLS
+  const toEnrich = candidates.slice(0, FIFA_MAX_ENRICHMENT_CALLS);
+  if (candidates.length > FIFA_MAX_ENRICHMENT_CALLS) {
+    const skippedCount = candidates.length - FIFA_MAX_ENRICHMENT_CALLS;
+    warnings.push(`FIFA enrichment limited to ${FIFA_MAX_ENRICHMENT_CALLS} matches (${skippedCount} candidate(s) skipped out of ${candidates.length})`);
+  }
+
+  for (const { key, fifaId } of toEnrich) {
     try {
       const fifa = await fetchFifaLiveMatch(fifaId);
       const enrichment = parseFifaLiveMatch(fifa, key, matches[key]);
@@ -691,7 +760,7 @@ function parseFifaLiveMatch(payload, key, existing) {
   return {
     status,
     score: `${home} ${homeScore}-${awayScore} ${away}`,
-    ...(elapsed && status !== 'FT' ? { elapsed } : {})
+    ...(elapsed && status !== 'FT' && status !== 'HT' ? { elapsed } : {})
   };
 }
 
@@ -715,6 +784,26 @@ function normalizeFifaMatchTime(value) {
 }
 
 function getFifaStatus(payload, elapsed, fallbackStatus) {
+  // Period field is the most reliable indicator of match state from FIFA live endpoint:
+  //   Period 0   = not started / scheduled
+  //   Period 1-2 = first half / second half
+  //   Period 3   = second half (in play)
+  //   Period 4   = halftime
+  //   Period 5-6 = extra time periods
+  //   Period 7+  = penalties
+  //   Period 10+ = finished (full time, extra time, penalties)
+  //   Period null/undefined = unknown, fall through to other checks
+  const period = payload?.Period;
+  if (period !== null && period !== undefined && period !== '') {
+    const p = Number(period);
+    if (Number.isFinite(p)) {
+      if (p >= 10) return 'FT';
+      if (p === 4) return 'HT';
+      if (p === 0) return fallbackStatus || 'NS';
+    }
+  }
+
+  // Fallback: check status text fields
   const statusText = [
     readString(payload, ['Status']),
     readString(payload, ['MatchStatus']),
@@ -722,10 +811,11 @@ function getFifaStatus(payload, elapsed, fallbackStatus) {
     readString(payload, ['PeriodName.0.Description'])
   ].join(' ').toLowerCase();
 
-  if (/\b(finished|full[ -]?time|final|ft)\b/.test(statusText)) return 'FT';
+  if (/\b(finished|full[ -]?time|final|ft|ended|complete)\b/.test(statusText)) return 'FT';
+  if (/\b(not[ _-]?started|scheduled|timed|cancelled|postponed)\b/.test(statusText)) return fallbackStatus || 'NS';
   if (elapsed === 'HT') return 'HT';
   if (elapsed) return 'LIVE';
-  return fallbackStatus || 'LIVE';
+  return fallbackStatus || 'NS';
 }
 
 function extractGames(payload) {
