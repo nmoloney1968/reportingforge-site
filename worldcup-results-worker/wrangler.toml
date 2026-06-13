@@ -12,7 +12,7 @@ compatibility_date = "2026-06-01"
 # and final results are verified, remove the [triggers] crons entry below and redeploy
 # to stop scheduled invocations completely.
 [triggers]
-crons = ["* * * * *"]
+crons = ["*/5 * * * *"]
 
 [[kv_namespaces]]
 binding = "RESULTS"
