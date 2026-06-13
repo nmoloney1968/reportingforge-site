@@ -8,9 +8,11 @@ name = "worldcup-results-worker"
 main = "src/index.js"
 compatibility_date = "2026-06-01"
 
-# Run often, but the Worker only calls worldcup26.ir during approved match polling slots.
+# Run every minute during active match windows. After group-stage polling has ended
+# and final results are verified, remove the [triggers] crons entry below and redeploy
+# to stop scheduled invocations completely.
 [triggers]
-crons = ["*/5 * * * *"]
+crons = ["* * * * *"]
 
 [[kv_namespaces]]
 binding = "RESULTS"

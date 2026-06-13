@@ -108,3 +108,13 @@ const FIFA_MATCH_IDS = {
 ```
 
 If FIFA returns valid team names, scores, and a clean `MatchTime`, the Worker enriches that match with `source: "fifa"` and an official-looking `elapsed` value. If FIFA fails or returns incomplete data, the existing `worldcup26.ir` result is left untouched and a warning is added to `warnings`.
+
+## Group-stage polling shutdown
+
+After group-stage matches are complete and final results verified, stop the scheduled cron:
+
+```powershell
+(Get-Content "C:\Users\nmolo\Documents\worldcup-results-worker-local\wrangler.toml") | Where-Object { $_ -notmatch 'crons\s*=' -and $_ -notmatch '^\[triggers\]$' } | Set-Content "C:\Users\nmolo\Documents\worldcup-results-worker-local\wrangler.toml"; Set-Location "C:\Users\nmolo\Documents\worldcup-results-worker-local"; npx wrangler deploy
+```
+
+This removes the `[triggers]` `crons` section and redeploys. The Worker still serves last cached results. Manual refresh via `ADMIN_TOKEN` continues to work for emergency backfill.
