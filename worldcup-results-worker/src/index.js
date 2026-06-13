@@ -477,14 +477,6 @@ async function runScheduledRefresh(env, now) {
     return { skipped: true, reason: 'No approved polling slot', checkedAtUtc: now.toISOString() };
   }
 
-  const claimKey = `poll-slot:${slot.slotId}`;
-  const alreadyClaimed = await env.RESULTS.get(claimKey);
-  if (alreadyClaimed) {
-    return { skipped: true, reason: 'Polling slot already claimed', slot, checkedAtUtc: now.toISOString() };
-  }
-
-  await env.RESULTS.put(claimKey, JSON.stringify({ claimedAtUtc: now.toISOString(), slot }), { expirationTtl: SLOT_CLAIM_TTL_SECONDS });
-
   try {
     const sourceFetchAt = new Date(Date.parse(slot.slotUtc) + SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS * 1000);
     await waitUntilTime(sourceFetchAt);
@@ -496,6 +488,7 @@ async function runScheduledRefresh(env, now) {
       slot,
       checkedAtUtc: now.toISOString()
     };
+    // Only write error/status keys on error
     await putJson(env, LAST_ERROR_KEY, failure, USAGE_TTL_SECONDS);
     await putJson(env, STATUS_KEY, { ...failure, lastSuccessfulPayloadKept: true }, USAGE_TTL_SECONDS);
     return failure;
@@ -567,9 +560,11 @@ function getOffsetsForMatch() {
   return Array.from(offsets).sort((a, b) => a - b);
 }
 
+let _lastStatusWriteHour = -1;
+let _lastWarningsJson = '';
+
 async function refreshResults(env, options = {}) {
   const now = options.now || new Date();
-  const usageAfterIncrement = await incrementUsage(env, now);
 
   const response = await fetch(API_URL, {
     headers: { accept: 'application/json' }
@@ -621,28 +616,34 @@ async function refreshResults(env, options = {}) {
 
   await enrichMatchesWithFifa(matches, warnings, options.slot);
 
+  const warningsJson = JSON.stringify(warnings);
+  const nowHour = now.getUTCHours();
   const data = {
     lastUpdated: new Date().toLocaleString('en-GB', { timeZone: 'Asia/Bangkok', hour12: false }) + ' ICT',
     lastUpdatedUtc: new Date().toISOString(),
     source: SOURCE_LABEL,
     mode: options.mode || 'unknown',
     slot: options.slot || null,
-    apiUsageUtcDate: usageKeyDate(now),
-    apiUsageAfterThisCall: usageAfterIncrement,
     matchCount: Object.keys(matches).length,
     matches,
     warnings
   };
 
+  // Write main results key every refresh (needed for live scoring)
   await env.RESULTS.put(KV_KEY, JSON.stringify(data, null, 2));
-  await putJson(env, STATUS_KEY, {
-    lastRefreshUtc: data.lastUpdatedUtc,
-    mode: data.mode,
-    slot: data.slot,
-    apiUsageUtcDate: data.apiUsageUtcDate,
-    apiUsageAfterThisCall: data.apiUsageAfterThisCall,
-    matchCount: data.matchCount
-  }, USAGE_TTL_SECONDS);
+
+  // Write status key at most once per UTC hour, or when warnings change
+  if (options.mode !== 'scheduled' || nowHour !== _lastStatusWriteHour || warningsJson !== _lastWarningsJson) {
+    _lastStatusWriteHour = nowHour;
+    _lastWarningsJson = warningsJson;
+    await putJson(env, STATUS_KEY, {
+      lastRefreshUtc: data.lastUpdatedUtc,
+      mode: data.mode,
+      slot: data.slot,
+      matchCount: data.matchCount,
+      warningCount: warnings.length
+    }, USAGE_TTL_SECONDS);
+  }
 
   return data;
 }
