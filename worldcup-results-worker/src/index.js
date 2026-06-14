@@ -11,6 +11,8 @@ const KV_KEY = 'worldcup2026-results';
 const STATUS_KEY = 'worldcup2026-poller-status';
 const LAST_ERROR_KEY = 'worldcup2026-last-error';
 const SLOT_MS = 3 * 60 * 1000;
+const AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS = 15 * 60 * 1000;
+const AUSTRALIA_ACTIVE_WINDOW_AFTER_MS = 4 * 60 * 60 * 1000;
 const SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS = 23;
 // Scheduled source calls are delayed to +23 seconds after the 5-minute boundary to avoid the obvious high-traffic boundary.
 const GROUP_STAGE_POLLING_END_UTC = '2026-06-28T08:00:00Z';
@@ -462,6 +464,30 @@ export default {
   }
 };
 
+function isAustraliaMatchKey(key) {
+  const pattern = /\b(australia|aus)\b/i;
+  const [home, away] = key.split(' vs ');
+  return pattern.test(home) || pattern.test(away);
+}
+
+function isInActiveWindow(kickoffUtc) {
+  if (!kickoffUtc) return false;
+  const kickoffMs = Date.parse(kickoffUtc);
+  if (!Number.isFinite(kickoffMs)) return false;
+  const nowMs = Date.now();
+  const msSinceKickoff = nowMs - kickoffMs;
+  return msSinceKickoff >= -AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS && msSinceKickoff <= AUSTRALIA_ACTIVE_WINDOW_AFTER_MS;
+}
+
+function anyAustraliaMatchActive() {
+  for (const match of GROUP_STAGE_SCHEDULE) {
+    if (isAustraliaMatchKey(match.match) && isInActiveWindow(match.kickoffUtc)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 async function runScheduledRefresh(env, now) {
   // Group-stage polling cutoff: after this UTC timestamp, stop all scheduled upstream calls.
   if (now.getTime() >= Date.parse(GROUP_STAGE_POLLING_END_UTC)) {
@@ -472,20 +498,32 @@ async function runScheduledRefresh(env, now) {
     };
   }
 
+  // Australia active window: refresh every minute regardless of slot
+  const ausActive = anyAustraliaMatchActive();
+
   const slot = getCurrentPollingSlot(now);
-  if (!slot) {
+  if (!slot && !ausActive) {
     return { skipped: true, reason: 'No approved polling slot', checkedAtUtc: now.toISOString() };
   }
 
+  // When Australia is active, also refresh non-slot minutes by fabricating a minimal slot
+  const effectiveSlot = slot || {
+    slotId: now.toISOString().slice(0, 16) + 'Z',
+    slotUtc: now.toISOString(),
+    dueMatchCount: 0,
+    dueMatches: [],
+    australiaPriority: true
+  };
+
   try {
-    const sourceFetchAt = new Date(Date.parse(slot.slotUtc) + SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS * 1000);
+    const sourceFetchAt = new Date(Date.parse(effectiveSlot.slotUtc) + SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS * 1000);
     await waitUntilTime(sourceFetchAt);
-    return await refreshResults(env, { mode: 'scheduled', slot, now });
+    return await refreshResults(env, { mode: ausActive ? 'australia-priority' : 'scheduled', slot: effectiveSlot, now });
   } catch (error) {
     const failure = {
       error: String(error && error.message ? error.message : error),
-      mode: 'scheduled',
-      slot,
+      mode: ausActive ? 'australia-priority' : 'scheduled',
+      slot: effectiveSlot,
       checkedAtUtc: now.toISOString()
     };
     // Only write error/status keys on error

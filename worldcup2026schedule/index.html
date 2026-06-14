@@ -37,6 +37,12 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 .result.live .status { background: color-mix(in srgb, #dc2626 22%, Canvas 78%); }
 @media (prefers-color-scheme: dark) { .card.germany { background: color-mix(in srgb, #78350f 46%, Canvas 54%); } }
 
+.card.australia { border: 2px solid #fbbf24; background: color-mix(in srgb, #fef9c3 50%, Canvas 50%); box-shadow: 0 0 0 3px color-mix(in srgb, #fbbf24 20%, transparent); }
+.card.australia .result { background: color-mix(in srgb, #16a34a 18%, Canvas 82%); border-color: color-mix(in srgb, #16a34a 50%, transparent); }
+.card.australia .result.live { background: color-mix(in srgb, #dc2626 15%, Canvas 85%); border-color: color-mix(in srgb, #dc2626 50%, transparent); }
+.australia-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #1a5632; color: #fbbf24; margin-left: 6px; vertical-align: 2px; }
+@media (prefers-color-scheme: dark) { .card.australia { background: color-mix(in srgb, #422006 44%, Canvas 56%); } }
+
 .flag-img { display: inline-block; width: 1.35em; height: .95em; object-fit: cover; border-radius: 2px; vertical-align: -0.08em; box-shadow: 0 0 0 1px color-mix(in srgb, CanvasText 18%, transparent); background: color-mix(in srgb, Canvas 85%, CanvasText 15%); }
 .flag-img.home { margin-right: .35em; }
 .flag-img.away { margin-left: .35em; }
@@ -70,7 +76,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Saturday, 13 June 2026</h2>
 <article class="card" data-kickoff-utc="2026-06-12T19:00:00Z">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Canada flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/><span class="team team-home">Canada</span><span class="versus">vs</span><span class="team team-away">Bosnia &amp; Herzegovina</span><img alt="Bosnia &amp; Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
+<div class="match"><img alt="Canada flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/><span class="team team-home">Canada</span><span class="versus">vs</span><span class="team team-away">Bosnia & Herzegovina</span><img alt="Bosnia & Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
 <div class="venue">Toronto, Canada</div>
 <div class="meta">Source time: Friday, June 12, 8pm UK time</div>
 </article>
@@ -220,7 +226,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 <section class="day"><h2>Friday, 19 June 2026</h2>
 <article class="card" data-kickoff-utc="2026-06-18T19:00:00Z">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Bosnia &amp; Herzegovina</span><img alt="Bosnia &amp; Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
+<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Bosnia & Herzegovina</span><img alt="Bosnia & Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
 <div class="venue">Los Angeles, USA</div>
 <div class="meta">Source time: Thursday, June 18, 8pm UK time</div>
 </article>
@@ -376,7 +382,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 </article>
 <article class="card" data-kickoff-utc="2026-06-24T19:00:00Z">
 <div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Bosnia &amp; Herzegovina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/><span class="team team-home">Bosnia &amp; Herzegovina</span><span class="versus">vs</span><span class="team team-away">Qatar</span><img alt="Qatar flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/></div>
+<div class="match"><img alt="Bosnia & Herzegovina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/><span class="team team-home">Bosnia & Herzegovina</span><span class="versus">vs</span><span class="team team-away">Qatar</span><img alt="Qatar flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/></div>
 <div class="venue">Seattle, USA</div>
 <div class="meta">Source time: Wednesday, June 24, 8pm UK time</div>
 </article>
@@ -525,13 +531,65 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
   const RESULT_URL = '/worldcup2026schedule/results.json';
   const RESULTS_BROWSER_READ_OFFSET_SECONDS = 41;
   const RESULTS_WATCHDOG_INTERVAL_MS = 12 * 1000;
+  const AUSTRALIA_REFRESH_INTERVAL_MS = 60 * 1000;
+  const AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS = 15 * 60 * 1000;
+  const AUSTRALIA_ACTIVE_WINDOW_AFTER_MS = 4 * 60 * 60 * 1000;
   const finishedStatuses = new Set(['FT', 'AET', 'PEN']);
   const liveStatuses = new Set(['1H', 'HT', '2H', 'ET', 'P', 'BT', 'LIVE']);
   let resultsRefreshInProgress = false;
   let nextResultsRefreshAtMs = 0;
   let latestMatches = {};
 
-  // The browser reads cached Worker results at +41 seconds, after the Worker should usually have written the latest KV result.
+  // ---------- Australia detection ----------
+  function isAustraliaCard(card) {
+    const home = card.querySelector('.team-home')?.textContent?.trim();
+    const away = card.querySelector('.team-away')?.textContent?.trim();
+    if (!home || !away) return false;
+    return /\b(australia|aus)\b/i.test(home) || /\b(australia|aus)\b/i.test(away);
+  }
+
+  function normalizeAustraliaCards() {
+    document.querySelectorAll('.card').forEach(card => {
+      if (card.classList.contains('australia')) return;
+      if (isAustraliaCard(card)) {
+        card.classList.add('australia');
+        if (!card.querySelector('.australia-badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'australia-badge';
+          badge.textContent = 'Australia';
+          const groupEl = card.querySelector('.group');
+          if (groupEl && groupEl.parentNode) {
+            groupEl.parentNode.appendChild(badge);
+          }
+        }
+      }
+    });
+  }
+
+  function getAustraliaCards() {
+    normalizeAustraliaCards();
+    return document.querySelectorAll('.card.australia');
+  }
+
+  function isMatchActiveOrUpcoming(card) {
+    const kickoffUtc = card.getAttribute('data-kickoff-utc');
+    if (!kickoffUtc) return false;
+    const kickoffMs = Date.parse(kickoffUtc);
+    if (!Number.isFinite(kickoffMs)) return false;
+    const nowMs = Date.now();
+    const msSinceKickoff = nowMs - kickoffMs;
+    return msSinceKickoff >= -AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS && msSinceKickoff <= AUSTRALIA_ACTIVE_WINDOW_AFTER_MS;
+  }
+
+  function anyAustraliaMatchActive() {
+    const ausCards = getAustraliaCards();
+    for (const card of ausCards) {
+      if (isMatchActiveOrUpcoming(card)) return true;
+    }
+    return false;
+  }
+
+  // ---------- Result helpers ----------
   function normalize(value) {
     return String(value || '')
       .toLowerCase()
@@ -638,6 +696,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     return matchKeys(key).map(k => byKey.get(k)).find(Boolean) || null;
   }
 
+  // ---------- Render ----------
   function renderCountdowns() {
     document.querySelectorAll('.card').forEach(card => {
       card.querySelectorAll(':scope > .countdown').forEach(el => el.remove());
@@ -674,6 +733,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     const scrollY = window.scrollY;
     let count = 0;
 
+    normalizeAustraliaCards();
     document.querySelectorAll('.card > .result, .card > .countdown').forEach(el => el.remove());
     document.querySelectorAll('.card').forEach(card => {
       const result = getResultForCard(card, latestMatches);
@@ -684,6 +744,17 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     return count;
   }
 
+  function renderAustraliaOnly(rawMatches) {
+    const matches = rawMatches || latestMatches;
+    const ausCards = getAustraliaCards();
+    ausCards.forEach(card => {
+      card.querySelectorAll(':scope > .result, :scope > .countdown').forEach(el => el.remove());
+      const result = getResultForCard(card, matches);
+      if (result) addResult(card, result);
+    });
+  }
+
+  // ---------- Timing ----------
   function getNextAlignedRefreshAt(now = Date.now()) {
     const intervalMs = 3 * 60 * 1000;
     const offsetMs = RESULTS_BROWSER_READ_OFFSET_SECONDS * 1000;
@@ -721,29 +792,69 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     }
   }
 
+  async function loadAustraliaResults() {
+    const ausCards = getAustraliaCards();
+    if (ausCards.length === 0) return;
+
+    // Only fetch if at least one Australia match is in its active window
+    let anyActive = false;
+    for (const card of ausCards) {
+      if (isMatchActiveOrUpcoming(card)) { anyActive = true; break; }
+    }
+    if (!anyActive) return;
+
+    try {
+      const res = await fetch(`${RESULT_URL}?ts=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) return;
+      const data = await res.json();
+      const matches = data.matches || {};
+      Object.assign(latestMatches, matches);
+      renderAustraliaOnly(matches);
+    } catch (err) {
+      // Silent fail -- normal cycle will retry
+    }
+  }
+
+  // ---------- Init ----------
+  normalizeAustraliaCards();
   loadResults('initial');
   scheduleNextResultsRefresh();
+
   setInterval(() => {
     renderCountdowns();
     if (!document.hidden && nextResultsRefreshAtMs && Date.now() >= nextResultsRefreshAtMs) {
       loadResults('watchdog');
     }
   }, RESULTS_WATCHDOG_INTERVAL_MS);
+
   setInterval(renderCountdowns, 1000);
+
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
+      normalizeAustraliaCards();
       loadResults('visible');
       scheduleNextResultsRefresh();
     }
   });
+
   window.addEventListener('focus', () => {
+    normalizeAustraliaCards();
     loadResults('focus');
     scheduleNextResultsRefresh();
   });
+
   window.addEventListener('pageshow', () => {
+    normalizeAustraliaCards();
     loadResults('pageshow');
     scheduleNextResultsRefresh();
   });
+
+  // Australia-only: 60-second refresh during active match windows
+  setInterval(() => {
+    if (!document.hidden) {
+      loadAustraliaResults();
+    }
+  }, AUSTRALIA_REFRESH_INTERVAL_MS);
 })();
 </script>
 <footer>Generated group-stage-only schedule for Hanoi time. Rebuild after the group stage for confirmed knockout fixtures. Calendar import includes 4-hour reminders.</footer></body></html>
