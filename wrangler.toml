@@ -15,7 +15,7 @@ binding = "rf_books"
 bucket_name = "rf-books"
 
 [triggers]
-crons = ["*/1 * * * *"]
+crons = ["*/15 * * * *"]
 
 [vars]
 MAIL_FROM = "hello@mg.reportingforge.com"
