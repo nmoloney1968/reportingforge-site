@@ -1,9 +1,9 @@
 {
-  "built_at_utc": "2026-06-15 06:37 UTC",
+  "built_at_utc": "2026-06-16 06:42 UTC",
   "fred": {
-    "last_obs_date": "2026-06-11",
-    "last_obs_value": 2.16,
-    "last_updated": "2026-06-12 15:16:41-05",
+    "last_obs_date": "2026-06-12",
+    "last_obs_value": 2.17,
+    "last_updated": "2026-06-15 15:18:25-05",
     "series_label": "10Y real yield (DFII10)",
     "series_used": "DFII10"
   },
@@ -25,11 +25,11 @@
     "dxy_last_date": "2026-06-12",
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
-    "gold_last_date": "2026-06-12",
-    "gold_last_value": 4215.0,
+    "gold_last_date": "2026-06-15",
+    "gold_last_value": 4328.0,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
-    "wti_last_date": "2026-06-12",
+    "wti_last_date": "2026-06-15",
     "wti_ticker": "CL=F"
   }
 }
