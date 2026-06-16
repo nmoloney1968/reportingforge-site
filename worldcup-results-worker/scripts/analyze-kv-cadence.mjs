@@ -7,6 +7,9 @@
  * KV write estimates for various polling cadences.
  *
  * Outputs a table showing per-UTC-day activity and recommendations.
+ *
+ * Updated for group-stage polling window: kickoff +0 through kickoff +150.
+ * Old model: kickoff -15 through kickoff +240.
  */
 
 // 72 group-stage schedule (same as index.js)
@@ -85,21 +88,26 @@ const LOCAL_SCHEDULE = [
   { match: "Jordan vs Argentina", group: "Group J", kickoffUtc: "2026-06-28T02:00:00Z" }
 ];
 
-const POLL_WINDOW_START_OFFSET_MIN = -15;  // 15 min before kickoff
-const POLL_WINDOW_END_OFFSET_MIN = 240;    // 240 min after kickoff
+// OLD model constants (for comparison)
+const OLD_POLL_WINDOW_START_OFFSET_MIN = -15;
+const OLD_POLL_WINDOW_END_OFFSET_MIN = 240;
+
+// NEW model constants (0 through +150)
+const POLL_WINDOW_START_OFFSET_MIN = 0;
+const POLL_WINDOW_END_OFFSET_MIN = 150;
 const POLLING_CUTOFF_UTC = '2026-06-28T08:00:00Z';
 const CUTOFF_MS = Date.parse(POLLING_CUTOFF_UTC);
 const CADENCES = [1, 2, 3, 4, 5]; // minutes
 const WRITES_PER_REFRESH_OPTIONS = [1, 2, 3];
 
 // Build active windows per match
-function buildWindows(schedule) {
+function buildWindows(schedule, startOffset, endOffset) {
   return schedule.map(m => {
     const kickoffMs = Date.parse(m.kickoffUtc);
     return {
       match: m.match,
-      startMs: kickoffMs + POLL_WINDOW_START_OFFSET_MIN * 60 * 1000,
-      endMs: Math.min(kickoffMs + POLL_WINDOW_END_OFFSET_MIN * 60 * 1000, CUTOFF_MS),
+      startMs: kickoffMs + startOffset * 60 * 1000,
+      endMs: Math.min(kickoffMs + endOffset * 60 * 1000, CUTOFF_MS),
       kickoffUtc: m.kickoffUtc
     };
   });
@@ -145,44 +153,17 @@ function minutesInDay(ms) {
   return Math.floor(ms / 60000);
 }
 
-function main() {
-  const windows = buildWindows(LOCAL_SCHEDULE);
+function computeDailyStats(schedule, startOffset, endOffset) {
+  const windows = buildWindows(schedule, startOffset, endOffset);
   const merged = mergeWindows(windows);
-
-  console.log('=== World Cup 2026 KV Write Budget Analysis ===\n');
-  console.log(`Total group-stage matches: ${LOCAL_SCHEDULE.length}`);
-  console.log(`Polling window per match: ${POLL_WINDOW_START_OFFSET_MIN} to +${POLL_WINDOW_END_OFFSET_MIN} minutes`);
-  console.log(`Polling cutoff: ${POLLING_CUTOFF_UTC}`);
-  console.log(`Merged active windows: ${merged.length}\n`);
-
-  // Show each active window
-  console.log('=== Active Windows (merged overlaps, grouped by UTC day) ===');
-  for (const w of merged) {
-    const start = new Date(w.startMs).toISOString();
-    const end = new Date(w.endMs).toISOString();
-    const durationMin = Math.round((w.endMs - w.startMs) / 60000);
-    console.log(`  ${start} → ${end} (${durationMin} min, ${w.matchCount} matches)`);
-  }
-  console.log();
-
-  // Per day analysis
   const DAY_BOUNDARY_MS = 24 * 60 * 60 * 1000;
-
-  // Find the first UTC day of activity
   const firstDayMs = new Date('2026-06-11T00:00:00Z').getTime();
   const lastDayMs = new Date('2026-06-28T00:00:00Z').getTime();
-
-  console.log('=== Daily Analysis ===');
-  console.log('UTC Date       Active min   cadence  refreshes  writes@1  writes@2  writes@3');
-  console.log('----------------------------------------------------------------------------');
-
   const daySummaries = [];
 
   for (let dayMs = firstDayMs; dayMs <= lastDayMs; dayMs += DAY_BOUNDARY_MS) {
     const dayEndMs = dayMs + DAY_BOUNDARY_MS;
     const dateStr = dateKey(dayMs);
-
-    // Calculate active minutes: sum of (overlapping) windows for this day
     let activeMinutes = 0;
     for (const w of merged) {
       const overlapStart = Math.max(w.startMs, dayMs);
@@ -192,45 +173,78 @@ function main() {
       }
     }
 
-    if (activeMinutes === 0) {
-      console.log(`${dateStr}    0           -        0          0        0        0`);
-      daySummaries.push({ date: dateStr, activeMinutes: 0, maxWrites: {} });
-      continue;
-    }
-
     const dayEntry = { date: dateStr, activeMinutes, maxWrites: {} };
     for (const cadence of CADENCES) {
-      const refreshes = Math.ceil(activeMinutes / cadence);
+      const refreshes = activeMinutes === 0 ? 0 : Math.ceil(activeMinutes / cadence);
       dayEntry[`refreshes_${cadence}m`] = refreshes;
-      dayEntry.maxWrites[cadence] = {};
-      for (const w of WRITES_PER_REFRESH_OPTIONS) {
-        const writes = refreshes * w;
-        dayEntry.maxWrites[cadence][w] = writes;
-      }
     }
     daySummaries.push(dayEntry);
+  }
+  return daySummaries;
+}
 
-    // Output row for 5m cadence (current)
+function main() {
+  const newWindows = buildWindows(LOCAL_SCHEDULE, POLL_WINDOW_START_OFFSET_MIN, POLL_WINDOW_END_OFFSET_MIN);
+  const newMerged = mergeWindows(newWindows);
+  const oldWindows = buildWindows(LOCAL_SCHEDULE, OLD_POLL_WINDOW_START_OFFSET_MIN, OLD_POLL_WINDOW_END_OFFSET_MIN);
+  const oldMerged = mergeWindows(oldWindows);
+  const newDayStats = computeDailyStats(LOCAL_SCHEDULE, POLL_WINDOW_START_OFFSET_MIN, POLL_WINDOW_END_OFFSET_MIN);
+  const oldDayStats = computeDailyStats(LOCAL_SCHEDULE, OLD_POLL_WINDOW_START_OFFSET_MIN, OLD_POLL_WINDOW_END_OFFSET_MIN);
+
+  console.log('=== World Cup 2026 KV Write Budget Analysis ===\n');
+  console.log(`Total group-stage matches: ${LOCAL_SCHEDULE.length}`);
+  console.log(`Polling cutoff: ${POLLING_CUTOFF_UTC}\n`);
+
+  console.log('=== OLD vs NEW Polling Window Comparison ===');
+  console.log(`  Old model: kickoff ${OLD_POLL_WINDOW_START_OFFSET_MIN} through +${OLD_POLL_WINDOW_END_OFFSET_MIN} minutes`);
+  console.log(`  New model: kickoff ${POLL_WINDOW_START_OFFSET_MIN} through +${POLL_WINDOW_END_OFFSET_MIN} minutes\n`);
+  console.log('  Old merged active windows:', oldMerged.length);
+  console.log('  New merged active windows:', newMerged.length, '\n');
+
+  // Show each active window for new model
+  console.log('=== Active Windows (new model, merged overlaps, grouped by UTC day) ===');
+  for (const w of newMerged) {
+    const start = new Date(w.startMs).toISOString();
+    const end = new Date(w.endMs).toISOString();
+    const durationMin = Math.round((w.endMs - w.startMs) / 60000);
+    console.log(`  ${start} → ${end} (${durationMin} min, ${w.matchCount} matches)`);
+  }
+  console.log();
+
+  // Per day analysis
+  const DAY_BOUNDARY_MS = 24 * 60 * 60 * 1000;
+  const firstDayMs = new Date('2026-06-11T00:00:00Z').getTime();
+  const lastDayMs = new Date('2026-06-28T00:00:00Z').getTime();
+
+  console.log('=== Daily Analysis (NEW model) ===');
+  console.log('UTC Date       Active min   cadence  refreshes  writes@1  writes@2  writes@3');
+  console.log('----------------------------------------------------------------------------');
+
+  for (const d of newDayStats) {
+    if (d.activeMinutes === 0) {
+      console.log(`${d.date}    0           -        0          0        0        0`);
+      continue;
+    }
     for (const cadence of CADENCES) {
-      const refreshes = dayEntry[`refreshes_${cadence}m`];
+      const refreshes = d[`refreshes_${cadence}m`];
       const w1 = refreshes * 1;
       const w2 = refreshes * 2;
       const w3 = refreshes * 3;
-      console.log(`${dateStr}    ${String(activeMinutes).padStart(4)}      ${cadence}m    ${String(refreshes).padStart(5)}    ${String(w1).padStart(4)}    ${String(w2).padStart(4)}    ${String(w3).padStart(4)}`);
+      console.log(`${d.date}    ${String(Math.round(d.activeMinutes)).padStart(4)}      ${cadence}m    ${String(refreshes).padStart(5)}    ${String(w1).padStart(4)}    ${String(w2).padStart(4)}    ${String(w3).padStart(4)}`);
     }
   }
 
   console.log();
 
   // Summary by cadence: worst day
-  console.log('=== Worst-Case Day by Cadence ===');
+  console.log('=== Worst-Case Day by Cadence (NEW model) ===');
   console.log('Cadence   Max writes@1  writes@2  writes@3  Worst UTC day');
   console.log('--------------------------------------------------------');
 
   for (const cadence of CADENCES) {
     let worstDay = null;
     let worstMaxWrites = { 1: 0, 2: 0, 3: 0 };
-    for (const d of daySummaries) {
+    for (const d of newDayStats) {
       const refreshes = d[`refreshes_${cadence}m`] || 0;
       for (const w of WRITES_PER_REFRESH_OPTIONS) {
         if (refreshes * w > worstMaxWrites[w]) {
@@ -250,7 +264,7 @@ function main() {
   for (const cadence of CADENCES) {
     let worst = 0;
     let worstDate = '';
-    for (const d of daySummaries) {
+    for (const d of newDayStats) {
       const refreshes = d[`refreshes_${cadence}m`] || 0;
       // Assume 2 writes/refresh after optimization (results + status)
       if (refreshes * 2 > worst) {
@@ -264,11 +278,11 @@ function main() {
 
   console.log();
 
-  // Detailed breakdown for recommended cadences
-  console.log('=== Per-Day Detail (2 writes/refresh) ===');
+  // Detailed breakdown for all cadences
+  console.log('=== Per-Day Detail (2 writes/refresh, NEW model) ===');
   console.log('UTC Date       1m      2m      3m      4m      5m');
   console.log('-------------------------------------------------');
-  for (const d of daySummaries) {
+  for (const d of newDayStats) {
     if (d.activeMinutes === 0) continue;
     const parts = [d.date];
     for (const cadence of CADENCES) {
@@ -279,23 +293,37 @@ function main() {
   }
 
   // Show all-day active windows (continuous activity)
-  console.log('\n=== Busiest UTC Days (5m cadence) ===');
-  const sortedDays = [...daySummaries].filter(d => d.activeMinutes > 0).sort((a, b) => b.activeMinutes - a.activeMinutes);
+  console.log('\n=== Busiest UTC Days (3m cadence, NEW model) ===');
+  const sortedDays = [...newDayStats].filter(d => d.activeMinutes > 0).sort((a, b) => b.activeMinutes - a.activeMinutes);
   for (const d of sortedDays.slice(0, 10)) {
     console.log(`  ${d.date}: ${Math.round(d.activeMinutes)} min active`);
   }
 
-  // If 5 minutes is safe, confirm
-  console.log('\n=== Current Cadence: 5 minutes ===');
-  const worst5m = daySummaries.reduce((max, d) => {
-    const r = d[`refreshes_5m`] || 0;
+  // Current cadence: 3 minutes
+  console.log('\n=== Current Cadence: 3 minutes (NEW model) ===');
+  const worst3m = newDayStats.reduce((max, d) => {
+    const r = d[`refreshes_3m`] || 0;
     return Math.max(max, r);
   }, 0);
-  console.log(`  Max refreshes/day: ${worst5m}`);
-  console.log(`  Max writes/day (1 write/refresh after opt): ${worst5m * 1}`);
-  console.log(`  Max writes/day (2 writes/refresh after opt): ${worst5m * 2}`);
-  console.log(`  Max writes/day (3 writes/refresh after opt): ${worst5m * 3}`);
-  console.log(`  Max writes/day (CURRENT: 4 writes/refresh):  ${worst5m * 4}`);
+  console.log(`  Max refreshes/day: ${worst3m}`);
+  console.log(`  Max writes/day (1 write/refresh): ${worst3m * 1}`);
+  console.log(`  Max writes/day (2 writes/refresh): ${worst3m * 2}`);
+  console.log(`  Max writes/day (3 writes/refresh): ${worst3m * 3}`);
+  console.log(`  Max writes/day (CURRENT: 2 writes/refresh after KV write optimization): ${worst3m * 2}`);
+
+  // OLD MODEL comparison
+  console.log('\n=== OLD Model (for comparison) ===');
+  const oldWorst3m = oldDayStats.reduce((max, d) => {
+    const r = d[`refreshes_3m`] || 0;
+    return Math.max(max, r);
+  }, 0);
+  console.log(`  Worst-day refreshes at 3m: ${oldWorst3m}`);
+  console.log(`  Worst-day writes@2: ${oldWorst3m * 2}\n`);
+  console.log('=== ===');
+  console.log('Summary Reduction:');
+  console.log(`  Old model (-15 to +240):  ${oldWorst3m} refreshes/day worst case`);
+  console.log(`  New model (+0 to +150):   ${worst3m} refreshes/day worst case`);
+  console.log(`  Reduction: ${Math.round((1 - worst3m / oldWorst3m) * 100)}%`);
 }
 
 main();

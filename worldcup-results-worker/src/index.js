@@ -11,6 +11,10 @@ const KV_KEY = 'worldcup2026-results';
 const STATUS_KEY = 'worldcup2026-poller-status';
 const LAST_ERROR_KEY = 'worldcup2026-last-error';
 const SLOT_MS = 3 * 60 * 1000;
+const GROUP_STAGE_POLL_START_MINUTES = 0;
+const GROUP_STAGE_POLL_END_MINUTES = 150;
+const GROUP_STAGE_EMERGENCY_POLL_END_MINUTES = 210;
+const KNOCKOUT_POLL_END_MINUTES = 240;
 const AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS = 15 * 60 * 1000;
 const AUSTRALIA_ACTIVE_WINDOW_AFTER_MS = 4 * 60 * 60 * 1000;
 const SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS = 23;
@@ -501,7 +505,7 @@ async function runScheduledRefresh(env, now) {
   // Australia active window: refresh every minute regardless of slot
   const ausActive = anyAustraliaMatchActive();
 
-  const slot = getCurrentPollingSlot(now);
+  const slot = await getCurrentPollingSlot(env, now);
   if (!slot && !ausActive) {
     return { skipped: true, reason: 'No approved polling slot', checkedAtUtc: now.toISOString() };
   }
@@ -564,11 +568,64 @@ function getDueMatchKeys(slot) {
   return new Set((slot?.dueMatches || []).map(d => d.match));
 }
 
-function getCurrentPollingSlot(now) {
-  const slotMs = Math.floor(now.getTime() / SLOT_MS) * SLOT_MS;
+async function loadCachedResults(env) {
+  const raw = await env.RESULTS.get(KV_KEY);
+  if (!raw) return null;
+  try { return JSON.parse(raw); } catch { return null; }
+}
+
+function isFifaFt(cachedResult, matchKey) {
+  // If the cached KV result has a match confirmed FT by FIFA, exclude from future polling.
+  const match = cachedResult?.matches?.[matchKey];
+  if (!match) return false;
+  return match.status === 'FT' && match.source === 'fifa';
+}
+
+/**
+ * Determine if a group-stage match key should be considered for due-match polling.
+ * Excludes FIFA FT matches entirely.
+ * For LIVE/HT matches beyond the normal +150 window, emergency polling continues until +210.
+ */
+function isMatchEligibleForPolling(cachedResult, matchKey, nowMs) {
+  const kickoffUtc = MATCH_KICKOFF_MAP[matchKey];
+  if (!kickoffUtc) return false;
+  const kickoffMs = Date.parse(kickoffUtc);
+  if (!Number.isFinite(kickoffMs)) return false;
+
+  // Exclude FIFA FT matches entirely
+  if (isFifaFt(cachedResult, matchKey)) return false;
+
+  const msSinceKickoff = nowMs - kickoffMs;
+  const normalEndMs = GROUP_STAGE_POLL_END_MINUTES * 60 * 1000;
+  const emergencyEndMs = GROUP_STAGE_EMERGENCY_POLL_END_MINUTES * 60 * 1000;
+
+  // Not yet at kickoff: exclude (no pre-kickoff polling)
+  if (msSinceKickoff < 0) return false;
+
+  // Inside normal window (0 to +150)
+  if (msSinceKickoff <= normalEndMs) return true;
+
+  // Emergency extension: beyond +150 but still LIVE/HT, continue until +210
+  if (msSinceKickoff <= emergencyEndMs) {
+    const cachedMatch = cachedResult?.matches?.[matchKey];
+    if (cachedMatch && (cachedMatch.status === 'LIVE' || cachedMatch.status === 'HT')) {
+      return true;
+    }
+  }
+
+  // Beyond all windows
+  return false;
+}
+
+async function getCurrentPollingSlot(env, now) {
+  const nowMs = now.getTime();
+  const slotMs = Math.floor(nowMs / SLOT_MS) * SLOT_MS;
+  const cachedResult = await loadCachedResults(env);
   const dueMatches = [];
 
   for (const match of GROUP_STAGE_SCHEDULE) {
+    if (!isMatchEligibleForPolling(cachedResult, match.match, nowMs)) continue;
+
     const kickoffMs = Date.parse(match.kickoffUtc);
     for (const offset of getOffsetsForMatch(match)) {
       const targetMs = kickoffMs + offset * 60 * 1000;
@@ -592,8 +649,13 @@ function getCurrentPollingSlot(now) {
 function getOffsetsForMatch() {
   const offsets = new Set();
 
-  // All group-stage games: every 3 minutes from kickoff through +240 minutes.
-  for (let minute = 0; minute <= 240; minute += 3) offsets.add(minute);
+  // Group-stage games: every 3 minutes from kickoff through +150 minutes.
+  // LIVE/HT matches may be extended to +210 via the emergency window applied
+  // in getCurrentPollingSlot / isRelevantForFifaEnrichment.
+  for (let minute = GROUP_STAGE_POLL_START_MINUTES; minute <= GROUP_STAGE_POLL_END_MINUTES; minute += 3) offsets.add(minute);
+
+  // Knockout matches (not in schedule yet) would use different offsets.
+  // This placeholder allows adding KNOCKOUT_POLL_END_MINUTES later.
 
   return Array.from(offsets).sort((a, b) => a - b);
 }
@@ -652,7 +714,7 @@ async function refreshResults(env, options = {}) {
     };
   }
 
-  await enrichMatchesWithFifa(matches, warnings, options.slot);
+  await enrichMatchesWithFifa(env, matches, warnings, options.slot);
 
   const warningsJson = JSON.stringify(warnings);
   const nowHour = now.getUTCHours();
@@ -686,15 +748,32 @@ async function refreshResults(env, options = {}) {
   return data;
 }
 
-function isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs) {
+function isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs, cachedResult) {
+  // Never enrich a FIFA FT match (already confirmed by FIFA)
+  if (isFifaFt(cachedResult, key)) return false;
+
   // Condition 1: match is in the current scheduled slot's dueMatches
   if (dueMatchKeys.has(key)) return true;
 
   // Condition 2: existing result has a live-ish status
   const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY'];
-  if (liveStatuses.includes(matchStatus)) return true;
+  if (liveStatuses.includes(matchStatus)) {
+    // Must also be within a valid time window (normal +150 or emergency +210 for LIVE/HT)
+    const kickoffUtc = MATCH_KICKOFF_MAP[key];
+    if (!kickoffUtc) return false;
+    const kickoffMs = Date.parse(kickoffUtc);
+    if (!Number.isFinite(kickoffMs)) return false;
 
-  // Condition 3 & 4: kickoff time window
+    const msSinceKickoff = nowMs - kickoffMs;
+    const emergencyEndMs = GROUP_STAGE_EMERGENCY_POLL_END_MINUTES * 60 * 1000;
+
+    // No pre-kickoff enrichment
+    if (msSinceKickoff < 0) return false;
+    // Allow enrichment for live matches up to emergency cap
+    return msSinceKickoff <= emergencyEndMs;
+  }
+
+  // Condition 3 & 4: kickoff time window (normal polling window only, no pre-kickoff)
   const kickoffUtc = MATCH_KICKOFF_MAP[key];
   if (!kickoffUtc) return false;
 
@@ -702,22 +781,22 @@ function isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs) {
   if (!Number.isFinite(kickoffMs)) return false;
 
   const msSinceKickoff = nowMs - kickoffMs;
-  const MIN_BEFORE_MS = 15 * 60 * 1000;    // 15 minutes before kickoff
-  const MAX_AFTER_MS = 240 * 60 * 1000;    // 240 minutes after kickoff
+  const normalEndMs = GROUP_STAGE_POLL_END_MINUTES * 60 * 1000;
 
-  // From 15 min before to 240 min after kickoff
-  return msSinceKickoff >= -MIN_BEFORE_MS && msSinceKickoff <= MAX_AFTER_MS;
+  // From kickoff +0 to +150 minutes (no pre-kickoff polling)
+  return msSinceKickoff >= 0 && msSinceKickoff <= normalEndMs;
 }
 
-async function enrichMatchesWithFifa(matches, warnings, slot) {
+async function enrichMatchesWithFifa(env, matches, warnings, slot) {
   const nowMs = Date.now();
   const dueMatchKeys = getDueMatchKeys(slot);
+  const cachedResult = await loadCachedResults(env);
 
   // Build candidate list filtered by relevance
   const candidates = [];
   for (const [key, fifaId] of Object.entries(FIFA_MATCH_IDS)) {
     const matchStatus = matches[key]?.status || '';
-    if (isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs)) {
+    if (isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs, cachedResult)) {
       candidates.push({ key, fifaId, matchStatus });
     }
   }
