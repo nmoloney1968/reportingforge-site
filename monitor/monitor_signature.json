@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-06-21 06:18 UTC",
+  "built_at_utc": "2026-06-21 07:15 UTC",
   "fred": {
     "last_obs_date": "2026-06-17",
     "last_obs_value": 2.23,
@@ -22,7 +22,7 @@
   },
   "template_version": "v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13",
   "yahoo": {
-    "dxy_last_date": "2026-06-17",
+    "dxy_last_date": "2026-06-18",
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
     "gold_last_date": "2026-06-19",
