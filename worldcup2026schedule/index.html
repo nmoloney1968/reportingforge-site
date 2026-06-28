@@ -49,13 +49,20 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 .team { white-space: nowrap; }
 .versus { opacity: .74; font-weight: 600; margin: 0 .18em; }
 
+/* Knockout section styling */
+.knockout-section { margin-top: 32px; padding: 18px 14px; border-radius: 18px; background: color-mix(in srgb, #1e1b4b 12%, Canvas 88%); border: 1px solid color-mix(in srgb, #6366f1 30%, transparent); }
+.knockout-heading { font-size: 1.2rem; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 2px solid color-mix(in srgb, #6366f1 40%, transparent); color: color-mix(in srgb, #818cf8 80%, CanvasText 20%); letter-spacing: .04em; text-align: center; line-height: 1.4; }
+.knockout-card { border: 1px solid color-mix(in srgb, #6366f1 35%, transparent); background: color-mix(in srgb, #1e1b4b 8%, Canvas 92%); }
+.knockout-card .group { border-color: color-mix(in srgb, #6366f1 45%, transparent); color: color-mix(in srgb, #818cf8 70%, CanvasText 30%); }
+.match-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 7px; border-radius: 999px; background: color-mix(in srgb, #6366f1 25%, Canvas 75%); border: 1px solid color-mix(in srgb, #6366f1 40%, transparent); margin-right: 4px; vertical-align: 3px; }
+@media (prefers-color-scheme: dark) { .knockout-section { background: color-mix(in srgb, #1e1b4b 30%, Canvas 70%); } .knockout-card { background: color-mix(in srgb, #1e1b4b 16%, Canvas 84%); } }
 
 </style>
 </head>
 <body>
 <header>
-<h1>World Cup 2026 Group Stage - Hanoi Time</h1>
-<p class="summary">72 group-stage games only. Times are Hanoi / ICT / UTC+7.</p>
+<h1>World Cup 2026 - Hanoi Time</h1>
+<p class="summary">72 group-stage + 16 Round-of-32 games. Times are Hanoi / ICT / UTC+7.</p>
 <div class="actions"><a href="world-cup-2026-group-stage-hanoi.ics">Download calendar (.ics)</a></div>
 <div id="results-status">Results update automatically from <code>results.json</code> when available.</div>
 </header>
@@ -527,11 +534,16 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 </section>
 <script>
 (() => {
-  const STATUS = document.getElementById('results-status');
+      const STATUS = document.getElementById('results-status');
   const RESULT_URL = '/worldcup2026schedule/results.json';
-  const RESULTS_BROWSER_READ_OFFSET_SECONDS = 41;
+  const RESULTS_BROWSER_READ_OFFSET_SECONDS = 18;
   const RESULTS_WATCHDOG_INTERVAL_MS = 12 * 1000;
+  const KNOCKOUT_REFRESH_INTERVAL_MS = 60 * 1000;
   const AUSTRALIA_REFRESH_INTERVAL_MS = 60 * 1000;
+  let lastKnownResults = null;
+  let lastKnownResultsLastUpdatedUtc = '';
+  let isKnockoutPolling = false;
+  let knockoutRetryTimeout = null;
   const AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS = 15 * 60 * 1000;
   const AUSTRALIA_ACTIVE_WINDOW_AFTER_MS = 4 * 60 * 60 * 1000;
   const finishedStatuses = new Set(['FT', 'AET', 'PEN']);
@@ -857,4 +869,86 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
   }, AUSTRALIA_REFRESH_INTERVAL_MS);
 })();
 </script>
-<footer>Generated group-stage-only schedule for Hanoi time. Rebuild after the group stage for confirmed knockout fixtures. Calendar import includes 4-hour reminders.</footer></body></html>
+<section class="day knockout-section"><h2 class="knockout-heading">KNOCKOUT STAGE<br/>ROUND OF 32</h2>
+<article class="card knockout-card" data-kickoff-utc="2026-06-28T19:00:00Z">
+<div><span class="time">02:00</span><span class="match-badge">M73</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="South Africa flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/><span class="team team-home">South Africa</span><span class="versus">vs</span><span class="team team-away">Canada</span><img alt="Canada flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/></div>
+<div class="meta">Monday, 29 June 2026 - 02:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-06-29T17:00:00Z">
+<div><span class="time">00:00</span><span class="match-badge">M76</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Brazil flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/><span class="team team-home">Brazil</span><span class="versus">vs</span><span class="team team-away">Japan</span><img alt="Japan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/></div>
+<div class="meta">Tuesday, 30 June 2026 - 00:00 Hanoi time</div>
+</article>
+<article class="card knockout-card germany" data-kickoff-utc="2026-06-29T20:30:00Z">
+<div><span class="time">03:30</span><span class="match-badge">M74</span><span class="germany-badge">Germany</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Germany flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/><span class="team team-home">Germany</span><span class="versus">vs</span><span class="team team-away">Paraguay</span><img alt="Paraguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/></div>
+<div class="meta">Tuesday, 30 June 2026 - 03:30 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-06-30T01:00:00Z">
+<div><span class="time">08:00</span><span class="match-badge">M75</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Netherlands flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/><span class="team team-home">Netherlands</span><span class="versus">vs</span><span class="team team-away">Morocco</span><img alt="Morocco flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/></div>
+<div class="meta">Tuesday, 30 June 2026 - 08:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-06-30T17:00:00Z">
+<div><span class="time">00:00</span><span class="match-badge">M78</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Ivory Coast flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/><span class="team team-home">Ivory Coast</span><span class="versus">vs</span><span class="team team-away">Norway</span><img alt="Norway flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/></div>
+<div class="meta">Wednesday, 1 July 2026 - 00:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-06-30T21:00:00Z">
+<div><span class="time">04:00</span><span class="match-badge">M77</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="France flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/><span class="team team-home">France</span><span class="versus">vs</span><span class="team team-away">Sweden</span><img alt="Sweden flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/></div>
+<div class="meta">Wednesday, 1 July 2026 - 04:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-01T01:00:00Z">
+<div><span class="time">08:00</span><span class="match-badge">M79</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Mexico flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/><span class="team team-home">Mexico</span><span class="versus">vs</span><span class="team team-away">Ecuador</span><img alt="Ecuador flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/></div>
+<div class="meta">Wednesday, 1 July 2026 - 08:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-01T16:00:00Z">
+<div><span class="time">23:00</span><span class="match-badge">M80</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="England flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/><span class="team team-home">England</span><span class="versus">vs</span><span class="team team-away">DR Congo</span><img alt="DR Congo flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/></div>
+<div class="meta">Wednesday, 1 July 2026 - 23:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-01T20:00:00Z">
+<div><span class="time">03:00</span><span class="match-badge">M82</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Belgium flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/><span class="team team-home">Belgium</span><span class="versus">vs</span><span class="team team-away">Senegal</span><img alt="Senegal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/></div>
+<div class="meta">Thursday, 2 July 2026 - 03:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-02T00:00:00Z">
+<div><span class="time">07:00</span><span class="match-badge">M81</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="USA flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/><span class="team team-home">USA</span><span class="versus">vs</span><span class="team team-away">Bosnia & Herzegovina</span><img alt="Bosnia & Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
+<div class="meta">Thursday, 2 July 2026 - 07:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-02T19:00:00Z">
+<div><span class="time">02:00</span><span class="match-badge">M84</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Spain flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/><span class="team team-home">Spain</span><span class="versus">vs</span><span class="team team-away">Austria</span><img alt="Austria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/></div>
+<div class="meta">Friday, 3 July 2026 - 02:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-02T23:00:00Z">
+<div><span class="time">06:00</span><span class="match-badge">M83</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Portugal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/><span class="team team-home">Portugal</span><span class="versus">vs</span><span class="team team-away">Croatia</span><img alt="Croatia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/></div>
+<div class="meta">Friday, 3 July 2026 - 06:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-03T03:00:00Z">
+<div><span class="time">10:00</span><span class="match-badge">M85</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Algeria</span><img alt="Algeria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/></div>
+<div class="meta">Friday, 3 July 2026 - 10:00 Hanoi time</div>
+</article>
+<article class="card knockout-card australia" data-kickoff-utc="2026-07-03T18:00:00Z">
+<div><span class="time">01:00</span><span class="match-badge">M88</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Australia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/><span class="team team-home">Australia</span><span class="versus">vs</span><span class="team team-away">Egypt</span><img alt="Egypt flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/></div>
+<div class="meta">Saturday, 4 July 2026 - 01:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-03T22:00:00Z">
+<div><span class="time">05:00</span><span class="match-badge">M86</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Argentina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/><span class="team team-home">Argentina</span><span class="versus">vs</span><span class="team team-away">Cape Verde</span><img alt="Cape Verde flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/></div>
+<div class="meta">Saturday, 4 July 2026 - 05:00 Hanoi time</div>
+</article>
+<article class="card knockout-card" data-kickoff-utc="2026-07-04T01:30:00Z">
+<div><span class="time">08:30</span><span class="match-badge">M87</span><span class="group">Round of 32</span></div>
+<div class="match"><img alt="Colombia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/><span class="team team-home">Colombia</span><span class="versus">vs</span><span class="team team-away">Ghana</span><img alt="Ghana flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/></div>
+<div class="meta">Saturday, 4 July 2026 - 08:30 Hanoi time</div>
+</article>
+</section>
+<footer>Group-stage and Round-of-32 schedule in Hanoi time. Calendar import includes 4-hour reminders.</footer></body></html>

@@ -1,4 +1,5 @@
 import FIFA_MATCH_IDS from './fifa-match-ids.js';
+import KNOCKOUT_MATCH_IDS from './fifa-knockout-match-ids.js';
 
 const API_URL = 'https://worldcup26.ir/get/games';
 const SOURCE_LABEL = 'worldcup26.ir/get/games';
@@ -15,13 +16,12 @@ const GROUP_STAGE_POLL_START_MINUTES = 0;
 const GROUP_STAGE_POLL_END_MINUTES = 150;
 const GROUP_STAGE_EMERGENCY_POLL_END_MINUTES = 210;
 const KNOCKOUT_POLL_END_MINUTES = 240;
-const AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS = 15 * 60 * 1000;
-const AUSTRALIA_ACTIVE_WINDOW_AFTER_MS = 4 * 60 * 60 * 1000;
-const SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS = 23;
-// Scheduled source calls are delayed to +23 seconds after the 5-minute boundary to avoid the obvious high-traffic boundary.
-const GROUP_STAGE_POLLING_END_UTC = '2026-06-28T08:00:00Z';
+const SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS = 5;
 const SLOT_CLAIM_TTL_SECONDS = 60 * 60 * 24 * 45;
 const USAGE_TTL_SECONDS = 60 * 60 * 24 * 3;
+
+// Merge FIFA match IDs for enrichment: group stage + knockout
+const ALL_FIFA_MATCH_IDS = { ...FIFA_MATCH_IDS, ...KNOCKOUT_MATCH_IDS };
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -393,6 +393,42 @@ const GROUP_STAGE_SCHEDULE = [
   }
 ];
 
+// Knockout stage schedule: Round of 32, 16 matches, in chronological Hanoi (ICT) order
+const KNOCKOUT_SCHEDULE = [
+  // M73
+  { "match": "South Africa vs Canada", "round": "Round of 32", "matchNumber": 73, "kickoffUtc": "2026-06-28T19:00:00Z" },
+  // M76
+  { "match": "Brazil vs Japan", "round": "Round of 32", "matchNumber": 76, "kickoffUtc": "2026-06-29T17:00:00Z" },
+  // M74
+  { "match": "Germany vs Paraguay", "round": "Round of 32", "matchNumber": 74, "kickoffUtc": "2026-06-29T20:30:00Z" },
+  // M75
+  { "match": "Netherlands vs Morocco", "round": "Round of 32", "matchNumber": 75, "kickoffUtc": "2026-06-30T01:00:00Z" },
+  // M78
+  { "match": "Ivory Coast vs Norway", "round": "Round of 32", "matchNumber": 78, "kickoffUtc": "2026-06-30T17:00:00Z" },
+  // M77
+  { "match": "France vs Sweden", "round": "Round of 32", "matchNumber": 77, "kickoffUtc": "2026-06-30T21:00:00Z" },
+  // M79
+  { "match": "Mexico vs Ecuador", "round": "Round of 32", "matchNumber": 79, "kickoffUtc": "2026-07-01T01:00:00Z" },
+  // M80
+  { "match": "England vs DR Congo", "round": "Round of 32", "matchNumber": 80, "kickoffUtc": "2026-07-01T16:00:00Z" },
+  // M82
+  { "match": "Belgium vs Senegal", "round": "Round of 32", "matchNumber": 82, "kickoffUtc": "2026-07-01T20:00:00Z" },
+  // M81
+  { "match": "USA vs Bosnia & Herzegovina", "round": "Round of 32", "matchNumber": 81, "kickoffUtc": "2026-07-02T00:00:00Z" },
+  // M84
+  { "match": "Spain vs Austria", "round": "Round of 32", "matchNumber": 84, "kickoffUtc": "2026-07-02T19:00:00Z" },
+  // M83
+  { "match": "Portugal vs Croatia", "round": "Round of 32", "matchNumber": 83, "kickoffUtc": "2026-07-02T23:00:00Z" },
+  // M85
+  { "match": "Switzerland vs Algeria", "round": "Round of 32", "matchNumber": 85, "kickoffUtc": "2026-07-03T03:00:00Z" },
+  // M88
+  { "match": "Australia vs Egypt", "round": "Round of 32", "matchNumber": 88, "kickoffUtc": "2026-07-03T18:00:00Z" },
+  // M86
+  { "match": "Argentina vs Cape Verde", "round": "Round of 32", "matchNumber": 86, "kickoffUtc": "2026-07-03T22:00:00Z" },
+  // M87
+  { "match": "Colombia vs Ghana", "round": "Round of 32", "matchNumber": 87, "kickoffUtc": "2026-07-04T01:30:00Z" }
+];
+
 // Source/FIFA naming can differ from the page naming. Canonicalize here so the static HTML can match reliably.
 const TEAM_ALIASES = new Map([
   ['bosnia and herzegovina', 'Bosnia & Herzegovina'],
@@ -427,8 +463,11 @@ const TEAM_ALIASES = new Map([
   ['usa', 'USA']
 ]);
 
-// Build kickoff lookup after GROUP_STAGE_SCHEDULE is fully declared
+// Build kickoff lookup: merge group stage and knockout schedules
 for (const m of GROUP_STAGE_SCHEDULE) {
+  MATCH_KICKOFF_MAP[m.match] = m.kickoffUtc;
+}
+for (const m of KNOCKOUT_SCHEDULE) {
   MATCH_KICKOFF_MAP[m.match] = m.kickoffUtc;
 }
 
@@ -468,24 +507,53 @@ export default {
   }
 };
 
-function isAustraliaMatchKey(key) {
-  const pattern = /\b(australia|aus)\b/i;
-  const [home, away] = key.split(' vs ');
-  return pattern.test(home) || pattern.test(away);
+function isKnockoutMatchKey(key) {
+  return KNOCKOUT_SCHEDULE.some(m => m.match === key);
 }
 
-function isInActiveWindow(kickoffUtc) {
-  if (!kickoffUtc) return false;
-  const kickoffMs = Date.parse(kickoffUtc);
-  if (!Number.isFinite(kickoffMs)) return false;
-  const nowMs = Date.now();
-  const msSinceKickoff = nowMs - kickoffMs;
-  return msSinceKickoff >= -AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS && msSinceKickoff <= AUSTRALIA_ACTIVE_WINDOW_AFTER_MS;
+function anyKnockoutMatchInPollingWindow(nowMs) {
+  for (const match of KNOCKOUT_SCHEDULE) {
+    const kickoffMs = Date.parse(match.kickoffUtc);
+    if (!Number.isFinite(kickoffMs)) continue;
+    const msSinceKickoff = nowMs - kickoffMs;
+    // Knockout polling window: kickoff +0 to +240 minutes
+    if (msSinceKickoff >= 0 && msSinceKickoff <= KNOCKOUT_POLL_END_MINUTES * 60 * 1000) {
+      return true;
+    }
+  }
+  return false;
 }
 
-function anyAustraliaMatchActive() {
+/**
+ * Check if any non-finalized knockout match is still in its eligible polling window.
+ * A match is "finalized" if the cached results show FT/AET/PEN status.
+ * A cached FIFA-final match that is finalized will NOT keep the Worker active.
+ */
+function anyKnockoutMatchStillEligible(nowMs, cachedResult) {
+  for (const match of KNOCKOUT_SCHEDULE) {
+    const kickoffMs = Date.parse(match.kickoffUtc);
+    if (!Number.isFinite(kickoffMs)) continue;
+    const msSinceKickoff = nowMs - kickoffMs;
+    // Must be within +240 minute window
+    if (msSinceKickoff < 0 || msSinceKickoff > KNOCKOUT_POLL_END_MINUTES * 60 * 1000) continue;
+    // Must not be a finalized match in cached results
+    if (isMatchFinal(cachedResult, match.match)) continue;
+    // Non-final match inside eligible window: active
+    return true;
+  }
+  return false;
+}
+
+function anyGroupMatchInPollingWindow(nowMs) {
+  // Group stage: from first kickoff to roughly the end of the last match
+  const cutoffMs = Date.parse('2026-06-28T10:00:00Z'); // last group match ended ~02:00 UTC + 3h buffer
+  if (nowMs > cutoffMs) return false;
+
   for (const match of GROUP_STAGE_SCHEDULE) {
-    if (isAustraliaMatchKey(match.match) && isInActiveWindow(match.kickoffUtc)) {
+    const kickoffMs = Date.parse(match.kickoffUtc);
+    if (!Number.isFinite(kickoffMs)) continue;
+    const msSinceKickoff = nowMs - kickoffMs;
+    if (msSinceKickoff >= 0 && msSinceKickoff <= GROUP_STAGE_EMERGENCY_POLL_END_MINUTES * 60 * 1000) {
       return true;
     }
   }
@@ -493,40 +561,47 @@ function anyAustraliaMatchActive() {
 }
 
 async function runScheduledRefresh(env, now) {
-  // Group-stage polling cutoff: after this UTC timestamp, stop all scheduled upstream calls.
-  if (now.getTime() >= Date.parse(GROUP_STAGE_POLLING_END_UTC)) {
+  const nowMs = now.getTime();
+
+  // Load cached results to check for finalized matches
+  const cachedResult = await loadCachedResults(env);
+
+  // Determine if any match (group or knockout) is in its active polling window
+  // For knockout, only consider non-finalized matches (cached FT/AET/PEN does not keep Worker active)
+  const knockoutActive = anyKnockoutMatchStillEligible(nowMs, cachedResult);
+  const groupActive = anyGroupMatchInPollingWindow(nowMs);
+
+  // If no match is active, skip entirely
+  // This prevents 1,440 KV writes per day
+  if (!knockoutActive && !groupActive) {
     return {
       skipped: true,
-      reason: 'Group stage polling window ended',
+      reason: 'No match in active polling window',
       checkedAtUtc: now.toISOString()
     };
   }
 
-  // Australia active window: refresh every minute regardless of slot
-  const ausActive = anyAustraliaMatchActive();
-
   const slot = await getCurrentPollingSlot(env, now);
-  if (!slot && !ausActive) {
+  if (!slot && !knockoutActive) {
     return { skipped: true, reason: 'No approved polling slot', checkedAtUtc: now.toISOString() };
   }
 
-  // When Australia is active, also refresh non-slot minutes by fabricating a minimal slot
+  // When knockout is active, also refresh non-slot minutes
   const effectiveSlot = slot || {
     slotId: now.toISOString().slice(0, 16) + 'Z',
     slotUtc: now.toISOString(),
     dueMatchCount: 0,
-    dueMatches: [],
-    australiaPriority: true
+    dueMatches: []
   };
 
   try {
     const sourceFetchAt = new Date(Date.parse(effectiveSlot.slotUtc) + SCHEDULED_SOURCE_FETCH_OFFSET_SECONDS * 1000);
     await waitUntilTime(sourceFetchAt);
-    return await refreshResults(env, { mode: ausActive ? 'australia-priority' : 'scheduled', slot: effectiveSlot, now });
+    return await refreshResults(env, { mode: knockoutActive ? 'knockout' : 'scheduled', slot: effectiveSlot, now });
   } catch (error) {
     const failure = {
       error: String(error && error.message ? error.message : error),
-      mode: ausActive ? 'australia-priority' : 'scheduled',
+      mode: knockoutActive ? 'knockout' : 'scheduled',
       slot: effectiveSlot,
       checkedAtUtc: now.toISOString()
     };
@@ -574,17 +649,20 @@ async function loadCachedResults(env) {
   try { return JSON.parse(raw); } catch { return null; }
 }
 
-function isFifaFt(cachedResult, matchKey) {
-  // If the cached KV result has a match confirmed FT by FIFA, exclude from future polling.
+function isMatchFinal(cachedResult, matchKey) {
+  // If the cached KV result has a match confirmed FT by any source, exclude from future polling.
   const match = cachedResult?.matches?.[matchKey];
   if (!match) return false;
-  return match.status === 'FT' && match.source === 'fifa';
+  const status = String(match.status || '').toUpperCase();
+  // FT, AET (after extra time), PEN (after penalties) are all final states
+  return status === 'FT' || status === 'AET' || status === 'PEN';
 }
 
 /**
- * Determine if a group-stage match key should be considered for due-match polling.
- * Excludes FIFA FT matches entirely.
- * For LIVE/HT matches beyond the normal +150 window, emergency polling continues until +210.
+ * Determine if a match key should be considered for due-match polling.
+ * Excludes FIFA final matches entirely.
+ * Group stage: kickoff +0 to +150 (emergency +210 for LIVE/HT).
+ * Knockout: kickoff +0 to +240 (every minute).
  */
 function isMatchEligibleForPolling(cachedResult, matchKey, nowMs) {
   const kickoffUtc = MATCH_KICKOFF_MAP[matchKey];
@@ -592,15 +670,31 @@ function isMatchEligibleForPolling(cachedResult, matchKey, nowMs) {
   const kickoffMs = Date.parse(kickoffUtc);
   if (!Number.isFinite(kickoffMs)) return false;
 
-  // Exclude FIFA FT matches entirely
-  if (isFifaFt(cachedResult, matchKey)) return false;
+  // Exclude final matches entirely
+  if (isMatchFinal(cachedResult, matchKey)) return false;
 
   const msSinceKickoff = nowMs - kickoffMs;
-  const normalEndMs = GROUP_STAGE_POLL_END_MINUTES * 60 * 1000;
-  const emergencyEndMs = GROUP_STAGE_EMERGENCY_POLL_END_MINUTES * 60 * 1000;
 
   // Not yet at kickoff: exclude (no pre-kickoff polling)
   if (msSinceKickoff < 0) return false;
+
+  if (isKnockoutMatchKey(matchKey)) {
+    // Knockout: polling window kickoff +0 to +240 minutes
+    const knockoutEndMs = KNOCKOUT_POLL_END_MINUTES * 60 * 1000;
+    if (msSinceKickoff <= knockoutEndMs) return true;
+    // Beyond +240: check if still LIVE (extra time, penalties could go long)
+    if (msSinceKickoff <= knockoutEndMs + 30 * 60 * 1000) {
+      const cachedMatch = cachedResult?.matches?.[matchKey];
+      if (cachedMatch && !isMatchFinal(cachedResult, matchKey) && cachedMatch.status !== 'NS') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Group stage logic
+  const normalEndMs = GROUP_STAGE_POLL_END_MINUTES * 60 * 1000;
+  const emergencyEndMs = GROUP_STAGE_EMERGENCY_POLL_END_MINUTES * 60 * 1000;
 
   // Inside normal window (0 to +150)
   if (msSinceKickoff <= normalEndMs) return true;
@@ -613,31 +707,43 @@ function isMatchEligibleForPolling(cachedResult, matchKey, nowMs) {
     }
   }
 
-  // Beyond all windows
   return false;
 }
 
 async function getCurrentPollingSlot(env, now) {
   const nowMs = now.getTime();
-  const slotMs = Math.floor(nowMs / SLOT_MS) * SLOT_MS;
   const cachedResult = await loadCachedResults(env);
   const dueMatches = [];
 
+  // Check group stage matches (3-minute cadence)
   for (const match of GROUP_STAGE_SCHEDULE) {
     if (!isMatchEligibleForPolling(cachedResult, match.match, nowMs)) continue;
 
     const kickoffMs = Date.parse(match.kickoffUtc);
     for (const offset of getOffsetsForMatch(match)) {
       const targetMs = kickoffMs + offset * 60 * 1000;
-      if (targetMs === slotMs) {
-        dueMatches.push({ match: match.match, group: match.group, offsetMinutes: offset });
+      const diff = Math.abs(targetMs - nowMs);
+      if (diff < 90 * 1000) { // within 90 seconds
+        dueMatches.push({ match: match.match, group: match.group || 'Group', offsetMinutes: offset });
       }
+    }
+  }
+
+  // Check knockout matches (1-minute cadence, aligned to wall clock)
+  for (const match of KNOCKOUT_SCHEDULE) {
+    if (!isMatchEligibleForPolling(cachedResult, match.match, nowMs)) continue;
+
+    const kickoffMs = Date.parse(match.kickoffUtc);
+    const msSinceKickoff = nowMs - kickoffMs;
+    const minuteSinceKickoff = Math.floor(msSinceKickoff / 60000);
+    if (minuteSinceKickoff >= 0 && minuteSinceKickoff <= KNOCKOUT_POLL_END_MINUTES) {
+      dueMatches.push({ match: match.match, group: match.round || 'Round of 32', offsetMinutes: minuteSinceKickoff });
     }
   }
 
   if (dueMatches.length === 0) return null;
 
-  const slotDate = new Date(slotMs);
+  const slotDate = new Date(nowMs);
   return {
     slotId: slotDate.toISOString().slice(0, 16) + 'Z',
     slotUtc: slotDate.toISOString(),
@@ -646,18 +752,19 @@ async function getCurrentPollingSlot(env, now) {
   };
 }
 
-function getOffsetsForMatch() {
-  const offsets = new Set();
+function getOffsetsForMatch(match) {
+  if (isKnockoutMatchKey(match.match)) {
+    // Knockout: every minute from kickoff through +240 minutes
+    const offsets = [];
+    for (let minute = 0; minute <= KNOCKOUT_POLL_END_MINUTES; minute++) offsets.push(minute);
+    return offsets;
+  }
 
-  // Group-stage games: every 3 minutes from kickoff through +150 minutes.
-  // LIVE/HT matches may be extended to +210 via the emergency window applied
-  // in getCurrentPollingSlot / isRelevantForFifaEnrichment.
-  for (let minute = GROUP_STAGE_POLL_START_MINUTES; minute <= GROUP_STAGE_POLL_END_MINUTES; minute += 3) offsets.add(minute);
+  // Group-stage games: every 3 minutes from kickoff through +150 minutes
+  const offsets = [];
+  for (let minute = GROUP_STAGE_POLL_START_MINUTES; minute <= GROUP_STAGE_POLL_END_MINUTES; minute += 3) offsets.push(minute);
 
-  // Knockout matches (not in schedule yet) would use different offsets.
-  // This placeholder allows adding KNOCKOUT_POLL_END_MINUTES later.
-
-  return Array.from(offsets).sort((a, b) => a - b);
+  return offsets;
 }
 
 let _lastStatusWriteHour = -1;
@@ -709,7 +816,7 @@ async function refreshResults(env, options = {}) {
     matches[key] = {
       status,
       score: formatScore(home, away, homeGoals, awayGoals),
-      note: formatGroup(readString(item, ['group', 'league.round', 'round'])),
+      note: formatRoundOrGroup(readString(item, ['group', 'league.round', 'round'])),
       ...(elapsed ? { elapsed } : {})
     };
   }
@@ -749,31 +856,31 @@ async function refreshResults(env, options = {}) {
 }
 
 function isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs, cachedResult) {
-  // Never enrich a FIFA FT match (already confirmed by FIFA)
-  if (isFifaFt(cachedResult, key)) return false;
+  // Never enrich a final match (already confirmed)
+  if (isMatchFinal(cachedResult, key)) return false;
 
   // Condition 1: match is in the current scheduled slot's dueMatches
   if (dueMatchKeys.has(key)) return true;
 
   // Condition 2: existing result has a live-ish status
-  const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY'];
+  const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY', 'ET', 'P'];
   if (liveStatuses.includes(matchStatus)) {
-    // Must also be within a valid time window (normal +150 or emergency +210 for LIVE/HT)
     const kickoffUtc = MATCH_KICKOFF_MAP[key];
     if (!kickoffUtc) return false;
     const kickoffMs = Date.parse(kickoffUtc);
     if (!Number.isFinite(kickoffMs)) return false;
 
     const msSinceKickoff = nowMs - kickoffMs;
-    const emergencyEndMs = GROUP_STAGE_EMERGENCY_POLL_END_MINUTES * 60 * 1000;
-
-    // No pre-kickoff enrichment
     if (msSinceKickoff < 0) return false;
-    // Allow enrichment for live matches up to emergency cap
-    return msSinceKickoff <= emergencyEndMs;
+
+    const maxEndMs = isKnockoutMatchKey(key)
+      ? (KNOCKOUT_POLL_END_MINUTES + 30) * 60 * 1000
+      : GROUP_STAGE_EMERGENCY_POLL_END_MINUTES * 60 * 1000;
+
+    return msSinceKickoff <= maxEndMs;
   }
 
-  // Condition 3 & 4: kickoff time window (normal polling window only, no pre-kickoff)
+  // Condition 3 & 4: kickoff time window
   const kickoffUtc = MATCH_KICKOFF_MAP[key];
   if (!kickoffUtc) return false;
 
@@ -781,10 +888,11 @@ function isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs, cach
   if (!Number.isFinite(kickoffMs)) return false;
 
   const msSinceKickoff = nowMs - kickoffMs;
-  const normalEndMs = GROUP_STAGE_POLL_END_MINUTES * 60 * 1000;
+  const maxEndMs = isKnockoutMatchKey(key)
+    ? KNOCKOUT_POLL_END_MINUTES * 60 * 1000
+    : GROUP_STAGE_POLL_END_MINUTES * 60 * 1000;
 
-  // From kickoff +0 to +150 minutes (no pre-kickoff polling)
-  return msSinceKickoff >= 0 && msSinceKickoff <= normalEndMs;
+  return msSinceKickoff >= 0 && msSinceKickoff <= maxEndMs;
 }
 
 async function enrichMatchesWithFifa(env, matches, warnings, slot) {
@@ -792,9 +900,9 @@ async function enrichMatchesWithFifa(env, matches, warnings, slot) {
   const dueMatchKeys = getDueMatchKeys(slot);
   const cachedResult = await loadCachedResults(env);
 
-  // Build candidate list filtered by relevance
+  // Build candidate list from ALL FIFA match IDs (group + knockout)
   const candidates = [];
-  for (const [key, fifaId] of Object.entries(FIFA_MATCH_IDS)) {
+  for (const [key, fifaId] of Object.entries(ALL_FIFA_MATCH_IDS)) {
     const matchStatus = matches[key]?.status || '';
     if (isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs, cachedResult)) {
       candidates.push({ key, fifaId, matchStatus });
@@ -807,7 +915,7 @@ async function enrichMatchesWithFifa(env, matches, warnings, slot) {
     const bIsDue = dueMatchKeys.has(b.key) ? 1 : 0;
     if (aIsDue !== bIsDue) return bIsDue - aIsDue;
 
-    const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY'];
+    const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY', 'ET', 'P'];
     const aIsLive = liveStatuses.includes(a.matchStatus) ? 1 : 0;
     const bIsLive = liveStatuses.includes(b.matchStatus) ? 1 : 0;
     if (aIsLive !== bIsLive) return bIsLive - aIsLive;
@@ -879,10 +987,32 @@ function parseFifaLiveMatch(payload, key, existing) {
   const elapsed = normalizeFifaMatchTime(readValue(payload, ['MatchTime']));
   const status = getFifaStatus(payload, elapsed, existing?.status);
 
+  // Capture extra time and penalty scores if available
+  const homePen = normalizeFifaScore(readValue(payload, ['HomeTeam.PenaltyScore']));
+  const awayPen = normalizeFifaScore(readValue(payload, ['AwayTeam.PenaltyScore']));
+  const homeET = normalizeFifaScore(readValue(payload, ['HomeTeam.ExtraTimeScore']));
+  const awayET = normalizeFifaScore(readValue(payload, ['AwayTeam.ExtraTimeScore']));
+
+  // Build enriched score display
+  let score = `${home} ${homeScore}-${awayScore} ${away}`;
+  const notes = [];
+
+  // If penalties occurred and we have penalty scores, show them
+  if (status === 'PEN' && homePen !== '' && awayPen !== '') {
+    score = `${home} ${homeScore}-${awayScore} ${away}`;
+    notes.push(`PEN: ${homePen}-${awayPen}`);
+  }
+
+  // If after extra time, note it
+  if (status === 'AET') {
+    notes.push('AET');
+  }
+
   return {
     status,
-    score: `${home} ${homeScore}-${awayScore} ${away}`,
-    ...(elapsed && status !== 'FT' && status !== 'HT' ? { elapsed } : {})
+    score,
+    ...(notes.length ? { note: notes.join(' ') } : {}),
+    ...(elapsed && status !== 'FT' && status !== 'HT' && status !== 'AET' && status !== 'PEN' ? { elapsed } : {})
   };
 }
 
@@ -901,27 +1031,39 @@ function normalizeFifaMatchTime(value) {
   if (!minute) return '';
 
   const base = Number.parseInt(minute[1], 10);
-  if (!Number.isFinite(base) || base < 0 || base > 130) return '';
+  if (!Number.isFinite(base) || base < 0 || base > 150) return '';
   return minute[2] ? `${base}+${Number.parseInt(minute[2], 10)}'` : `${base}'`;
 }
 
 function getFifaStatus(payload, elapsed, fallbackStatus) {
   // Period field is the most reliable indicator of match state from FIFA live endpoint:
-  //   Period 0   = not started / scheduled
-  //   Period 1-2 = first half / second half
-  //   Period 3   = second half (in play)
-  //   Period 4   = halftime
-  //   Period 5-6 = extra time periods
-  //   Period 7+  = penalties
-  //   Period 10+ = finished (full time, extra time, penalties)
-  //   Period null/undefined = unknown, fall through to other checks
   const period = payload?.Period;
   if (period !== null && period !== undefined && period !== '') {
     const p = Number(period);
     if (Number.isFinite(p)) {
-      if (p >= 10) return 'FT';
+      // Period values for knockout football:
+      // 0 = not started
+      // 1-3 = first half / second half
+      // 4 = halftime
+      // 5 = extra time first half
+      // 6 = extra time second half
+      // 7+ = penalties
+      // 10+ = finished
+      if (p >= 10) {
+        // Check if penalties were needed
+        const homePen = payload?.HomeTeam?.PenaltyScore;
+        const awayPen = payload?.AwayTeam?.PenaltyScore;
+        if (homePen !== null && homePen !== undefined && awayPen !== null && awayPen !== undefined &&
+            Number(homePen) > 0 && Number(awayPen) > 0) {
+          return 'PEN';
+        }
+        return 'FT';
+      }
+      if (p === 7 || p === 8) return 'P'; // Penalties in progress
+      if (p === 5 || p === 6) return 'ET'; // Extra time
       if (p === 4) return 'HT';
       if (p === 0) return fallbackStatus || 'NS';
+      // Periods 1-3 are normal play
     }
   }
 
@@ -934,6 +1076,10 @@ function getFifaStatus(payload, elapsed, fallbackStatus) {
   ].join(' ').toLowerCase();
 
   if (/\b(finished|full[ -]?time|final|ft|ended|complete)\b/.test(statusText)) return 'FT';
+  if (/\b(after extra( |-)?time|aet)\b/.test(statusText)) return 'AET';
+  if (/\b(after penalties|pen(alty)? shootout|won on pens)\b/.test(statusText)) return 'PEN';
+  if (/\b(extra( |-)?time|extra time)\b/.test(statusText)) return 'ET';
+  if (/\b(penalties|penalty shootout)\b/.test(statusText)) return 'P';
   if (/\b(not[ _-]?started|scheduled|timed|cancelled|postponed)\b/.test(statusText)) return fallbackStatus || 'NS';
   if (elapsed === 'HT') return 'HT';
   if (elapsed) return 'LIVE';
@@ -965,7 +1111,7 @@ function getGameStatus(item) {
 }
 
 function getElapsedDisplay(item, status) {
-  if (status === 'FT' || status === 'NS') return '';
+  if (status === 'FT' || status === 'NS' || status === 'AET' || status === 'PEN') return '';
   return normalizeElapsedTime(readValue(item, ['time_elapsed', 'timeElapsed', 'elapsed', 'minute', 'status']));
 }
 
@@ -981,7 +1127,7 @@ function normalizeElapsedTime(value) {
   if (!minute) return '';
 
   const base = Number.parseInt(minute[1], 10);
-  if (!Number.isFinite(base) || base < 0 || base > 130) return '';
+  if (!Number.isFinite(base) || base < 0 || base > 150) return '';
   return minute[2] ? `${base}+${Number.parseInt(minute[2], 10)}'` : `${base}'`;
 }
 
@@ -1014,11 +1160,12 @@ function formatScore(home, away, homeGoals, awayGoals) {
   return `${home} vs ${away}`;
 }
 
-function formatGroup(value) {
+function formatRoundOrGroup(value) {
   const group = String(value || '').trim();
   if (!group) return '';
   if (/^group\b/i.test(group)) return group.replace(/^group\s*/i, 'Group ');
   if (/^[A-L]$/i.test(group)) return `Group ${group.toUpperCase()}`;
+  if (/^round\b/i.test(group)) return group;
   return group;
 }
 
@@ -1052,7 +1199,7 @@ function normalize(value) {
   return String(value || '')
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/&/g, 'and')
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
