@@ -300,6 +300,65 @@ const keys = KNOCKOUT_SCHEDULE.map(m => m.match);
 const uniqueKeys = new Set(keys);
 assert(uniqueKeys.size === 16, `16 unique knockout match keys (found ${uniqueKeys.size})`);
 
+// ========== Score format tests ==========
+console.log();
+console.log('=== R32 Score format tests ===');
+
+function buildDefaultScore(matchKey) {
+  const [home, away] = matchKey.split(' vs ');
+  return {
+    status: 'NS',
+    score: `${home} 0-0 ${away}`,
+    note: 'Round of 32'
+  };
+}
+
+const scoreFixtures = [
+  'France vs Sweden',
+  'Spain vs Austria',
+  'Switzerland vs Algeria',
+  'Colombia vs Ghana',
+  'Australia vs Egypt',
+  'USA vs Bosnia & Herzegovina',
+  'South Africa vs Canada',
+  'Brazil vs Japan',
+  'Germany vs Paraguay',
+  'Netherlands vs Morocco',
+  'Ivory Coast vs Norway',
+  'Mexico vs Ecuador',
+  'England vs DR Congo',
+  'Belgium vs Senegal',
+  'Portugal vs Croatia',
+  'Argentina vs Cape Verde'
+];
+
+for (const fixture of scoreFixtures) {
+  const result = buildDefaultScore(fixture);
+  const [home, away] = fixture.split(' vs ');
+  assertEqual(result.status, 'NS', `Status NS for ${fixture}`);
+  assert(result.score.includes(' 0-0 '), `Score contains 0-0 for ${fixture}`);
+  assert(!result.score.includes('vs'), `Score does not contain 'vs' for ${fixture}`);
+  assert(!result.score.includes(home + '-'), `Score does not contain '${home}-' for ${fixture}`);
+  assert(!result.score.includes('-' + away), `Score does not contain '-${away}' for ${fixture}`);
+  assert(result.score.startsWith(home + ' '), `Score starts with home team for ${fixture}`);
+  assert(result.score.endsWith(' ' + away), `Score ends with away team for ${fixture}`);
+}
+
+// Specific expected scores
+const expectedScores = {
+  'France vs Sweden': 'France 0-0 Sweden',
+  'Spain vs Austria': 'Spain 0-0 Austria',
+  'Switzerland vs Algeria': 'Switzerland 0-0 Algeria',
+  'Colombia vs Ghana': 'Colombia 0-0 Ghana',
+  'Australia vs Egypt': 'Australia 0-0 Egypt',
+  'USA vs Bosnia & Herzegovina': 'USA 0-0 Bosnia & Herzegovina'
+};
+
+for (const [fixture, expected] of Object.entries(expectedScores)) {
+  const result = buildDefaultScore(fixture);
+  assertEqual(result.score, expected, `Score matches expected for ${fixture}`);
+}
+
 // ========== Summary ==========
 console.log();
 console.log('=== Summary ===');

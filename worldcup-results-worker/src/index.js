@@ -770,9 +770,51 @@ function getOffsetsForMatch(match) {
 let _lastStatusWriteHour = -1;
 let _lastWarningsJson = '';
 
+function ensureCompleteScheduleCoverage(matches, cachedResult) {
+  // Build default NS entries for all group-stage matches
+  for (const m of GROUP_STAGE_SCHEDULE) {
+    const key = m.match;
+    if (!matches[key]) {
+      // If cached has a final result, preserve it instead of creating default NS
+      if (cachedResult && isMatchFinal(cachedResult, key)) {
+        matches[key] = { ...cachedResult.matches[key] };
+      } else {
+        const [home, away] = key.split(' vs ');
+        matches[key] = {
+          status: 'NS',
+          score: `${home} 0-0 ${away}`,
+          note: formatRoundOrGroup(m.group)
+        };
+      }
+    }
+  }
+
+  // Build default NS entries for all knockout matches
+  for (const m of KNOCKOUT_SCHEDULE) {
+    const key = m.match;
+    if (!matches[key]) {
+      // If cached has a final result, preserve it instead of creating default NS
+      if (cachedResult && isMatchFinal(cachedResult, key)) {
+        matches[key] = { ...cachedResult.matches[key] };
+      } else {
+        const [home, away] = key.split(' vs ');
+        matches[key] = {
+          status: 'NS',
+          score: `${home} 0-0 ${away}`,
+          note: formatRoundOrGroup(m.round || 'R32')
+        };
+      }
+    }
+  }
+}
+
 async function refreshResults(env, options = {}) {
   const now = options.now || new Date();
 
+  // Step 1: Load cached result for FT preservation during coverage
+  const cachedResult = await loadCachedResults(env);
+
+  // Step 2: Fetch worldcup26.ir results
   const response = await fetch(API_URL, {
     headers: { accept: 'application/json' }
   });
@@ -787,6 +829,7 @@ async function refreshResults(env, options = {}) {
   const matches = {};
   const warnings = [];
 
+  // Step 3: Overlay worldcup26.ir results onto matches
   for (const item of games) {
     const home = canonicalTeamName(readString(item, [
       'home_team_name_en',
@@ -821,6 +864,11 @@ async function refreshResults(env, options = {}) {
     };
   }
 
+  // Step 4: Ensure all 88 scheduled matches are present
+  // Default NS entries added for missing matches; cached FT results preserved
+  ensureCompleteScheduleCoverage(matches, cachedResult);
+
+  // Step 5: FIFA enrichment (highest priority)
   await enrichMatchesWithFifa(env, matches, warnings, options.slot);
 
   const warningsJson = JSON.stringify(warnings);
