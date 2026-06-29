@@ -940,7 +940,7 @@ function isRelevantForFifaEnrichment(key, dueMatchKeys, matchStatus, nowMs, cach
   if (dueMatchKeys.has(key)) return true;
 
   // Condition 2: existing result has a live-ish status
-  const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY', 'ET', 'ET HT', 'P'];
+  const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY', 'ET', 'ET HT', 'P', 'PEN WAIT'];
   if (liveStatuses.includes(matchStatus)) {
     const kickoffUtc = MATCH_KICKOFF_MAP[key];
     if (!kickoffUtc) return false;
@@ -992,7 +992,7 @@ async function enrichMatchesWithFifa(env, matches, warnings, slot) {
     const bIsDue = dueMatchKeys.has(b.key) ? 1 : 0;
     if (aIsDue !== bIsDue) return bIsDue - aIsDue;
 
-    const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY', 'ET', 'ET HT', 'P'];
+    const liveStatuses = ['LIVE', 'HT', '1H', '2H', 'IN_PLAY', 'ET', 'ET HT', 'P', 'PEN WAIT'];
     const aIsLive = liveStatuses.includes(a.matchStatus) ? 1 : 0;
     const bIsLive = liveStatuses.includes(b.matchStatus) ? 1 : 0;
     if (aIsLive !== bIsLive) return bIsLive - aIsLive;
@@ -1018,10 +1018,27 @@ async function enrichMatchesWithFifa(env, matches, warnings, slot) {
         continue;
       }
 
+      // Merge the schedule note (e.g. "R32") with the FIFA enrichment note
+      // (e.g. "Pens 3-4" or "AET") using " · " as separator.
+      // Ensure no duplication of the same content.
+      const scheduleNote = matches[key]?.note || '';
+      const fifaNote = enrichment.note || '';
+      let mergedNote;
+      if (scheduleNote && fifaNote) {
+        // Check if the notes already contain each other to avoid duplication
+        if (scheduleNote.includes(fifaNote) || fifaNote.includes(scheduleNote)) {
+          mergedNote = scheduleNote.length >= fifaNote.length ? scheduleNote : fifaNote;
+        } else {
+          mergedNote = `${scheduleNote} · ${fifaNote}`;
+        }
+      } else {
+        mergedNote = scheduleNote || fifaNote;
+      }
+
       matches[key] = {
         ...(matches[key] || {}),
         ...enrichment,
-        note: matches[key]?.note || enrichment.note,
+        note: mergedNote,
         source: 'fifa'
       };
     } catch (error) {
@@ -1065,8 +1082,9 @@ function parseFifaLiveMatch(payload, key, existing) {
   const status = getFifaStatus(payload, elapsed, existing?.status);
 
   // Capture extra time and penalty scores if available
-  const homePen = normalizeFifaScore(readValue(payload, ['HomeTeam.PenaltyScore']));
-  const awayPen = normalizeFifaScore(readValue(payload, ['AwayTeam.PenaltyScore']));
+  const penScores = readFifaPenaltyScores(payload);
+  const homePen = penScores.home !== null ? String(penScores.home) : '';
+  const awayPen = penScores.away !== null ? String(penScores.away) : '';
   const homeET = normalizeFifaScore(readValue(payload, ['HomeTeam.ExtraTimeScore']));
   const awayET = normalizeFifaScore(readValue(payload, ['AwayTeam.ExtraTimeScore']));
 
@@ -1124,6 +1142,29 @@ function normalizeFifaMatchTime(value) {
   return `${base}'`;
 }
 
+/**
+ * Read penalty scores from a FIFA payload.
+ * Observed fields: top-level HomeTeamPenaltyScore / AwayTeamPenaltyScore
+ * (e.g. Germany vs Paraguay had HomeTeamPenaltyScore: 2, AwayTeamPenaltyScore: 3
+ *  while HomeTeam.PenaltyScore was null).
+ * Falls back to nested HomeTeam.PenaltyScore / AwayTeam.PenaltyScore for
+ * compatibility with payload variants.
+ */
+function readFifaPenaltyScores(payload) {
+  if (!payload) return { home: null, away: null };
+  // Try top-level fields first (observed during live shootout)
+  const homeRaw = payload.HomeTeamPenaltyScore !== null && payload.HomeTeamPenaltyScore !== undefined
+    ? payload.HomeTeamPenaltyScore : undefined;
+  const awayRaw = payload.AwayTeamPenaltyScore !== null && payload.AwayTeamPenaltyScore !== undefined
+    ? payload.AwayTeamPenaltyScore : undefined;
+  // Fallback to nested fields
+  const homeNested = homeRaw !== undefined ? homeRaw : readValue(payload, ['HomeTeam.PenaltyScore']);
+  const awayNested = awayRaw !== undefined ? awayRaw : readValue(payload, ['AwayTeam.PenaltyScore']);
+  const home = homeNested !== null && homeNested !== undefined ? Number(homeNested) : null;
+  const away = awayNested !== null && awayNested !== undefined ? Number(awayNested) : null;
+  return { home, away };
+}
+
 function getFifaStatus(payload, elapsed, fallbackStatus) {
   // Period field is a useful but not definitive indicator. The observed FIFA payload
   // for Germany vs Paraguay (tied 1-1, in extra time) showed Period=7, MatchTime='97',
@@ -1132,41 +1173,61 @@ function getFifaStatus(payload, elapsed, fallbackStatus) {
   const period = payload?.Period;
   const homeScore = normalizeFifaScore(readValue(payload, ['HomeTeam.Score']));
   const awayScore = normalizeFifaScore(readValue(payload, ['AwayTeam.Score']));
-  const homePen = payload?.HomeTeam?.PenaltyScore;
-  const awayPen = payload?.AwayTeam?.PenaltyScore;
+  const penScores = readFifaPenaltyScores(payload);
+  const homePen = penScores.home;
+  const awayPen = penScores.away;
   const homeET = payload?.HomeTeam?.ExtraTimeScore;
   const awayET = payload?.AwayTeam?.ExtraTimeScore;
   const matchStatus = payload?.MatchStatus;
   const matchTime = payload?.MatchTime;
   const isKnockout = false; // will be set based on key context if available
 
-  if (period !== null && period !== undefined && period !== '') {
+    if (period !== null && period !== undefined && period !== '') {
     const p = Number(period);
     if (Number.isFinite(p)) {
       // Period mapping:
       // 0   = not started
       // 1-3 = first / second half of regulation
       // 4   = halftime
-      // 5-8 = extra time periods (ET first half, ET second half, ET possible additional)
-      // 7+  = may be ET OR penalties depending on payload context
-      // 10+ = finished
+      // 5-8 = extra time periods
+      // 7   = ET first half (or penalties depending on payload context)
+      // 8   = ET HT (extra-time half-time)
+      // 9   = ET second half
+      // 16  = pre-shootout interval (observed: Period 16, MatchStatus 3, tied, no penalties)
 
       if (p >= 10) {
-        // Match is at Period >= 10 (finished or potentially in shootout phase).
-        // Determine the correct terminal or live state.
+        // Match is at Period >= 10. Determine terminal or live state.
+        // MatchStatus 3 has been observed as a live indicator (Germany v Paraguay
+        // during ET and pre-shootout interval). Do not return a terminal status
+        // while MatchStatus is 3 and the score is tied.
 
         const penHome = homePen !== null && homePen !== undefined ? Number(homePen) : null;
         const penAway = awayPen !== null && awayPen !== undefined ? Number(awayPen) : null;
         const hasPenalties = penHome !== null && penAway !== null &&
                              (penHome > 0 || penAway > 0);
 
+        // MatchStatus 3 observed as live. For a tied knockout match with
+        // MatchStatus 3, the match is still live regardless of Period value.
+        const isLiveMatchStatus = matchStatus === 3 || matchStatus === '3';
+        const homeScoreNum = homeScore !== '' ? Number(homeScore) : null;
+        const awayScoreNum = awayScore !== '' ? Number(awayScore) : null;
+        const isTied = homeScoreNum !== null && awayScoreNum !== null &&
+                       homeScoreNum === awayScoreNum;
+
         if (hasPenalties) {
-          // Penalty score fields are populated. Check for explicit terminal evidence.
-          // The observed live MatchStatus=3 for Germany v Paraguay during ET.
-          // A completed match should have a different MatchStatus or textual evidence.
-          // Do NOT infer completion from the penalty tally alone (temporary scores
-          // like 1-0, 1-1, 3-2, 4-4 are not proof the shootout ended).
-          // Check the fallback status text fields for terminal evidence.
+          // Penalty score fields are populated. Determine terminal or live.
+
+          // MatchStatus 0 has been observed as the terminal/finished state
+          // (Germany vs Paraguay: Period 10, MatchStatus 0, HomeTeamPenaltyScore 3,
+          //  AwayTeamPenaltyScore 4, score 1-1).
+          const isTerminalMatchStatus = matchStatus === 0 || matchStatus === '0';
+
+          if (isTerminalMatchStatus) return 'PEN';
+
+          // If still live (MatchStatus 3), the shootout is in progress.
+          if (isLiveMatchStatus) return 'P';
+
+          // Check for explicit terminal evidence in text fields.
           const statusText = [
             readString(payload, ['Status']),
             readString(payload, ['MatchStatus']),
@@ -1178,10 +1239,21 @@ function getFifaStatus(payload, elapsed, fallbackStatus) {
 
           if (hasTerminalEvidence) return 'PEN';
 
-          // No explicit terminal evidence. The shootout may still be active.
-          // Penalty tally alone does not prove completion (e.g. 5-4 after sudden death
-          // looks the same as 3-2 mid-shootout without knowing kick count).
-          // Stay at P and continue polling.
+          // No explicit terminal evidence. Stay at P and continue polling.
+          return 'P';
+        }
+
+        // No penalty scores populated. Check if still live (MatchStatus 3).
+        if (isLiveMatchStatus && isTied) {
+          // Period 16 has been observed as the pre-shootout interval
+          // (Germany vs Paraguay: Period 16, MatchStatus 3, tied 1-1,
+          // no penalty scores, blank MatchTime).
+          if (p === 16) return 'PEN WAIT';
+
+          // Period 11 has been observed as the active penalty shootout
+          // (Germany vs Paraguay: Period 11, MatchStatus 3, tied 1-1,
+          // blank penalty fields, blank MatchTime).
+          // Return P (non-final, continues polling, no Pens note yet).
           return 'P';
         }
 
