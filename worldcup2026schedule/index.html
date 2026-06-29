@@ -661,6 +661,33 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     return true;
   }
 
+  // Extract penalty score from a note string like "R32 · Pens 3-4" or "Pens 2-3"
+  function parsePenaltyNote(note) {
+    if (!note) return { metadata: '', pens: '' };
+    const match = note.match(/Pens\s+(\d+\s*-\s*\d+)/i);
+    if (!match) return { metadata: note, pens: '' };
+    const pens = match[1].replace(/\s+/g, '');
+    // Remove the penalty part from the note to get the metadata portion
+    const metadata = note.replace(/\s*·\s*Pens\s+\d+\s*-\s*\d+/i, '').replace(/Pens\s+\d+\s*-\s*\d+/i, '').trim();
+    return { metadata, pens };
+  }
+
+  // Parse a score string like "Germany 1-1 Paraguay" into { home, score, away }
+  function parseScoreString(scoreStr) {
+    if (!scoreStr) return null;
+    // Match: team name followed by digits-digits followed by team name
+    // Team names may contain spaces, hyphens, ampersands
+    const match = scoreStr.match(/^(.+?)\s+(\d+)\s*-\s*(\d+)\s+(.+)$/);
+    if (!match) return null;
+    return {
+      home: match[1].trim(),
+      homeScore: match[2],
+      awayScore: match[3],
+      score: `${match[2]}-${match[3]}`,
+      away: match[4].trim()
+    };
+  }
+
   function addResult(card, result) {
     if (!result) return false;
     const status = String(result.status || result.apiStatus || '').toUpperCase();
@@ -671,21 +698,94 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     const div = document.createElement('div');
     div.className = 'result' + (liveStatuses.has(status) && !finishedStatuses.has(status) ? ' live' : '');
 
+    // Parse note for penalty information
+    const parsedNote = parsePenaltyNote(result.note);
+    const parsedScore = parseScoreString(score);
+
+    // Bail out to simple rendering for non-penalty results
+    if (!parsedNote.pens || !parsedScore) {
+      // Non-penalty result or unparseable score: render the original way
+      const badge = document.createElement('span');
+      badge.className = 'status';
+      badge.textContent = formatStatusLabel(status, result.elapsed);
+      div.appendChild(badge);
+      if (score) div.appendChild(document.createTextNode(score));
+
+      if (result.note) {
+        const note = document.createElement('div');
+        note.style.fontWeight = '500';
+        note.style.fontSize = '.8rem';
+        note.style.opacity = '.78';
+        note.style.marginTop = '3px';
+        note.textContent = result.note;
+        div.appendChild(note);
+      }
+      card.appendChild(div);
+      return true;
+    }
+
+    // Penalty result: structured layout
+    // Line 1: status badge + "Germany  1-1  Paraguay"
+    // Line 2: "3-4 pens" (smaller, centered below score)
+    // Line 3: metadata note (e.g. "R32")
+
     const badge = document.createElement('span');
     badge.className = 'status';
     badge.textContent = formatStatusLabel(status, result.elapsed);
     div.appendChild(badge);
-    if (score) div.appendChild(document.createTextNode(score));
 
-    if (result.note) {
-      const note = document.createElement('div');
-      note.style.fontWeight = '500';
-      note.style.fontSize = '.8rem';
-      note.style.opacity = '.78';
-      note.style.marginTop = '3px';
-      note.textContent = result.note;
-      div.appendChild(note);
+    // Structured score block
+    const scoreBlock = document.createElement('span');
+    scoreBlock.style.display = 'inline-flex';
+    scoreBlock.style.alignItems = 'center';
+    scoreBlock.style.flexWrap = 'wrap';
+    scoreBlock.style.gap = '2px 6px';
+
+    const homeSpan = document.createElement('span');
+    homeSpan.className = 'team';
+    homeSpan.textContent = parsedScore.home;
+
+    const scoreSpan = document.createElement('span');
+    scoreSpan.style.fontWeight = '700';
+    scoreSpan.textContent = parsedScore.score;
+
+    const awaySpan = document.createElement('span');
+    awaySpan.className = 'team';
+    awaySpan.textContent = parsedScore.away;
+
+    scoreBlock.appendChild(homeSpan);
+    scoreBlock.appendChild(scoreSpan);
+    scoreBlock.appendChild(awaySpan);
+    div.appendChild(scoreBlock);
+
+    // Penalty tally line
+    const pensDiv = document.createElement('div');
+    pensDiv.style.fontSize = '.78rem';
+    pensDiv.style.fontWeight = '600';
+    pensDiv.style.opacity = '.82';
+    pensDiv.style.marginTop = '1px';
+    pensDiv.style.paddingLeft = '0';
+    pensDiv.textContent = `${parsedNote.pens} pens`;
+    div.appendChild(pensDiv);
+
+    // Metadata note (e.g. "R32") without the penalty portion
+    if (parsedNote.metadata) {
+      const metaDiv = document.createElement('div');
+      metaDiv.style.fontWeight = '500';
+      metaDiv.style.fontSize = '.8rem';
+      metaDiv.style.opacity = '.78';
+      metaDiv.style.marginTop = '2px';
+      metaDiv.textContent = parsedNote.metadata;
+      div.appendChild(metaDiv);
     }
+
+    // Accessible description for screen readers
+    const srDesc = document.createElement('span');
+    srDesc.className = 'visually-hidden';
+    srDesc.textContent = `${formatStatusLabel(status, result.elapsed)}: ${score}, penalty shootout ${parsedNote.pens}`;
+    srDesc.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;';
+    div.appendChild(srDesc);
+
     card.appendChild(div);
     return true;
   }
