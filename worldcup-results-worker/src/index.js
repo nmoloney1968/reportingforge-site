@@ -688,6 +688,22 @@ function isMatchFinal(cachedResult, matchKey) {
 }
 
 /**
+ * WC26-R32-ET-012: Check if a cached FIFA entry is in a sticky knockout
+ * shootout phase that must be preserved against worldcup26.ir fallback.
+ *
+ * Sticky statuses: PEN WAIT (pre-shootout interval), P (active shootout).
+ * These are non-final phases that FIFA enrichment can advance forward
+ * (PEN WAIT -> P -> PEN), but a fallback source must never regress.
+ *
+ * Does NOT include FT/AET/PEN (covered by isMatchFinal).
+ * Does NOT include ET or ET HT (those are not part of the shootout phase).
+ */
+function isStickyFifaKnockoutState(entry) {
+  const status = String(entry.status || '').toUpperCase();
+  return status === 'PEN WAIT' || status === 'P';
+}
+
+/**
  * Determine if a match key should be considered for due-match polling.
  * Excludes FIFA final matches entirely.
  * Group stage: kickoff +0 to +150 (emergency +210 for LIVE/HT).
@@ -884,6 +900,20 @@ async function refreshResults(env, options = {}) {
     const key = `${home} vs ${away}`;
     const status = getGameStatus(item);
     const elapsed = getElapsedDisplay(item, status);
+
+    // WC26-R32-ET-012: Preserve authoritative FIFA knockout states.
+    // A lower-priority source (worldcup26.ir/worldcup26.ir/get/games) must never
+    // downgrade a cached FIFA result that is either:
+    //   1. final under isMatchFinal(), or
+    //   2. in a sticky shootout phase (PEN WAIT, P, AET).
+    // This prevents a fallback FT result from regressing a match out of
+    // extra time or penalties once FIFA has established those phases.
+    // FIFA enrichment (Step 5) may still advance: PEN WAIT -> P -> PEN.
+    const cachedEntry = cachedResult?.matches?.[key];
+    if (cachedEntry?.source === 'fifa' && (isMatchFinal(cachedResult, key) || isStickyFifaKnockoutState(cachedEntry))) {
+      matches[key] = { ...cachedEntry };
+      continue;
+    }
 
     matches[key] = {
       status,
@@ -1282,8 +1312,11 @@ function getFifaStatus(payload, elapsed, fallbackStatus) {
         return 'ET HT';
       }
 
-      // Periods 5-7 and 9: treat as ET unless there is explicit penalty evidence
-      if (p >= 5 && p <= 9) {
+      // Periods 7, 8, and 9: treat as ET unless there is explicit penalty evidence.
+      // Period 5 is the ordinary second half of regulation play (Period 3 is 1H,
+      // Period 5 is 2H) and must NOT be treated as ET.
+      // Period 6 is excluded until a captured FIFA payload proves its meaning.
+      if (p === 7 || p === 8 || p === 9) {
         // Check if penalties are actually happening by examining penalty score fields.
         // During an active shootout, at least one penalty score will be populated (0 or more).
         // During ET, penalty scores remain null.

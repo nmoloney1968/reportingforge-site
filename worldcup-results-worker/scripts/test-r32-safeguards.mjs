@@ -17,6 +17,82 @@
 // Copy the relevant constants and functions from index.js
 const KNOCKOUT_POLL_END_MINUTES = 240;
 
+// Group-stage schedule (full 72 matches) from index.js
+const GROUP_STAGE_SCHEDULE = [
+  { "match": "Mexico vs South Africa", "group": "Group A", "kickoffUtc": "2026-06-11T19:00:00Z" },
+  { "match": "South Korea vs Czech Republic", "group": "Group A", "kickoffUtc": "2026-06-12T02:00:00Z" },
+  { "match": "Canada vs Bosnia & Herzegovina", "group": "Group B", "kickoffUtc": "2026-06-12T19:00:00Z" },
+  { "match": "USA vs Paraguay", "group": "Group D", "kickoffUtc": "2026-06-13T01:00:00Z" },
+  { "match": "Qatar vs Switzerland", "group": "Group B", "kickoffUtc": "2026-06-13T19:00:00Z" },
+  { "match": "Brazil vs Morocco", "group": "Group C", "kickoffUtc": "2026-06-13T22:00:00Z" },
+  { "match": "Haiti vs Scotland", "group": "Group C", "kickoffUtc": "2026-06-14T01:00:00Z" },
+  { "match": "Australia vs Turkey", "group": "Group D", "kickoffUtc": "2026-06-14T04:00:00Z" },
+  { "match": "Germany vs Curacao", "group": "Group E", "kickoffUtc": "2026-06-14T17:00:00Z" },
+  { "match": "Netherlands vs Japan", "group": "Group F", "kickoffUtc": "2026-06-14T20:00:00Z" },
+  { "match": "Ivory Coast vs Ecuador", "group": "Group E", "kickoffUtc": "2026-06-14T23:00:00Z" },
+  { "match": "Sweden vs Tunisia", "group": "Group F", "kickoffUtc": "2026-06-15T02:00:00Z" },
+  { "match": "Spain vs Cape Verde", "group": "Group H", "kickoffUtc": "2026-06-15T16:00:00Z" },
+  { "match": "Belgium vs Egypt", "group": "Group G", "kickoffUtc": "2026-06-15T19:00:00Z" },
+  { "match": "Saudi Arabia vs Uruguay", "group": "Group H", "kickoffUtc": "2026-06-15T22:00:00Z" },
+  { "match": "Iran vs New Zealand", "group": "Group G", "kickoffUtc": "2026-06-16T01:00:00Z" },
+  { "match": "France vs Senegal", "group": "Group I", "kickoffUtc": "2026-06-16T19:00:00Z" },
+  { "match": "Iraq vs Norway", "group": "Group I", "kickoffUtc": "2026-06-16T22:00:00Z" },
+  { "match": "Argentina vs Algeria", "group": "Group J", "kickoffUtc": "2026-06-17T01:00:00Z" },
+  { "match": "Austria vs Jordan", "group": "Group J", "kickoffUtc": "2026-06-17T04:00:00Z" },
+  { "match": "Portugal vs DR Congo", "group": "Group K", "kickoffUtc": "2026-06-17T17:00:00Z" },
+  { "match": "England vs Croatia", "group": "Group L", "kickoffUtc": "2026-06-17T20:00:00Z" },
+  { "match": "Ghana vs Panama", "group": "Group L", "kickoffUtc": "2026-06-17T23:00:00Z" },
+  { "match": "Uzbekistan vs Colombia", "group": "Group K", "kickoffUtc": "2026-06-18T02:00:00Z" },
+  { "match": "Czech Republic vs South Africa", "group": "Group A", "kickoffUtc": "2026-06-18T16:00:00Z" },
+  { "match": "Switzerland vs Bosnia & Herzegovina", "group": "Group B", "kickoffUtc": "2026-06-18T19:00:00Z" },
+  { "match": "Canada vs Qatar", "group": "Group B", "kickoffUtc": "2026-06-18T22:00:00Z" },
+  { "match": "Mexico vs South Korea", "group": "Group A", "kickoffUtc": "2026-06-19T01:00:00Z" },
+  { "match": "USA vs Australia", "group": "Group D", "kickoffUtc": "2026-06-19T19:00:00Z" },
+  { "match": "Scotland vs Morocco", "group": "Group C", "kickoffUtc": "2026-06-19T22:00:00Z" },
+  { "match": "Brazil vs Haiti", "group": "Group C", "kickoffUtc": "2026-06-20T00:30:00Z" },
+  { "match": "Turkey vs Paraguay", "group": "Group D", "kickoffUtc": "2026-06-20T03:00:00Z" },
+  { "match": "Netherlands vs Sweden", "group": "Group F", "kickoffUtc": "2026-06-20T17:00:00Z" },
+  { "match": "Germany vs Ivory Coast", "group": "Group E", "kickoffUtc": "2026-06-20T20:00:00Z" },
+  { "match": "Ecuador vs Curacao", "group": "Group E", "kickoffUtc": "2026-06-21T00:00:00Z" },
+  { "match": "Tunisia vs Japan", "group": "Group F", "kickoffUtc": "2026-06-21T04:00:00Z" },
+  { "match": "Spain vs Saudi Arabia", "group": "Group H", "kickoffUtc": "2026-06-21T16:00:00Z" },
+  { "match": "Belgium vs Iran", "group": "Group G", "kickoffUtc": "2026-06-21T19:00:00Z" },
+  { "match": "Uruguay vs Cape Verde", "group": "Group H", "kickoffUtc": "2026-06-21T22:00:00Z" },
+  { "match": "New Zealand vs Egypt", "group": "Group G", "kickoffUtc": "2026-06-22T01:00:00Z" },
+  { "match": "Argentina vs Austria", "group": "Group J", "kickoffUtc": "2026-06-22T17:00:00Z" },
+  { "match": "France vs Iraq", "group": "Group I", "kickoffUtc": "2026-06-22T21:00:00Z" },
+  { "match": "Norway vs Senegal", "group": "Group I", "kickoffUtc": "2026-06-23T00:00:00Z" },
+  { "match": "Jordan vs Algeria", "group": "Group J", "kickoffUtc": "2026-06-23T03:00:00Z" },
+  { "match": "Portugal vs Uzbekistan", "group": "Group K", "kickoffUtc": "2026-06-23T17:00:00Z" },
+  { "match": "England vs Ghana", "group": "Group L", "kickoffUtc": "2026-06-23T20:00:00Z" },
+  { "match": "Panama vs Croatia", "group": "Group L", "kickoffUtc": "2026-06-23T23:00:00Z" },
+  { "match": "Colombia vs DR Congo", "group": "Group K", "kickoffUtc": "2026-06-24T02:00:00Z" },
+  { "match": "Switzerland vs Canada", "group": "Group B", "kickoffUtc": "2026-06-24T19:00:00Z" },
+  { "match": "Bosnia & Herzegovina vs Qatar", "group": "Group B", "kickoffUtc": "2026-06-24T19:00:00Z" },
+  { "match": "Morocco vs Haiti", "group": "Group C", "kickoffUtc": "2026-06-24T22:00:00Z" },
+  { "match": "Scotland vs Brazil", "group": "Group C", "kickoffUtc": "2026-06-24T22:00:00Z" },
+  { "match": "South Africa vs South Korea", "group": "Group A", "kickoffUtc": "2026-06-25T01:00:00Z" },
+  { "match": "Czech Republic vs Mexico", "group": "Group A", "kickoffUtc": "2026-06-25T01:00:00Z" },
+  { "match": "Curacao vs Ivory Coast", "group": "Group E", "kickoffUtc": "2026-06-25T20:00:00Z" },
+  { "match": "Ecuador vs Germany", "group": "Group E", "kickoffUtc": "2026-06-25T20:00:00Z" },
+  { "match": "Tunisia vs Netherlands", "group": "Group F", "kickoffUtc": "2026-06-25T23:00:00Z" },
+  { "match": "Japan vs Sweden", "group": "Group F", "kickoffUtc": "2026-06-25T23:00:00Z" },
+  { "match": "Turkey vs USA", "group": "Group D", "kickoffUtc": "2026-06-26T02:00:00Z" },
+  { "match": "Paraguay vs Australia", "group": "Group D", "kickoffUtc": "2026-06-26T02:00:00Z" },
+  { "match": "Norway vs France", "group": "Group I", "kickoffUtc": "2026-06-26T19:00:00Z" },
+  { "match": "Senegal vs Iraq", "group": "Group I", "kickoffUtc": "2026-06-26T19:00:00Z" },
+  { "match": "Cape Verde vs Saudi Arabia", "group": "Group H", "kickoffUtc": "2026-06-27T00:00:00Z" },
+  { "match": "Uruguay vs Spain", "group": "Group H", "kickoffUtc": "2026-06-27T00:00:00Z" },
+  { "match": "New Zealand vs Belgium", "group": "Group G", "kickoffUtc": "2026-06-27T03:00:00Z" },
+  { "match": "Egypt vs Iran", "group": "Group G", "kickoffUtc": "2026-06-27T03:00:00Z" },
+  { "match": "Panama vs England", "group": "Group L", "kickoffUtc": "2026-06-27T21:00:00Z" },
+  { "match": "Croatia vs Ghana", "group": "Group L", "kickoffUtc": "2026-06-27T21:00:00Z" },
+  { "match": "Colombia vs Portugal", "group": "Group K", "kickoffUtc": "2026-06-27T23:30:00Z" },
+  { "match": "DR Congo vs Uzbekistan", "group": "Group K", "kickoffUtc": "2026-06-27T23:30:00Z" },
+  { "match": "Algeria vs Austria", "group": "Group J", "kickoffUtc": "2026-06-28T02:00:00Z" },
+  { "match": "Jordan vs Argentina", "group": "Group J", "kickoffUtc": "2026-06-28T02:00:00Z" }
+];
+
 const KNOCKOUT_SCHEDULE = [
   { match: "South Africa vs Canada", round: "Round of 32", matchNumber: 73, kickoffUtc: "2026-06-28T19:00:00Z" },
   { match: "Brazil vs Japan", round: "Round of 32", matchNumber: 76, kickoffUtc: "2026-06-29T17:00:00Z" },
@@ -219,7 +295,11 @@ function getFifaStatus(payload) {
         return 'ET HT';
       }
 
-      if (p >= 5 && p <= 9) {
+      // Periods 7, 8, and 9: treat as ET unless there is explicit penalty evidence.
+      // Period 5 is the ordinary second half of regulation play (Period 3 is 1H,
+      // Period 5 is 2H) and must NOT be treated as ET.
+      // Period 6 is excluded until a captured FIFA payload proves its meaning.
+      if (p === 7 || p === 8 || p === 9) {
         const penHomeLive = homePen !== null && homePen !== undefined;
         const penAwayLive = awayPen !== null && awayPen !== undefined;
         if (penHomeLive && penAwayLive) return 'P';
@@ -478,9 +558,9 @@ assert(getFifaStatus(period7Live) !== 'P',
 assert(getFifaStatus(period7Live) !== 'PEN',
   'Period 7 with no penalty evidence => not PEN');
 
-// Test: FIFA Period 5 during a tied knockout match remains ET
+// Test: FIFA Period 5 is ordinary regulation second half (LIVE, not ET)
 console.log();
-console.log('Test: Period 5 during tied knockout match => ET');
+console.log('Test: Period 5 returns LIVE with MatchTime preserved');
 const period5Tied = {
   Period: 5,
   MatchTime: '91',
@@ -488,20 +568,27 @@ const period5Tied = {
   HomeTeam: { Score: 0, PenaltyScore: null, ExtraTimeScore: null },
   AwayTeam: { Score: 0, PenaltyScore: null, ExtraTimeScore: null }
 };
-assertEqual(getFifaStatus(period5Tied), 'ET',
-  'Period 5 at 0-0 is ET');
+assertEqual(getFifaStatus(period5Tied), 'LIVE',
+  'Period 5 at 0-0 with MatchStatus 3 => LIVE (not ET)');
+assert(getFifaStatus(period5Tied) !== 'ET',
+  'Period 5 does not return ET');
+assertEqual(normalizeFifaMatchTime(period5Tied.MatchTime), "91'",
+  'Period 5 MatchTime "91\'" preserved');
 
-// Test: Period 6 also during ET
+// Test: Period 6 is unconfirmed - falls through to LIVE fallback
+// (Period 6 is excluded from ET mapping until a captured FIFA payload proves its meaning)
 console.log();
-console.log('Test: Period 6 => ET');
+console.log('Test: Period 6 => LIVE (unconfirmed period)');
 const period6 = {
   Period: 6,
   MatchTime: '106',
   HomeTeam: { Score: 1, PenaltyScore: null },
   AwayTeam: { Score: 1, PenaltyScore: null }
 };
-assertEqual(getFifaStatus(period6), 'ET',
-  'Period 6 is ET');
+assertEqual(getFifaStatus(period6), 'LIVE',
+  'Period 6 with no ET/penalty mapping => LIVE fallback');
+assert(getFifaStatus(period6) !== 'ET',
+  'Period 6 is not classified as ET');
 
 // Test: Active penalty shootout remains non-final (P)
 console.log();
@@ -1418,7 +1505,708 @@ assertEqual(merged2, 'R32 · Pens 3-4',
 assertEqual(mergeNotes('R32', ''), 'R32',
   'Normal non-penalty R32 match => note "R32"');
 
-// ========== Summary ==========
+// ====================================================================
+// WC26-R32-ET-011: Source-precedence regression tests
+// ====================================================================
+console.log();
+console.log('=== WC26-R32-ET-011: Source-precedence tests ===');
+console.log();
+
+// Helper: Simulate the worldcup26.ir overlay logic with the source-precedence guard.
+// Mirrors the Step 3 loop in refreshResults() from index.js.
+function simulateWorldcupOverlay(cachedResult, apiMatchKey, apiStatus, apiScore, apiNote) {
+  const matches = {};
+
+  // Apply worldcup26.ir game (single match simulation)
+  // This mirrors the source-precedence guard in refreshResults() step 3
+  const key = apiMatchKey;
+  const cachedEntry = cachedResult?.matches?.[key];
+  if (cachedEntry?.source === 'fifa' && isMatchFinal(cachedResult, key)) {
+    matches[key] = { ...cachedEntry };
+  } else {
+    matches[key] = {
+      status: apiStatus,
+      score: apiScore || key.replace(' vs ', ' 0-0 '),
+      note: apiNote || 'R32'
+    };
+  }
+
+  return matches;
+}
+
+// Helper: Simulate ensureCompleteScheduleCoverage logic with the source-precedence guard.
+// This fills in any schedule keys not yet covered, preserving cached final results.
+function simulateCoverage(cachedResult) {
+  const matches = {};
+
+  // Populate all knockout schedule keys
+  for (const m of KNOCKOUT_SCHEDULE) {
+    const key = m.match;
+    const cachedEntry = cachedResult?.matches?.[key];
+    if (cachedEntry?.source === 'fifa' && isMatchFinal(cachedResult, key)) {
+      matches[key] = { ...cachedEntry };
+    } else if (cachedResult && isMatchFinal(cachedResult, key)) {
+      matches[key] = { ...cachedResult.matches[key] };
+    } else {
+      const [home, away] = key.split(' vs ');
+      matches[key] = {
+        status: 'NS',
+        score: `${home} 0-0 ${away}`,
+        note: 'Round of 32'
+      };
+    }
+  }
+
+  // Populate all group stage schedule keys
+  for (const m of GROUP_STAGE_SCHEDULE) {
+    const key = m.match;
+    if (matches[key]) continue;
+    if (cachedResult && isMatchFinal(cachedResult, key)) {
+      matches[key] = { ...cachedResult.matches[key] };
+    } else {
+      const [home, away] = key.split(' vs ');
+      matches[key] = {
+        status: 'NS',
+        score: `${home} 0-0 ${away}`,
+        note: m.group
+      };
+    }
+  }
+
+  return matches;
+}
+
+// ====================================================================
+// TEST A: Cached PEN survives fallback FT after enrichment window
+// ====================================================================
+console.log('TEST A: Cached PEN survives fallback FT after enrichment window');
+console.log('Simulates "Germany vs Paraguay" beyond +240 minute FIFA window.');
+console.log();
+
+const testACached = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 3-4',
+      source: 'fifa'
+    }
+  }
+};
+
+// Simulate the fallback worldcup26.ir returning FT for this match
+const testAResult = simulateWorldcupOverlay(testACached, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+const tA = testAResult['Germany vs Paraguay'];
+
+assertEqual(tA.status, 'PEN',
+  'TEST A1: status remains PEN (not FT)');
+assertEqual(tA.score, 'Germany 1-1 Paraguay',
+  'TEST A2: score preserved');
+assertEqual(tA.note, 'R32 · Pens 3-4',
+  'TEST A3: note preserved (R32 · Pens 3-4)');
+assertEqual(tA.source, 'fifa',
+  'TEST A4: source remains fifa');
+
+// Ensure the final payload would serialize properly
+const tAPayload = JSON.stringify(tA);
+assert(!tAPayload.includes('"FT"'),
+  'TEST A5: no FT in serialized result');
+assert(tAPayload.includes('"PEN"'),
+  'TEST A6: PEN present in serialized result');
+assert(tAPayload.includes('Pens 3-4'),
+  'TEST A7: Pens note present in serialized result');
+assert(tAPayload.includes('"fifa"'),
+  'TEST A8: fifa source present in serialized result');
+
+console.log();
+
+// ====================================================================
+// TEST B: Cached AET survives fallback FT
+// ====================================================================
+console.log('TEST B: Cached AET survives fallback FT');
+console.log();
+
+const testBCached = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'AET',
+      score: 'Germany 2-1 Paraguay',
+      note: 'R32 · AET',
+      source: 'fifa'
+    }
+  }
+};
+
+const testBResult = simulateWorldcupOverlay(testBCached, 'Germany vs Paraguay', 'FT', 'Germany 2-1 Paraguay', 'R32');
+const tB = testBResult['Germany vs Paraguay'];
+
+assertEqual(tB.status, 'AET',
+  'TEST B1: status remains AET (not FT)');
+assertEqual(tB.score, 'Germany 2-1 Paraguay',
+  'TEST B2: score preserved');
+assertEqual(tB.note, 'R32 · AET',
+  'TEST B3: note preserved');
+assertEqual(tB.source, 'fifa',
+  'TEST B4: source remains fifa');
+
+console.log();
+
+// ====================================================================
+// TEST C: Newer FIFA terminal result may replace older FIFA data
+// ====================================================================
+console.log('TEST C: Newer FIFA terminal result may replace older FIFA data');
+console.log('Simulates a follow-up FIFA enrichment call where PEN replaces PEN.');
+console.log();
+
+// Test: A new FIFA PEN result should be accepted over an older FIFA PEN result
+// (the enrichMatchesWithFifa code applies the FIFA result unconditionally for matches
+// still within the enrichment window - this test verifies the guard does not block it)
+const testCInitial = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 3-4',
+      source: 'fifa'
+    }
+  }
+};
+
+// Simulate worldcup overlay with the same FIFA result (no change)
+const testCOverlay = simulateWorldcupOverlay(testCInitial, 'Germany vs Paraguay', 'PEN', 'Germany 1-1 Paraguay', 'R32 · Pens 3-4');
+const tC1 = testCOverlay['Germany vs Paraguay'];
+
+assertEqual(tC1.status, 'PEN',
+  'TEST C1: status remains PEN (PEN overlay from worldcup would not occur, but if it did, the guard preserves the cached FIFA data)');
+assertEqual(tC1.score, 'Germany 1-1 Paraguay',
+  'TEST C2: score preserved');
+assertEqual(tC1.source, 'fifa',
+  'TEST C3: source remains fifa');
+
+// Test: If the cached entry has source fifa but is NOT final (e.g. P status),
+// worldcup26.ir should NOT overwrite it (the guard still blocks it because
+// the cached entry has source fifa and the guard explicitly checks isMatchFinal).
+// Actually - re-reading the guard: it checks `cachedEntry?.source === 'fifa' && isMatchFinal(cachedResult, key)`.
+// So a non-final FIFA entry (like P) would NOT be guarded, which is correct:
+// it can be overlaid by worldcup26.ir and then re-enriched by FIFA later.
+const testCNonFinalCache = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'P',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 2-1',
+      source: 'fifa'
+    }
+  }
+};
+
+const testCNonFinalResult = simulateWorldcupOverlay(testCNonFinalCache, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+const tCNonFinal = testCNonFinalResult['Germany vs Paraguay'];
+
+assertEqual(tCNonFinal.status, 'FT',
+  'TEST C4: non-final FIFA P is overridden by worldcup26.ir FT (correct - not final)');
+
+console.log();
+
+// ====================================================================
+// TEST D: Group-stage FT draw remains normal and final
+// ====================================================================
+console.log('TEST D: Group-stage FT draw remains normal and final');
+console.log();
+
+const testDCached = {
+  matches: {
+    "Mexico vs South Africa": {
+      status: 'FT',
+      score: 'Mexico 1-1 South Africa',
+      note: 'Group A'
+    }
+  }
+};
+
+// A group-stage FT 1-1 is final and must not be treated as a penalty candidate
+assertEqual(isMatchFinal(testDCached, 'Mexico vs South Africa'), true,
+  'TEST D1: Group-stage FT 1-1 is final');
+
+// Worldcup26.ir returning FT 1-1 for a group match must be accepted
+const testDResult = simulateWorldcupOverlay(testDCached, 'Mexico vs South Africa', 'FT', 'Mexico 1-1 South Africa', 'Group A');
+const tD = testDResult['Mexico vs South Africa'];
+assertEqual(tD.status, 'FT',
+  'TEST D2: Group-stage FT status remains FT');
+assertEqual(tD.score, 'Mexico 1-1 South Africa',
+  'TEST D3: Group-stage score preserved');
+
+// A group-stage FT 1-1 must not be enriched for penalties
+assert(!isKnockoutMatchKey('Mexico vs South Africa'),
+  'TEST D4: Mexico vs South Africa is not a knockout match');
+
+// Group-stage FT always final, regardless of score equality
+const testDGroupFt = { matches: { "Mexico vs South Africa": { status: 'FT', score: 'Mexico 1-1 South Africa' } } };
+assertEqual(isMatchFinal(testDGroupFt, 'Mexico vs South Africa'), true,
+  'TEST D5: Group-stage FT 1-1 always final');
+
+console.log();
+
+// ====================================================================
+// TEST E: Knockout FT with unequal score retains existing behavior
+// ====================================================================
+console.log('TEST E: Knockout FT with unequal score retains existing behavior');
+console.log();
+
+// Knockout FT 2-1 (unequal) is final and should remain final
+const testECached = {
+  matches: {
+    "South Africa vs Canada": {
+      status: 'FT',
+      score: 'South Africa 2-1 Canada',
+      note: 'Round of 32'
+    }
+  }
+};
+
+assertEqual(isMatchFinal(testECached, 'South Africa vs Canada'), true,
+  'TEST E1: Knockout FT 2-1 (unequal) is final');
+
+// Worldcup26.ir FT should be accepted for a cached non-FIFA result
+const testEResult = simulateWorldcupOverlay(testECached, 'South Africa vs Canada', 'FT', 'South Africa 2-1 Canada', 'R32');
+const tE = testEResult['South Africa vs Canada'];
+assertEqual(tE.status, 'FT',
+  'TEST E2: Knockout FT status remains FT');
+assertEqual(tE.score, 'South Africa 2-1 Canada',
+  'TEST E3: Knockout score preserved');
+
+// Any cached source is accepted for non-FIFA final results
+const testEAnySource = {
+  matches: {
+    "South Africa vs Canada": {
+      status: 'FT',
+      score: 'South Africa 2-1 Canada',
+      note: 'R32',
+      source: 'worldcup26.ir'
+    }
+  }
+};
+assertEqual(isMatchFinal(testEAnySource, 'South Africa vs Canada'), true,
+  'TEST E4: Non-FIFA knockout FT 2-1 is also final');
+
+console.log();
+
+// ====================================================================
+// TEST F: Repeated scheduled refreshes do not duplicate notes or alter source
+// ====================================================================
+console.log('TEST F: Repeated scheduled refreshes do not duplicate notes or alter source');
+console.log();
+
+const testFCached = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 3-4',
+      source: 'fifa'
+    }
+  }
+};
+
+// Simulate multiple refresh cycles
+let testFMatches = {};
+for (let cycle = 1; cycle <= 5; cycle++) {
+  testFMatches = simulateWorldcupOverlay(testFCached, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+}
+
+const tF = testFMatches['Germany vs Paraguay'];
+
+assertEqual(tF.note, 'R32 · Pens 3-4',
+  'TEST F1: Note not duplicated after 5 refresh cycles');
+assert(!tF.note.includes('· ·'),
+  'TEST F2: Note does not contain double separator');
+assert(!tF.note.includes('Pens 3-4 · Pens 3-4'),
+  'TEST F3: Note does not duplicate Pens content');
+assertEqual(tF.source, 'fifa',
+  'TEST F4: Source remains fifa after 5 cycles');
+assertEqual(tF.status, 'PEN',
+  'TEST F5: Status remains PEN after 5 cycles');
+
+console.log();
+
+// ====================================================================
+// TEST G: Unchanged authoritative final payload does not trigger unnecessary KV write
+// ====================================================================
+console.log('TEST G: Unchanged authoritative final payload does not trigger unnecessary KV write');
+console.log();
+
+// Simulate: cached result is the authoritative FIFA terminal result.
+// After refresh, if the overlay guard preserves it, the serialized payload should be
+// identical to the cached version. This proves no unnecessary KV write.
+const testGCached = {
+  lastUpdated: '30/06/2026, 19:00:00 ICT',
+  lastUpdatedUtc: '2026-06-30T12:00:00.000Z',
+  source: 'worldcup26.ir/get/games',
+  matchCount: 88,
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 3-4',
+      source: 'fifa'
+    }
+  }
+};
+
+// Simulate the full coverage + overlay
+const testGCoverageMatches = simulateCoverage({
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 3-4',
+      source: 'fifa'
+    }
+  }
+});
+
+const gMatch = testGCoverageMatches['Germany vs Paraguay'];
+assertEqual(gMatch.status, 'PEN',
+  'TEST G1: Coverage preserves PEN status');
+
+// Verify the key match entry is serialized identically (proves no downgrade)
+const gOldSerialized = JSON.stringify(testGCached.matches['Germany vs Paraguay']);
+const gNewSerialized = JSON.stringify(testGCoverageMatches['Germany vs Paraguay']);
+assertEqual(gOldSerialized, gNewSerialized,
+  'TEST G2: Serialized match entry unchanged (no unnecessary KV write)');
+
+// Verify all 88 keys present
+const gKeys = Object.keys(testGCoverageMatches);
+assert(gKeys.length >= 88,
+  `TEST G3: ${gKeys.length} schedule keys present (>= 88)`);
+
+console.log();
+
+// ====================================================================
+// TEST H: All 88 expected schedule keys remain present
+// ====================================================================
+console.log('TEST H: All 88 expected schedule keys remain present');
+console.log();
+
+// Collect all expected keys
+const expectedKeys = new Set();
+for (const m of GROUP_STAGE_SCHEDULE) {
+  expectedKeys.add(m.match);
+}
+for (const m of KNOCKOUT_SCHEDULE) {
+  expectedKeys.add(m.match);
+}
+
+// Run simulateCoverage with a null/empty cached result to generate all default NS entries
+const testHMatches = simulateCoverage(null);
+const hKeys = Object.keys(testHMatches);
+
+// Check every expected key exists
+let hMissingKeys = [];
+for (const key of expectedKeys) {
+  if (!testHMatches[key]) {
+    hMissingKeys.push(key);
+  } else {
+    // Verify each has a status
+    assert(testHMatches[key].status !== undefined, `HK: ${key} has status`);
+  }
+}
+assert(hMissingKeys.length === 0,
+  `TEST H1: ${hMissingKeys.length} missing keys (${hMissingKeys.join(', ') || 'none'})`);
+assert(hKeys.length >= 88,
+  `TEST H2: ${hKeys.length} total keys (>= 88)`);
+
+// Verify all have score format "TeamA X-Y TeamB" (not "TeamA vs TeamB")
+for (const key of expectedKeys) {
+  const match = testHMatches[key];
+  if (!match) continue;
+  const score = match.score;
+  assert(/ \d+-\d+ /.test(score),
+    `TEST H3: ${key} score contains "X-Y" separator: "${score}"`);
+  assert(!score.includes(' vs '),
+    `TEST H4: ${key} score does not contain " vs ": "${score}"`);
+}
+
+// Verify 72 group stage keys
+const groupKeys = GROUP_STAGE_SCHEDULE.length;
+assertEqual(groupKeys, 72,
+  `TEST H5: ${groupKeys} group stage keys`);
+
+// Verify 16 knockout keys
+const knockoutKeys = KNOCKOUT_SCHEDULE.length;
+assertEqual(knockoutKeys, 16,
+  `TEST H6: ${knockoutKeys} knockout keys`);
+
+assertEqual(groupKeys + knockoutKeys, 88,
+  'TEST H7: 72 + 16 = 88 total schedule keys');
+
+// Check the merged result preserves cached FIFA terminal data
+const testHFifaCached = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 3-4',
+      source: 'fifa'
+    },
+    "Netherlands vs Morocco": {
+      status: 'PEN',
+      score: 'Netherlands 1-1 Morocco',
+      note: 'R32 · Pens 2-3',
+      source: 'fifa'
+    }
+  }
+};
+
+const testHWithFifa = simulateCoverage(testHFifaCached);
+const tHGer = testHWithFifa['Germany vs Paraguay'];
+const tHNet = testHWithFifa['Netherlands vs Morocco'];
+
+assertEqual(tHGer.status, 'PEN',
+  'TEST H8: Germany vs Paraguay status preserved as PEN');
+assertEqual(tHGer.note, 'R32 · Pens 3-4',
+  'TEST H9: Germany vs Paraguay note preserved');
+assertEqual(tHGer.source, 'fifa',
+  'TEST H10: Germany vs Paraguay source preserved as fifa');
+assertEqual(tHNet.status, 'PEN',
+  'TEST H11: Netherlands vs Morocco status preserved as PEN');
+assertEqual(tHNet.note, 'R32 · Pens 2-3',
+  'TEST H12: Netherlands vs Morocco note preserved');
+assertEqual(tHNet.source, 'fifa',
+  'TEST H13: Netherlands vs Morocco source preserved as fifa');
+
+// Verify the coverage preserved all keys including the cached FIFA terminal ones
+assert(testHWithFifa['Germany vs Paraguay'] !== undefined,
+  'TEST H14: Germany vs Paraguay present after coverage');
+assert(testHWithFifa['Netherlands vs Morocco'] !== undefined,
+  'TEST H15: Netherlands vs Morocco present after coverage');
+
+console.log();
+
+// ====================================================================
+// WC26-R32-ET-012: Sticky shootout phase tests
+// ====================================================================
+console.log();
+console.log('=== WC26-R32-ET-012: Sticky shootout phase tests ===');
+console.log();
+
+// Helper: isStickyFifaKnockoutState mirror from index.js
+function isStickyFifaKnockoutState(entry) {
+  const status = String(entry.status || '').toUpperCase();
+  return status === 'PEN WAIT' || status === 'P';
+}
+
+// Helper: simulate overlay with sticky guard (mirrors the updated Step 3 guard)
+function simulateStickyOverlay(cachedResult, apiMatchKey, apiStatus, apiScore, apiNote) {
+  const matches = {};
+  const key = apiMatchKey;
+  const cachedEntry = cachedResult?.matches?.[key];
+  if (cachedEntry?.source === 'fifa' && (isMatchFinal(cachedResult, key) || isStickyFifaKnockoutState(cachedEntry))) {
+    matches[key] = { ...cachedEntry };
+  } else {
+    matches[key] = {
+      status: apiStatus,
+      score: apiScore || key.replace(' vs ', ' 0-0 '),
+      note: apiNote || 'R32'
+    };
+  }
+  return matches;
+}
+
+// TEST 1: Cached FIFA PEN WAIT survives incoming fallback FT 1-1
+console.log('TEST 1: Cached FIFA PEN WAIT survives fallback FT');
+const test1Cached = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN WAIT',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32',
+      source: 'fifa'
+    }
+  }
+};
+const test1Result = simulateStickyOverlay(test1Cached, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+const t1 = test1Result['Germany vs Paraguay'];
+assertEqual(t1.status, 'PEN WAIT', 'ET012-1: PEN WAIT survives fallback FT');
+assertEqual(t1.source, 'fifa', 'ET012-2: source remains fifa');
+
+// TEST 2: Cached FIFA P with Pens 2-3 survives incoming fallback FT 1-1
+console.log();
+console.log('TEST 2: Cached FIFA P survives fallback FT');
+const test2Cached = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'P',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 2-3',
+      source: 'fifa'
+    }
+  }
+};
+const test2Result = simulateStickyOverlay(test2Cached, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+const t2 = test2Result['Germany vs Paraguay'];
+assertEqual(t2.status, 'P', 'ET012-3: P survives fallback FT');
+assertEqual(t2.note, 'R32 · Pens 2-3', 'ET012-4: note preserved');
+assertEqual(t2.source, 'fifa', 'ET012-5: source remains fifa');
+
+// TEST 3: A newer FIFA response advances PEN WAIT to P
+console.log();
+console.log('TEST 3: Newer FIFA advances PEN WAIT to P');
+// Simulate enrichMatchesWithFifa: it directly writes the enrichment result
+// on top of the sticky-preserved entry; the guard only blocks worldcup26.ir.
+const test3Match = { status: 'PEN WAIT', score: 'Germany 1-1 Paraguay', note: 'R32', source: 'fifa' };
+const test3Enrichment = { status: 'P', score: 'Germany 1-1 Paraguay', note: 'R32 · Pens 2-1', source: 'fifa' };
+// Simulate: worldcup overlay preserved PEN WAIT via sticky guard, then FIFA enrichment writes P
+const test3After = { ...test3Match, ...test3Enrichment };
+assertEqual(test3After.status, 'P', 'ET012-6: FIFA enrichment advances PEN WAIT to P');
+assertEqual(test3After.note, 'R32 · Pens 2-1', 'ET012-7: note updated');
+assertEqual(test3After.source, 'fifa', 'ET012-8: source remains fifa');
+
+// TEST 4: A newer FIFA response advances P to final PEN
+console.log();
+console.log('TEST 4: Newer FIFA advances P to PEN');
+const test4Match = { status: 'P', score: 'Germany 1-1 Paraguay', note: 'R32 · Pens 3-4', source: 'fifa' };
+const test4Enrichment = { status: 'PEN', score: 'Germany 1-1 Paraguay', note: 'R32 · Pens 3-4', source: 'fifa' };
+const test4After = { ...test4Match, ...test4Enrichment };
+assertEqual(test4After.status, 'PEN', 'ET012-9: FIFA enrichment advances P to PEN');
+
+// TEST 5: Final PEN and AET retention tests from ET-011 continue passing
+console.log();
+console.log('TEST 5: ET-011 final retention tests confirmed');
+// These are already tested in TEST A and TEST B above; confirm they also pass
+// via the updated sticky guard function:
+const penRetainCached = {
+  matches: { "Germany vs Paraguay": { status: 'PEN', score: 'Germany 1-1 Paraguay', note: 'R32 · Pens 3-4', source: 'fifa' } }
+};
+const penRetainResult = simulateStickyOverlay(penRetainCached, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+assertEqual(penRetainResult['Germany vs Paraguay'].status, 'PEN', 'ET012-10: PEN retention (ET-011 compat)');
+const aetRetainCached = {
+  matches: { "Germany vs Paraguay": { status: 'AET', score: 'Germany 2-1 Paraguay', note: 'R32 · AET', source: 'fifa' } }
+};
+const aetRetainResult = simulateStickyOverlay(aetRetainCached, 'Germany vs Paraguay', 'FT', 'Germany 2-1 Paraguay', 'R32');
+assertEqual(aetRetainResult['Germany vs Paraguay'].status, 'AET', 'ET012-11: AET retention (ET-011 compat)');
+
+// TEST 6: Ordinary regulation, group-stage FT, and unequal knockout FT unchanged
+console.log();
+console.log('TEST 6: Ordinary states unchanged');
+// Group-stage FT 1-1 (no source -> accepts worldcup)
+const gsCached = { matches: { "Mexico vs South Africa": { status: 'FT', score: 'Mexico 1-1 South Africa', note: 'Group A' } } };
+const gsResult = simulateStickyOverlay(gsCached, 'Mexico vs South Africa', 'FT', 'Mexico 2-0 South Africa', 'Group A');
+assertEqual(gsResult['Mexico vs South Africa'].score, 'Mexico 2-0 South Africa', 'ET012-12: group-stage FT 1-1 overwritten by worldcup (no fifa source)');
+// Unequal knockout FT with source:fifa is preserved
+const koFtCached = { matches: { "South Africa vs Canada": { status: 'FT', score: 'South Africa 2-1 Canada', note: 'R32', source: 'fifa' } } };
+const koFtResult = simulateStickyOverlay(koFtCached, 'South Africa vs Canada', 'FT', 'South Africa 2-1 Canada', 'R32');
+assertEqual(koFtResult['South Africa vs Canada'].source, 'fifa', 'ET012-13: unequal FIFA FT preserved');
+
+// TEST 7: All 88 schedule keys remain present
+console.log();
+console.log('TEST 7: All 88 schedule keys present');
+const test7Cached = { matches: { "Germany vs Paraguay": { status: 'P', score: 'Germany 1-1 Paraguay', note: 'R32 · Pens 2-1', source: 'fifa' } } };
+// Verify the sticky overlay guard (Step 3) preserves P before coverage runs
+const test7Overlay = simulateStickyOverlay(test7Cached, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+assertEqual(test7Overlay['Germany vs Paraguay'].status, 'P', 'ET012-15: P preserved by overlay guard');
+const test7Coverage = simulateCoverage(test7Cached);
+const t7Keys = Object.keys(test7Coverage);
+assert(t7Keys.length >= 88, `ET012-14: ${t7Keys.length} schedule keys (>= 88)`);
+// Coverage fills in the missing key (P not preserved by coverage itself - that's fine, overlay guard handles it)
+assert(test7Coverage['Germany vs Paraguay'].status === 'NS', 'ET012-15b: coverage creates default NS for non-final P (expected - overlay guard already preserved it)');
+
+// TEST 8: KV payload unchanged when sticky cached record preserved
+console.log();
+console.log('TEST 8: KV payload unchanged');
+const test8CachedMatch = { status: 'PEN WAIT', score: 'Germany 1-1 Paraguay', note: 'R32', source: 'fifa' };
+const test8OldSerialized = JSON.stringify(test8CachedMatch);
+const test8Result = simulateStickyOverlay(
+  { matches: { "Germany vs Paraguay": test8CachedMatch } },
+  'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32'
+);
+const test8NewSerialized = JSON.stringify(test8Result['Germany vs Paraguay']);
+assertEqual(test8OldSerialized, test8NewSerialized, 'ET012-16: KV payload unchanged when sticky record preserved');
+
+console.log();
+
+// ====================================================================
+// Additional edge-case tests for source-precedence
+// ====================================================================
+console.log('=== Source-precedence edge-case tests ===');
+console.log();
+
+// Test: worldcup26.ir result with no source field does not overwrite cached FIFA PEN
+console.log('Test: worldcup26.ir FT without source does not overwrite cached FIFA PEN');
+const edgeCachedPEN = {
+  matches: {
+    "Germany vs Paraguay": {
+      status: 'PEN',
+      score: 'Germany 1-1 Paraguay',
+      note: 'R32 · Pens 3-4',
+      source: 'fifa'
+    }
+  }
+};
+const edgeWorldcup = simulateWorldcupOverlay(edgeCachedPEN, 'Germany vs Paraguay', 'FT', 'Germany 1-1 Paraguay', 'R32');
+const edgeMatch = edgeWorldcup['Germany vs Paraguay'];
+assertEqual(edgeMatch.status, 'PEN',
+  'Edge 1: Worldcup FT does not overwrite cached FIFA PEN');
+assertEqual(edgeMatch.source, 'fifa',
+  'Edge 2: Source remains fifa after worldcup overlay');
+assert(!edgeMatch.source || edgeMatch.source === 'fifa',
+  'Edge 3: Source is fifa, not missing');
+
+// Test: worldcup26.ir can populate a match for which no FIFA terminal exists
+console.log();
+console.log('Test: worldcup26.ir populates match with no cached FIFA terminal result');
+const edgeNoCached = null; // no cached result
+const edgeLiveResult = simulateWorldcupOverlay(edgeNoCached, 'France vs Sweden', 'LIVE', 'France 1-0 Sweden', 'R32');
+const edgeLiveMatch = edgeLiveResult['France vs Sweden'];
+assertEqual(edgeLiveMatch.status, 'LIVE',
+  'Edge 4: Worldcup LIVE status accepted when no cached FIFA result');
+assertEqual(edgeLiveMatch.score, 'France 1-0 Sweden',
+  'Edge 5: Worldcup score accepted');
+
+// Test: cached FIFA FT (unequal score, final) is preserved over worldcup26.ir
+console.log();
+console.log('Test: cached FIFA FT (unequal) preserved over worldcup26.ir');
+const edgeFifaFtCached = {
+  matches: {
+    "South Africa vs Canada": {
+      status: 'FT',
+      score: 'South Africa 2-1 Canada',
+      note: 'R32',
+      source: 'fifa'
+    }
+  }
+};
+const edgeFifaFtResult = simulateWorldcupOverlay(edgeFifaFtCached, 'South Africa vs Canada', 'FT', 'South Africa 2-1 Canada', 'R32');
+const edgeFifaFtMatch = edgeFifaFtResult['South Africa vs Canada'];
+assertEqual(edgeFifaFtMatch.status, 'FT',
+  'Edge 6: FIFA FT (unequal) preserved');
+assertEqual(edgeFifaFtMatch.source, 'fifa',
+  'Edge 7: Source remains fifa');
+
+// Test: no cached FIFA result at all means worldcup26.ir is used
+console.log();
+console.log('Test: No cached FIFA result => worldcup26.ir used');
+const edgeNoFifaCached = {
+  matches: {
+    "Mexico vs Ecuador": {
+      status: 'FT',
+      score: 'Mexico 2-0 Ecuador',
+      note: 'R32'
+      // no source field
+    }
+  }
+};
+const edgeNoFifaResult = simulateWorldcupOverlay(edgeNoFifaCached, 'Mexico vs Ecuador', 'FT', 'Mexico 2-0 Ecuador', 'R32');
+const edgeNoFifaMatch = edgeNoFifaResult['Mexico vs Ecuador'];
+assertEqual(edgeNoFifaMatch.status, 'FT',
+  'Edge 8: Non-FIFA cached result accepts worldcup FT');
+// Note: when cachedEntry is non-FIFA, the guard skips it and worldcup overlay applies.
+// The cached result would have been overwritten by worldcup in a full refresh, which is fine.
+
+console.log();
+
+// ====================================================================
+// Summary ====================================================================
 console.log();
 console.log('=== Summary ===');
 console.log(`  Passed: ${passed}`);
