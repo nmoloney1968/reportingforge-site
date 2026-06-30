@@ -44,17 +44,25 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 @media (prefers-color-scheme: dark) { .card.australia { background: color-mix(in srgb, #1e3a5f 44%, Canvas 56%); } }
 
 /* Penalty result outer wrapper: status badge col 1, score grid col 2, metadata row 2 */
-.result-pens-wrapper { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 6px; align-items: start; }
+/* Desktop: auto columns and justify-content: start so the cluster shrink-wraps beside the badge */
+.result-pens-wrapper { display: grid; grid-template-columns: auto auto; justify-content: start; column-gap: 6px; align-items: start; }
 .result-pens-wrapper .status { margin-right: 0; align-self: start; margin-top: 2px; }
 .result-pens-wrapper .meta { grid-column: 1 / -1; text-align: left; font-size: .8rem; font-weight: 500; opacity: .78; margin-top: 2px; margin-left: 0; padding-left: 0; }
 
 /* Penalty result inner score grid */
-.result-pens { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 1px 4px; }
+/* Desktop: max-content team columns and fit-content width so content determines the width */
+.result-pens { display: grid; grid-template-columns: max-content auto max-content; width: fit-content; max-width: 100%; align-items: center; gap: 1px 4px; }
 .result-pens .team-home { text-align: right; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
 .result-pens .score { text-align: center; font-weight: 700; }
 .result-pens .team-away { text-align: left; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
 .result-pens .pens { grid-column: 2; text-align: center; font-size: .78rem; font-weight: 600; opacity: .82; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Narrow screen: switch to flexible columns so teams can wrap */
+@media (max-width: 520px) {
+  .result-pens-wrapper { grid-template-columns: auto minmax(0, 1fr); }
+  .result-pens { width: 100%; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+}
 
 .flag-img { display: inline-block; width: 1.35em; height: .95em; object-fit: cover; border-radius: 2px; vertical-align: -0.08em; box-shadow: 0 0 0 1px color-mix(in srgb, CanvasText 18%, transparent); background: color-mix(in srgb, Canvas 85%, CanvasText 15%); }
 .flag-img.home { margin-right: .35em; }
