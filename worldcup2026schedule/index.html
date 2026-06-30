@@ -43,6 +43,15 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 .australia-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #1a5632; color: #fbbf24; margin-left: 6px; vertical-align: 2px; }
 @media (prefers-color-scheme: dark) { .card.australia { background: color-mix(in srgb, #1e3a5f 44%, Canvas 56%); } }
 
+/* Penalty result grid layout */
+.result-pens { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 1px 4px; }
+.result-pens .team-home { text-align: right; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
+.result-pens .score { text-align: center; font-weight: 700; }
+.result-pens .team-away { text-align: left; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
+.result-pens .pens { grid-column: 2; text-align: center; font-size: .78rem; font-weight: 600; opacity: .82; }
+.result-pens .meta { grid-column: 1 / -1; text-align: left; font-size: .8rem; font-weight: 500; opacity: .78; margin-top: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
 .flag-img { display: inline-block; width: 1.35em; height: .95em; object-fit: cover; border-radius: 2px; vertical-align: -0.08em; box-shadow: 0 0 0 1px color-mix(in srgb, CanvasText 18%, transparent); background: color-mix(in srgb, Canvas 85%, CanvasText 15%); }
 .flag-img.home { margin-right: .35em; }
 .flag-img.away { margin-left: .35em; }
@@ -724,66 +733,56 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
       return true;
     }
 
-    // Penalty result: structured layout
-    // Line 1: status badge + "Germany  1-1  Paraguay"
-    // Line 2: "3-4 pens" (smaller, centered below score)
-    // Line 3: metadata note (e.g. "R32")
+    // Penalty result: CSS grid layout with 3 columns.
+    // col 1: home team (right-aligned), col 2: ordinary score (center), col 3: away team (left-aligned)
+    // Penalty tally in col 2 directly beneath the score.
+    // Metadata in full-width row beneath.
 
     const badge = document.createElement('span');
     badge.className = 'status';
     badge.textContent = formatStatusLabel(status, result.elapsed);
     div.appendChild(badge);
 
-    // Structured score block
-    const scoreBlock = document.createElement('span');
-    scoreBlock.style.display = 'inline-flex';
-    scoreBlock.style.alignItems = 'center';
-    scoreBlock.style.flexWrap = 'wrap';
-    scoreBlock.style.gap = '2px 6px';
+    // Inline wrapper for the grid (keeps status + grid on one line initially)
+    const grid = document.createElement('span');
+    grid.className = 'result-pens';
+    grid.style.display = 'inline-grid';
+    grid.style.verticalAlign = 'middle';
 
     const homeSpan = document.createElement('span');
-    homeSpan.className = 'team';
+    homeSpan.className = 'team-home';
     homeSpan.textContent = parsedScore.home;
 
     const scoreSpan = document.createElement('span');
-    scoreSpan.style.fontWeight = '700';
+    scoreSpan.className = 'score';
     scoreSpan.textContent = parsedScore.score;
 
     const awaySpan = document.createElement('span');
-    awaySpan.className = 'team';
+    awaySpan.className = 'team-away';
     awaySpan.textContent = parsedScore.away;
 
-    scoreBlock.appendChild(homeSpan);
-    scoreBlock.appendChild(scoreSpan);
-    scoreBlock.appendChild(awaySpan);
-    div.appendChild(scoreBlock);
+    const pensSpan = document.createElement('span');
+    pensSpan.className = 'pens';
+    pensSpan.textContent = `${parsedNote.pens} pens`;
 
-    // Penalty tally line
-    const pensDiv = document.createElement('div');
-    pensDiv.style.fontSize = '.78rem';
-    pensDiv.style.fontWeight = '600';
-    pensDiv.style.opacity = '.82';
-    pensDiv.style.marginTop = '1px';
-    pensDiv.style.paddingLeft = '0';
-    pensDiv.textContent = `${parsedNote.pens} pens`;
-    div.appendChild(pensDiv);
+    grid.appendChild(homeSpan);
+    grid.appendChild(scoreSpan);
+    grid.appendChild(awaySpan);
+    grid.appendChild(pensSpan);
 
-    // Metadata note (e.g. "R32") without the penalty portion
     if (parsedNote.metadata) {
-      const metaDiv = document.createElement('div');
-      metaDiv.style.fontWeight = '500';
-      metaDiv.style.fontSize = '.8rem';
-      metaDiv.style.opacity = '.78';
-      metaDiv.style.marginTop = '2px';
-      metaDiv.textContent = parsedNote.metadata;
-      div.appendChild(metaDiv);
+      const metaSpan = document.createElement('span');
+      metaSpan.className = 'meta';
+      metaSpan.textContent = parsedNote.metadata;
+      grid.appendChild(metaSpan);
     }
+
+    div.appendChild(grid);
 
     // Accessible description for screen readers
     const srDesc = document.createElement('span');
-    srDesc.className = 'visually-hidden';
+    srDesc.className = 'sr-only';
     srDesc.textContent = `${formatStatusLabel(status, result.elapsed)}: ${score}, penalty shootout ${parsedNote.pens}`;
-    srDesc.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;';
     div.appendChild(srDesc);
 
     card.appendChild(div);
