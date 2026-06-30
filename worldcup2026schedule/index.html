@@ -43,13 +43,17 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 .australia-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #1a5632; color: #fbbf24; margin-left: 6px; vertical-align: 2px; }
 @media (prefers-color-scheme: dark) { .card.australia { background: color-mix(in srgb, #1e3a5f 44%, Canvas 56%); } }
 
-/* Penalty result grid layout */
+/* Penalty result outer wrapper: status badge col 1, score grid col 2, metadata row 2 */
+.result-pens-wrapper { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 6px; align-items: start; }
+.result-pens-wrapper .status { margin-right: 0; align-self: start; margin-top: 2px; }
+.result-pens-wrapper .meta { grid-column: 1 / -1; text-align: left; font-size: .8rem; font-weight: 500; opacity: .78; margin-top: 2px; margin-left: 0; padding-left: 0; }
+
+/* Penalty result inner score grid */
 .result-pens { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 1px 4px; }
 .result-pens .team-home { text-align: right; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
 .result-pens .score { text-align: center; font-weight: 700; }
 .result-pens .team-away { text-align: left; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
 .result-pens .pens { grid-column: 2; text-align: center; font-size: .78rem; font-weight: 600; opacity: .82; }
-.result-pens .meta { grid-column: 1 / -1; text-align: left; font-size: .8rem; font-weight: 500; opacity: .78; margin-top: 2px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .flag-img { display: inline-block; width: 1.35em; height: .95em; object-fit: cover; border-radius: 2px; vertical-align: -0.08em; box-shadow: 0 0 0 1px color-mix(in srgb, CanvasText 18%, transparent); background: color-mix(in srgb, Canvas 85%, CanvasText 15%); }
@@ -733,20 +737,24 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
       return true;
     }
 
-    // Penalty result: CSS grid layout with 3 columns.
-    // col 1: home team (right-aligned), col 2: ordinary score (center), col 3: away team (left-aligned)
-    // Penalty tally in col 2 directly beneath the score.
-    // Metadata in full-width row beneath.
+    // Penalty result: outer wrapper grid with status in col 1, score grid in col 2.
+    // Inner score grid: 3 columns for home / score / away, penalty in col 2 below score.
+    // Metadata in outer wrapper row 2 spanning both columns.
+
+    const wrapper = document.createElement('span');
+    wrapper.className = 'result-pens-wrapper';
+    wrapper.style.display = 'grid';
+    wrapper.style.verticalAlign = 'middle';
 
     const badge = document.createElement('span');
     badge.className = 'status';
     badge.textContent = formatStatusLabel(status, result.elapsed);
-    div.appendChild(badge);
+    wrapper.appendChild(badge);
 
-    // Inline wrapper for the grid (keeps status + grid on one line initially)
+    // Inner score grid
     const grid = document.createElement('span');
     grid.className = 'result-pens';
-    grid.style.display = 'inline-grid';
+    grid.style.display = 'grid';
     grid.style.verticalAlign = 'middle';
 
     const homeSpan = document.createElement('span');
@@ -770,14 +778,17 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     grid.appendChild(awaySpan);
     grid.appendChild(pensSpan);
 
+    wrapper.appendChild(grid);
+
+    // Metadata in outer wrapper row 2
     if (parsedNote.metadata) {
       const metaSpan = document.createElement('span');
       metaSpan.className = 'meta';
       metaSpan.textContent = parsedNote.metadata;
-      grid.appendChild(metaSpan);
+      wrapper.appendChild(metaSpan);
     }
 
-    div.appendChild(grid);
+    div.appendChild(wrapper);
 
     // Accessible description for screen readers
     const srDesc = document.createElement('span');
