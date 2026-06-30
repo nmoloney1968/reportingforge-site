@@ -779,7 +779,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 
     const pensSpan = document.createElement('span');
     pensSpan.className = 'pens';
-    pensSpan.textContent = `${parsedNote.pens} pens`;
+    pensSpan.textContent = parsedNote.pens;
 
     grid.appendChild(homeSpan);
     grid.appendChild(scoreSpan);
