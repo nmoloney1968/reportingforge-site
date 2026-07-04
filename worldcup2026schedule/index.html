@@ -1,12 +1,10 @@
 <!doctype html>
-<!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>World Cup 2026 Group Stage - Hanoi Time</title>
-<meta content="Phone-friendly FIFA World Cup 2026 group-stage schedule converted to Hanoi time, with downloadable calendar import file." name="description"/>
+<title>World Cup 2026 Round of 16 - Hanoi Time</title>
+<meta content="Phone-friendly FIFA World Cup 2026 Round of 16 schedule with live scores." name="description"/>
 <link href="/favicon.ico" rel="icon" sizes="any"/>
 <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
@@ -25,9 +23,6 @@ h2 { font-size: 1.05rem; margin: 0 0 10px; padding-bottom: 6px; border-bottom: 1
 .match { font-size: 1.05rem; font-weight: 650; margin-top: 4px; }
 .venue, .meta { font-size: .86rem; opacity: .76; margin-top: 4px; }
 footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
-
-.actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
-.actions a { border: 1px solid color-mix(in srgb, CanvasText 22%, transparent); border-radius: 999px; padding: 7px 10px; text-decoration: none; color: inherit; font-size: .86rem; }
 #results-status { font-size: .82rem; opacity: .74; margin-top: 9px; }
 .card.germany { border: 2px solid #f59e0b; background: color-mix(in srgb, #fef3c7 58%, Canvas 42%); box-shadow: 0 0 0 3px color-mix(in srgb, #f59e0b 22%, transparent); }
 .germany-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #b91c1c; color: white; margin-left: 6px; vertical-align: 2px; }
@@ -43,22 +38,16 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 .australia-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #1a5632; color: #fbbf24; margin-left: 6px; vertical-align: 2px; }
 @media (prefers-color-scheme: dark) { .card.australia { background: color-mix(in srgb, #1e3a5f 44%, Canvas 56%); } }
 
-/* Penalty result outer wrapper: status badge col 1, score grid col 2, metadata row 2 */
-/* Desktop: auto columns and justify-content: start so the cluster shrink-wraps beside the badge */
+/* Penalty result wrapper */
 .result-pens-wrapper { display: grid; grid-template-columns: auto auto; justify-content: start; column-gap: 6px; align-items: start; }
 .result-pens-wrapper .status { margin-right: 0; align-self: start; margin-top: 2px; }
 .result-pens-wrapper .meta { grid-column: 1 / -1; text-align: left; font-size: .8rem; font-weight: 500; opacity: .78; margin-top: 2px; margin-left: 0; padding-left: 0; }
-
-/* Penalty result inner score grid */
-/* Desktop: max-content team columns and fit-content width so content determines the width */
 .result-pens { display: grid; grid-template-columns: max-content auto max-content; width: fit-content; max-width: 100%; align-items: center; gap: 1px 4px; }
 .result-pens .team-home { text-align: right; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
 .result-pens .score { text-align: center; font-weight: 700; }
 .result-pens .team-away { text-align: left; font-weight: 700; overflow-wrap: break-word; word-break: break-word; }
 .result-pens .pens { grid-column: 2; text-align: center; font-size: .78rem; font-weight: 600; opacity: .82; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
-/* Narrow screen: switch to flexible columns so teams can wrap */
 @media (max-width: 520px) {
   .result-pens-wrapper { grid-template-columns: auto minmax(0, 1fr); }
   .result-pens { width: 100%; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
@@ -70,501 +59,81 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 .team { white-space: nowrap; }
 .versus { opacity: .74; font-weight: 600; margin: 0 .18em; }
 
-/* Knockout section styling */
 .knockout-section { margin-top: 32px; padding: 18px 14px; border-radius: 18px; background: color-mix(in srgb, #1e1b4b 12%, Canvas 88%); border: 1px solid color-mix(in srgb, #6366f1 30%, transparent); }
 .knockout-heading { font-size: 1.2rem; margin: 0 0 14px; padding-bottom: 10px; border-bottom: 2px solid color-mix(in srgb, #6366f1 40%, transparent); color: color-mix(in srgb, #818cf8 80%, CanvasText 20%); letter-spacing: .04em; text-align: center; line-height: 1.4; }
 .knockout-card { border: 1px solid color-mix(in srgb, #6366f1 35%, transparent); background: color-mix(in srgb, #1e1b4b 8%, Canvas 92%); }
 .knockout-card .group { border-color: color-mix(in srgb, #6366f1 45%, transparent); color: color-mix(in srgb, #818cf8 70%, CanvasText 30%); }
 .match-badge { display: inline-block; font-size: .72rem; font-weight: 800; padding: 3px 7px; border-radius: 999px; background: color-mix(in srgb, #6366f1 25%, Canvas 75%); border: 1px solid color-mix(in srgb, #6366f1 40%, transparent); margin-right: 4px; vertical-align: 3px; }
 @media (prefers-color-scheme: dark) { .knockout-section { background: color-mix(in srgb, #1e1b4b 30%, Canvas 70%); } .knockout-card { background: color-mix(in srgb, #1e1b4b 16%, Canvas 84%); } }
-
 </style>
 </head>
 <body>
 <header>
-<h1>World Cup 2026 - Hanoi Time</h1>
-<p class="summary">72 group-stage + 16 Round-of-32 games. Times are Hanoi / ICT / UTC+7.</p>
-<div class="actions"><a href="world-cup-2026-group-stage-hanoi.ics">Download calendar (.ics)</a></div>
+<h1>World Cup 2026 Round of 16 - Hanoi Time</h1>
+<p class="summary">Eight Round-of-16 matches. Times are Hanoi / ICT / UTC+7.</p>
 <div id="results-status">Results update automatically from <code>results.json</code> when available.</div>
 </header>
-<section class="day"><h2>Friday, 12 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-11T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group A</span></div>
-<div class="match"><img alt="Mexico flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/><span class="team team-home">Mexico</span><span class="versus">vs</span><span class="team team-away">South Africa</span><img alt="South Africa flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/></div>
-<div class="venue">Mexico City, Mexico</div>
-<div class="meta">Source time: Thursday, June 11, 8pm UK time</div>
+
+<section class="day knockout-section"><h2 class="knockout-heading">ROUND OF 16</h2>
+<!-- M90: Sunday 5 July 2026 - 00:00 ICT -->
+<article class="card knockout-card australia" data-kickoff-utc="2026-07-04T17:00:00Z" data-match-number="90">
+<div><span class="time">00:00</span><span class="match-badge">M90</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="Canada flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/><span class="team team-home">Canada</span><span class="versus">vs</span><span class="team team-away">Morocco</span><img alt="Morocco flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/></div>
+<div class="meta">Sunday, 5 July 2026 - 00:00 Hanoi time</div>
 </article>
-<article class="card" data-kickoff-utc="2026-06-12T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group A</span></div>
-<div class="match"><img alt="South Korea flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/kr.svg"/><span class="team team-home">South Korea</span><span class="versus">vs</span><span class="team team-away">Czech Republic</span><img alt="Czech Republic flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cz.svg"/></div>
-<div class="venue">Zapopan, Mexico</div>
-<div class="meta">Source time: Friday, June 12, 3am UK time</div>
+<!-- M89: Sunday 5 July 2026 - 04:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-04T21:00:00Z" data-match-number="89">
+<div><span class="time">04:00</span><span class="match-badge">M89</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="Paraguay flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/><span class="team team-home">Paraguay</span><span class="versus">vs</span><span class="team team-away">France</span><img alt="France flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/></div>
+<div class="meta">Sunday, 5 July 2026 - 04:00 Hanoi time</div>
 </article>
-</section>
-<section class="day"><h2>Saturday, 13 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-12T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Canada flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/><span class="team team-home">Canada</span><span class="versus">vs</span><span class="team team-away">Bosnia & Herzegovina</span><img alt="Bosnia & Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
-<div class="venue">Toronto, Canada</div>
-<div class="meta">Source time: Friday, June 12, 8pm UK time</div>
+<!-- M91: Monday 6 July 2026 - 03:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-05T20:00:00Z" data-match-number="91">
+<div><span class="time">03:00</span><span class="match-badge">M91</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="Brazil flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/><span class="team team-home">Brazil</span><span class="versus">vs</span><span class="team team-away">Norway</span><img alt="Norway flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/></div>
+<div class="meta">Monday, 6 July 2026 - 03:00 Hanoi time</div>
 </article>
-<article class="card" data-kickoff-utc="2026-06-13T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group D</span></div>
-<div class="match"><img alt="USA flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/><span class="team team-home">USA</span><span class="versus">vs</span><span class="team team-away">Paraguay</span><img alt="Paraguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/></div>
-<div class="venue">Los Angeles, USA</div>
-<div class="meta">Source time: Saturday, June 13, 2am UK time</div>
+<!-- M92: Monday 6 July 2026 - 07:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-06T00:00:00Z" data-match-number="92">
+<div><span class="time">07:00</span><span class="match-badge">M92</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="Mexico flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/><span class="team team-home">Mexico</span><span class="versus">vs</span><span class="team team-away">England</span><img alt="England flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/></div>
+<div class="meta">Monday, 6 July 2026 - 07:00 Hanoi time</div>
 </article>
-</section>
-<section class="day"><h2>Sunday, 14 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-13T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Qatar flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/><span class="team team-home">Qatar</span><span class="versus">vs</span><span class="team team-away">Switzerland</span><img alt="Switzerland flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/></div>
-<div class="venue">Santa Clara, USA</div>
-<div class="meta">Source time: Saturday, June 13, 8pm UK time</div>
+<!-- M93: Tuesday 7 July 2026 - 02:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-06T19:00:00Z" data-match-number="93">
+<div><span class="time">02:00</span><span class="match-badge">M93</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="Portugal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/><span class="team team-home">Portugal</span><span class="versus">vs</span><span class="team team-away">Spain</span><img alt="Spain flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/></div>
+<div class="meta">Tuesday, 7 July 2026 - 02:00 Hanoi time</div>
 </article>
-<article class="card" data-kickoff-utc="2026-06-13T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match"><img alt="Brazil flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/><span class="team team-home">Brazil</span><span class="versus">vs</span><span class="team team-away">Morocco</span><img alt="Morocco flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/></div>
-<div class="venue">New Jersey, USA</div>
-<div class="meta">Source time: Saturday, June 13, 11pm UK time</div>
+<!-- M94: Tuesday 7 July 2026 - 07:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-07T00:00:00Z" data-match-number="94">
+<div><span class="time">07:00</span><span class="match-badge">M94</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="USA flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/><span class="team team-home">USA</span><span class="versus">vs</span><span class="team team-away">Belgium</span><img alt="Belgium flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/></div>
+<div class="meta">Tuesday, 7 July 2026 - 07:00 Hanoi time</div>
 </article>
-<article class="card" data-kickoff-utc="2026-06-14T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group C</span></div>
-<div class="match"><img alt="Haiti flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ht.svg"/><span class="team team-home">Haiti</span><span class="versus">vs</span><span class="team team-away">Scotland</span><img alt="Scotland flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-sct.svg"/></div>
-<div class="venue">Foxborough, USA</div>
-<div class="meta">Source time: Sunday, June 14, 2am UK time</div>
+<!-- M95: Tuesday 7 July 2026 - 23:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-07T16:00:00Z" data-match-number="95">
+<div><span class="time">23:00</span><span class="match-badge">M95</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="Argentina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/><span class="team team-home">Argentina</span><span class="versus">vs</span><span class="team team-away">Egypt</span><img alt="Egypt flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/></div>
+<div class="meta">Tuesday, 7 July 2026 - 23:00 Hanoi time</div>
 </article>
-<article class="card" data-kickoff-utc="2026-06-14T04:00:00Z">
-<div><span class="time">11:00</span><span class="group">Group D</span></div>
-<div class="match"><img alt="Australia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/><span class="team team-home">Australia</span><span class="versus">vs</span><span class="team team-away">Turkey</span><img alt="Turkey flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tr.svg"/></div>
-<div class="venue">Vancouver, Canada</div>
-<div class="meta">Source time: Sunday, June 14, 5am UK time</div>
+<!-- M96: Wednesday 8 July 2026 - 03:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-07T20:00:00Z" data-match-number="96">
+<div><span class="time">03:00</span><span class="match-badge">M96</span><span class="group">Round of 16</span></div>
+<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Colombia</span><img alt="Colombia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/></div>
+<div class="meta">Wednesday, 8 July 2026 - 03:00 Hanoi time</div>
 </article>
 </section>
-<section class="day"><h2>Monday, 15 June 2026</h2>
-<article class="card germany" data-kickoff-utc="2026-06-14T17:00:00Z">
-<div><span class="time">00:00</span><span class="group">Group E</span><span class="germany-badge">Germany game</span></div>
-<div class="match"><img alt="Germany flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/><span class="team team-home">Germany</span><span class="versus">vs</span><span class="team team-away">Curacao</span><img alt="Curacao flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cw.svg"/></div>
-<div class="venue">Houston, USA</div>
-<div class="meta">Source time: Sunday, June 14, 6pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-14T20:00:00Z">
-<div><span class="time">03:00</span><span class="group">Group F</span></div>
-<div class="match"><img alt="Netherlands flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/><span class="team team-home">Netherlands</span><span class="versus">vs</span><span class="team team-away">Japan</span><img alt="Japan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/></div>
-<div class="venue">Arlington, USA</div>
-<div class="meta">Source time: Sunday, June 14, 9pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-14T23:00:00Z">
-<div><span class="time">06:00</span><span class="group">Group E</span></div>
-<div class="match"><img alt="Ivory Coast flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/><span class="team team-home">Ivory Coast</span><span class="versus">vs</span><span class="team team-away">Ecuador</span><img alt="Ecuador flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/></div>
-<div class="venue">Philadelphia, USA</div>
-<div class="meta">Source time: Monday, June 15, 12am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-15T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group F</span></div>
-<div class="match"><img alt="Sweden flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/><span class="team team-home">Sweden</span><span class="versus">vs</span><span class="team team-away">Tunisia</span><img alt="Tunisia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tn.svg"/></div>
-<div class="venue">Guadalupe, Mexico</div>
-<div class="meta">Source time: Monday, June 15, 3am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-15T16:00:00Z">
-<div><span class="time">23:00</span><span class="group">Group H</span></div>
-<div class="match"><img alt="Spain flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/><span class="team team-home">Spain</span><span class="versus">vs</span><span class="team team-away">Cape Verde</span><img alt="Cape Verde flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/></div>
-<div class="venue">Atlanta, USA</div>
-<div class="meta">Source time: Monday, June 15, 5pm UK time</div>
-</article>
-</section>
-<section class="day"><h2>Tuesday, 16 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-15T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group G</span></div>
-<div class="match"><img alt="Belgium flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/><span class="team team-home">Belgium</span><span class="versus">vs</span><span class="team team-away">Egypt</span><img alt="Egypt flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/></div>
-<div class="venue">Seattle, USA</div>
-<div class="meta">Source time: Monday, June 15, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-15T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group H</span></div>
-<div class="match"><img alt="Saudi Arabia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sa.svg"/><span class="team team-home">Saudi Arabia</span><span class="versus">vs</span><span class="team team-away">Uruguay</span><img alt="Uruguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uy.svg"/></div>
-<div class="venue">Miami, USA</div>
-<div class="meta">Source time: Monday, June 15, 11pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-16T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group G</span></div>
-<div class="match"><img alt="Iran flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ir.svg"/><span class="team team-home">Iran</span><span class="versus">vs</span><span class="team team-away">New Zealand</span><img alt="New Zealand flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nz.svg"/></div>
-<div class="venue">Los Angeles, USA</div>
-<div class="meta">Source time: Tuesday, June 16, 2am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Wednesday, 17 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-16T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group I</span></div>
-<div class="match"><img alt="France flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/><span class="team team-home">France</span><span class="versus">vs</span><span class="team team-away">Senegal</span><img alt="Senegal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/></div>
-<div class="venue">New Jersey, USA</div>
-<div class="meta">Source time: Tuesday, June 16, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-16T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group I</span></div>
-<div class="match"><img alt="Iraq flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/iq.svg"/><span class="team team-home">Iraq</span><span class="versus">vs</span><span class="team team-away">Norway</span><img alt="Norway flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/></div>
-<div class="venue">Foxborough, USA</div>
-<div class="meta">Source time: Tuesday, June 16, 11pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-17T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group J</span></div>
-<div class="match"><img alt="Argentina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/><span class="team team-home">Argentina</span><span class="versus">vs</span><span class="team team-away">Algeria</span><img alt="Algeria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/></div>
-<div class="venue">Kansas City, USA</div>
-<div class="meta">Source time: Wednesday, June 17, 2am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-17T04:00:00Z">
-<div><span class="time">11:00</span><span class="group">Group J</span></div>
-<div class="match"><img alt="Austria flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/><span class="team team-home">Austria</span><span class="versus">vs</span><span class="team team-away">Jordan</span><img alt="Jordan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jo.svg"/></div>
-<div class="venue">Santa Clara, USA</div>
-<div class="meta">Source time: Wednesday, June 17, 5am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Thursday, 18 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-17T17:00:00Z">
-<div><span class="time">00:00</span><span class="group">Group K</span></div>
-<div class="match"><img alt="Portugal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/><span class="team team-home">Portugal</span><span class="versus">vs</span><span class="team team-away">DR Congo</span><img alt="DR Congo flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/></div>
-<div class="venue">Houston, USA</div>
-<div class="meta">Source time: Wednesday, June 17, 6pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-17T20:00:00Z">
-<div><span class="time">03:00</span><span class="group">Group L</span></div>
-<div class="match"><img alt="England flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/><span class="team team-home">England</span><span class="versus">vs</span><span class="team team-away">Croatia</span><img alt="Croatia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/></div>
-<div class="venue">Arlington, USA</div>
-<div class="meta">Source time: Wednesday, June 17, 9pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-17T23:00:00Z">
-<div><span class="time">06:00</span><span class="group">Group L</span></div>
-<div class="match"><img alt="Ghana flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/><span class="team team-home">Ghana</span><span class="versus">vs</span><span class="team team-away">Panama</span><img alt="Panama flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pa.svg"/></div>
-<div class="venue">Toronto, Canada</div>
-<div class="meta">Source time: Thursday, June 18, 12am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-18T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group K</span></div>
-<div class="match"><img alt="Uzbekistan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uz.svg"/><span class="team team-home">Uzbekistan</span><span class="versus">vs</span><span class="team team-away">Colombia</span><img alt="Colombia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/></div>
-<div class="venue">Mexico City, Mexico</div>
-<div class="meta">Source time: Thursday, June 18, 3am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-18T16:00:00Z">
-<div><span class="time">23:00</span><span class="group">Group A</span></div>
-<div class="match"><img alt="Czech Republic flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cz.svg"/><span class="team team-home">Czech Republic</span><span class="versus">vs</span><span class="team team-away">South Africa</span><img alt="South Africa flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/></div>
-<div class="venue">Atlanta, USA</div>
-<div class="meta">Source time: Thursday, June 18, 5pm UK time</div>
-</article>
-</section>
-<section class="day"><h2>Friday, 19 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-18T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Bosnia & Herzegovina</span><img alt="Bosnia & Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
-<div class="venue">Los Angeles, USA</div>
-<div class="meta">Source time: Thursday, June 18, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-18T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Canada flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/><span class="team team-home">Canada</span><span class="versus">vs</span><span class="team team-away">Qatar</span><img alt="Qatar flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/></div>
-<div class="venue">Vancouver, Canada</div>
-<div class="meta">Source time: Thursday, June 18, 11pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-19T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group A</span></div>
-<div class="match"><img alt="Mexico flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/><span class="team team-home">Mexico</span><span class="versus">vs</span><span class="team team-away">South Korea</span><img alt="South Korea flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/kr.svg"/></div>
-<div class="venue">Zapopan, Mexico</div>
-<div class="meta">Source time: Friday, June 19, 2am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Saturday, 20 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-19T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group D</span></div>
-<div class="match"><img alt="USA flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/><span class="team team-home">USA</span><span class="versus">vs</span><span class="team team-away">Australia</span><img alt="Australia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/></div>
-<div class="venue">Seattle, USA</div>
-<div class="meta">Source time: Friday, June 19, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-19T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match"><img alt="Scotland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-sct.svg"/><span class="team team-home">Scotland</span><span class="versus">vs</span><span class="team team-away">Morocco</span><img alt="Morocco flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/></div>
-<div class="venue">Foxborough, USA</div>
-<div class="meta">Source time: Friday, June 19, 11pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-20T00:30:00Z">
-<div><span class="time">07:30</span><span class="group">Group C</span></div>
-<div class="match"><img alt="Brazil flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/><span class="team team-home">Brazil</span><span class="versus">vs</span><span class="team team-away">Haiti</span><img alt="Haiti flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ht.svg"/></div>
-<div class="venue">Philadelphia, USA</div>
-<div class="meta">Source time: Saturday, June 20, 1.30am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-20T03:00:00Z">
-<div><span class="time">10:00</span><span class="group">Group D</span></div>
-<div class="match"><img alt="Turkey flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tr.svg"/><span class="team team-home">Turkey</span><span class="versus">vs</span><span class="team team-away">Paraguay</span><img alt="Paraguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/></div>
-<div class="venue">Santa Clara, USA</div>
-<div class="meta">Source time: Saturday, June 20, 4am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Sunday, 21 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-20T17:00:00Z">
-<div><span class="time">00:00</span><span class="group">Group F</span></div>
-<div class="match"><img alt="Netherlands flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/><span class="team team-home">Netherlands</span><span class="versus">vs</span><span class="team team-away">Sweden</span><img alt="Sweden flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/></div>
-<div class="venue">Houston, USA</div>
-<div class="meta">Source time: Saturday, June 20, 6pm UK time</div>
-</article>
-<article class="card germany" data-kickoff-utc="2026-06-20T20:00:00Z">
-<div><span class="time">03:00</span><span class="group">Group E</span><span class="germany-badge">Germany game</span></div>
-<div class="match"><img alt="Germany flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/><span class="team team-home">Germany</span><span class="versus">vs</span><span class="team team-away">Ivory Coast</span><img alt="Ivory Coast flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/></div>
-<div class="venue">Toronto, Canada</div>
-<div class="meta">Source time: Saturday, June 20, 9pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-21T00:00:00Z">
-<div><span class="time">07:00</span><span class="group">Group E</span></div>
-<div class="match"><img alt="Ecuador flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/><span class="team team-home">Ecuador</span><span class="versus">vs</span><span class="team team-away">Curacao</span><img alt="Curacao flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cw.svg"/></div>
-<div class="venue">Kansas City, USA</div>
-<div class="meta">Source time: Sunday, June 21, 1am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-21T04:00:00Z">
-<div><span class="time">11:00</span><span class="group">Group F</span></div>
-<div class="match"><img alt="Tunisia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tn.svg"/><span class="team team-home">Tunisia</span><span class="versus">vs</span><span class="team team-away">Japan</span><img alt="Japan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/></div>
-<div class="venue">Guadalupe, Mexico</div>
-<div class="meta">Source time: Sunday, June 21, 5am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-21T16:00:00Z">
-<div><span class="time">23:00</span><span class="group">Group H</span></div>
-<div class="match"><img alt="Spain flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/><span class="team team-home">Spain</span><span class="versus">vs</span><span class="team team-away">Saudi Arabia</span><img alt="Saudi Arabia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sa.svg"/></div>
-<div class="venue">Atlanta, USA</div>
-<div class="meta">Source time: Sunday, June 21, 5pm UK time</div>
-</article>
-</section>
-<section class="day"><h2>Monday, 22 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-21T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group G</span></div>
-<div class="match"><img alt="Belgium flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/><span class="team team-home">Belgium</span><span class="versus">vs</span><span class="team team-away">Iran</span><img alt="Iran flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ir.svg"/></div>
-<div class="venue">Los Angeles, USA</div>
-<div class="meta">Source time: Sunday, June 21, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-21T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group H</span></div>
-<div class="match"><img alt="Uruguay flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uy.svg"/><span class="team team-home">Uruguay</span><span class="versus">vs</span><span class="team team-away">Cape Verde</span><img alt="Cape Verde flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/></div>
-<div class="venue">Miami, USA</div>
-<div class="meta">Source time: Sunday, June 21, 11pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-22T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group G</span></div>
-<div class="match"><img alt="New Zealand flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nz.svg"/><span class="team team-home">New Zealand</span><span class="versus">vs</span><span class="team team-away">Egypt</span><img alt="Egypt flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/></div>
-<div class="venue">Vancouver, Canada</div>
-<div class="meta">Source time: Monday, June 22, 2am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Tuesday, 23 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-22T17:00:00Z">
-<div><span class="time">00:00</span><span class="group">Group J</span></div>
-<div class="match"><img alt="Argentina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/><span class="team team-home">Argentina</span><span class="versus">vs</span><span class="team team-away">Austria</span><img alt="Austria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/></div>
-<div class="venue">Arlington, USA</div>
-<div class="meta">Source time: Monday, June 22, 6pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-22T21:00:00Z">
-<div><span class="time">04:00</span><span class="group">Group I</span></div>
-<div class="match"><img alt="France flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/><span class="team team-home">France</span><span class="versus">vs</span><span class="team team-away">Iraq</span><img alt="Iraq flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/iq.svg"/></div>
-<div class="venue">Philadelphia, USA</div>
-<div class="meta">Source time: Monday, June 22, 10pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-23T00:00:00Z">
-<div><span class="time">07:00</span><span class="group">Group I</span></div>
-<div class="match"><img alt="Norway flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/><span class="team team-home">Norway</span><span class="versus">vs</span><span class="team team-away">Senegal</span><img alt="Senegal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/></div>
-<div class="venue">Toronto, Canada</div>
-<div class="meta">Source time: Tuesday, June 23, 1am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-23T03:00:00Z">
-<div><span class="time">10:00</span><span class="group">Group J</span></div>
-<div class="match"><img alt="Jordan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jo.svg"/><span class="team team-home">Jordan</span><span class="versus">vs</span><span class="team team-away">Algeria</span><img alt="Algeria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/></div>
-<div class="venue">Santa Clara, USA</div>
-<div class="meta">Source time: Tuesday, June 23, 4am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Wednesday, 24 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-23T17:00:00Z">
-<div><span class="time">00:00</span><span class="group">Group K</span></div>
-<div class="match"><img alt="Portugal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/><span class="team team-home">Portugal</span><span class="versus">vs</span><span class="team team-away">Uzbekistan</span><img alt="Uzbekistan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uz.svg"/></div>
-<div class="venue">Houston, USA</div>
-<div class="meta">Source time: Tuesday, June 23, 6pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-23T20:00:00Z">
-<div><span class="time">03:00</span><span class="group">Group L</span></div>
-<div class="match"><img alt="England flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/><span class="team team-home">England</span><span class="versus">vs</span><span class="team team-away">Ghana</span><img alt="Ghana flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/></div>
-<div class="venue">Foxborough, USA</div>
-<div class="meta">Source time: Tuesday, June 23, 9pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-23T23:00:00Z">
-<div><span class="time">06:00</span><span class="group">Group L</span></div>
-<div class="match"><img alt="Panama flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pa.svg"/><span class="team team-home">Panama</span><span class="versus">vs</span><span class="team team-away">Croatia</span><img alt="Croatia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/></div>
-<div class="venue">Foxborough, USA</div>
-<div class="meta">Source time: Wednesday, June 24, 12am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-24T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group K</span></div>
-<div class="match"><img alt="Colombia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/><span class="team team-home">Colombia</span><span class="versus">vs</span><span class="team team-away">DR Congo</span><img alt="DR Congo flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/></div>
-<div class="venue">Zapopan, Mexico</div>
-<div class="meta">Source time: Wednesday, June 24, 3am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Thursday, 25 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-24T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Canada</span><img alt="Canada flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/></div>
-<div class="venue">Vancouver, Canada</div>
-<div class="meta">Source time: Wednesday, June 24, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-24T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group B</span></div>
-<div class="match"><img alt="Bosnia & Herzegovina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/><span class="team team-home">Bosnia & Herzegovina</span><span class="versus">vs</span><span class="team team-away">Qatar</span><img alt="Qatar flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/qa.svg"/></div>
-<div class="venue">Seattle, USA</div>
-<div class="meta">Source time: Wednesday, June 24, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-24T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match"><img alt="Morocco flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/><span class="team team-home">Morocco</span><span class="versus">vs</span><span class="team team-away">Haiti</span><img alt="Haiti flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ht.svg"/></div>
-<div class="venue">Atlanta, USA</div>
-<div class="meta">Source time: Wednesday, June 24, 11pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-24T22:00:00Z">
-<div><span class="time">05:00</span><span class="group">Group C</span></div>
-<div class="match"><img alt="Scotland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-sct.svg"/><span class="team team-home">Scotland</span><span class="versus">vs</span><span class="team team-away">Brazil</span><img alt="Brazil flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/></div>
-<div class="venue">Miami, USA</div>
-<div class="meta">Source time: Wednesday, June 24, 11pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-25T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group A</span></div>
-<div class="match"><img alt="South Africa flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/><span class="team team-home">South Africa</span><span class="versus">vs</span><span class="team team-away">South Korea</span><img alt="South Korea flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/kr.svg"/></div>
-<div class="venue">Guadalupe, Mexico</div>
-<div class="meta">Source time: Thursday, June 25, 2am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-25T01:00:00Z">
-<div><span class="time">08:00</span><span class="group">Group A</span></div>
-<div class="match"><img alt="Czech Republic flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cz.svg"/><span class="team team-home">Czech Republic</span><span class="versus">vs</span><span class="team team-away">Mexico</span><img alt="Mexico flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/></div>
-<div class="venue">Mexico City, Mexico</div>
-<div class="meta">Source time: Thursday, June 25, 2am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Friday, 26 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-25T20:00:00Z">
-<div><span class="time">03:00</span><span class="group">Group E</span></div>
-<div class="match"><img alt="Curacao flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cw.svg"/><span class="team team-home">Curacao</span><span class="versus">vs</span><span class="team team-away">Ivory Coast</span><img alt="Ivory Coast flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/></div>
-<div class="venue">Philadelphia, USA</div>
-<div class="meta">Source time: Thursday, June 25, 9pm UK time</div>
-</article>
-<article class="card germany" data-kickoff-utc="2026-06-25T20:00:00Z">
-<div><span class="time">03:00</span><span class="group">Group E</span><span class="germany-badge">Germany game</span></div>
-<div class="match"><img alt="Ecuador flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/><span class="team team-home">Ecuador</span><span class="versus">vs</span><span class="team team-away">Germany</span><img alt="Germany flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/></div>
-<div class="venue">New Jersey, USA</div>
-<div class="meta">Source time: Thursday, June 25, 9pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-25T23:00:00Z">
-<div><span class="time">06:00</span><span class="group">Group F</span></div>
-<div class="match"><img alt="Tunisia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tn.svg"/><span class="team team-home">Tunisia</span><span class="versus">vs</span><span class="team team-away">Netherlands</span><img alt="Netherlands flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/></div>
-<div class="venue">Kansas City, USA</div>
-<div class="meta">Source time: Friday, June 26, 12am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-25T23:00:00Z">
-<div><span class="time">06:00</span><span class="group">Group F</span></div>
-<div class="match"><img alt="Japan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/><span class="team team-home">Japan</span><span class="versus">vs</span><span class="team team-away">Sweden</span><img alt="Sweden flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/></div>
-<div class="venue">Arlington, USA</div>
-<div class="meta">Source time: Friday, June 26, 12am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-26T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group D</span></div>
-<div class="match"><img alt="Turkey flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/tr.svg"/><span class="team team-home">Turkey</span><span class="versus">vs</span><span class="team team-away">USA</span><img alt="USA flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/></div>
-<div class="venue">Los Angeles, USA</div>
-<div class="meta">Source time: Friday, June 26, 3am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-26T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group D</span></div>
-<div class="match"><img alt="Paraguay flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/><span class="team team-home">Paraguay</span><span class="versus">vs</span><span class="team team-away">Australia</span><img alt="Australia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/></div>
-<div class="venue">Santa Clara, USA</div>
-<div class="meta">Source time: Friday, June 26, 3am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Saturday, 27 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-26T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group I</span></div>
-<div class="match"><img alt="Norway flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/><span class="team team-home">Norway</span><span class="versus">vs</span><span class="team team-away">France</span><img alt="France flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/></div>
-<div class="venue">Foxborough, USA</div>
-<div class="meta">Source time: Friday, June 26, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-26T19:00:00Z">
-<div><span class="time">02:00</span><span class="group">Group I</span></div>
-<div class="match"><img alt="Senegal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/><span class="team team-home">Senegal</span><span class="versus">vs</span><span class="team team-away">Iraq</span><img alt="Iraq flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/iq.svg"/></div>
-<div class="venue">Toronto, Canada</div>
-<div class="meta">Source time: Friday, June 26, 8pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-27T00:00:00Z">
-<div><span class="time">07:00</span><span class="group">Group H</span></div>
-<div class="match"><img alt="Cape Verde flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/><span class="team team-home">Cape Verde</span><span class="versus">vs</span><span class="team team-away">Saudi Arabia</span><img alt="Saudi Arabia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sa.svg"/></div>
-<div class="venue">Houston, USA</div>
-<div class="meta">Source time: Saturday, June 27, 1am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-27T00:00:00Z">
-<div><span class="time">07:00</span><span class="group">Group H</span></div>
-<div class="match"><img alt="Uruguay flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uy.svg"/><span class="team team-home">Uruguay</span><span class="versus">vs</span><span class="team team-away">Spain</span><img alt="Spain flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/></div>
-<div class="venue">Zapopan, Mexico</div>
-<div class="meta">Source time: Saturday, June 27, 1am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-27T03:00:00Z">
-<div><span class="time">10:00</span><span class="group">Group G</span></div>
-<div class="match"><img alt="New Zealand flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nz.svg"/><span class="team team-home">New Zealand</span><span class="versus">vs</span><span class="team team-away">Belgium</span><img alt="Belgium flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/></div>
-<div class="venue">Vancouver, Canada</div>
-<div class="meta">Source time: Saturday, June 27, 4am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-27T03:00:00Z">
-<div><span class="time">10:00</span><span class="group">Group G</span></div>
-<div class="match"><img alt="Egypt flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/><span class="team team-home">Egypt</span><span class="versus">vs</span><span class="team team-away">Iran</span><img alt="Iran flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ir.svg"/></div>
-<div class="venue">Seattle, USA</div>
-<div class="meta">Source time: Saturday, June 27, 4am UK time</div>
-</article>
-</section>
-<section class="day"><h2>Sunday, 28 June 2026</h2>
-<article class="card" data-kickoff-utc="2026-06-27T21:00:00Z">
-<div><span class="time">04:00</span><span class="group">Group L</span></div>
-<div class="match"><img alt="Panama flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pa.svg"/><span class="team team-home">Panama</span><span class="versus">vs</span><span class="team team-away">England</span><img alt="England flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/></div>
-<div class="venue">New Jersey, USA</div>
-<div class="meta">Source time: Saturday, June 27, 10pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-27T21:00:00Z">
-<div><span class="time">04:00</span><span class="group">Group L</span></div>
-<div class="match"><img alt="Croatia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/><span class="team team-home">Croatia</span><span class="versus">vs</span><span class="team team-away">Ghana</span><img alt="Ghana flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/></div>
-<div class="venue">Philadelphia, USA</div>
-<div class="meta">Source time: Saturday, June 27, 10pm UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-27T23:30:00Z">
-<div><span class="time">06:30</span><span class="group">Group K</span></div>
-<div class="match"><img alt="Colombia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/><span class="team team-home">Colombia</span><span class="versus">vs</span><span class="team team-away">Portugal</span><img alt="Portugal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/></div>
-<div class="venue">Miami, USA</div>
-<div class="meta">Source time: Sunday, June 28, 12.30am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-27T23:30:00Z">
-<div><span class="time">06:30</span><span class="group">Group K</span></div>
-<div class="match"><img alt="DR Congo flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/><span class="team team-home">DR Congo</span><span class="versus">vs</span><span class="team team-away">Uzbekistan</span><img alt="Uzbekistan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/uz.svg"/></div>
-<div class="venue">Atlanta, USA</div>
-<div class="meta">Source time: Sunday, June 28, 12.30am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-28T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group J</span></div>
-<div class="match"><img alt="Algeria flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/><span class="team team-home">Algeria</span><span class="versus">vs</span><span class="team team-away">Austria</span><img alt="Austria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/></div>
-<div class="venue">Kansas City, USA</div>
-<div class="meta">Source time: Sunday, June 28, 3am UK time</div>
-</article>
-<article class="card" data-kickoff-utc="2026-06-28T02:00:00Z">
-<div><span class="time">09:00</span><span class="group">Group J</span></div>
-<div class="match"><img alt="Jordan flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jo.svg"/><span class="team team-home">Jordan</span><span class="versus">vs</span><span class="team team-away">Argentina</span><img alt="Argentina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/></div>
-<div class="venue">Arlington, USA</div>
-<div class="meta">Source time: Sunday, June 28, 3am UK time</div>
-</article>
-</section>
+
+<footer>Round of 16 schedule in Hanoi time (ICT, UTC+7). Live scores from results.json.</footer>
+
 <script>
 (() => {
-      const STATUS = document.getElementById('results-status');
+  const STATUS = document.getElementById('results-status');
   const RESULT_URL = '/worldcup2026schedule/results.json';
   const RESULTS_BROWSER_READ_OFFSET_SECONDS = 18;
   const RESULTS_WATCHDOG_INTERVAL_MS = 12 * 1000;
-  const KNOCKOUT_REFRESH_INTERVAL_MS = 60 * 1000;
   const AUSTRALIA_REFRESH_INTERVAL_MS = 60 * 1000;
-  let lastKnownResults = null;
-  let lastKnownResultsLastUpdatedUtc = '';
-  let isKnockoutPolling = false;
-  let knockoutRetryTimeout = null;
   const AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS = 15 * 60 * 1000;
   const AUSTRALIA_ACTIVE_WINDOW_AFTER_MS = 4 * 60 * 60 * 1000;
   const finishedStatuses = new Set(['FT', 'AET', 'PEN']);
@@ -580,7 +149,6 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     if (!home || !away) return false;
     return /\b(australia|aus)\b/i.test(home) || /\b(australia|aus)\b/i.test(away);
   }
-
   function normalizeAustraliaCards() {
     document.querySelectorAll('.card').forEach(card => {
       if (card.classList.contains('australia')) return;
@@ -591,75 +159,48 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
           badge.className = 'australia-badge';
           badge.textContent = 'Australia';
           const groupEl = card.querySelector('.group');
-          if (groupEl && groupEl.parentNode) {
-            groupEl.parentNode.appendChild(badge);
-          }
+          if (groupEl && groupEl.parentNode) groupEl.parentNode.appendChild(badge);
         }
       }
     });
   }
-
   function getAustraliaCards() {
     normalizeAustraliaCards();
     return document.querySelectorAll('.card.australia');
   }
-
   function isMatchActiveOrUpcoming(card) {
     const kickoffUtc = card.getAttribute('data-kickoff-utc');
     if (!kickoffUtc) return false;
     const kickoffMs = Date.parse(kickoffUtc);
     if (!Number.isFinite(kickoffMs)) return false;
     const nowMs = Date.now();
-    const msSinceKickoff = nowMs - kickoffMs;
-    return msSinceKickoff >= -AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS && msSinceKickoff <= AUSTRALIA_ACTIVE_WINDOW_AFTER_MS;
-  }
-
-  function anyAustraliaMatchActive() {
-    const ausCards = getAustraliaCards();
-    for (const card of ausCards) {
-      if (isMatchActiveOrUpcoming(card)) return true;
-    }
-    return false;
+    return nowMs - kickoffMs >= -AUSTRALIA_ACTIVE_WINDOW_BEFORE_MS && nowMs - kickoffMs <= AUSTRALIA_ACTIVE_WINDOW_AFTER_MS;
   }
 
   // ---------- Result helpers ----------
   function normalize(value) {
-    return String(value || '')
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/&/g, 'and')
-      .replace(/[^a-z0-9]+/g, ' ')
-      .trim();
+    return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/&/g, 'and').replace(/[^a-z0-9]+/g, ' ').trim();
   }
-
   function matchKeys(name) {
     const key = normalize(name);
     const parts = key.split(/\s+vs\s+/);
-    if (parts.length === 2) {
-      return [key, `${parts[1]} vs ${parts[0]}`];
-    }
+    if (parts.length === 2) return [key, `${parts[1]} vs ${parts[0]}`];
     return [key];
   }
-
   function isPregameStatus(status) {
     const s = String(status || '').trim().toLowerCase().replace(/\s+/g, '');
     return !s || s === 'ns' || s === 'notstarted' || s === 'notstart';
   }
-
   function cleanElapsed(value) {
     const raw = String(value ?? '').trim();
     const lower = raw.toLowerCase();
-
     if (!raw) return '';
     if (['notstarted', 'not started', 'live', 'finished', 'false', 'true', 'null', 'undefined'].includes(lower)) return '';
     if (/^ht$/i.test(raw)) return 'HT';
-    if (/^\d{1,3}(\+\d{1,2})?$/.test(raw)) return `${raw}'`;
     if (/^\d{1,3}(\+\d{1,2})?'$/.test(raw)) return raw;
-
+    if (/^\d{1,3}(\+\d{1,2})?$/.test(raw)) return `${raw}'`;
     return '';
   }
-
   function formatStatusLabel(status, elapsed) {
     const cleanStatus = String(status || '').toUpperCase();
     if (cleanStatus === 'LIVE') {
@@ -669,7 +210,6 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     if (cleanStatus === 'HT') return 'HT';
     return cleanStatus || 'Result';
   }
-
   function addStatusBlock(card, label, text, live = false) {
     const div = document.createElement('div');
     div.className = 'result' + (live ? ' live' : '');
@@ -681,138 +221,88 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     card.appendChild(div);
     return true;
   }
-
-  // Extract penalty score from a note string like "R32 · Pens 3-4" or "Pens 2-3"
   function parsePenaltyNote(note) {
     if (!note) return { metadata: '', pens: '' };
     const match = note.match(/Pens\s+(\d+\s*-\s*\d+)/i);
     if (!match) return { metadata: note, pens: '' };
     const pens = match[1].replace(/\s+/g, '');
-    // Remove the penalty part from the note to get the metadata portion
     const metadata = note.replace(/\s*·\s*Pens\s+\d+\s*-\s*\d+/i, '').replace(/Pens\s+\d+\s*-\s*\d+/i, '').trim();
     return { metadata, pens };
   }
-
-  // Parse a score string like "Germany 1-1 Paraguay" into { home, score, away }
   function parseScoreString(scoreStr) {
     if (!scoreStr) return null;
-    // Match: team name followed by digits-digits followed by team name
-    // Team names may contain spaces, hyphens, ampersands
-    const match = scoreStr.match(/^(.+?)\s+(\d+)\s*-\s*(\d+)\s+(.+)$/);
-    if (!match) return null;
-    return {
-      home: match[1].trim(),
-      homeScore: match[2],
-      awayScore: match[3],
-      score: `${match[2]}-${match[3]}`,
-      away: match[4].trim()
-    };
+    const m = scoreStr.match(/^(.+?)\s+(\d+)\s*-\s*(\d+)\s+(.+)$/);
+    if (!m) return null;
+    return { home: m[1].trim(), homeScore: m[2], awayScore: m[3], score: `${m[2]}-${m[3]}`, away: m[4].trim() };
   }
-
   function addResult(card, result) {
     if (!result) return false;
     const status = String(result.status || result.apiStatus || '').toUpperCase();
     if (isPregameStatus(status)) return false;
-
-    const hasScore = Boolean(result.score) || (Number.isFinite(result.homeGoals) && Number.isFinite(result.awayGoals));
-    const score = result.score || (hasScore ? `${result.home || ''} ${result.homeGoals}-${result.awayGoals} ${result.away || ''}`.trim() : '');
+    const score = result.score || '';
     const div = document.createElement('div');
     div.className = 'result' + (liveStatuses.has(status) && !finishedStatuses.has(status) ? ' live' : '');
-
-    // Parse note for penalty information
     const parsedNote = parsePenaltyNote(result.note);
     const parsedScore = parseScoreString(score);
-
-    // Bail out to simple rendering for non-penalty results
     if (!parsedNote.pens || !parsedScore) {
-      // Non-penalty result or unparseable score: render the original way
       const badge = document.createElement('span');
       badge.className = 'status';
       badge.textContent = formatStatusLabel(status, result.elapsed);
       div.appendChild(badge);
       if (score) div.appendChild(document.createTextNode(score));
-
       if (result.note) {
-        const note = document.createElement('div');
-        note.style.fontWeight = '500';
-        note.style.fontSize = '.8rem';
-        note.style.opacity = '.78';
-        note.style.marginTop = '3px';
-        note.textContent = result.note;
-        div.appendChild(note);
+        const noteEl = document.createElement('div');
+        noteEl.style.cssText = 'font-weight:500;font-size:.8rem;opacity:.78;margin-top:3px';
+        noteEl.textContent = result.note;
+        div.appendChild(noteEl);
       }
       card.appendChild(div);
       return true;
     }
-
-    // Penalty result: outer wrapper grid with status in col 1, score grid in col 2.
-    // Inner score grid: 3 columns for home / score / away, penalty in col 2 below score.
-    // Metadata in outer wrapper row 2 spanning both columns.
-
     const wrapper = document.createElement('span');
     wrapper.className = 'result-pens-wrapper';
-    wrapper.style.display = 'grid';
-    wrapper.style.verticalAlign = 'middle';
-
     const badge = document.createElement('span');
     badge.className = 'status';
     badge.textContent = formatStatusLabel(status, result.elapsed);
     wrapper.appendChild(badge);
-
-    // Inner score grid
     const grid = document.createElement('span');
     grid.className = 'result-pens';
-    grid.style.display = 'grid';
-    grid.style.verticalAlign = 'middle';
-
-    const homeSpan = document.createElement('span');
-    homeSpan.className = 'team-home';
-    homeSpan.textContent = parsedScore.home;
-
-    const scoreSpan = document.createElement('span');
-    scoreSpan.className = 'score';
-    scoreSpan.textContent = parsedScore.score;
-
-    const awaySpan = document.createElement('span');
-    awaySpan.className = 'team-away';
-    awaySpan.textContent = parsedScore.away;
-
-    const pensSpan = document.createElement('span');
-    pensSpan.className = 'pens';
-    pensSpan.textContent = parsedNote.pens;
-
-    grid.appendChild(homeSpan);
-    grid.appendChild(scoreSpan);
-    grid.appendChild(awaySpan);
-    grid.appendChild(pensSpan);
-
+    const homeS = document.createElement('span'); homeS.className = 'team-home'; homeS.textContent = parsedScore.home;
+    const scoreS = document.createElement('span'); scoreS.className = 'score'; scoreS.textContent = parsedScore.score;
+    const awayS = document.createElement('span'); awayS.className = 'team-away'; awayS.textContent = parsedScore.away;
+    const pensS = document.createElement('span'); pensS.className = 'pens'; pensS.textContent = parsedNote.pens;
+    grid.appendChild(homeS); grid.appendChild(scoreS); grid.appendChild(awayS); grid.appendChild(pensS);
     wrapper.appendChild(grid);
-
-    // Metadata in outer wrapper row 2
     if (parsedNote.metadata) {
-      const metaSpan = document.createElement('span');
-      metaSpan.className = 'meta';
-      metaSpan.textContent = parsedNote.metadata;
-      wrapper.appendChild(metaSpan);
+      const metaS = document.createElement('span'); metaS.className = 'meta'; metaS.textContent = parsedNote.metadata;
+      wrapper.appendChild(metaS);
     }
-
     div.appendChild(wrapper);
-
-    // Accessible description for screen readers
-    const srDesc = document.createElement('span');
-    srDesc.className = 'sr-only';
-    srDesc.textContent = `${formatStatusLabel(status, result.elapsed)}: ${score}, penalty shootout ${parsedNote.pens}`;
-    div.appendChild(srDesc);
-
     card.appendChild(div);
     return true;
   }
 
+  /**
+   * WC-FE-R16-001: Match results.json records to cards primarily by numeric
+   * matchNumber. Falls back to team-name key only when matchNumber is
+   * unavailable. Never updates more than one card for the same match.
+   */
   function getResultForCard(card, rawMatches = latestMatches) {
+    // Primary: match by data-match-number attribute
+    const mnAttr = card.getAttribute('data-match-number');
+    if (mnAttr) {
+      const mn = Number(mnAttr);
+      if (Number.isFinite(mn) && mn >= 73 && mn <= 104) {
+        for (const [key, result] of Object.entries(rawMatches)) {
+          if (result && Number(result.matchNumber) === mn) return result;
+        }
+      }
+    }
+
+    // Fallback: match by team-name key
     const home = card.querySelector('.team-home')?.textContent?.trim();
     const away = card.querySelector('.team-away')?.textContent?.trim();
     if (!home || !away) return null;
-
     const key = `${home} vs ${away}`;
     if (rawMatches[key]) return rawMatches[key];
 
@@ -831,24 +321,17 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     document.querySelectorAll('.card').forEach(card => {
       card.querySelectorAll(':scope > .countdown').forEach(el => el.remove());
       if (card.querySelector(':scope > .result')) return;
-
       const result = getResultForCard(card);
       if (result && !isPregameStatus(result.status || result.apiStatus)) return;
-
       const kickoffUtc = card.getAttribute('data-kickoff-utc');
       if (!kickoffUtc) return;
-
       const kickoffMs = Date.parse(kickoffUtc);
       if (!Number.isFinite(kickoffMs)) return;
-
       const remainingMs = kickoffMs - Date.now();
       if (remainingMs > 60 * 60 * 1000) return;
-
       if (remainingMs > 0) {
         const totalSeconds = Math.max(0, Math.floor(remainingMs / 1000));
-        const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
-        const seconds = String(totalSeconds % 60).padStart(2, '0');
-        addStatusBlock(card, 'Kickoff in', `${minutes}:${seconds}`);
+        addStatusBlock(card, 'Kickoff in', `${String(Math.floor(totalSeconds / 60)).padStart(2, '0')}:${String(totalSeconds % 60).padStart(2, '0')}`);
         card.lastElementChild.classList.add('countdown');
       } else {
         addStatusBlock(card, 'Awaiting live status', '');
@@ -856,13 +339,10 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
       }
     });
   }
-
   function renderResults(rawMatches) {
     latestMatches = rawMatches || {};
-    const scrollX = window.scrollX;
-    const scrollY = window.scrollY;
+    const scrollX = window.scrollX, scrollY = window.scrollY;
     let count = 0;
-
     normalizeAustraliaCards();
     document.querySelectorAll('.card > .result, .card > .countdown').forEach(el => el.remove());
     document.querySelectorAll('.card').forEach(card => {
@@ -873,11 +353,9 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     window.scrollTo(scrollX, scrollY);
     return count;
   }
-
   function renderAustraliaOnly(rawMatches) {
     const matches = rawMatches || latestMatches;
-    const ausCards = getAustraliaCards();
-    ausCards.forEach(card => {
+    getAustraliaCards().forEach(card => {
       card.querySelectorAll(':scope > .result, :scope > .countdown').forEach(el => el.remove());
       const result = getResultForCard(card, matches);
       if (result) addResult(card, result);
@@ -893,22 +371,18 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
     if (target <= now) target += intervalMs;
     return target;
   }
-
   function scheduleNextResultsRefresh(now = Date.now()) {
     nextResultsRefreshAtMs = getNextAlignedRefreshAt(now);
   }
-
-  async function loadResults(reason = 'manual') {
+  async function loadResults(reason) {
     if (resultsRefreshInProgress) return;
     resultsRefreshInProgress = true;
-
     try {
       const res = await fetch(`${RESULT_URL}?ts=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       const count = renderResults(data.matches || {});
       scheduleNextResultsRefresh();
-
       if (STATUS) {
         const when = data.lastUpdated || data.lastUpdatedUtc || 'unknown time';
         STATUS.textContent = count ? `Results loaded: ${count} match result${count === 1 ? '' : 's'} shown. Last updated: ${when}.` : `No results posted yet. Last checked: ${when}.`;
@@ -917,156 +391,39 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
       scheduleNextResultsRefresh();
       if (STATUS) STATUS.textContent = 'Results refresh unavailable right now; keeping the last displayed scores.';
       console.warn('Could not load World Cup results:', reason, err);
-    } finally {
-      resultsRefreshInProgress = false;
-    }
+    } finally { resultsRefreshInProgress = false; }
   }
-
   async function loadAustraliaResults() {
     const ausCards = getAustraliaCards();
     if (ausCards.length === 0) return;
-
-    // Only fetch if at least one Australia match is in its active window
     let anyActive = false;
-    for (const card of ausCards) {
-      if (isMatchActiveOrUpcoming(card)) { anyActive = true; break; }
-    }
+    for (const card of ausCards) { if (isMatchActiveOrUpcoming(card)) { anyActive = true; break; } }
     if (!anyActive) return;
-
     try {
       const res = await fetch(`${RESULT_URL}?ts=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) return;
       const data = await res.json();
-      const matches = data.matches || {};
-      Object.assign(latestMatches, matches);
-      renderAustraliaOnly(matches);
-    } catch (err) {
-      // Silent fail -- normal cycle will retry
-    }
+      Object.assign(latestMatches, data.matches || {});
+      renderAustraliaOnly(data.matches || {});
+    } catch (err) { /* silent */ }
   }
 
   // ---------- Init ----------
   normalizeAustraliaCards();
   loadResults('initial');
   scheduleNextResultsRefresh();
-
   setInterval(() => {
     renderCountdowns();
-    if (!document.hidden && nextResultsRefreshAtMs && Date.now() >= nextResultsRefreshAtMs) {
-      loadResults('watchdog');
-    }
+    if (!document.hidden && nextResultsRefreshAtMs && Date.now() >= nextResultsRefreshAtMs) loadResults('watchdog');
   }, RESULTS_WATCHDOG_INTERVAL_MS);
-
   setInterval(renderCountdowns, 1000);
-
   document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      normalizeAustraliaCards();
-      loadResults('visible');
-      scheduleNextResultsRefresh();
-    }
+    if (!document.hidden) { normalizeAustraliaCards(); loadResults('visible'); scheduleNextResultsRefresh(); }
   });
-
-  window.addEventListener('focus', () => {
-    normalizeAustraliaCards();
-    loadResults('focus');
-    scheduleNextResultsRefresh();
-  });
-
-  window.addEventListener('pageshow', () => {
-    normalizeAustraliaCards();
-    loadResults('pageshow');
-    scheduleNextResultsRefresh();
-  });
-
-  // Australia-only: 60-second refresh during active match windows
-  setInterval(() => {
-    if (!document.hidden) {
-      loadAustraliaResults();
-    }
-  }, AUSTRALIA_REFRESH_INTERVAL_MS);
+  window.addEventListener('focus', () => { normalizeAustraliaCards(); loadResults('focus'); scheduleNextResultsRefresh(); });
+  window.addEventListener('pageshow', () => { normalizeAustraliaCards(); loadResults('pageshow'); scheduleNextResultsRefresh(); });
+  setInterval(() => { if (!document.hidden) loadAustraliaResults(); }, AUSTRALIA_REFRESH_INTERVAL_MS);
 })();
 </script>
-<section class="day knockout-section"><h2 class="knockout-heading">KNOCKOUT STAGE<br/>ROUND OF 32</h2>
-<article class="card knockout-card" data-kickoff-utc="2026-06-28T19:00:00Z">
-<div><span class="time">02:00</span><span class="match-badge">M73</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="South Africa flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/za.svg"/><span class="team team-home">South Africa</span><span class="versus">vs</span><span class="team team-away">Canada</span><img alt="Canada flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ca.svg"/></div>
-<div class="meta">Monday, 29 June 2026 - 02:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-06-29T17:00:00Z">
-<div><span class="time">00:00</span><span class="match-badge">M76</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Brazil flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/br.svg"/><span class="team team-home">Brazil</span><span class="versus">vs</span><span class="team team-away">Japan</span><img alt="Japan flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/jp.svg"/></div>
-<div class="meta">Tuesday, 30 June 2026 - 00:00 Hanoi time</div>
-</article>
-<article class="card knockout-card germany" data-kickoff-utc="2026-06-29T20:30:00Z">
-<div><span class="time">03:30</span><span class="match-badge">M74</span><span class="germany-badge">Germany</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Germany flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/de.svg"/><span class="team team-home">Germany</span><span class="versus">vs</span><span class="team team-away">Paraguay</span><img alt="Paraguay flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/py.svg"/></div>
-<div class="meta">Tuesday, 30 June 2026 - 03:30 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-06-30T01:00:00Z">
-<div><span class="time">08:00</span><span class="match-badge">M75</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Netherlands flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/nl.svg"/><span class="team team-home">Netherlands</span><span class="versus">vs</span><span class="team team-away">Morocco</span><img alt="Morocco flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ma.svg"/></div>
-<div class="meta">Tuesday, 30 June 2026 - 08:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-06-30T17:00:00Z">
-<div><span class="time">00:00</span><span class="match-badge">M78</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Ivory Coast flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ci.svg"/><span class="team team-home">Ivory Coast</span><span class="versus">vs</span><span class="team team-away">Norway</span><img alt="Norway flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/no.svg"/></div>
-<div class="meta">Wednesday, 1 July 2026 - 00:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-06-30T21:00:00Z">
-<div><span class="time">04:00</span><span class="match-badge">M77</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="France flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/><span class="team team-home">France</span><span class="versus">vs</span><span class="team team-away">Sweden</span><img alt="Sweden flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/se.svg"/></div>
-<div class="meta">Wednesday, 1 July 2026 - 04:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-01T01:00:00Z">
-<div><span class="time">08:00</span><span class="match-badge">M79</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Mexico flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/mx.svg"/><span class="team team-home">Mexico</span><span class="versus">vs</span><span class="team team-away">Ecuador</span><img alt="Ecuador flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ec.svg"/></div>
-<div class="meta">Wednesday, 1 July 2026 - 08:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-01T16:00:00Z">
-<div><span class="time">23:00</span><span class="match-badge">M80</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="England flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/><span class="team team-home">England</span><span class="versus">vs</span><span class="team team-away">DR Congo</span><img alt="DR Congo flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cd.svg"/></div>
-<div class="meta">Wednesday, 1 July 2026 - 23:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-01T20:00:00Z">
-<div><span class="time">03:00</span><span class="match-badge">M82</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Belgium flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/be.svg"/><span class="team team-home">Belgium</span><span class="versus">vs</span><span class="team team-away">Senegal</span><img alt="Senegal flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/sn.svg"/></div>
-<div class="meta">Thursday, 2 July 2026 - 03:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-02T00:00:00Z">
-<div><span class="time">07:00</span><span class="match-badge">M81</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="USA flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/us.svg"/><span class="team team-home">USA</span><span class="versus">vs</span><span class="team team-away">Bosnia & Herzegovina</span><img alt="Bosnia & Herzegovina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ba.svg"/></div>
-<div class="meta">Thursday, 2 July 2026 - 07:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-02T19:00:00Z">
-<div><span class="time">02:00</span><span class="match-badge">M84</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Spain flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/><span class="team team-home">Spain</span><span class="versus">vs</span><span class="team team-away">Austria</span><img alt="Austria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/at.svg"/></div>
-<div class="meta">Friday, 3 July 2026 - 02:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-02T23:00:00Z">
-<div><span class="time">06:00</span><span class="match-badge">M83</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Portugal flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/pt.svg"/><span class="team team-home">Portugal</span><span class="versus">vs</span><span class="team team-away">Croatia</span><img alt="Croatia flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/hr.svg"/></div>
-<div class="meta">Friday, 3 July 2026 - 06:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-03T03:00:00Z">
-<div><span class="time">10:00</span><span class="match-badge">M85</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Switzerland flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ch.svg"/><span class="team team-home">Switzerland</span><span class="versus">vs</span><span class="team team-away">Algeria</span><img alt="Algeria flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/dz.svg"/></div>
-<div class="meta">Friday, 3 July 2026 - 10:00 Hanoi time</div>
-</article>
-<article class="card knockout-card australia" data-kickoff-utc="2026-07-03T18:00:00Z">
-<div><span class="time">01:00</span><span class="match-badge">M88</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Australia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/au.svg"/><span class="team team-home">Australia</span><span class="versus">vs</span><span class="team team-away">Egypt</span><img alt="Egypt flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/eg.svg"/></div>
-<div class="meta">Saturday, 4 July 2026 - 01:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-03T22:00:00Z">
-<div><span class="time">05:00</span><span class="match-badge">M86</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Argentina flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/><span class="team team-home">Argentina</span><span class="versus">vs</span><span class="team team-away">Cape Verde</span><img alt="Cape Verde flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/cv.svg"/></div>
-<div class="meta">Saturday, 4 July 2026 - 05:00 Hanoi time</div>
-</article>
-<article class="card knockout-card" data-kickoff-utc="2026-07-04T01:30:00Z">
-<div><span class="time">08:30</span><span class="match-badge">M87</span><span class="group">Round of 32</span></div>
-<div class="match"><img alt="Colombia flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/co.svg"/><span class="team team-home">Colombia</span><span class="versus">vs</span><span class="team team-away">Ghana</span><img alt="Ghana flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gh.svg"/></div>
-<div class="meta">Saturday, 4 July 2026 - 08:30 Hanoi time</div>
-</article>
-</section>
-<footer>Group-stage and Round-of-32 schedule in Hanoi time. Calendar import includes 4-hour reminders.</footer></body></html>
+</body>
+</html>
