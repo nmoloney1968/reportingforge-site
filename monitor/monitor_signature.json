@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-07-05 05:08 UTC",
+  "built_at_utc": "2026-07-06 05:36 UTC",
   "fred": {
     "last_obs_date": "2026-07-01",
     "last_obs_value": 2.25,
@@ -25,11 +25,11 @@
     "dxy_last_date": "2026-07-02",
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
-    "gold_last_date": "2026-07-03",
-    "gold_last_value": 4187.2998046875,
+    "gold_last_date": "2026-07-02",
+    "gold_last_value": 4112.7001953125,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
-    "wti_last_date": "2026-07-03",
+    "wti_last_date": "2026-07-02",
     "wti_ticker": "CL=F"
   }
 }
