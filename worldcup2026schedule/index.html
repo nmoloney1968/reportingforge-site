@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>World Cup 2026 Round of 16 Results & Quarterfinals - Hanoi Time</title>
-<meta content="Phone-friendly FIFA World Cup 2026 Round of 16 results and upcoming quarterfinal fixtures with live scores." name="description"/>
+<title>World Cup 2026 Knockout Results & Semifinals - Hanoi Time</title>
+<meta content="Phone-friendly FIFA World Cup 2026 knockout results: Round of 16, quarterfinal results, and upcoming semifinal fixtures with live scores." name="description"/>
 <link href="/favicon.ico" rel="icon" sizes="any"/>
 <link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
 <link href="/apple-touch-icon.png" rel="apple-touch-icon"/>
@@ -69,8 +69,8 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 </head>
 <body>
 <header>
-<h1>World Cup 2026 Round of 16 Results & Quarterfinals - Hanoi Time</h1>
-<p class="summary">Round-of-16 results and upcoming quarterfinal fixtures. Times are Hanoi / ICT / UTC+7.</p>
+<h1>World Cup 2026 Knockout Results & Semifinals - Hanoi Time</h1>
+<p class="summary">Round-of-16 results, quarterfinal results, and upcoming semifinal fixtures. Times are Hanoi / ICT / UTC+7.</p>
 <div id="results-status">Results update automatically from <code>results.json</code> when available.</div>
 </header>
 
@@ -125,7 +125,7 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 </article>
 </section>
 
-<section class="day knockout-section"><h2 class="knockout-heading">QUARTERFINALS</h2>
+<section class="day knockout-section"><h2 class="knockout-heading">QUARTERFINALS · RESULTS</h2>
 <!-- M97: Friday 10 July 2026 - 03:00 ICT -->
 <article class="card knockout-card" data-kickoff-utc="2026-07-09T20:00:00Z" data-match-number="97">
 <div><span class="time">03:00</span><span class="match-badge">M97</span><span class="group">Quarterfinal</span></div>
@@ -152,7 +152,22 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
 </article>
 </section>
 
-<footer>Round of 16 results and quarterfinal fixtures in Hanoi time (ICT, UTC+7). Live scores from results.json.</footer>
+<section class="day knockout-section"><h2 class="knockout-heading">SEMIFINALS</h2>
+<!-- M101: Wednesday 15 July 2026 - 02:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-14T19:00:00Z" data-match-number="101">
+<div><span class="time">02:00</span><span class="match-badge">M101</span><span class="group">Semifinal</span></div>
+<div class="match"><img alt="France flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/fr.svg"/><span class="team team-home">France</span><span class="versus">vs</span><span class="team team-away">Spain</span><img alt="Spain flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/es.svg"/></div>
+<div class="meta">Wednesday, 15 July 2026 - 02:00 Hanoi time</div>
+</article>
+<!-- M102: Thursday 16 July 2026 - 07:00 ICT -->
+<article class="card knockout-card" data-kickoff-utc="2026-07-16T00:00:00Z" data-match-number="102">
+<div><span class="time">07:00</span><span class="match-badge">M102</span><span class="group">Semifinal</span></div>
+<div class="match"><img alt="England flag" class="flag-img home" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/gb-eng.svg"/><span class="team team-home">England</span><span class="versus">vs</span><span class="team team-away">Argentina</span><img alt="Argentina flag" class="flag-img away" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="https://flagcdn.com/ar.svg"/></div>
+<div class="meta">Thursday, 16 July 2026 - 07:00 Hanoi time</div>
+</article>
+</section>
+
+<footer>Knockout results: Round of 16, quarterfinals completed, and semifinal fixtures in Hanoi time (ICT, UTC+7). Live scores from results.json and manual overrides.</footer>
 
 <script>
 (() => {
@@ -168,6 +183,22 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
   let resultsRefreshInProgress = false;
   let nextResultsRefreshAtMs = 0;
   let latestMatches = {};
+
+  /**
+   * WC-FE-SF-001: Manual results override for matches where the Worker
+   * result is stale or missing. Set force: true to always use the manual
+   * result. For non-forced entries, the Worker result takes precedence.
+   * After a match finishes, change force to true, status to FT/AET/PEN,
+   * and update score to the final result.
+   */
+  const MANUAL_RESULTS = {
+    97: { force: true, status: "FT", score: "France 2-0 Morocco", note: "QF" },
+    98: { force: true, status: "FT", score: "Spain 2-1 Belgium", note: "QF" },
+    99: { force: true, status: "AET", score: "Norway 1-2 England", note: "QF" },
+    100: { force: true, status: "AET", score: "Argentina 3-1 Switzerland", note: "QF" },
+    101: { force: false, status: "NS", score: "France 0-0 Spain", note: "SF" },
+    102: { force: false, status: "NS", score: "England 0-0 Argentina", note: "SF" }
+  };
 
   // ---------- Australia detection ----------
   function isAustraliaCard(card) {
@@ -310,23 +341,43 @@ footer { font-size: .8rem; opacity: .72; margin: 24px 0 8px; }
   }
 
   /**
-   * WC-FE-R16-001: Match results.json records to cards primarily by numeric
-   * matchNumber. Falls back to team-name key only when matchNumber is
-   * unavailable. Never updates more than one card for the same match.
+   * WC-FE-SF-001: Match results.json records to cards with manual-result
+   * override. Precedence:
+   *   1. If MANUAL_RESULTS[matchNumber].force is true, return a synthetic
+   *      result object from the manual entry.
+   *   2. Otherwise use a valid Worker result found primarily by matchNumber.
+   *   3. Preserve the existing team-key lookup only as a secondary fallback.
+   *   4. If no valid Worker result exists, use the non-forced manual entry
+   *      as the fixture fallback (keeps teams/date visible without 0-0
+   *      being treated as a live result).
+   *   5. If neither exists, retain the existing static-card behavior.
    */
   function getResultForCard(card, rawMatches = latestMatches) {
-    // Primary: match by data-match-number attribute
+    // Check for manual override by match-number attribute first
     const mnAttr = card.getAttribute('data-match-number');
+    let mn = null;
     if (mnAttr) {
-      const mn = Number(mnAttr);
-      if (Number.isFinite(mn) && mn >= 73 && mn <= 104) {
-        for (const [key, result] of Object.entries(rawMatches)) {
-          if (result && Number(result.matchNumber) === mn) return result;
+      mn = Number(mnAttr);
+    }
+    if (Number.isFinite(mn)) {
+      const manual = MANUAL_RESULTS[mn];
+      if (manual) {
+        if (manual.force) {
+          // Step 1: forced manual result always wins
+          return { status: manual.status, score: manual.score, note: manual.note, matchNumber: mn };
         }
+        // Step 2: try Worker result by matchNumber
+        for (const [key, result] of Object.entries(rawMatches)) {
+          if (result && Number(result.matchNumber) === mn && !isPregameStatus(result.status || result.apiStatus)) {
+            return result;
+          }
+        }
+        // Step 4: non-forced manual as fixture fallback (keeps scheduled status)
+        return { status: manual.status, score: manual.score, note: manual.note, matchNumber: mn };
       }
     }
 
-    // Fallback: match by team-name key
+    // Step 3 (legacy): match by team-name key
     const home = card.querySelector('.team-home')?.textContent?.trim();
     const away = card.querySelector('.team-away')?.textContent?.trim();
     if (!home || !away) return null;
