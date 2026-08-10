@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-08-10 03:18 UTC",
+  "built_at_utc": "2026-08-10 04:11 UTC",
   "fred": {
     "last_obs_date": "2026-08-06",
     "last_obs_value": 2.43,
@@ -22,14 +22,14 @@
   },
   "template_version": "v4-dark-fred-fallback-dxy-wti-rficon-2026-02-13",
   "yahoo": {
-    "dxy_last_date": "2026-08-09",
+    "dxy_last_date": "2026-08-07",
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
-    "gold_last_date": "2026-08-09",
-    "gold_last_value": 4379.2001953125,
+    "gold_last_date": "2026-08-07",
+    "gold_last_value": 4340.7001953125,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
-    "wti_last_date": "2026-08-09",
+    "wti_last_date": "2026-08-07",
     "wti_ticker": "CL=F"
   }
 }
