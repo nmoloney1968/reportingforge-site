@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-08-30 06:41 UTC",
+  "built_at_utc": "2026-08-31 07:02 UTC",
   "fred": {
     "last_obs_date": "2026-08-27",
     "last_obs_value": 2.34,
@@ -10,7 +10,7 @@
   "states": {
     "dxy": "Red",
     "gdx_gold": "Red",
-    "gold": "Yellow",
+    "gold": "Red",
     "nem_gold": "Green",
     "overall": "Red",
     "panic_flush": {
@@ -26,7 +26,7 @@
     "dxy_ticker": "DX-Y.NYB",
     "gdx_ticker": "GDX",
     "gold_last_date": "2026-08-28",
-    "gold_last_value": 4529.89990234375,
+    "gold_last_value": 4478.10009765625,
     "gold_ticker": "GC=F",
     "nem_ticker": "NEM",
     "wti_last_date": "2026-08-28",
