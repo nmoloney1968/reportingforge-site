@@ -1,5 +1,5 @@
 {
-  "built_at_utc": "2026-09-01 06:15 UTC",
+  "built_at_utc": "2026-09-01 07:54 UTC",
   "fred": {
     "last_obs_date": "2026-08-28",
     "last_obs_value": 2.42,
@@ -9,7 +9,7 @@
   },
   "states": {
     "dxy": "Red",
-    "gdx_gold": "Yellow",
+    "gdx_gold": "Red",
     "gold": "Red",
     "nem_gold": "Green",
     "overall": "Red",
